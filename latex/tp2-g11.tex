@@ -1,0 +1,63 @@
+\documentclass[10pt, a4paper]{article}
+\usepackage[paper=a4paper, left=1.5cm, right=1.5cm, bottom=1.5cm, top=3.5cm]{geometry}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,activeacute]{babel}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{lastpage}
+\usepackage{aed2-symb,aed2-itef,aed2-tad,caratula}
+\usepackage[colorlinks=true, linkcolor=blue]{hyperref}
+\usepackage{calc}
+
+\newcommand{\f}[1]{\text{#1}}
+\newcommand{\fAux}{$_{\text{aux}}$}
+\renewcommand{\paratodo}[2]{\ensuremath{\forall~#2: \text{#1}}}
+
+\sloppy
+
+\hypersetup{%
+ % Para que el PDF se abra a pagina completa.
+ pdfstartview= {FitH \hypercalcbp{\paperheight-\topmargin-1in-\headheight}},
+ pdfauthor={Grupo 11},
+ pdfkeywords={HOLA HOLA},
+ pdfsubject={Trabajo pr\'actico 2 - Dise\'no - DCNet}
+}
+
+\parskip=5pt % 10pt es el tamaño de fuente
+
+% Pongo en 0 la distancia extra entre ítemes.
+\let\olditemize\itemize
+\def\itemize{\olditemize\itemsep=0pt}
+
+% Acomodo fancyhdr.
+\pagestyle{fancy}
+\thispagestyle{fancy}
+\addtolength{\headheight}{1pt}
+\lhead{Algoritmos y Estructuras de Datos II}
+\rhead{Trabajo Pr\'actico 2 - Dise\~no - DCNet}
+\cfoot{\thepage /\pageref{LastPage}}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\author{Grupo 11}
+\date{}
+\title{Trabajo pr\'actico 2 - Dise\~no - DCNet}
+
+\def\Materia{Algoritmos y Estructuras de Datos II}
+\def\Titulo{Trabajo pr\'actico 2}
+\def\Subtitulo{Dise\~no - DCNet}
+\def\Grupo{Grupo 11}
+\integrante{Frizzo, Franco}{013/14}{francofrizzo@gmail.com}
+\integrante{Mart\'inez, Manuela}{160/14}{martinez.manuela.22@gmail.com}
+\integrante{Rabinowicz, Luc\'ia}{105/14}{lu.rabinowicz@gmail.com}
+\integrante{Weber, Andr\'es}{923/13}{herr.andyweber@gmail.com}
+
+\begin{document}
+
+\maketitle
+\newpage\null\thispagestyle{empty}\newpage
+
+\include{modulo_red}
+
+\end{document}
