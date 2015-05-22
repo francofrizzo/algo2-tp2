@@ -9,18 +9,21 @@
 
 \begin{Representacion}
 
-  \begin{Estructura}{dcnet}[estr\_dcnet]
+  \begin{Estructura}{red}[estrRed]
 
-    \begin{Tupla}[estr\_dcnet]
-      \tupItem{red}{red}
-      \tupItem{IDsCompusPorIP}{dicc\_trie(string, nat)}
-      \tupItem{siguientesCompus}{arregloDimensionable(arregloDimensionable(nat))}
-      \tupItem{paqEnEspera}{arregloDimensionable(tupla(conjunto(paquete), colaPrior(tupla(nat, itConjunto(paquete))), dicc\_AVL(itConjunto(paquete))))}
-      \tupItem{\#PaqEnviados}{arregloDimensionable(nat)}
-      \tupItem{laQueM\'asEnvi\'o}{itRed}
-      \tupItem{\'ultimoId}{nat}
+    \begin{Tupla}[estrRed]
+      \tupItem{compus}{lista(estrCompu)}
+      \tupItem{cantidadCOmpus}{nat}
     \end{Tupla}
 
-  \end{Estructura} 
+    \begin{Tupla}[estrCompu]
+      \tupItem{IP}{string}
+      \tupItem{conexiones}{lista\_enlazada(tupla(interfaz, itLista(estrCompu)))}
+    \end{Tupla}
+
+  \end{Estructura}
+
+  \begin{Estructura}{itRed}[itLista(estrCompu)]
+  \end{Estructura}
 
 \end{Representacion}
