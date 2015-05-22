@@ -24,4 +24,29 @@
 
   \end{Estructura} 
 
+  \Rep[e][l]{($\forall e$: estr)(
+  (tam(e.paquetesEnEspera) = tam(e.IPcompusXID) = tam(e.siguienteCompu) = tam (e.cantPaquetesEnviados) = #(computaodras(e.estrRed)) $\land$ 
+  ($\forall n$: nat)(definido?(e.siguienteCompu,n) $\impluego$ tam(e.siguienteCompu[n]) = #(computadoras(e.estrRed))) $\land$
+  Maximo(e.cantPaqEnviados) = e.cantidadEnviados[obtener($\pi_1$(siguiente(e.laQueMasEnvio)),e.IDcompusPorIP)] $\land$
+  ($\forall c$: compu)(c $\in$ computadoras(e.estRed) $\impluego$ obtener($\pi_1$(c),e.IDcompusPorIP) $\min$ #(computadoras(e.estrRed))) $\land$ (($\forall c_1$, $c_2$: compu)( ($c_1 \in$ computadoras(e.estRed) $\land$ ($c_2 \in$ computadoras(e.estrRed)) $\land$ ($c_1 \neq c_2$) ) $\impluego$ (( obtener($\pi_1$($c_1$), e.IDcompusPorIP) $\neq$ obtener($\pi_1$($c_2$), e.IDcompusPorIP))))) $\land$
+  (dameNombres(computadoras(e.estrRed)) = claus(IDcompusPorIP)) $\land$
+  ($\forall L$: nat)( 0 $\leq$ L $\min$ tam(e.paqEnEspera) $\impluego$ 
+  5)
+  (
+  ($\forall i$: ItConj(paquete))
+
+
+  )
+
+  )
+
+
+  )}\mbox{}
+
+  ~      
+
+  \tadOperacion{Nodo}{lst/l,nat}{puntero(nodo)}{$l$.primero $\neq$ NULL}
+  \tadAxioma{Nodo($l$,$i$)}{\IF $i = 0$ THEN $l$.primero ELSE Nodo(FinLst($l$), $i-1$) FI}
+
+  ~
 \end{Representacion}
