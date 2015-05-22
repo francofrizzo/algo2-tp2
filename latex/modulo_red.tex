@@ -27,4 +27,51 @@
   \begin{Estructura}{itRed}[itLista(estrCompu)]
   \end{Estructura}
 
+  \RepFc[Red][e]{($\forall c$: compu)(c $\in$ ArmarComputadoras(e.conexiones) $\impluego$ $\lnot$ Pertenece?(e.conexiones, c, c))$\land$ \\
+    $\#$ArmarComputadoras(e.conexiones) = e.cantidadCompus $\land$ \\
+    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) ($c_{1}$ $\in$ ArmarComputadoras(e.conexiones) $\land$ $c_{2}$ $\in$ ArmarComputadoras(e.conexiones) $\impluego$ Pertenece?(e.conexiones, $c_{1}$, $c_{2}$) $\Leftrightarrow$ Pertenece?(e.conexiones, $c_{2}$, $c_{1}$))) $\land$ \\
+    ($\forall c_{1}$: compu)($c_{1}$ $\in$ ArmarComputadoras(e.conexiones) $\impluego$ ($\forall c_{2}$: compu) (Pertenece?(e.conexiones, $c_{1}$, $c_{2}$) $\Rightarrow$ $c_{2}$ $\in$ ArmarComputadoras(e.conexiones))) $\land$ \\
+    sinRepetidos(ArmarSecuencia(e.conexiones)) 
+    %FALTAN SINREPETIDOS Y ARMAR SECUENCIA
+    }\mbox{}
+
+  ~
+
+  \AbsFc[estrRed]{Red}[e]{(r: Red | computadoras(r) = ArmarComputadoras(e.conexiones) $\land$ \\
+    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) conectados?(r, $c_{1}$, $c_{2}$) = Pertenece?(e.conexiones, $c_{1}$, $c_{2}$) $\land$ \\
+    InterfazUsada(r, $c_{1}$, $c_{2}$) = DevolverInterfaz(e.conexiones, $c_{1}$, $c_{2}$)))
+  }
+
+  ~      
+
+  \tadOperacion{ArmarComputadoras}{lista(tupla<string, lista(tupla<Interfaz, ItRed>)>)}{conj(compu)}{} %falta arreglar comas
+  \tadAxioma{ArmarComputadoras($l$)}{\IF vacia?(l) THEN $\emptyset$ ELSE Ag(<$\pi_{1}$(prim($l$)), GenerarInterfaces($\pi_{2}$(prim($l$)))>, ArmarComputadoras(fin($l$))) FI}
+
+  ~
+
+  \tadOperacion{GenerarInterfaces}{lista(tupla<Interfaz, ItLista(estrCompu)>)}{conj(Interfaz)}{}
+  \tadAxioma{GenerarInterfaces($l$)}{\IF vacia?($l$) THEN $\emptyset$ ELSE Ag($\pi_{1}$(prim($l$)), GenerarInterfaces(fin($l$))) FI}
+
+  ~
+
+  \tadOperacion{Pertenece?}{lista(tupla<string, lista(tupla<Interfaz, ItRed>)>)/l, compu/c_{1}, compu/c_{2}}{bool}{}
+  \tadAxioma{Pertenece?($l$, $c_{1}$, $c_{2}$)}{\IF ($\pi_{1}$(prim($l$) = $\pi_{1}$($c_{1}$))) THEN $\pi_{1}$($c_{2}$) $\in$ GenerarCompus($\pi_{2}$(prim($l$))) ELSE Pertenece?(fin($l$), $c_{1}$, $c_{2}$) FI}
+
+  ~
+
+  \tadOperacion{GenerarCompus}{lista(tupla<Interfaz, ItLista(estrCompu)>)}{conj(string)}{}
+  \tadAxioma{GenerarCompus($l$)}{\IF vacia?($l$) THEN $\emptyset$ ELSE Ag($\pi_{1}$(siguiente($\pi_{2}$(prim($l$)))), GenerarCompus(fin($l$))) FI}
+
+  ~
+
+  \tadOperacion{DevolverInterfaz}{lista(tupla<string, lista(tupla<Interfaz, ItRed>)>)/l, compu/c_{1}, compu/c_{2}}{Interfaz}{} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
+  \tadAxioma{DevolverInterfaz($l$, $c_{1}$, $c_{2}$)}{\IF ($\pi_{1}$(prim($l$)) = $\pi_{1}$($c_{1}$)) THEN DevolverInterfazAux($\pi_{2}$(prim($l$), $c_{2}$)) ELSE DevolverInterfaz(fin($l$, $c_{1}$, $c_{2}$)) FI}
+
+  ~  
+  
+   \tadOperacion{DevolverInterfazAux}{lista(tupla<Interfaz, ItRed>)/l, compu/c}{Interfaz}{} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
+  \tadAxioma{DevolverInterfaz($l$, $c$)}{\IF ($\pi_{1}$($c_{2}$) = $\pi_{1}$(siguiente($\pi_{2}$(prim($l$))))) THEN $\pi_{1}$(prim($l$)) ELSE DevolverInterfazAux(fin($l$, c)) FI}
+
+  ~
+
 \end{Representacion}
