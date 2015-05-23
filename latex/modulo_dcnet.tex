@@ -6,6 +6,78 @@
   
   \textbf{g\'eneros:} \TipoVariable{dcnet}
   
+  \Titulo{Operaciones b\'asicas de lista}
+
+  \InterfazFuncion{iniciarDCNet}{\In{r}{Red}}{DCNet}%
+  [true]%pre
+  {res $\igobs$ iniciarDCNet(r)}%pos
+  [$\Theta(1234)$]%complejidad
+  [Genera un nuevo DCNet sin paquetes. "vac\'ia" ]%descripcion
+  []%aliasing
+  
+  \InterfazFuncion{crearPaquete}{\Inout{D}{DCNet}, \In{p}{paquete}}{}%
+  [D $\igobs$ $D_{0}$ $\land$ $\not$(($\exists p'$: paquete)(paqueteEnTransito?(D,p') $\land$ id(p') = id(p)) $\land$ origen(p) $\in$ computadoras(red(D)) $\yluego$ destino(p) $\in$ computadoras(red(D)) $\yluego$ hayCamino?(red(D), origen(p), destino(p)))]%pre
+  {D $\igobs$ crearPaquete($D_{0}$, p)}%pos
+  [$\Theta(l+log(k))$]%complejidad
+  [Crea un nuevo paquete que no exite en el DCNet anterior. ]%descripcion
+  []%aliasing
+
+  \InterfazFuncion{avanzarSegundo}{\Inout{D}{DCNet}}{}%
+  [D $\igobs$ $D_{0}$]%pre
+  {D $\igobs$ avanzarSegundo($D_{0}$)}%pos
+  [$\Theta(n.(L+log(n)+log(k)))$]%complejidad
+  [Avanza un segundo en el DCNet, moviendo todos los paquetes correspondientes. ]%descripcion
+  []%aliasing
+
+  \InterfazFuncion{red}{\In{D}{DCNet}}{red}%
+  [true]%pre
+  {res $\igobs$ red(D)}%pos
+  [$\Theta(1234)$]%complejidad
+  [Devuelve la red donde esta funcionando el DCNet. ]%descripcion
+  []%aliasing
+
+  \InterfazFuncion{caminoRecorido}{\In{D}{DCNet}, \In{p}{paquete}}{secu(compu)}%
+  [paqueteEnTrancito?(D, p)]%pre
+  {res $\gobs$ caminoRecorrido(D, p)}%pos
+  [$\Theta(n.log(max(n,k)))$]%complejidad
+  [Devuelve la secuencia que contiene de forma ordenada todas las computadoras por las que fue pasando. ]%descripcion
+  []%aliasing
+
+  \InterfazFuncion{cantidadEnviados}{\In{D}{DCNet}, \In{c}{compu}}{nat}%
+  [c $\in$ computadoras(red(D))]%pre
+  {res $\igobs$ cantidadEnviados(D, c)}%pos
+  [$\Theta(1234)$]%complejidad
+  [Devuelve la cantidad de paquetes que envi\'o la computadora 'c'. ]%descripcion
+  []%aliasing
+
+  \InterfazFuncion{enEspera}{\In{D}{DCNet}, \In{c}{compu}}{conj(paquete)}%
+  [c $\in$ computadoras(red(D))]%pre
+  {res $\igobs$ enEspera(D, c)}%pos
+  [$\Theta(L)$]%complejidad
+  [Devuelve los paquetes que tiene en espera la compu 'c'. ]%descripcion
+  []%aliasing
+
+  \InterfazFuncion{paquetesEnEspera?}{\In{D}{DCNet}, \In{p}{paquete}}{bool}%
+  [true]%pre
+  {res $\igobs$ paquetesEnTrancito?(D, p)}%pos
+  [$\Theta(1234)$]%complejidad
+  [Devuelve 'True' si y solo si el paquete esta en los paquetes en espera de alguna computadora. ]%descripcion
+  []%aliasing
+
+  \InterfazFuncion{laQueMasEnvio}{\In{D}{DCNet}}{compu}%
+  [true]%pre
+  {res $\igobs$ laQueMasEnvio(D)}%pos
+  [$\Theta(1)$]%complejidad
+  [Devuelve una de las computadoras con mas paquetes enviados]%descripcion
+  []%aliasing
+
+  \InterfazFuncion{NOMBRE}{PARAMTROS}{RES}%
+  []%pre
+  {}%pos
+  []%complejidad
+  []%descripcion
+  []%aliasing
+
 \end{Interfaz}
 
 \begin{Representacion}
@@ -13,7 +85,7 @@
   \begin{Estructura}{dcnet}[estrDCNet]
 
     \begin{Tupla}[estrDCNet]
-      \tupItem{red}{red}
+      \tupItem{estrRed}{red}
       \tupItem{IDsCompusPorIP}{dicc\_trie(string, nat)}
       \tupItem{siguientesCompus}{arregloDimensionable(arregloDimensionable(nat))}
       \tupItem{paqEnEspera}{arregloDimensionable(tupla(conjunto(paquete), colaPrior(tupla(nat, itConjunto(paquete))), dicc\_AVL(itConjunto(paquete))))}
@@ -41,7 +113,7 @@
 			($\forall i$: ItConj(paquete))(siguiente(i) $\in$ (dameSiguientes(dame$\pi_1$($juntarSignificados_1$($\pi_2$(e.paquetesEnEspera[L])))$\impluego$ siguiente(i) $\in \pi_1$(e.paquetesEnEspera[L])))) $\land$ 
 			($\forall c$: ID)(c$\in$ claves($\pi_2$(e.paquetesEnEspera[L])) $\impluego \pi_1$(siguiente($\pi_1$(obtener($\pi_2$(c), e.paquetesEnEspera[L])))) = c) $\land$
 			($\forall i$: ItConj(paquete))(siguiente(i)$\in$ dameSiguientes(dame$\pi_1$($juntarSignificados_2$($\pi_3$(e.paquetesEnEspera[L])))) $\impluego$ siguiente(i) $\in \pi_1$(e.paquetesEnEspera[L]))$\land$
-			($\forall n$: prioridad)(definido?($\pi_3#(e.paquetesEnEspera[L]),n) $\impluego$ ($\forall p$: paquete)(esta?(p, obtener(n, $\pi_3$(e.paquetesEnEspera[L]))) $\impluego$ $\pi_2$(p) = n)) $\land$
+			($\forall n$: prioridad)(definido?($\pi_3$(e.paquetesEnEspera[L]),n) $\impluego$ ($\forall p$: paquete)(esta?(p, obtener(n, $\pi_3$(e.paquetesEnEspera[L]))) $\impluego$ $\pi_2$(p) = n)) $\land$
 % *1
     ($\forall x$, $z$: nat)((0 $\leq$ x < tam(e.paquetesEnEspera) $\land$ 0 $\leq$ z < tam(e.paquetesEnEspera) $\land$ x $\neq$ z) $\impluego$ ($\pi_1$(e.paquetesEnEspera[x]) $\cap$ $\pi_2$(e.paquetesEnEspera[z])) = $\emptyset$) $\land$
 %6

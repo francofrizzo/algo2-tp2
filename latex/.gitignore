@@ -127,3 +127,10 @@ sympy-plots-for-*.tex/
 
 # Main pdf file
 tp2-g11.pdf
+
+# paquetes de la facu
+aed2-itef.sty
+caratula.sty
+aed2-symb.sty
+aed2-tad.sty
+aed2-tokenizer.sty
