@@ -33,25 +33,27 @@
     [funci\'on de copia de $\sigma$]
   }
 
-  \textbf{se explica con:} \tadNombre{Arbol Binario($\alpha$)}
+  \textbf{se explica con:} \tadNombre{Diccionario($\kappa$, $\lambda$)}
 
-  \textbf{g\'eneros:} \TipoVariable{AB($\alpha$)}
+  \textbf{g\'eneros:} \TipoVariable{diccAVL($\kappa$, $\lambda$)}
   
 \end{Interfaz}
 
 \begin{Representacion}
 
-  \begin{Estructura}{AB($\alpha$)}[estrAB]
+  \begin{Estructura}{diccAVL($\alpha$)}[estrAVL]
 
-    \begin{Tupla}[estrAB]
+    \begin{Tupla}[estrAVL]
       \tupItem{raiz}{puntero(nodo)}%
       \tupItem{cantNodos}{nat}%
     \end{Tupla}
 
     \begin{Tupla}[nodo]
       \tupItem{dato}{$\alpha$}%
+      \tupItem{padre}{puntero(nodo)}
       \tupItem{izq}{puntero(nodo)}%
       \tupItem{der}{puntero(nodo)}%
+      \tupItem{alturaSubarbol}{nat}
     \end{Tupla}
 
   \end{Estructura} 
