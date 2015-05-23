@@ -1,0 +1,81 @@
+\section{M\'odulo \'Diccionario AVL($\kappa$, $\sigma$)}
+
+\begin{Interfaz}
+  
+  \textbf{par\'ametros formales:}\hangindent=2\parindent \\
+  \parbox{1.7cm}{\textbf{g\'eneros:}} $\kappa$, $\sigma$
+
+  \parbox[t]{1.7cm}{\textbf{funci\'on}}\parbox[t]{\textwidth-2\parindent-1.7cm}{%
+    \InterfazFuncion{$\bullet = \bullet$}{\In{k_1}{$\kappa$}, \In{k_2}{$\kappa$}}{\TipoVariable{bool}}
+    {$res \igobs (k_1 = k_2)$}
+    [$\Theta(equal(k_1, k_2))$]
+    [funci\'on de igualdad de $\kappa$]
+  }
+
+  \parbox[t]{1.7cm}{\textbf{funci\'on}}\parbox[t]{\textwidth-2\parindent-1.7cm}{%
+    \InterfazFuncion{$\bullet = \bullet$}{\In{k_1}{$\kappa$}, \In{k_2}{$\kappa$}}{\TipoVariable{bool}}
+    {$res \igobs (k_1 \leq k_2)$}
+    [$\Theta(compare(k_1, k_2))$]
+    [funci\'on de comparaci\'on por orden total estricto de $\kappa$]
+  }
+
+  \parbox[t]{1.7cm}{\textbf{funci\'on}}\parbox[t]{\textwidth-2\parindent-1.7cm}{%
+    \InterfazFuncion{Copiar}{\In{k}{$\kappa$}}{$\kappa$}
+    {$res \igobs k$}
+    [$\Theta(copy(k))$]
+    [funci\'on de copia de $\kappa$]
+  }
+  
+  \parbox[t]{1.7cm}{\textbf{funci\'on}}\parbox[t]{\textwidth-2\parindent-1.7cm}{%
+    \InterfazFuncion{Copiar}{\In{s}{$\sigma$}}{$\sigma$}
+    {$res \igobs s$}
+    [$\Theta(copy(s))$]
+    [funci\'on de copia de $\sigma$]
+  }
+
+  \textbf{se explica con:} \tadNombre{Arbol Binario($\alpha$)}
+
+  \textbf{g\'eneros:} \TipoVariable{AB($\alpha$)}
+  
+\end{Interfaz}
+
+\begin{Representacion}
+
+  \begin{Estructura}{AB($\alpha$)}[estrAB]
+
+    \begin{Tupla}[estrAB]
+      \tupItem{raiz}{puntero(nodo)}%
+      \tupItem{cantNodos}{nat}%
+    \end{Tupla}
+
+    \begin{Tupla}[nodo]
+      \tupItem{dato}{$\alpha$}%
+      \tupItem{izq}{puntero(nodo)}%
+      \tupItem{der}{puntero(nodo)}%
+    \end{Tupla}
+
+  \end{Estructura} 
+
+  \Rep[estrAB][ab]{
+    ($ab$.cantNodos = 0) = ($ab$.raiz = NULL) $\yluego$ \\
+    ($ab$.cantNodos > 0) $\impluego$ ($ab$.cantNodos = cantHijos(\*($ab$.raiz)) + 1) $\land$ \\
+    (\paratodo{nodo}{n_1, n_2})(($n_1$ $\in$ nodos($ab$) $\land$ $n_2$ $\in$ nodos($ab$)) $\impluego$ (($n_1$.izq $\neq$ $n_2$.der) $\land$ (($n_1$.izq = $n_2$.izq $\lor$ $n_1$.der = $n_2$.der) $\implies$ ($n_1 = n_2$))))
+  }
+
+  \AbsFc[estrAB]{ab($\alpha$)}[ab]{
+    \IF $ab$.cantNodos = 0 THEN nil ELSE bin(Abs(plantar($ab$.raiz $\rightarrow$ izq)), $ab$.raiz $\rightarrow$ dato, Abs(plantar($ab$.raiz $\rightarrow$ der))) FI
+  }
+
+  \tadOperacion{hijos}{nodo}{conj(nodo)}{}
+  \tadAxioma{hijos($n$)}{\IF $n$.izq = NULL THEN $\emptyset$ ELSE Ag(\*($n$.izq), hijos(\*($n$.izq))) FI $\cup$ \IF $n$.der = NULL THEN $\emptyset$ ELSE Ag(\*($n$.der), hijos(\*($n$.der))) FI}
+
+  \tadOperacion{cantHijos}{nodo}{nat}{}
+  \tadAxioma{cantHijos($n$)}{\#(hijos($n$))}
+
+  \tadOperacion{nodos}{estrAB}{conj(nodo)}{}
+  \tadAxioma{nodos($ab$)}{\IF $ab$.raiz = NULL THEN $\emptyset$ ELSE Ag(\*($ab$.raiz), hijos(\*($ab$.raiz))) FI}
+
+  \tadOperacion{plantar}{puntero(nodo)}{estrAB}{}
+  \tadAxioma{plantar($p$)}{$\langle p$, \IF $p$ = NULL THEN 0 ELSE cantHijos(\*($p$)) + 1 FI$\rangle$}
+
+\end{Representacion}

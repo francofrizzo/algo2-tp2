@@ -1,0 +1,1852 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"dit",
+				"dist{arg1}	Apunte PyEC.tex"
+			],
+			[
+				"cs",
+				"closest	.closest()"
+			],
+			[
+				"css",
+				"css	.css() - single"
+			],
+			[
+				"atr",
+				"attr	.attr() - single"
+			],
+			[
+				"a",
+				"attr	.attr() - multiple"
+			],
+			[
+				"f",
+				"filter	.filter() function"
+			],
+			[
+				"s",
+				"show	.show()"
+			],
+			[
+				"on",
+				"on	.on()"
+			],
+			[
+				"ani",
+				"animate	.animate()"
+			],
+			[
+				"ajax",
+				"ajaxsetup	$.ajaxSetup()"
+			],
+			[
+				"tex",
+				"text-transform"
+			],
+			[
+				"padding",
+				"padding-bottom"
+			],
+			[
+				"indi",
+				"indice"
+			],
+			[
+				"contacto",
+				"contacto-item"
+			],
+			[
+				"spa",
+				"space-between"
+			],
+			[
+				"padd",
+				"padding-left"
+			],
+			[
+				"marg",
+				"margin-top"
+			],
+			[
+				"border-r",
+				"border-right"
+			],
+			[
+				"flex",
+				"flex-grow"
+			],
+			[
+				"alig",
+				"align-items"
+			],
+			[
+				"bodega-",
+				"bodega-next"
+			],
+			[
+				"ease",
+				"ease-in-out"
+			],
+			[
+				"trans",
+				"transition"
+			],
+			[
+				"back",
+				"background-position"
+			],
+			[
+				"bodega",
+				"bodega-prev"
+			],
+			[
+				"bac",
+				"background-position"
+			],
+			[
+				"bak",
+				"background-image"
+			],
+			[
+				"recorrid",
+				"recorrido-1"
+			],
+			[
+				"recorr",
+				"recorrido_act_datos"
+			],
+			[
+				"menu",
+				"menu-actividades"
+			],
+			[
+				"end",
+				"endforeach"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"array_ke",
+				"array_key_exists"
+			],
+			[
+				"recor",
+				"recorridos"
+			],
+			[
+				"border",
+				"border-bottom"
+			],
+			[
+				"pad",
+				"padding-top"
+			],
+			[
+				"no",
+				"no-repeat"
+			],
+			[
+				"desc",
+				"descripcion"
+			],
+			[
+				"bord",
+				"border"
+			],
+			[
+				"boedga",
+				"bodega-texto"
+			],
+			[
+				"felx",
+				"flex-flow"
+			],
+			[
+				"backgr",
+				"background-color"
+			],
+			[
+				"margi",
+				"margin-right"
+			],
+			[
+				"po",
+				"pointer-events"
+			],
+			[
+				"max",
+				"max-width"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"slide",
+				"slides-pager"
+			],
+			[
+				"slides-",
+				"slides-prev"
+			],
+			[
+				"eas",
+				"ease-in-out"
+			],
+			[
+				"min",
+				"min-width"
+			],
+			[
+				"slides",
+				"slides-next"
+			],
+			[
+				"al",
+				"align-content"
+			],
+			[
+				"el",
+				"\\ell	ℓ"
+			],
+			[
+				"contact",
+				"contacto-item"
+			],
+			[
+				"align",
+				"align-items"
+			],
+			[
+				"formulario",
+				"formularioValido"
+			],
+			[
+				"algo",
+				"algodon-wine-estates"
+			],
+			[
+				"include",
+				"include_path"
+			],
+			[
+				"fle",
+				"flex-grow"
+			],
+			[
+				"contac",
+				"contacto-mensajes"
+			],
+			[
+				"deselec",
+				"deseleccionarDesarrollo"
+			],
+			[
+				"visi",
+				"visibility"
+			],
+			[
+				"margin",
+				"margin-left"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"col",
+				"column"
+			],
+			[
+				"disp",
+				"display"
+			],
+			[
+				"naver",
+				"navegador-flotante"
+			],
+			[
+				"navegador",
+				"navegador-flotante"
+			],
+			[
+				"info",
+				"info-desarrollo"
+			],
+			[
+				"vi",
+				"visible"
+			],
+			[
+				"h",
+				"hidden"
+			],
+			[
+				"lista",
+				"lista-desarrollos"
+			],
+			[
+				"ba",
+				"background-position"
+			],
+			[
+				"r",
+				"right"
+			],
+			[
+				"list",
+				"line-stacking"
+			],
+			[
+				"box",
+				"box-sizing"
+			],
+			[
+				"header",
+				"header-barra"
+			],
+			[
+				"tri",
+				"triggerHook"
+			],
+			[
+				"trig",
+				"triggerElement"
+			],
+			[
+				"cur",
+				"cur	cursor: ${pointer};"
+			],
+			[
+				"tra",
+				"transition"
+			],
+			[
+				"pos",
+				"position"
+			],
+			[
+				"paddin",
+				"padding-left"
+			],
+			[
+				"z",
+				"z-index"
+			],
+			[
+				"sceneFrase",
+				"sceneFraseLodge"
+			],
+			[
+				"text",
+				"text-indent"
+			],
+			[
+				"fl",
+				"float"
+			],
+			[
+				"backg",
+				"background-color"
+			],
+			[
+				"prin",
+				"print_r"
+			],
+			[
+				"t_proyecto_ag",
+				"t_proyecto_aguar"
+			],
+			[
+				"com",
+				"comercial"
+			],
+			[
+				"inf",
+				"info_lote"
+			],
+			[
+				"pri",
+				"print_r"
+			],
+			[
+				"lotes",
+				"lotes_bloqueados"
+			],
+			[
+				"json",
+				"json_encode"
+			],
+			[
+				"func",
+				"function"
+			],
+			[
+				"fu",
+				"funcionesFiltros"
+			],
+			[
+				"fo",
+				"font-weight"
+			],
+			[
+				"page",
+				"pageLength"
+			],
+			[
+				"salida",
+				"salidaLotes"
+			],
+			[
+				"su",
+				"superficieMax"
+			],
+			[
+				"edi",
+				"edificadoF"
+			],
+			[
+				"dispon",
+				"disponibleF"
+			],
+			[
+				"ord",
+				"ordenF"
+			],
+			[
+				"t",
+				"top"
+			],
+			[
+				"user",
+				"user_id"
+			],
+			[
+				"l",
+				"list-style"
+			],
+			[
+				"tit",
+				"tituloBreadcrumbs"
+			],
+			[
+				"loteDete",
+				"loteDetalleServicios"
+			],
+			[
+				"loteDe",
+				"loteDetalleDisponible"
+			],
+			[
+				"list-s",
+				"list-style-type"
+			],
+			[
+				"lo",
+				"lote_disp"
+			],
+			[
+				"lote_",
+				"lote_disp"
+			],
+			[
+				"paddi",
+				"padding-top"
+			],
+			[
+				"tog",
+				"toggle_contacto"
+			],
+			[
+				"togg",
+				"toggle_ubicacion"
+			],
+			[
+				"window-bar-",
+				"window-bar-ubicacion"
+			],
+			[
+				"window",
+				"window-bar-contacto"
+			],
+			[
+				"con",
+				"contacto-link"
+			],
+			[
+				"ubicacio",
+				"ubicacion-link"
+			],
+			[
+				"ubicacion-sel",
+				"ubicacion-selector-gmaps"
+			],
+			[
+				"ubicacion-selector",
+				"ubicacion-selector-pb"
+			],
+			[
+				"u",
+				"ul	Tag"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"font-",
+				"font-family"
+			],
+			[
+				"margn",
+				"margin-right"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"mrgin",
+				"margin-bottom"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "latex/tp2-g11.tex",
+			"settings":
+			{
+				"buffer_size": 5138,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/LaTeXing/LaTeX.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/LaTeXing/LaTeX.sublime-build",
+					""
+				],
+				[
+					"Packages/LaTeXing/LaTeX.sublime-build",
+					"Primary Quick Build"
+				],
+				[
+					"Packages/LaTeXing/LaTeX.sublime-build",
+					"Choose Quick Build"
+				],
+				[
+					"Packages/LaTeXing/LaTeX.sublime-build",
+					"Clean up Files"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/LaTeXing/LaTeX.sublime-build",
+				"Clean up Files"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 310.0,
+		"last_filter": "Build",
+		"selected_items":
+		[
+			[
+				"Build",
+				"Build: Cancel"
+			],
+			[
+				"build",
+				"Build: Cancel"
+			],
+			[
+				"clean",
+				"LaTeXing: Clean up (Remove) all Nonessential Files"
+			],
+			[
+				"cleaun",
+				"LaTeXing: Clean up (Remove) all Nonessential Files"
+			],
+			[
+				"build ",
+				"Build With: LaTeX"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"mi",
+				"Minify::Default File Settings"
+			],
+			[
+				"m",
+				"Minify Javascript"
+			],
+			[
+				"minif",
+				"Minify::Minify File"
+			],
+			[
+				"comb",
+				"Run CSScomb"
+			],
+			[
+				"decod",
+				"StringEncode: URL Decode"
+			],
+			[
+				"html",
+				"HTML: Encode Special Characters"
+			],
+			[
+				"url",
+				"StringEncode: URL Encode"
+			],
+			[
+				"encode",
+				"StringEncode: URL Encode"
+			],
+			[
+				"encod",
+				"StringEncode: URL Encode"
+			],
+			[
+				"dec",
+				"URL Decode"
+			],
+			[
+				"Decod",
+				"URL Decode"
+			],
+			[
+				"\necode",
+				"URL Decode"
+			],
+			[
+				"\nec",
+				"HTML: Encode Special Characters"
+			],
+			[
+				"Dec",
+				"URL Decode"
+			],
+			[
+				"deco",
+				"URL Decode"
+			],
+			[
+				"plain te",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"color",
+				"ColorSchemeSelector: Select Color Scheme"
+			],
+			[
+				"c",
+				"Set Syntax: C#"
+			],
+			[
+				"c++",
+				"Set Syntax: C++"
+			],
+			[
+				"colo",
+				"ColorSchemeSelector: Select Color Scheme"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"setti",
+				"Preferences: Settings - User"
+			],
+			[
+				"disa",
+				"Package Control: Disable Package"
+			],
+			[
+				"COlor",
+				"ColorSchemeSelector: Select Color Scheme"
+			],
+			[
+				"Color",
+				"ColorSchemeSelector: Next Color Scheme"
+			],
+			[
+				"trail",
+				"Trailing Spaces: Delete Trailing Spaces"
+			],
+			[
+				"color ",
+				"ColorSchemeSelector: Select Color Scheme"
+			],
+			[
+				"edit",
+				"Color Scheme Editor: Edit current color scheme"
+			],
+			[
+				"preferences",
+				"Preferences: Settings - User"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"sort",
+				"Sort Lines"
+			],
+			[
+				"dictiona",
+				"Dictionaries: Set Language"
+			],
+			[
+				"setting",
+				"Preferences: Settings - User"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"javas",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"indenta",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"inde",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"javasc",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"json",
+				"Set Syntax: JSON"
+			],
+			[
+				"php",
+				"Set Syntax: PHP"
+			],
+			[
+				"disab",
+				"Package Control: Disable Package"
+			],
+			[
+				"enabe",
+				"Package Control: Enable Package"
+			],
+			[
+				"disabe",
+				"Package Control: Disable Package"
+			],
+			[
+				"enable",
+				"Package Control: Enable Package"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"remove ",
+				"Package Control: Remove Package"
+			],
+			[
+				"disbal",
+				"Package Control: Disable Package"
+			],
+			[
+				"oackga",
+				"Package Control: List Packages"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"add repo",
+				"Package Control: Add Repository"
+			],
+			[
+				"",
+				"CSS3: Clear Gutter Marks"
+			],
+			[
+				"formamt",
+				"CodeFormatter: Format as Javascript Syntax"
+			],
+			[
+				"format",
+				"CodeFormatter: Format as CSS Syntax"
+			],
+			[
+				"convert",
+				"Convert Case: Lower Case"
+			],
+			[
+				"pack ins",
+				"Package Control: Install Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"i p",
+				"Package Control: Install Package"
+			],
+			[
+				"in p",
+				"Package Control: Install Package"
+			],
+			[
+				"pack in",
+				"Package Control: Install Package"
+			],
+			[
+				"pca",
+				"Package Control: Add Channel"
+			]
+		],
+		"width": 524.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": false,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/franco/Documentos/Facultad/algo2/tp2",
+		"/home/franco/Documentos/Facultad/algo2/tp2/latex"
+	],
+	"file_history":
+	[
+		"/home/franco/.config/sublime-text-3/Packages/User/LaTeXing.sublime-settings",
+		"/home/franco/Documentos/Facultad/algo2/tp2/latex/modulo_avl.tex",
+		"/home/franco/Documentos/Facultad/algo2/tp2/tp2.sublime-project",
+		"/home/franco/Documentos/Facultad/algo2/tp2/latex/.gitignore",
+		"/home/franco/Documentos/Facultad/algo2/tp2/latex/tp2-g11.tex",
+		"/home/franco/Documentos/Facultad/algo2/tp2/latex/modulo_red.tex",
+		"/home/franco/Documentos/Facultad/algo2/tp2/latex/disenando_con_latex.tex",
+		"/home/franco/Documentos/Facultad/algo2/tp2/latex/modulo_ab.tex",
+		"/home/franco/Documentos/Facultad/algo2/tp2/latex/modulo_dcnet.tex",
+		"/home/franco/Descargas/RepAbs de RED",
+		"/home/franco/Documentos/Facultad/algo2/tp2/tp2.txt",
+		"/home/franco/Documentos/Facultad/algo2/petulant-octo-wight/disenando_con_latex.tex",
+		"/home/franco/Documentos/Facultad/algo2/petulant-octo-wight/tp2.txt",
+		"/home/franco/Documentos/Facultad/algo2/petulant-octo-wight/latex/modulo_red.tex",
+		"/home/franco/Documentos/Facultad/algo2/petulant-octo-wight/latex/tp2-g11.tex",
+		"/home/franco/Documentos/Facultad/algo2/petulant-octo-wight/latex/.gitignore",
+		"/home/franco/Documentos/Facultad/algo2/petulant-octo-wight/latex/modulo_dcnet.tex",
+		"/home/franco/Documentos/Facultad/algo2/petulant-octo-wight/latex/modulo_rere",
+		"/home/franco/Documentos/Facultad/algo2/petulant-octo-wight/latex/modulo_lista_enlazada.tex",
+		"/home/franco/Documentos/Facultad/proba/Apunte en LaTeX/Apunte PyEC.tex",
+		"/media/datos/bootsqm.dat",
+		"/home/franco/Descargas/díptico_final__computacion.pdf",
+		"/tmp/díptico_final__computacion.pdf",
+		"/home/franco/Escritorio/TestIter.java",
+		"/home/franco/Escritorio/ejemplos.py",
+		"/home/franco/Escritorio/tpFranco/tpFisica",
+		"/tmp/freeformatter-output",
+		"/home/franco/.config/dconf/user",
+		"/home/franco/.config/ubuntu-ui-toolkit/theme.ini",
+		"/home/franco/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/franco/Escritorio/codigo/caca2.out",
+		"/media/datos/Users/Franco/Documents/Facultad/materias-viejas/algo-1/TP2/codigo/galeria_imagenes.cpp",
+		"/media/datos/Users/Franco/Documents/Facultad/materias-viejas/algo-1/TP2/codigo/imagen.cpp",
+		"/media/datos/Users/Franco/Documents/Facultad/materias-viejas/algo-1/TP2/codigo/main.cpp",
+		"/media/datos/Users/Franco/Documents/Facultad/materias-viejas/algo-1/TP2/codigo/mediana.cpp",
+		"/media/datos/Users/Franco/Documents/Facultad/materias-viejas/algo-1/TP2/codigo/pixel.cpp",
+		"/home/franco/servidor/infolocal/app/bootstrap.php.cache",
+		"/home/franco/servidor/cdisanrafael/.htaccess",
+		"/home/franco/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/franco/servidor/cdisanrafael/css.min/san-rafael.css",
+		"/home/franco/servidor/cdisanrafael/css.min/san-rafael/turismo-aventura.actividad.css",
+		"/home/franco/servidor/cdisanrafael/css.min/san-rafael/destinos-turisticos.css",
+		"/home/franco/servidor/cdisanrafael/css.min/san-rafael/caminos-del-vino.css",
+		"/home/franco/servidor/cdisanrafael/css.min/home.css",
+		"/home/franco/servidor/cdisanrafael/css.min/estilos.css",
+		"/home/franco/servidor/cdisanrafael/css.min/desarrollos.css",
+		"/home/franco/servidor/cdisanrafael/css.min/contacto.css",
+		"/home/franco/servidor/cdisanrafael/css.min/san-rafael/caminos-del-vino.bodega.css",
+		"/home/franco/servidor/cdisanrafael/css.min/desarrollos/algodon-wine-estates.css",
+		"/home/franco/servidor/cdisanrafael/css.min/desarrollos/desarrollo-contacto.css",
+		"/home/franco/servidor/cdisanrafael/css.min/desarrollos/pueblo-benegas.css",
+		"/home/franco/servidor/cdisanrafael/css.min/san-rafael/turismo-aventura.css",
+		"/home/franco/.config/sublime-text-3/Packages/Minify/Minify.sublime-settings",
+		"/home/franco/servidor/cdisanrafael/css/home.css",
+		"/home/franco/servidor/cdisanrafael/css/desarrollos/algodon-wine-estates.css",
+		"/home/franco/servidor/cdisanrafael/css/desarrollos.css",
+		"/home/franco/servidor/cdisanrafael/css/san-rafael/caminos-del-vino.bodega.css",
+		"/home/franco/servidor/cdisanrafael/css/san-rafael/caminos-del-vino.css",
+		"/home/franco/servidor/cdisanrafael/css/san-rafael/destinos-turisticos.css",
+		"/home/franco/servidor/cdisanrafael/css/san-rafael/turismo-aventura.actividad.css",
+		"/home/franco/servidor/cdisanrafael/css/san-rafael/turismo-aventura.css",
+		"/home/franco/servidor/cdisanrafael/css/desarrollos/desarrollo-contacto.css",
+		"/home/franco/servidor/cdisanrafael/css/desarrollos/pueblo-benegas.css",
+		"/home/franco/servidor/cdisanrafael/css/estilos.css",
+		"/home/franco/servidor/cdisanrafael/css/contacto.css",
+		"/D/Users/Franco/Downloads/Chamuyo etiqueta.textile",
+		"/D/Users/Franco/Downloads/logisim-generic-2.7.1/src/com/cburch/logisim/gui/menu/Menu.java",
+		"/D/Users/Franco/Downloads/logisim-generic-2.7.1/src/com/cburch/logisim/gui/hex/HexFile.java",
+		"/D/Users/Franco/Downloads/logisim-generic-2.7.1/src/com/cburch/logisim/gui/main/TickCounter.java",
+		"/D/Users/Franco/Downloads/logisim-generic-2.7.1/src/com/cburch/logisim/gui/main/LogisimToolbarItem.java",
+		"/D/Users/Franco/Downloads/logisim-generic-2.7.1/src/com/cburch/logisim/gui/main/Strings.java",
+		"/D/Users/Franco/Downloads/logisim-generic-2.7.1/src/com/cburch/logisim/gui/menu/MenuEdit.java",
+		"/D/Users/Franco/Desktop/Logo Corral de Caballos.svg",
+		"/D/Users/Franco/Desktop/prueba.htmñ.html",
+		"/D/Users/Franco/Desktop/prueba.html",
+		"/D/Users/Franco/Desktop/caca.py",
+		"/D/Users/Franco/Desktop/100ANDRO/PIM00001.vcf",
+		"/D/Users/Franco/Documents/Olimpíada Matemática/N3-00-5.cpp",
+		"/D/Users/Franco/Desktop/100ANDRO/PIM00002.vcf",
+		"/D/Users/Franco/Desktop/fotos celular/DSC_0138.MPO",
+		"/D/Users/Franco/Documents/.Rhistory",
+		"/D/Users/Franco/Documents/vCards/Juan Collins.vcf",
+		"/D/Users/Franco/Documents/vCards/Contactos 31-01-2015.vcf",
+		"/D/Users/Franco/Desktop/CONTACTOS.txt",
+		"/D/Users/Franco/Desktop/cony.vcf",
+		"/D/Users/Franco/Documents/Ordenar/100ANDRO/Contactos.vcf",
+		"/D/Users/Franco/Documents/Passwords 01-10-2014.txt",
+		"/D/Users/Franco/Desktop/Nueva carpeta/_disk_id.pod",
+		"/D/Users/Franco/Music/Música clásica/Ludwig van Beethoven/ren.txr",
+		"/D/Users/Franco/Videos/Series/Seinfeld/rename.pairs.txt",
+		"/D/Users/Franco/Music/Música clásica/Ludwig van Beethoven/rename.txt",
+		"/D/Users/Franco/Music/Música clásica/Frederic Chopin/The Nocturnes (Artur Rubinstein)/rename.txt",
+		"/D/Users/Franco/Videos/Series/Seinfeld/Seinfeld Season 9/Seinfeld - 9x04 - The Blood.srt",
+		"/D/Users/Franco/Videos/Series/Seinfeld/Seinfeld Season 9/Seinfeld.S09E19.The.Maid.DVDRip.x264-DiGG.srt",
+		"/D/Users/Franco/Videos/Series/Seinfeld/Seinfield Season 9/Seinfeld.S09E18.The.Frogger.DVDRip.x264-DiGG.srt",
+		"/D/Users/Franco/Videos/Series/Seinfeld/Seinfeld Season 1/Seinfeld - 1x01 - The Seinfeld Chronicles.srt",
+		"/D/Users/Franco/Videos/Series/Seinfeld/Seinfeld Season 3/Seinfeld - 3x21 - The Parking Space.srt",
+		"/D/Users/Franco/Videos/Series/Seinfeld/Seinfeld Season 3/Seinfeld - 3x22 - The Keys.sub",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/Maps/Archipelago.lua",
+		"/D/Servidor/cdisanrafael/js/desarrollos/pueblo-benegas.js",
+		"/D/Users/Franco/Documents/My Games/Sid Meier's Civilization Beyond Earth/config.ini",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/steam_api.dll",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/steam_api.ini",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/UI/Art/Fonts/Font Icons/FontIcons.ggxml",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/UI/InGame/CityView/CityView.lua",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/UI/Art/Icons/Units/erase_doc.doc",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/UI/ColorAtlas.xml",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/UI/Screens/Main Menu/Atlas/Atlas_Scene.txt",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/UI/Screens/Main Menu/Atlas/02_Scene/Atlas_Lights.fxsxml",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/UI/Screens/Main Menu/Atlas/02_Scene/Atlas_Scene.gr2",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/UI/Screens/Main Menu/Atlas/02_Scene/Atlas_Camera.fxsxml",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/Tutorial/lua/TutorialEngine.lua",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/terrain/pieces/Coast/Generic/Coast 21_T_BLEND.dds",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/terrain/pieces/Coast/Generic/Coast 21.csv",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/SQL/CivBEEngineDatabaseSchema.sql",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/PlanetSpec/FungusPlanet.xml",
+		"/C/Program Files (x86)/R.G. Gamblers/Sid Meier's Civilization Beyond Earth/assets/Overlays/CultureBorders.xml",
+		"/D/Users/Franco/AppData/Roaming/Sublime Text 3/Packages/User/base16-tomorrow.soda.tmTheme",
+		"/D/Users/Franco/AppData/Roaming/Sublime Text 3/Packages/User/Tomorrow-Soda.tmTheme",
+		"/D/Users/Franco/AppData/Roaming/Sublime Text 3/base16-tomorrow.dark.tmTheme",
+		"/D/Servidor/cdisanrafael/js/desarrollos/algodon-wine-estates.js",
+		"/D/Users/Franco/Desktop/PB Corral de Caballos.svg",
+		"/D/Servidor/cdisanrafael/js/contacto.js",
+		"/D/Users/Franco/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/D/Users/Franco/Desktop/PB Corral de Caballos 2.svg",
+		"/D/Users/Franco/Desktop/PB Corral de Caballos 3.svg",
+		"/D/Users/Franco/AppData/Roaming/Mozilla/Firefox/Profiles/braubdst.default/chrome/userContent.css",
+		"/D/Users/Franco/Documents/Facultad/Probabilidades y Estadística (C)/Finales/Finales.tex"
+	],
+	"find":
+	{
+		"height": 37.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"C:\\wamp\\www\\subdomains\\pueblobenegas",
+			"C:\\wamp\\pueblobenegas",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"comparaci",
+			"a",
+			"alpha",
+			"a",
+			"\\alpha",
+			"función",
+			",",
+			"lista",
+			"\\",
+			"space",
+			"small",
+			"$l$.primero $\\neq$ NULL",
+			"Abs",
+			"abs",
+			"izq",
+			"formales",
+			"\\alpha",
+			"forall",
+			"ab",
+			"cantElem",
+			"str\\_dcnet",
+			"estr\\_compu",
+			"estr\\_red",
+			"arreglo\\_dimensionable",
+			"tupItem",
+			"tupla",
+			"estr_dcnet",
+			"Estruc",
+			"tupla",
+			"Ñ",
+			"ñ",
+			"ó",
+			"í",
+			"é",
+			"á",
+			"Representacion",
+			"cátedra",
+			"import",
+			"Representacion",
+			"RepresentAacion",
+			"Representacion",
+			"environment",
+			"Representaci",
+			"Representacion",
+			"se representa con",
+			"inteIfaz",
+			"inter",
+			"Interfaz",
+			"Diseno",
+			"\\'n",
+			"Diseño",
+			"lista_enlazada",
+			" = 1",
+			"marginal",
+			"Márkov",
+			"!50!black",
+			"P(",
+			"A2",
+			"paragraph",
+			"label",
+			"/",
+			"\\\\dists\\{U\\}",
+			"\\\\dist\\{U\\}",
+			"\\esp(X^n)",
+			"command",
+			"\\\\dist\\{",
+			"\\\\dist",
+			"dists",
+			"exponen",
+			"generadora de momentos",
+			"_XY",
+			"x",
+			"     ",
+			"    ",
+			"   ",
+			"  ",
+			"   ",
+			"  ",
+			"   ",
+			"  ",
+			"background",
+			"flex|justify|order",
+			"justify",
+			"order",
+			"flex",
+			"webkit",
+			"flex",
+			"justify-",
+			"justify.",
+			"justify",
+			"webkit",
+			"justify-content: center",
+			"flex",
+			"C2%A1%45%73%74%6F%20%6E%6F%20%65%73%20%75%6E%20\n73%74%72%69%6E%67%20%65%6E%20%55%54%46%2D%38%21",
+			" ",
+			"\n			",
+			"st4",
+			"st3",
+			"st2",
+			"st1",
+			"st0",
+			"\n				",
+			"\n			",
+			"\n				",
+			"corral_de_caballos",
+			"_x5F",
+			"_1_",
+			"END:VCARD\n\nBEGIN:VCARD",
+			"TEL;CELL:3444 574381\nEND:VCARD\n\nBEGIN:VCARD",
+			"\n\n",
+			";;F",
+			"\n\n",
+			"\nFN",
+			"\n",
+			"\\x",
+			"\\x3B",
+			"\\x0A",
+			"=",
+			"LE:",
+			"LE:De Zan;Agustín;;;",
+			"N:",
+			";;F",
+			"^N\\:.*[^ a-zA-Z0-9\\;\\n]",
+			":+54 9 ",
+			"END:VCARD\nBEGIN:VCARD",
+			"END:VCARD\n\nBEGIN:VCARD",
+			"\n",
+			" \n"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"END:VCARD\n\nBEGIN:VCARD",
+			"Hostname: \"$1\"\n$6: \"$2\"\n$7: \"$3\"\nformSubmitUrl: \"$4\"\nhttpRealm: \"$5\"\n--",
+			"$1|",
+			"$2|$1",
+			" Symphony No. $1 ($2) op. $3",
+			".srt",
+			"",
+			"Seinfeld - $1x$2 - ",
+			"",
+			"Seinfeld - ",
+			"Seinfeld - $1x$2 - ",
+			"\"$1\": {\n        \"",
+			". $1",
+			", $1",
+			":",
+			".",
+			",",
+			" ",
+			",",
+			"San Rafael",
+			", $1",
+			")",
+			"(",
+			" ",
+			",",
+			".",
+			"border-box",
+			"NULL",
+			")\n(",
+			"\",",
+			"new mysqli(\"localhost\", \"pueblobe_web\", \"_zWU5Q,w1hS;\", \"pueblobe_web\")",
+			"new mysqli(\"localhost\", \"pueblobe_web\", \"_zWU5Q,w1hS;\", \"pueblobe_we\")",
+			"/scripts/info.php",
+			"/scripts/filtrar.php",
+			",\"0",
+			"\n",
+			"$1,$2,$3,$4",
+			"),",
+			"\n",
+			"('$1','$2','$3')\n('$1','$4','$5')\n('$1','$6','$7')\n",
+			"('$1','$2','$3')\n('$1','$4','$5')\n",
+			"('$1','$2','$3')\n",
+			"('$1','$2','$3')",
+			"($1,$2,$3)",
+			"}",
+			"id=\"$1$2\"",
+			"id=\"$1 0$2\"",
+			"id=\"$1 0$2",
+			"id=\"$10$2\"",
+			"$1:",
+			"'$1',",
+			"0, 1, 1",
+			"1, 1, 1",
+			"1, 0, 1",
+			"0, 0, 0",
+			"0, 0, 1",
+			"0, 1, 0",
+			"1, 0, 0",
+			"0, 1, 1, [",
+			"0, 0, 1, [",
+			"0, 1, 0, [",
+			"0, 0, 0, [",
+			"0, 0, 0",
+			"1",
+			"0",
+			"'",
+			"	",
+			"},\n			{\"calle\":",
+			"    ",
+			".a ..?; .......; \\(",
+			"A\",\n		\"numero\": \"",
+			"A\",\n		\"numero\": ",
+			"\",\n		\"numero\": ",
+			"\n	{\n		\"sector\": \"",
+			"\n	{\n		\"sector\": \"A\"",
+			"$_GET",
+			"$GET_['way']",
+			"/lib/js/",
+			"/img/",
+			"\"bodega-",
+			"/img/",
+			"\"bodega-",
+			"/img/",
+			"map-ubica",
+			"menu-entorno",
+			"menu-entorno-title-text",
+			"menu-entorno-title-box",
+			"menu-entorno-image",
+			"menu-entorno-box",
+			"/img/entorno",
+			"((",
+			"	; ((\n",
+			"));\n",
+			"));",
+			"	((",
+			"	((\n",
+			"\n",
+			",",
+			";",
+			")",
+			"(14,",
+			"(4,",
+			"(2,",
+			"(18,",
+			"(17,",
+			"(16,",
+			"(15,",
+			"(12,",
+			"(9,",
+			"(8,",
+			"(7,",
+			"(6,",
+			"(5,",
+			"(1,",
+			"(2,",
+			"(3,",
+			"(1,",
+			"",
+			"; ",
+			";();",
+			"0",
+			"1",
+			"2,3",
+			"(1,2,3)",
+			";3",
+			";1",
+			";2",
+			"(1);"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "latex/tp2-g11.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5138,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/base16-tomorrow.soda.tmTheme",
+							"syntax": "Packages/LaTeXing/support/LaTeX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 126.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "tp2.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"latex/tp2-g11.tex"
+			],
+			[
+				"sub",
+				"tp2.sublime-project"
+			],
+			[
+				"caminos",
+				"cdisanrafael\\css\\san-rafael\\caminos-del-vino.css"
+			],
+			[
+				"desarr",
+				"cdisanrafael\\inc\\cont\\desarrollos.php"
+			],
+			[
+				"estilos",
+				"cdisanrafael\\css\\estilos.css"
+			],
+			[
+				"bodega.",
+				"cdisanrafael\\inc\\cont\\san-rafael\\caminos-del-vino.bodega.php"
+			],
+			[
+				"algodon",
+				"cdisanrafael\\css\\desarrollos\\algodon-wine-estates.css"
+			],
+			[
+				"caminos-del-vino.clas",
+				"cdisanrafael\\inc\\cont\\san-rafael\\caminos-del-vino.clases.php"
+			],
+			[
+				"clases.p",
+				"cdisanrafael\\inc\\cont\\san-rafael\\caminos-del-vino.clases.php"
+			],
+			[
+				"bodega.php",
+				"cdisanrafael\\inc\\cont\\san-rafael\\caminos-del-vino.bodega.php"
+			],
+			[
+				"algodo",
+				"cdisanrafael\\inc\\cont\\desarrollos\\algodon-wine-estates.php"
+			],
+			[
+				"est",
+				"cdisanrafael\\css\\estilos.css"
+			],
+			[
+				"hom",
+				"cdisanrafael\\css\\home.css"
+			],
+			[
+				"c",
+				"cdisanrafael\\css\\contacto.css"
+			],
+			[
+				"contac",
+				"cdisanrafael\\js\\contacto.js"
+			],
+			[
+				"htac",
+				".htaccess"
+			],
+			[
+				"head",
+				"inc\\head.php"
+			],
+			[
+				"footer",
+				"inc\\footer.php"
+			],
+			[
+				"entorno.p",
+				"inc\\cont\\entorno.php"
+			],
+			[
+				"hedaer",
+				"inc\\header.php"
+			],
+			[
+				"sistemaind",
+				"sistema\\index.php"
+			],
+			[
+				"login",
+				"sistema\\login.php"
+			],
+			[
+				"fotos.css",
+				"css\\fotos.css"
+			],
+			[
+				"header",
+				"inc\\header.php"
+			],
+			[
+				"index",
+				"index.php"
+			],
+			[
+				"mapa.php",
+				"inc\\cont\\proyecto\\mapa.php"
+			],
+			[
+				"proyecto.js",
+				"scripts\\proyecto.js"
+			],
+			[
+				"filrar",
+				"scripts\\filtrar.php"
+			],
+			[
+				"inde",
+				"index.php"
+			],
+			[
+				"albu",
+				"inc\\cont\\fotos\\album.php"
+			],
+			[
+				"pro",
+				"inc\\cont\\proyecto.php"
+			],
+			[
+				"fotos.php",
+				"inc\\cont\\fotos\\index.php"
+			],
+			[
+				"fotosindex",
+				"inc\\cont\\fotos\\index.php"
+			],
+			[
+				"filtrar",
+				"scripts\\filtrar.php"
+			],
+			[
+				"es",
+				"lang\\es.php"
+			],
+			[
+				"en",
+				"lang\\en.php"
+			],
+			[
+				"contacto",
+				"inc\\contacto.php"
+			],
+			[
+				"proyec",
+				"inc\\cont\\proyecto.php"
+			],
+			[
+				"enviar",
+				"scripts\\enviar.php"
+			],
+			[
+				"es.",
+				"lang\\es.php"
+			],
+			[
+				"lista",
+				"inc\\cont\\proyecto\\lista.php"
+			],
+			[
+				"sty",
+				"css\\style.css"
+			],
+			[
+				"env",
+				"scripts\\enviar.php"
+			],
+			[
+				"concep",
+				"inc\\cont\\concepto.php"
+			],
+			[
+				"mapa.",
+				"inc\\cont\\proyecto\\mapa.php"
+			],
+			[
+				"inf",
+				"inc\\cont\\proyecto\\info.php"
+			],
+			[
+				"info.p",
+				"inc\\cont\\proyecto\\info.php"
+			],
+			[
+				"mapa.p",
+				"inc\\cont\\proyecto\\mapa.php"
+			],
+			[
+				"mapa",
+				"css\\mapa.css"
+			],
+			[
+				"lotes.json",
+				"inc\\cont\\proyecto\\lotes.json"
+			],
+			[
+				"proyecto.css",
+				"css\\proyecto.css"
+			],
+			[
+				"fotos.p",
+				"inc\\cont\\fotos\\album.php"
+			],
+			[
+				"foto",
+				"css\\fotos.css"
+			],
+			[
+				"proyecto.ba",
+				"js\\proyecto.bak.js"
+			],
+			[
+				"validate",
+				"sistema\\validate_login.php"
+			],
+			[
+				"lotes.",
+				"inc\\cont\\proyecto\\lotes.json"
+			],
+			[
+				"panel",
+				"sistema\\css\\panel.css"
+			],
+			[
+				"config",
+				"abm\\config\\config.inc.php"
+			],
+			[
+				"inc",
+				"inc.common.php"
+			],
+			[
+				"actividad",
+				"actividades.php"
+			],
+			[
+				"es.php",
+				"lang\\es.php"
+			],
+			[
+				"lotes",
+				"inc\\cont\\proyecto\\lotes.json"
+			],
+			[
+				"login.css",
+				"css\\login.css"
+			],
+			[
+				"htacc",
+				".htaccess"
+			],
+			[
+				"bottom",
+				"inc\\bottom-bar.php"
+			],
+			[
+				"mailer.ph",
+				"mailer\\enviar.php"
+			],
+			[
+				"contact",
+				"inc\\contacto.php"
+			],
+			[
+				"en.",
+				"lang\\en.php"
+			],
+			[
+				"es.p",
+				"lang\\es.php"
+			],
+			[
+				"window",
+				"css\\window.css"
+			],
+			[
+				"concept",
+				"inc\\cont\\concepto.php"
+			],
+			[
+				"lang",
+				"lang_config.php"
+			],
+			[
+				"langen",
+				"lang\\en.php"
+			],
+			[
+				"langes",
+				"lang\\es.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/servidor/pbsymfony/pbsymfony.sublime-project"
+			],
+			[
+				"ysm",
+				"D:\\Users\\Franco\\Haphi\\Sitios web\\Proyectos Sublime\\Yampai.sublime-project"
+			],
+			[
+				"yamp",
+				"D:\\Users\\Franco\\Haphi\\Sitios web\\Proyectos Sublime\\Yampai.sublime-project"
+			],
+			[
+				"p",
+				"D:\\Users\\Franco\\Haphi\\Sitios web\\Proyectos Sublime\\Pueblo Benegas.sublime-project"
+			],
+			[
+				"P",
+				"D:\\Users\\Franco\\Haphi\\Sitios web\\Proyectos Sublime\\Pueblo Benegas.sublime-project"
+			],
+			[
+				"Pueb",
+				"D:\\Users\\Franco\\Haphi\\Sitios web\\Proyectos Sublime\\Pueblo Benegas.sublime-project"
+			],
+			[
+				"pueb",
+				"D:\\Users\\Franco\\Haphi\\Sitios web\\Proyectos Sublime\\Pueblo Benegas.sublime-project"
+			],
+			[
+				"y",
+				"D:\\Users\\Franco\\Haphi\\Sitios web\\Proyectos Sublime\\Yampai.sublime-project"
+			],
+			[
+				"yampai",
+				"D:\\Users\\Franco\\Haphi\\Sitios web\\Proyectos Sublime\\Yampai.sublime-project"
+			],
+			[
+				"ya",
+				"D:\\Users\\Franco\\Haphi\\Sitios web\\Proyectos Sublime\\Yampai.sublime-project"
+			],
+			[
+				"pue",
+				"D:\\Users\\Franco\\Haphi\\Proyectos Sublime\\Pueblo Benegas.sublime-project"
+			],
+			[
+				"Pue",
+				"D:\\Users\\Franco\\Haphi\\Proyectos Sublime\\Pueblo Benegas.sublime-project"
+			],
+			[
+				"pb",
+				"D:\\Users\\Franco\\Haphi\\Proyectos Sublime\\Pueblo Benegas.sublime-project"
+			],
+			[
+				"cdi",
+				"D:\\Users\\Franco\\Haphi\\Proyectos Sublime\\CDI.sublime-project"
+			],
+			[
+				"CDI",
+				"D:\\Users\\Franco\\Haphi\\Proyectos Sublime\\CDI.sublime-project"
+			],
+			[
+				"cd",
+				"D:\\Users\\Franco\\Haphi\\Proyectos Sublime\\CDI.sublime-project"
+			],
+			[
+				"el",
+				"D:\\Users\\Franco\\Haphi\\Proyectos Sublime\\El Legado.sublime-project"
+			],
+			[
+				"legado",
+				"D:\\Users\\Franco\\Haphi\\Proyectos Sublime\\El Legado.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 176.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
