@@ -24,25 +24,39 @@
 
   \end{Estructura} 
 
-  \Rep[e][l]{($\forall e$: estr)(
-  (tam(e.paquetesEnEspera) = tam(e.IPcompusXID) = tam(e.siguienteCompu) = tam (e.cantPaquetesEnviados) = #(computaodras(e.estrRed)) $\land$ 
-  ($\forall n$: nat)(definido?(e.siguienteCompu,n) $\impluego$ tam(e.siguienteCompu[n]) = #(computadoras(e.estrRed))) $\land$
-  Maximo(e.cantPaqEnviados) = e.cantidadEnviados[obtener($\pi_1$(siguiente(e.laQueMasEnvio)),e.IDcompusPorIP)] $\land$
-  ($\forall c$: compu)(c $\in$ computadoras(e.estRed) $\impluego$ obtener($\pi_1$(c),e.IDcompusPorIP) $\min$ #(computadoras(e.estrRed))) $\land$ (($\forall c_1$, $c_2$: compu)( ($c_1 \in$ computadoras(e.estRed) $\land$ ($c_2 \in$ computadoras(e.estrRed)) $\land$ ($c_1 \neq c_2$) ) $\impluego$ (( obtener($\pi_1$($c_1$), e.IDcompusPorIP) $\neq$ obtener($\pi_1$($c_2$), e.IDcompusPorIP))))) $\land$
-  (dameNombres(computadoras(e.estrRed)) = claus(IDcompusPorIP)) $\land$
-  ($\forall L$: nat)( 0 $\leq$ L $\min$ tam(e.paqEnEspera) $\impluego$ 
-  %5)
-  (
-  ($\forall i$: ItConj(paquete))(
-  siguiente(i) $\in$ (dameSiguientes(dame$\pi_1$($juntarSignificados_1$($\pi_2$(e.paquetesEnEspera[L])))$\impluego$ siguiente(i) $\in \pi_1$(e.paquetesEnEspera[L]) $\land$ ($\forall c$: ID)(c$\in$ claves($\pi_2$(e.paquetesEnEspera[L])) $\impluego \pi_1$(siguiente($\pi_1$(obtener($\pi_2$(c), e.paquetesEnEspera[L])))) = c ($\forall i$: ItConj(paquete))(siguiente(i)$\in$ dameSiguientes(dame$\pi_1$($juntarSignificados_2$($\pi_3$(e.paquetesEnEspera[L])))) $\impluego$ siguiente(i) $\in \pi_1$(e.paquetesEnEspera[L])  ))))
-
-
-  )
-
-  )
-
-
-  )}\mbox{}
+	\Rep[e][l]{
+	($\forall e$: estr)(
+%1
+		(tam(e.paquetesEnEspera) = tam(e.IPcompusXID) = tam(e.siguienteCompu) = tam (e.cantPaquetesEnviados) = #(computaodras(e.estrRed))) $\land$ 
+		($\forall n$: nat)(definido?(e.siguienteCompu,n) $\impluego$ tam(e.siguienteCompu[n]) = #(computadoras(e.estrRed))) $\land$
+%2
+		Maximo(e.cantPaqEnviados) = e.cantidadEnviados[obtener($\pi_1$(siguiente(e.laQueMasEnvio)),e.IDcompusPorIP)] $\land$
+%3 CHEQUEAR PARENTESIS
+		($\forall c$: compu)(c $\in$ computadoras(e.estRed) $\impluego$ obtener($\pi_1$(c),e.IDcompusPorIP) < #(computadoras(e.estrRed))) $\land$
+		(($\forall c_1$, $c_2$: compu)(($c_1 \in$ computadoras(e.estRed) $\land$ ($c_2 \in$ computadoras(e.estrRed)) $\land$ ($c_1 \neq c_2$)) $\impluego$ ((obtener($\pi_1$($c_1$), e.IDcompusPorIP) $\neq$ obtener($\pi_1$($c_2$), e.IDcompusPorIP))))) $\land$
+%4
+		(dameNombres(computadoras(e.estrRed)) = claus(IDcompusPorIP)) $\land$
+%5
+		($\forall L$: nat)( 0 $\leq$ L < tam(e.paqEnEspera) $\impluego$ (
+			($\forall i$: ItConj(paquete))(siguiente(i) $\in$ (dameSiguientes(dame$\pi_1$($juntarSignificados_1$($\pi_2$(e.paquetesEnEspera[L])))$\impluego$ siguiente(i) $\in \pi_1$(e.paquetesEnEspera[L])))) $\land$ 
+			($\forall c$: ID)(c$\in$ claves($\pi_2$(e.paquetesEnEspera[L])) $\impluego \pi_1$(siguiente($\pi_1$(obtener($\pi_2$(c), e.paquetesEnEspera[L])))) = c) $\land$
+			($\forall i$: ItConj(paquete))(siguiente(i)$\in$ dameSiguientes(dame$\pi_1$($juntarSignificados_2$($\pi_3$(e.paquetesEnEspera[L])))) $\impluego$ siguiente(i) $\in \pi_1$(e.paquetesEnEspera[L]))$\land$
+			($\forall n$: prioridad)(definido?($\pi_3#(e.paquetesEnEspera[L]),n) $\impluego$ ($\forall p$: paquete)(esta?(p, obtener(n, $\pi_3$(e.paquetesEnEspera[L]))) $\impluego$ $\pi_2$(p) = n)) $\land$
+% *1
+    ($\forall x$, $z$: nat)((0 $\leq$ x < tam(e.paquetesEnEspera) $\land$ 0 $\leq$ z < tam(e.paquetesEnEspera) $\land$ x $\neq$ z) $\impluego$ ($\pi_1$(e.paquetesEnEspera[x]) $\cap$ $\pi_2$(e.paquetesEnEspera[z])) = $\emptyset$) $\land$
+%6
+		($\forall i$: nat)(0 $\leq$ i < #(computadoras(e.estrRed)) $\land$ obtener($\pi_1$(siguiente(e.IPcompusPorID[i])), e.IDcompusPorID) = i) $\land$
+%7
+		($\forall n$, $m$: nat)(0 $\leq$ n < #(computadoras(e.estrRed)) $\land$ 0 $\leq$ n < #(computadoras(e.estrRed)) $\impluego$ e.siguienteCompu[n][m] = prim(dameuno(caminosminimos(e.estrRed,siguiente(e.IPcompusporID[n]),siguiente(e.IPcompusPorID[m]))))) $\land$
+%8
+    ($\forall i$: nat)(0 $\leq$ i $\leq$ #computadoras(e.estrRed) $\impluego$ siguiente(e.IPcompusPorID[i]) $\in$ compitadoras(e.estrRed)) $\land$
+% *2
+    ($\forall x$, $y$: nat)((0 $\leq$ x < #computadoras(e.estrRed) $\land$ 0 $\leq$ y < #computadoras(e.estrRed) $\land$ x $\neq$ y) $\impluego$ (siguiente(e.IPcompusPorID[x]) $\neq$ siguiente(e.IPcompusPorID[y]))))) $\land$
+%9
+    #($\pi_1$(e.paquetesEnEspera)) = #claves($\pi_2$(e.paquetesEnEspera)) $\land$ = #(juntarSecuenciasEnConj(juntarSignificados($\pi_3$(e.paquetesEnEspera)))) $\land$
+%10?
+    ($\forall it_1$: ItConj(paquete))($\forall it_2$: ItConj(paquete))(($it_1 \in$ juntarSecuEnConj(JuntarSignificado($\pi_3$(e.paquetesEnEspera[L])))) $\land$ ($it_2 \in$ juntarSecuEnConj(JuntarSignificado($\pi_3$(e.paquetesEnEspera[L])))) $\land$ ($it_1$ $\neq$ $it_2$) $\impluego$ (siguiente($it_1)$ $\neq$ siguiente($it_2$)))
+	)}\mbox{}
 
   ~      
 
