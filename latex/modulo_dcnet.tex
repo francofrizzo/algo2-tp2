@@ -13,13 +13,13 @@
   \begin{Estructura}{dcnet}[estrDCNet]
 
     \begin{Tupla}[estrDCNet]
-      \tupItem{red}{red}
+      \tupItem{red}{estrRed}
       \tupItem{IDsCompusPorIP}{dicc\_trie(string, nat)}
-      \tupItem{siguientesCompus}{arregloDimensionable(arregloDimensionable(nat))}
-      \tupItem{paqEnEspera}{arregloDimensionable(tupla(conjunto(paquete), colaPrior(tupla(nat, itConjunto(paquete))), dicc\_AVL(itConjunto(paquete))))}
-      \tupItem{\#PaqEnviados}{arregloDimensionable(nat)}
+      \tupItem{siguientesCompus}{ad(ad(nat))}
+      \tupItem{paquetesEnEspera}{ad(tupla(enConjunto: conj(paquete), porID: dicc\_AVL(ID, tupla(iPaquete: itConj(paquete),codOrigen: nat, codDestino: nat), porPrioridad: heap(tupla(prioridad, itConjunto(paquete))))))}
+      \tupItem{\#PaqEnviados}{ad(nat)}
       \tupItem{laQueM\'asEnvi\'o}{itRed}
-      \tupItem{\'ultimoId}{nat}
+      \tupItem{IPsCompuPorID}{ad(itRed)}
     \end{Tupla}
 
   \end{Estructura} 
