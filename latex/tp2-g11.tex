@@ -25,6 +25,7 @@
 
 \let\NombreFuncion=\textsc
 \let\TipoVariable=\texttt
+\let\tipo=\texttt
 \let\ModificadorArgumento=\textbf
 \newcommand{\res}{$res$\xspace}
 \newcommand{\tab}{\hspace*{7mm}}
@@ -157,6 +158,16 @@
 \newcommand{\seExplicaCon}[1]{\parbox{3cm}{\textbf{se explica con}:} \tadNombre{#1}}
 
 \newcommand{\generos}[1]{\parbox{3cm}{\textbf{g\'eneros}:} #1}
+
+\usepackage[]{algorithm2e}
+\newenvironment{algoritmo}[2]{
+  \NoCaptionOfAlgo\SetAlgoLongEnd\LinesNumbered\SetAlgoLined\RestyleAlgo{ruled}\IncMargin{1em}\DontPrintSemicolon\SetArgSty{}\SetCommentSty{textsf}\SetFuncSty{textsf}\begin{algorithm}[H]
+  \SetKwComment{com}{$\triangleright$ }{}
+  \caption{\Aplicar{#1}{#2}}
+}{
+  \end{algorithm}\DecMargin{1em}
+}
+\newcommand{\as}{\ensuremath{\,\leftarrow\,}}
 
 \sloppy
 
