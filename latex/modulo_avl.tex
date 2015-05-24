@@ -92,7 +92,7 @@
       \tupItemNL{padre}{puntero(nodo)}%
       \tupItemNL{izq}{puntero(nodo)}%
       \tupItemNL{der}{puntero(nodo)}%
-      \tupItemNL{alturaSubarbol}{nat}%
+      \tupItemNL{altSubarbol}{nat}%
     \end{Tupla}
 
   \end{Estructura} 
@@ -104,7 +104,7 @@
   }
 
   \AbsFc[estrAB]{ab($\alpha$)}[ab]{
-    \IF $ab$.cantNodos = 0 THEN nil ELSE bin(Abs(plantar($ab$.raiz $\rightarrow$ izq)), $ab$.raiz $\rightarrow$ dato, Abs(plantar($ab$.raiz $\rightarrow$ der))) FI
+    \IF $ab$.cantNodos = 0 THEN nil ELSE bin(Abs(plantar($ab$.raiz $\to$ izq)), $ab$.raiz $\to$ dato, Abs(plantar($ab$.raiz $\to$ der))) FI
   }
 
   \tadOperacion{hijos}{nodo}{conj(nodo)}{}
@@ -126,9 +126,9 @@
   % Definición de funciones que se usan en el algoritmo:
   \SetKwFunction{atajoFuncion}{nombreFuncion}
 
-  \begin{algoritmo}{nombreAlgoritmo}{parametros}
+  \begin{algoritmo}{nombreAlgoritmo}{parametros}{tipoSalida}
     % Crear e inicializar variables:
-    \tipo{tipoVariable} $nombreVariable \as valor$ \;
+    \tipo{tipoVariable} $nombreVariable \gets valor$ \;
     % Nota: las líneas sin comentario deben terminar en \;
 
     % Comentarios:
@@ -164,39 +164,159 @@
 
   \end{algoritmo}
 
-  \SetKwFunction{fdb}{fdb}
-  \SetKwFunction{raizq}{rotarAIzquierda}
-  \SetKwFunction{rader}{rotarADerecha}
+  \SetKwFunction{fdb}{FDB}
+  \SetKwFunction{raizq}{RotarAIzquierda}
+  \SetKwFunction{rader}{RotarADerecha}
+  \SetKwFunction{buscar}{Buscar}
+  \SetKwFunction{max}{max}
+  \SetKwFunction{rebalancear}{RebalancearArbol}
 
-  \begin{algoritmo}{iRebalancearArbol}{\In{n}{puntero(nodo)}}
-    \tipo{puntero(nodo)} $p \as n$ \com*{$\Theta(1)$}
-    \While{$p \neq$ NULL}{ 
-      \tipo{int} $fdb1 \as$ \fdb{$p$}\;
+  \begin{algoritmo}{iVacio}{}{estrAVL}{
+    $res \gets \langle$NULL, 0$\rangle$ \com*{$\Theta(1)$}
+  }
+  \end{algoritmo}
+
+  \begin{algoritmo}{iRebalancearArbol}{\In{n}{puntero(nodo)}}{}
+    \tipo{puntero(nodo)} $p \gets n$ \com*{$\Theta(1)$}
+    \While{$p \neq \NULL$}{ 
+      \tipo{int} $fdb1 \gets$ \fdb{$p$}\;
       \uIf{$fdb1 = 2$}{
-        \tipo{puntero(nodo)} $q \as (p \rightarrow der)$ \;
-        \tipo{int} $fdb2 \as$ \fdb{$q$} \;
+        \tipo{puntero(nodo)} $q \gets (p \to der)$ \;
+        \tipo{int} $fdb2 \gets$ \fdb{$q$} \;
         \uIf{$fdb2 = 1 \lor fdb2 = 0$}{
           \raizq{$p$} \;
-          $p \as q$ \;
+          $p \gets q$ \;
         }\ElseIf{$fbd2 = -1$}{
           \rader{$q$} \;
           \raizq{$p$} \;
-          $p \as (q \rightarrow padre)$ \;
+          $p \gets (q \to padre)$ \;
         }
       }\ElseIf{$fdb1 = -2$}{
-        \tipo{puntero(nodo)} $q \as (p \rightarrow izq)$ \;
-        \tipo{int} $fdb2 \as$ \fdb{$q$} \;
+        \tipo{puntero(nodo)} $q \gets (p \to izq)$ \;
+        \tipo{int} $fdb2 \gets$ \fdb{$q$} \;
         \uIf{$fdb2 = -1 \lor fdb2 = 0$}{
           \rader{$p$} \;
-          $p \as q$ \;
+          $p \gets q$ \;
         }\ElseIf{$fbd2 = 1$}{
           \raizq{$q$} \;
           \rader{$p$} \;
-          $p \as (q \rightarrow padre)$ \;
+          $p \gets (q \to padre)$ \;
         }
       }
-      $p \as (p \rightarrow padre)$ \;
+      $p \gets (p \to padre)$ \;
     }
   \end{algoritmo}
+
+  \begin{algoritmo}{iFBD}{\In{n}{puntero(nodo)}}{int}
+    \tipo{int} $altIzq \gets n \to izq = \NULL$ ? 0 : $n \to izq \to altSubarbol$ \;
+    \tipo{int} $altDer \gets n \to der = \NULL$ ? 0 : $n \to izq \to altSubarbol$ \;
+    $res \gets altDer - altIzq$ \;
+  \end{algoritmo}
+
+  \begin{algoritmo}{iRotarAIzquierda}{\In{n}{puntero(nodo)}}{}
+    \If{$n.padre \neq \NULL$}{
+      \eIf{$n.padre \to izq = n$}{
+        $(n.padre \to izq) \gets n.der$ \;
+      }{
+        $(n.padre \to der) \gets n.der$ \;
+      }
+    }
+    $(n.der \to padre) \gets n.padre$ \; 
+    $n.padre \gets n.der$ \;
+    $n.der \gets (n.der \to izq)$ \;
+    \If{$n.der \neq \NULL$}{
+      $(n.der \to padre) \gets n$ \;
+    }
+    $(n.padre \to izq) \gets n$ \;
+    \While{$actual \neq \NULL$}{
+      $(actual \to altSubarbol) \gets 1$ + \max{$actual \to izq \to altSubarbol$, $actual \to der \to altSubarbol$} \;
+      $actual \gets (actual \to padre)$ \;
+    }
+  \end{algoritmo}
+
+  \begin{algoritmo}{iRotarADerecha}{\In{n}{puntero(nodo)}}{}
+    \If{$n.padre \neq \NULL$}{
+      \eIf{$n.padre \to izq = n$}{
+        $(n.padre \to izq) \gets n.izq$ \;
+      }{
+        $(n.padre \to der) \gets n.izq$ \;
+      }
+    }
+    $(n.izq \to padre) \gets n.padre$ \; 
+    $n.padre \gets n.izq$ \;
+    $n.izq \gets (n.izq \to der)$ \;
+    \If{$n.izq \neq \NULL$}{
+      $(n.izq \to padre) \gets n$ \;
+    }
+    $(n.padre \to der) \gets n$ \;
+    \While{$actual \neq \NULL$}{
+      $(actual \to altSubarbol) \gets 1$ + \max{$actual \to izq \to altSubarbol$, $actual \to der \to altSubarbol$} \;
+      $actual \gets (actual \to padre)$ \;
+    }
+  \end{algoritmo}
+
+  \begin{algoritmo}{iBuscar}{\In{e}{estrAVL}, \In{k}{$\kappa$}, \Out{padre}{puntero(nodo)}}{puntero(nodo)}
+    $padre \gets \NULL$ \;
+    $actual \gets e.raiz$ \;
+    \While{$actual \neq \NULL \yluego (actual \to clave \neq k)$}{ % ¡Preguntar por el y luego!
+      $padre \gets actual$ \;
+      \eIf{$k \leq (padre \to clave)$}{
+        $actual \gets (actual \to izq)$ \;
+      }{
+        $actual \gets (actual \to der)$ \;
+      }
+    }
+    $res \gets actual$ \;
+    \end{algoritmo}
+
+    \begin{algoritmo}{iBorrar}{\Inout{e}{estrAVL}, \In{k}{$\kappa$}}{}
+      \tipo{puntero(nodo)} $padre \gets \NULL$ \;
+      \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \;
+      \uIf{$lugar \to izq = \NULL \land lugar \to der = \NULL$}{
+        \eIf{$padre \neq \NULL$}{
+          \eIf{$padre \to izq = lugar$}{
+            $(padre \to izq) \gets \NULL$ \; 
+            $(padre \to altSubarbol) \gets 1 + (padre \to der \to altSubarbol)$ \;
+          }{
+            $(padre \to der) \gets \NULL$ \; 
+            $(padre \to altSubarbol) \gets 1 + (padre \to izq \to altSubarbol)$ \;
+          }
+          \rebalancear{$padre$} \;
+        }{
+          $e.raiz = \NULL$ \;
+        }
+        \delete{$lugar$} \;
+      }\uElseIf{$lugar \to der = \NULL$}{
+        $(lugar \to izq \to padre) \gets padre$ \;
+        \eIf{$padre \neq \NULL$}{
+          \eIf{$padre \to izq = lugar$}{
+            $(padre \to izq) \gets (lugar \to izq)$ \; 
+          }{
+            $(padre \to der) \gets (lugar \to izq)$ \; 
+          }
+          $(padre \to altSubarbol) \gets 1$ + \max{$padre \to der \to altSubarbol$, $padre \to izq \to altSubarbol$} \;
+          \rebalancear{$padre$} \;
+        }{
+          $e.raiz = lugar \to izq$ \;
+        }
+        \delete{$lugar$} \;
+      }\uElseIf{$lugar \to izq = \NULL$}{
+        $(lugar \to der \to padre) \gets padre$ \;
+        \eIf{$padre \neq \NULL$}{
+          \eIf{$padre \to izq = lugar$}{
+            $(padre \to izq) \gets (lugar \to der)$ \; 
+          }{
+            $(padre \to der) \gets (lugar \to der)$ \; 
+          }
+          $(padre \to altSubarbol) \gets 1$ + \max{$padre \to der \to altSubarbol$, $padre \to izq \to altSubarbol$} \;
+          \rebalancear{$padre$} \;
+        }{
+          $e.raiz = lugar \to izq$ \;
+        }
+        \delete{$lugar$} \;
+      }\Else{
+        \com*{Ac\'a viene la parte horrible del algoritmo}
+      }
+    \end{algoritmo}
 
 \end{Algoritmos}

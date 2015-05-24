@@ -159,15 +159,20 @@
 
 \newcommand{\generos}[1]{\parbox{3cm}{\textbf{g\'eneros}:} #1}
 
-\usepackage[]{algorithm2e}
-\newenvironment{algoritmo}[2]{
-  \NoCaptionOfAlgo\SetAlgoLongEnd\LinesNumbered\SetAlgoLined\RestyleAlgo{ruled}\IncMargin{1em}\DontPrintSemicolon\SetArgSty{}\SetCommentSty{textsf}\SetFuncSty{textsf}\begin{algorithm}[H]
+\usepackage{algorithm2e}
+\usepackage{float}
+\newenvironment{algoritmo}[3]{
+  \NoCaptionOfAlgo\SetAlgoLongEnd\LinesNumbered\SetAlgoLined\RestyleAlgo{ruled}\IncMargin{1em}\DontPrintSemicolon\SetArgSty{}\SetCommentSty{textsf}\SetFuncSty{textsf}
+  \begin{algorithm}[H]
   \SetKwComment{com}{ $\triangleright$ }{}
-  \caption{\Aplicar{#1}{#2}}
+  \caption{\TipoFuncion{#1}{#2}{#3}}
 }{
-  \end{algorithm}\DecMargin{1em}
+  \end{algorithm}
+  \vspace{0.5em}
 }
-\newcommand{\as}{\ensuremath{\,\leftarrow\,}}
+
+\SetKwFunction{delete}{delete}
+\def\NULL{\textrm{NULL}}
 
 \sloppy
 
