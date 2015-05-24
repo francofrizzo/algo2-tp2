@@ -1,6 +1,6 @@
 \newcommand{\avlKS}{diccAVL(\ensuremath{\kappa}, \ensuremath{\sigma})} % Macro para diccAVL(k, s)
 
-\section{M\'odulo \'Diccionario AVL($\kappa$, $\sigma$)}
+\section{M\'odulo Diccionario AVL($\kappa$, $\sigma$)}
 
 \begin{Interfaz}
   
@@ -8,14 +8,14 @@
     \paramGeneros{$\kappa$, $\sigma$}
 
     \paramFuncion{
-      \InterfazFuncion{$\bullet = \bullet$}{\In{k_1}{$\kappa$}, \In{k_2}{$\kappa$}}{\TipoVariable{bool}}
+      \InterfazFuncion{$\bullet = \bullet$}{\In{k_1}{$\kappa$}, \In{k_2}{$\kappa$}}{\tipo{bool}}
       {$res \igobs (k_1 = k_2)$}
       [$\Theta(equal(k_1, k_2))$]
       [funci\'on de igualdad de $\kappa$]
     }
 
     \paramFuncion{
-      \InterfazFuncion{$\bullet = \bullet$}{\In{k_1}{$\kappa$}, \In{k_2}{$\kappa$}}{\TipoVariable{bool}}
+      \InterfazFuncion{$\bullet = \bullet$}{\In{k_1}{$\kappa$}, \In{k_2}{$\kappa$}}{\tipo{bool}}
       {$res \igobs (k_1 \leq k_2)$}
       [$\Theta(order(k_1, k_2))$]
       [funci\'on de comparaci\'on por orden total estricto de $\kappa$]
@@ -38,7 +38,7 @@
 
   \seExplicaCon{Diccionario($\kappa$, $\sigma$)}
 
-  \generos{\TipoVariable{\avlKS}}
+  \generos{\tipo{\avlKS}}
 
   \Encabezado{Operaciones de diccionario}
 
@@ -120,3 +120,83 @@
   \tadAxioma{plantar($p$)}{$\langle p$, \IF $p$ = NULL THEN 0 ELSE cantHijos(\*($p$)) + 1 FI$\rangle$}
 
 \end{Representacion}
+
+\begin{Algoritmos}
+  
+  % Definición de funciones que se usan en el algoritmo:
+  \SetKwFunction{atajoFuncion}{nombreFuncion}
+
+  \begin{algoritmo}{nombreAlgoritmo}{parametros}
+    % Crear e inicializar variables:
+    \tipo{tipoVariable} $nombreVariable \as valor$ \;
+    % Nota: las líneas sin comentario deben terminar en \;
+
+    % Comentarios:
+    Contenido de la linea \tcp*[h]{Comentario pegado al texto, onda C++} \com*{Comentario contra el margen}
+    Contenido de la linea \com*[h]{Comentario pegado al texto} \tcp*{Comentario contra el margen, onda C++}
+
+    % Llamada a función definida antes:
+    \atajoFuncion{parametros}
+
+    % If/then:
+    \If{guarda}{
+      Codigo \;
+    }
+
+    % If/then/else:
+    \eIf(\com*[f]{Comentario opcional}){guarda}{
+      Codigo (then) \;
+    }(\com*[f]{Otro comentario opcional}){
+      Codigo (else) \;
+    }
+
+    % If/then/elseif:
+    \uIf{guarda}{
+      Codigo (then) \;
+    }\ElseIf{otra guarda}{
+      Codigo (else) \;
+    }
+
+    % While:
+    \While(\com*[f]{Comentario opcional}){guarda}{
+      Codigo \;
+    }
+
+  \end{algoritmo}
+
+  \SetKwFunction{fdb}{fdb}
+  \SetKwFunction{raizq}{rotarAIzquierda}
+  \SetKwFunction{rader}{rotarADerecha}
+
+  \begin{algoritmo}{iRebalancearArbol}{\In{n}{puntero(nodo)}}
+    \tipo{puntero(nodo)} $p \as n$ \com*{$\Theta(1)$}
+    \While{$p \neq$ NULL}{ 
+      \tipo{int} $fdb1 \as$ \fdb{$p$}\;
+      \uIf{$fdb1 = 2$}{
+        \tipo{puntero(nodo)} $q \as (p \rightarrow der)$ \;
+        \tipo{int} $fdb2 \as$ \fdb{$q$} \;
+        \uIf{$fdb2 = 1 \lor fdb2 = 0$}{
+          \raizq{$p$} \;
+          $p \as q$ \;
+        }\ElseIf{$fbd2 = -1$}{
+          \rader{$q$} \;
+          \raizq{$p$} \;
+          $p \as (q \rightarrow padre)$ \;
+        }
+      }\ElseIf{$fdb1 = -2$}{
+        \tipo{puntero(nodo)} $q \as (p \rightarrow izq)$ \;
+        \tipo{int} $fdb2 \as$ \fdb{$q$} \;
+        \uIf{$fdb2 = -1 \lor fdb2 = 0$}{
+          \rader{$p$} \;
+          $p \as q$ \;
+        }\ElseIf{$fbd2 = 1$}{
+          \raizq{$q$} \;
+          \rader{$p$} \;
+          $p \as (q \rightarrow padre)$ \;
+        }
+      }
+      $p \as (p \rightarrow padre)$ \;
+    }
+  \end{algoritmo}
+
+\end{Algoritmos}
