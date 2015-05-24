@@ -520,10 +520,10 @@
 	"buffers":
 	[
 		{
-			"file": "latex/tp2-g11.tex",
+			"file": "/home/franco/.config/sublime-text-3/Packages/User/base16-tomorrow.soda.tmTheme",
 			"settings":
 			{
-				"buffer_size": 5138,
+				"buffer_size": 12054,
 				"line_ending": "Unix"
 			}
 		}
@@ -556,17 +556,89 @@
 			],
 			[
 				"Packages/LaTeXing/LaTeX.sublime-build",
-				"Clean up Files"
+				""
 			]
 		]
 	],
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 310.0,
-		"last_filter": "Build",
+		"height": 375.0,
+		"last_filter": "COLOR",
 		"selected_items":
 		[
+			[
+				"COLOR",
+				"ColorSchemeSelector: Select Color Scheme"
+			],
+			[
+				"color",
+				"ColorSchemeSelector: Select Color Scheme"
+			],
+			[
+				"select",
+				"ColorSchemeSelector: Select Color Scheme"
+			],
+			[
+				"selec",
+				"ColorSchemeSelector: Select Color Scheme"
+			],
+			[
+				"select co",
+				"ColorSchemeSelector: Select Color Scheme"
+			],
+			[
+				"Select Co",
+				"ColorSchemeSelector: Select Color Scheme"
+			],
+			[
+				"Select Color",
+				"ColorSchemeSelector: Select Color Scheme"
+			],
+			[
+				"SELECTC",
+				"ColorSchemeSelector: Select Color Scheme"
+			],
+			[
+				"SELECT COL",
+				"ColorSchemeSelector: Select Color Scheme"
+			],
+			[
+				"SELECT CO",
+				"ColorSchemeSelector: Select Color Scheme"
+			],
+			[
+				"theme",
+				"Themr: List themes"
+			],
+			[
+				"themr",
+				"Themr: List themes"
+			],
+			[
+				"toggle Theme",
+				"Themr: Toggle Theme Settings"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"prefere",
+				"Preferences: Settings - User"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
 			[
 				"Build",
 				"Build: Cancel"
@@ -588,16 +660,8 @@
 				"Build With: LaTeX"
 			],
 			[
-				"install",
-				"Package Control: Install Package"
-			],
-			[
 				"instal",
 				"Package Control: Install Package"
-			],
-			[
-				"remove",
-				"Package Control: Remove Package"
 			],
 			[
 				"mi",
@@ -664,10 +728,6 @@
 				"Set Syntax: Plain Text"
 			],
 			[
-				"color",
-				"ColorSchemeSelector: Select Color Scheme"
-			],
-			[
 				"c",
 				"Set Syntax: C#"
 			],
@@ -678,10 +738,6 @@
 			[
 				"colo",
 				"ColorSchemeSelector: Select Color Scheme"
-			],
-			[
-				"inst",
-				"Package Control: Install Package"
 			],
 			[
 				"pack",
@@ -718,10 +774,6 @@
 			[
 				"preferences",
 				"Preferences: Settings - User"
-			],
-			[
-				"insta",
-				"Package Control: Install Package"
 			],
 			[
 				"sort",
@@ -852,7 +904,7 @@
 				"Package Control: Add Channel"
 			]
 		],
-		"width": 524.0
+		"width": 570.0
 	},
 	"console":
 	{
@@ -878,15 +930,19 @@
 	],
 	"file_history":
 	[
-		"/home/franco/.config/sublime-text-3/Packages/User/LaTeXing.sublime-settings",
+		"/home/franco/.config/sublime-text-3/Packages/User/base16-tomorrow.soda.tmTheme",
+		"/home/franco/.config/sublime-text-3/Packages/Seti_UI/Scheme/Seti.tmTheme",
+		"/home/franco/.config/sublime-text-3/Packages/User/Flat.tmTheme",
+		"/home/franco/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/franco/Documentos/Facultad/algo2/tp2/latex/modulo_dcnet.tex",
+		"/home/franco/Documentos/Facultad/algo2/tp2/latex/tp2-g11.tex",
 		"/home/franco/Documentos/Facultad/algo2/tp2/latex/modulo_avl.tex",
+		"/home/franco/.config/sublime-text-3/Packages/User/LaTeXing.sublime-settings",
 		"/home/franco/Documentos/Facultad/algo2/tp2/tp2.sublime-project",
 		"/home/franco/Documentos/Facultad/algo2/tp2/latex/.gitignore",
-		"/home/franco/Documentos/Facultad/algo2/tp2/latex/tp2-g11.tex",
 		"/home/franco/Documentos/Facultad/algo2/tp2/latex/modulo_red.tex",
 		"/home/franco/Documentos/Facultad/algo2/tp2/latex/disenando_con_latex.tex",
 		"/home/franco/Documentos/Facultad/algo2/tp2/latex/modulo_ab.tex",
-		"/home/franco/Documentos/Facultad/algo2/tp2/latex/modulo_dcnet.tex",
 		"/home/franco/Descargas/RepAbs de RED",
 		"/home/franco/Documentos/Facultad/algo2/tp2/tp2.txt",
 		"/home/franco/Documentos/Facultad/algo2/petulant-octo-wight/disenando_con_latex.tex",
@@ -907,7 +963,6 @@
 		"/tmp/freeformatter-output",
 		"/home/franco/.config/dconf/user",
 		"/home/franco/.config/ubuntu-ui-toolkit/theme.ini",
-		"/home/franco/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
 		"/home/franco/Escritorio/codigo/caca2.out",
 		"/media/datos/Users/Franco/Documents/Facultad/materias-viejas/algo-1/TP2/codigo/galeria_imagenes.cpp",
 		"/media/datos/Users/Franco/Documents/Facultad/materias-viejas/algo-1/TP2/codigo/imagen.cpp",
@@ -1002,10 +1057,7 @@
 		"/D/Users/Franco/Desktop/PB Corral de Caballos.svg",
 		"/D/Servidor/cdisanrafael/js/contacto.js",
 		"/D/Users/Franco/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
-		"/D/Users/Franco/Desktop/PB Corral de Caballos 2.svg",
-		"/D/Users/Franco/Desktop/PB Corral de Caballos 3.svg",
-		"/D/Users/Franco/AppData/Roaming/Mozilla/Firefox/Profiles/braubdst.default/chrome/userContent.css",
-		"/D/Users/Franco/Documents/Facultad/Probabilidades y Estadística (C)/Finales/Finales.tex"
+		"/D/Users/Franco/Desktop/PB Corral de Caballos 2.svg"
 	],
 	"find":
 	{
@@ -1026,6 +1078,19 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"GUTTER",
+			"1A1A1A",
+			"0E0E0E",
+			"1A1A1A",
+			"backgrou",
+			"background",
+			"backgroundç",
+			"2AAA",
+			"2A2A2A",
+			"#",
+			"'",
+			"\"",
+			"dicc_AVL",
 			"comparaci",
 			"a",
 			"alpha",
@@ -1140,20 +1205,7 @@
 			"\n\n",
 			"\nFN",
 			"\n",
-			"\\x",
-			"\\x3B",
-			"\\x0A",
-			"=",
-			"LE:",
-			"LE:De Zan;Agustín;;;",
-			"N:",
-			";;F",
-			"^N\\:.*[^ a-zA-Z0-9\\;\\n]",
-			":+54 9 ",
-			"END:VCARD\nBEGIN:VCARD",
-			"END:VCARD\n\nBEGIN:VCARD",
-			"\n",
-			" \n"
+			"\\x"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1304,19 +1356,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "latex/tp2-g11.tex",
+					"file": "/home/franco/.config/sublime-text-3/Packages/User/base16-tomorrow.soda.tmTheme",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5138,
+						"buffer_size": 12054,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								901,
+								901
 							]
 						],
 						"settings":
@@ -1324,16 +1376,36 @@
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
@@ -1344,46 +1416,25 @@
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content"
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
 							],
-							"color_scheme": "Packages/User/Color Highlighter/themes/base16-tomorrow.soda.tmTheme",
-							"syntax": "Packages/LaTeXing/support/LaTeX.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai Soda.tmTheme",
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1447,6 +1498,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"avl",
+				"latex/modulo_avl.tex"
+			],
 			[
 				"",
 				"latex/tp2-g11.tex"
@@ -1843,7 +1898,7 @@
 	"show_minimap": false,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": false,
+	"side_bar_visible": true,
 	"side_bar_width": 176.0,
 	"status_bar_visible": true,
 	"template_settings":

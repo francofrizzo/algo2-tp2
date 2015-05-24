@@ -71,7 +71,7 @@
 }{}
 
 
-\newcommand{\Titulo}[1]{
+\newcommand{\Encabezado}[1]{
   \vspace*{1ex}\par\noindent\textbf{\large #1}\par
 }
 
@@ -105,6 +105,15 @@
     \setboolean{EstructuraHayItems}{true}%
 }
 
+\newcommandx{\tupItemNL}[3][1={\ }]{%
+    %\hspace*{3mm}%
+    \ifthenelse{\boolean{EstructuraHayItems}}{%
+        ,\\#1%
+    }{}%
+    \emph{#2}: \TipoVariable{#3}%
+    \setboolean{EstructuraHayItems}{true}%
+}
+
 \newcommandx{\RepFc}[3][1={estr},2={e}]{%
   \tadOperacion{Rep}{#1}{bool}{}%
   \tadAxioma{Rep($#2$)}{#3}%
@@ -129,7 +138,25 @@
 
 \newcommand{\DRef}{\ensuremath{\rightarrow}}
 
-% Fin macros de diseño provistas por la cátedra %
+% Macros de diseño propias %
+
+\usepackage{scrextend} % Para poder indentar bloques
+
+\newenvironment{paramFormales}{
+  \textbf{par\'ametros formales}
+  \vspace{-0.5em}
+  \list{}{\leftmargin8em \topsep0.2em \itemsep0.25em \labelsep2em}
+}{
+  \endlist 
+}
+
+\newcommand{\paramGeneros}[1]{\item[\textbf{g\'eneros}] #1}
+
+\newcommand{\paramFuncion}[1]{\item[\textbf{funci\'on}] \parbox[t]{\textwidth-2\parindent-1.7cm}{#1}}
+
+\newcommand{\seExplicaCon}[1]{\parbox{3cm}{\textbf{se explica con}:} \tadNombre{#1}}
+
+\newcommand{\generos}[1]{\parbox{3cm}{\textbf{g\'eneros}:} #1}
 
 \sloppy
 

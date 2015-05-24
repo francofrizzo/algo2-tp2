@@ -1,42 +1,80 @@
+\newcommand{\avlKS}{diccAVL(\ensuremath{\kappa}, \ensuremath{\sigma})} % Macro para diccAVL(k, s)
+
 \section{M\'odulo \'Diccionario AVL($\kappa$, $\sigma$)}
 
 \begin{Interfaz}
   
-  \textbf{par\'ametros formales:}\hangindent=2\parindent \\
-  \parbox{1.7cm}{\textbf{g\'eneros:}} $\kappa$, $\sigma$
+  \begin{paramFormales}
+    \paramGeneros{$\kappa$, $\sigma$}
 
-  \parbox[t]{1.7cm}{\textbf{funci\'on}}\parbox[t]{\textwidth-2\parindent-1.7cm}{%
-    \InterfazFuncion{$\bullet = \bullet$}{\In{k_1}{$\kappa$}, \In{k_2}{$\kappa$}}{\TipoVariable{bool}}
-    {$res \igobs (k_1 = k_2)$}
-    [$\Theta(equal(k_1, k_2))$]
-    [funci\'on de igualdad de $\kappa$]
-  }
+    \paramFuncion{
+      \InterfazFuncion{$\bullet = \bullet$}{\In{k_1}{$\kappa$}, \In{k_2}{$\kappa$}}{\TipoVariable{bool}}
+      {$res \igobs (k_1 = k_2)$}
+      [$\Theta(equal(k_1, k_2))$]
+      [funci\'on de igualdad de $\kappa$]
+    }
 
-  \parbox[t]{1.7cm}{\textbf{funci\'on}}\parbox[t]{\textwidth-2\parindent-1.7cm}{%
-    \InterfazFuncion{$\bullet = \bullet$}{\In{k_1}{$\kappa$}, \In{k_2}{$\kappa$}}{\TipoVariable{bool}}
-    {$res \igobs (k_1 \leq k_2)$}
-    [$\Theta(compare(k_1, k_2))$]
-    [funci\'on de comparaci\'on por orden total estricto de $\kappa$]
-  }
+    \paramFuncion{
+      \InterfazFuncion{$\bullet = \bullet$}{\In{k_1}{$\kappa$}, \In{k_2}{$\kappa$}}{\TipoVariable{bool}}
+      {$res \igobs (k_1 \leq k_2)$}
+      [$\Theta(order(k_1, k_2))$]
+      [funci\'on de comparaci\'on por orden total estricto de $\kappa$]
+    }
 
-  \parbox[t]{1.7cm}{\textbf{funci\'on}}\parbox[t]{\textwidth-2\parindent-1.7cm}{%
-    \InterfazFuncion{Copiar}{\In{k}{$\kappa$}}{$\kappa$}
-    {$res \igobs k$}
-    [$\Theta(copy(k))$]
-    [funci\'on de copia de $\kappa$]
-  }
-  
-  \parbox[t]{1.7cm}{\textbf{funci\'on}}\parbox[t]{\textwidth-2\parindent-1.7cm}{%
-    \InterfazFuncion{Copiar}{\In{s}{$\sigma$}}{$\sigma$}
-    {$res \igobs s$}
-    [$\Theta(copy(s))$]
-    [funci\'on de copia de $\sigma$]
-  }
+    \paramFuncion{
+      \InterfazFuncion{Copiar}{\In{k}{$\kappa$}}{$\kappa$}
+      {$res \igobs k$}
+      [$\Theta(copy(k))$]
+      [funci\'on de copia de $\kappa$]
+    }
 
-  \textbf{se explica con:} \tadNombre{Diccionario($\kappa$, $\lambda$)}
+    \paramFuncion{
+      \InterfazFuncion{Copiar}{\In{s}{$\sigma$}}{$\sigma$}
+      {$res \igobs s$}
+      [$\Theta(copy(s))$]
+      [funci\'on de copia de $\sigma$]
+    }
+  \end{paramFormales}
 
-  \textbf{g\'eneros:} \TipoVariable{diccAVL($\kappa$, $\lambda$)}
-  
+  \seExplicaCon{Diccionario($\kappa$, $\sigma$)}
+
+  \generos{\TipoVariable{\avlKS}}
+
+  \Encabezado{Operaciones de diccionario}
+
+    \InterfazFuncion{Vacio}{}{\avlKS}
+    {$res \igobs$ vac\'io}
+    []
+    []
+
+    \InterfazFuncion{Definir}{\Inout{d}{\avlKS}, \In{k}{$\kappa$}, \In{s}{$\sigma$}}{}
+    [$d \igobs d_0$]
+    {$d \igobs$ definir($k$, $s$, $d_0$)}
+    []
+    []
+
+    \InterfazFuncion{Borrar}{\Inout{d}{\avlKS}, \In{k}{$\kappa$}}{}
+    [$d \igobs d_0 \land$ def?($k$, $d$)]
+    {$d \igobs$ borrar($k$, $d_0$)}
+    []
+    []
+
+    \InterfazFuncion{\#Claves}{\In{d}{\avlKS}}{nat}
+    {$res \igobs$ \#(claves($d$))}
+    []
+    []
+
+    \InterfazFuncion{Definido?}{\In{d}{\avlKS}, \In{k}{$\kappa$}}{bool}
+    {$res \igobs$ def?($k$, $d$)}
+    []
+    []
+
+    \InterfazFuncion{Obtener}{\In{d}{\avlKS}, \In{k}{$\kappa$}}{$\sigma$}
+    [def?($k$, $d$)]
+    {$res \igobs$ obtener($k$, $d$)}
+    []
+    []
+
 \end{Interfaz}
 
 \begin{Representacion}
@@ -44,16 +82,17 @@
   \begin{Estructura}{diccAVL($\alpha$)}[estrAVL]
 
     \begin{Tupla}[estrAVL]
-      \tupItem{raiz}{puntero(nodo)}%
-      \tupItem{cantNodos}{nat}%
+      \tupItemNL{raiz}{puntero(nodo)}%
+      \tupItemNL{cantNodos}{nat}%
     \end{Tupla}
 
     \begin{Tupla}[nodo]
-      \tupItem{dato}{$\alpha$}%
-      \tupItem{padre}{puntero(nodo)}
-      \tupItem{izq}{puntero(nodo)}%
-      \tupItem{der}{puntero(nodo)}%
-      \tupItem{alturaSubarbol}{nat}
+      \tupItemNL{clave}{$\kappa$}%
+      \tupItemNL{significado}{$\sigma$}%
+      \tupItemNL{padre}{puntero(nodo)}%
+      \tupItemNL{izq}{puntero(nodo)}%
+      \tupItemNL{der}{puntero(nodo)}%
+      \tupItemNL{alturaSubarbol}{nat}%
     \end{Tupla}
 
   \end{Estructura} 
