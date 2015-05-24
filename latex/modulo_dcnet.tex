@@ -130,10 +130,38 @@
     ($\forall it_1$: ItConj(paquete))($\forall it_2$: ItConj(paquete))(($it_1 \in$ juntarSecuEnConj(JuntarSignificado($\pi_3$(e.paquetesEnEspera[L])))) $\land$ ($it_2 \in$ juntarSecuEnConj(JuntarSignificado($\pi_3$(e.paquetesEnEspera[L])))) $\land$ ($it_1$ $\neq$ $it_2$) $\impluego$ (siguiente($it_1)$ $\neq$ siguiente($it_2$)))
 	)}\mbox{}
 
+\AbsFc[estrDCNet]{DCNet}[e]{red($d$) = e.estrRed $\land$ \\
+
+  ($\forall p$: paquete) paqueteEnTr\'ansito?($d$, $p$) $\impluego$ caminoRecorrido($d$, $p$) = caminoDelPaquete(e.siguienteCompu, e.IPsCompusPorID, e.PaquetesEnEspera, $p$) $\land$ \\
+
+  ($\forall c$: compu) $c$ $\in$ computadoras(red($d$)) $\impluego$ cantidadEnviados($d$, $c$) = e.\#PaqEnviados[obtener($c$, e.IDsCompusPorIP)] $\land$ \\
+
+  ($\forall c$: compu) $c$ $\in$ computadoras(red($d$)) $\impluego$ enEspera($d$, $c$) = enConjunto(e.paquetesEnEspera[obtener($c$, e.IDsCompusPorIP)])
+}
+
   ~      
 
-  \tadOperacion{Nodo}{lst/l,nat}{puntero(nodo)}{$l$.primero $\neq$ NULL}
-  \tadAxioma{Nodo($l$,$i$)}{\IF $i = 0$ THEN $l$.primero ELSE Nodo(FinLst($l$), $i-1$) FI}
+\tadOperacion{caminoDelPaquete}{ad(ad(nat)), ad(ItRed), ad(tupla(enConjunto: conj(paquete), porID: dicc$_{\text{AVL}}$(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))), paquete, ad(tupla(enConjunto: conj(paquete), porID: dicc\_AVL(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete))))))}{secu(compu)}{} %FALTA AGREGAR RESTRICCION y alinear bien los parametros - Manu  
+
+\tadAxioma{caminoDelPaquete($t$, $CsxID$, $ps$, $p$, $Psr$)}{\IF def?(ID($p$), porID($ps$[0])) THEN caminoDelPaquete$_{\text{aux}}$($t$, $CsxID$, $ps$, $p$, codOrigen(obtener(ID($p$), porId($ps$[0]))), codDestino(obtener(ID($p$), porId($ps$[0])))) ELSE caminoDelPaquete($t$, $CsxID$, $ps$, $p$, finAd(psr)) FI}
 
   ~
+
+\tadOperacion{caminoDelPaquete$_{\text{aux}}$}{ad(ad(nat)), ad(ItRed), ad(tupla(enConjunto: conj(paquete)\, porID: dicc$_{\text{AVL}}$, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))), paquete, ad(tupla(enConjunto: conj(paquete), porID: dicc\_AVL(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))), nat, nat}{secu(compu)}{} %AGREGAR RESTRICCION  
+
+\tadAxioma{caminoDelPaquete$_{\text{aux}}$($t$, $CsxID$, $ps$, $p$, $Psr$, $compuActual$, $d$)}{\IF def?(ID($p$), porID($ps$[$compuActual$])) THEN siguiente($CsxID$[$compuActual$]) $\puntito$ <> ELSE siguiente($CsxID$[$compuActual$]) $\puntito$ caminoDelPaquete$_{\text{aux}}$($t$, $CsxID$, $ps$, $p$, $Psr$, $t$[$compuActual$][$d$], $d$) FI}
+
+  ~
+
+\tadOperacion{finAd}{ad(tupla(enConjunto: conj(paquete), porID: dicc$_{\text{AVL}}$(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))))}{ad(tupla(enConjunto: conj(paquete), porID: dicc\_AVL(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))))}{} 
+
+\tadAxioma{finAd($a$)}{\IF (tam(a) $\leq$ 1) THEN crearArreglo(0) ELSE finAd$_{\text{aux}}$(a, crearArreglo(tam(a)-1), tam(a)-2) FI}
+
+  ~
+
+\tadOperacion{finAd$_{\text{aux}}$}{ad(tupla(enConjunto: conj(paquete), porID: dicc$_{\text{AVL}}$(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))))/a, ad(tupla(enConjunto: conj(paquete), porID: dicc$_{\text{AVL}}$(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))))/b, nat}{ad(tupla(enConjunto: conj(paquete), porID: dicc$_{\text{AVL}}$(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))))}{tam(a)>1 $\land$ tam(b)>0}
+
+\tadAxioma{finAd$_{\text{aux}}$($a$, $b$, $n$)}{\IF ($n$=0) THEN $b$[0] $\leftarrow$ $a$[1] ELSE finAd$_{\text{aux}}$($a$, $b$[n]$\leftarrow$ $a$[$n$+1], $n$ -1) FI}
+
 \end{Representacion}
+
