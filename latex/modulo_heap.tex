@@ -34,10 +34,10 @@
 
   \Encabezado{Operaciones del heap}
 
-    \InterfazFuncion{vac\'{i}a}{}{heap($\alpha$)}
+    \InterfazFuncion{vac\'{i}o}{}{heap($\alpha$)}
 %    \InterfazFuncion{heap}{}{heap($\alpha$)}
     [true]
-    {$res \igobs$ vac\'{i}a}
+    {$res \igobs$ vac\'{i}o}
     [$\Theta(1)$]
     [Constructor por defecto de heap($\alpha$)]
 
@@ -47,9 +47,9 @@
     [$\Theta(log(h.tama\~{n}o))$]
     [Agrega un elemento a la cola de prioridades]
 
-    \InterfazFuncion{vac\'{i}a?}{\In{h}{heap($\alpha$)}}{bool}
+    \InterfazFuncion{vac\'{i}o?}{\In{h}{heap($\alpha$)}}{bool}
     [true]
-    {$h \igobs$ vac\'{i}a()}
+    {$h \igobs$ vac\'{i}o()}
     [$\Theta(1)$]
     [Devuelve true si y solo si h es un heap vac\'io]
 
@@ -57,13 +57,13 @@
     [$\not$(vac\'ia?(h))]    % $\land$ $h_{0} \igobs h$]
     {$res \igobs$ pr\'{o}ximo (h)}
     [$\Theta(1)$]
-    [Devuelve el proximo elemento en el heap]
+    [Devuelve el pr\'{o}ximo elemento en el heap]
 
     \InterfazFuncion{desencolar}{\Inout{h}{heap($alpha$)}}{}
     [$\not$(vac\'ia?(h))]
     {$res \igobs$ desencolar(h)}
     [$\Theta(log(h.tama\~{n}o))$]
-    [Elimina el proximo elemento en el heap]
+    [Elimina el pr\'{o}ximo elemento en el heap]
 
 \end{Interfaz}
 
