@@ -162,7 +162,7 @@
   \SetKwFunction{max}{max}
   \SetKwFunction{rebalancear}{RebalancearArbol}
   \SetKwFunction{recalcAlt}{RecalcularAltura}
-  \SetKwFunction{recalcAlts}{RecalcularAlturas}
+  % \SetKwFunction{recalcAlts}{RecalcularAlturas}
 
   \begin{algoritmo}{iVacio}{}{estrAVL}
     $res \gets \langle$NULL, 0$\rangle$ \com*{$\Theta(1)$}
@@ -182,7 +182,7 @@
         $(padre \to der) \gets nuevo$ \;
       }
       $(nuevo \to padre) \gets padre$ \;
-      \recalcAlt($padre$) \;
+      % \recalcAlts($padre$) \;
       \rebalancear($padre$) \;
       $e.cantNodos ++$ \;
     }
@@ -218,7 +218,7 @@
         }{
           $(padre \to der) \gets \NULL$ \; 
         }
-        \recalcAlts{$padre$} \;
+        % \recalcAlts{$padre$} \;
         \rebalancear{$padre$} \;
       }{
         $e.raiz = \NULL$ \;
@@ -231,7 +231,7 @@
         }{
           $(padre \to der) \gets (lugar \to izq)$ \; 
         }
-        \recalcAlts{$padre$} \;
+        % \recalcAlts{$padre$} \;
         \rebalancear{$padre$} \;
       }{
         $e.raiz \gets lugar \to izq$ \;
@@ -244,7 +244,7 @@
         }{
           $(padre \to der) \gets (lugar \to der)$ \; 
         }
-        \recalcAlts{$padre$} \;
+        % \recalcAlts{$padre$} \;
         \rebalancear{$padre$} \;
       }{
         $e.raiz \gets lugar \to izq$ \;
@@ -269,7 +269,7 @@
         $(reemplazo \to padre) \gets padre$ \;
         $(reemplazo \to izq) \gets lugar \to izq$ \;
         $(lugar \to izq \to padre) \gets reemplazo$ \;
-        \recalcAlts{$reemplazo$} \;
+        % \recalcAlts{$reemplazo$} \;
         \rebalancear{$reemplazo$} \;
       }{
         \While{$(reemplazo \to izq) \neq \NULL$}{
@@ -294,7 +294,7 @@
         }
         $(reemplazo \to der) \gets (lugar \to der)$ \;
         $(lugar \to der \to padre) \gets reemplazo$ \;
-        \recalcAlts{$reemplazo$} \;
+        % \recalcAlts{$reemplazo$} \;
         \rebalancear{$reemplazo$} \;
       }
     }
