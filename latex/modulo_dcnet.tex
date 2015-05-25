@@ -6,7 +6,7 @@
   
   \generos{\tipo{dcnet}}
   
-  \Titulo{Operaciones b\'asicas de lista}
+  \Encabezado{Operaciones b\'asicas de lista} % ¿?
 
   \InterfazFuncion{iniciarDCNet}{\In{r}{Red}}{DCNet}%
   [true]%pre
@@ -166,7 +166,8 @@
 \end{Representacion}
 
 \begin{Algoritmos}
- \begin{algoritmo}{iCrearPaquete}{\Inout{d}{DCNet},\in{p}{paquete}}{}
+
+ \begin{algoritmo}{iCrearPaquete}{\Inout{d}{DCNet},\In{p}{paquete}}{}
     % Crear e inicializar variables:
     \tipo{nat} $o \gets$ iObtener($p$.origen, $d$.IDsCompusPorIP)\;
     \tipo{nat} $dest \gets$ iObtener($p$.destino, $d$.IDsCompusPorIP)\;

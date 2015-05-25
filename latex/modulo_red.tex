@@ -170,7 +170,7 @@
 
   \begin{algoritmo}{iAgregarCompu}{\Inout{r}{estrRed}, \In{c}{estrCompu}}{}
     agregarAtras(r.compus, $\langle$c.IP, iArmarLista(c.interfaces)$\rangle$)\;
-    $r.cantidadCompus \gets r.cantidadCompus+1$\; \com*{$\Theta(1)$
+    $r.cantidadCompus \gets r.cantidadCompus+1$ \com*{$\Theta(1)$}
   \end{algoritmo}
 
   \begin{algoritmo}{iArmarLista}{\In{ci}{conj(interfaz)}}{lista($\langle$Interfaz, itLista(estrComp)$\rangle$)}
@@ -182,7 +182,7 @@
     }
   \end{algoritmo}
   
-  \begin{algoritmo}{iConectar}{\Inout{r}{estrRed)}, \In{$c_{0}$}{estrCompu}, \In{$i_{0}$}{interfaz}, \In{$c_{1}$}{estrCompu}, \In{$i_{1}$}{interfaz}}{}
+  \begin{algoritmo}{iConectar}{\Inout{r}{estrRed)}, \In{c_{0}}{estrCompu}, \In{i_{0}}{interfaz}, \In{c_{1}}{estrCompu}, \In{i_{1}}{interfaz}}{}
     \tipo{itLista(estrComp)} $it_{0} \gets$ crearIt(r.compus)\;
     \tipo{itLista(estrComp)} $it_{1} \gets$ crearIt(r.compus)\;
     \While{siguiente($it_{0}$.IP $\neq$ $c_{0}$.IP)}{
@@ -206,7 +206,7 @@
     siguiente($it_{3}$).itCompu $\gets$ $i_{1}$
   \end{algoritmo}
 
-  \begin{algoritmo}{iCrearConjuntoDeInterfaces}{\In{l}{lista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)}}{conj(estrInterfaz)}}{}
+  \begin{algoritmo}{iCrearConjuntoDeInterfaces}{\In{l}{lista(tupla(interfaz, itLista(estrCompu)))}}{conj(estrInterfaz)}{}
     \tipo{nat} $n \gets$ 0\;
     $res \gets$ vacio()\;
    \While{n < longitud(l)}{
@@ -215,7 +215,7 @@
     }
   \end{algoritmo}  
   
-  \begin{algoritmo}{iConectadas?}{\In{$r$}{estrRed}, \In{$c_{0}$}{estrCompu}, \In{$c_{1}$}{estrCompu}}{bool}{}
+  \begin{algoritmo}{iConectadas?}{\In{r}{estrRed}, \In{c_{0}}{estrCompu}, \In{c_{1}}{estrCompu}}{bool}{}
     \tipo{itLista(estrComp)} $it_{0} \gets$ crearIt(r.compus)\;
     \While{siguiente($it_{0}$).IP $\neq c_{0}$.IP}{
       avanzar($it_{0}$)\;
@@ -227,7 +227,7 @@
     $res \gets$ (siguiente(siguiente($it_{1}$).itCompu).IP $= c_{1}$.IP)\;
   \end{algoritmo}  
 
-  \begin{algoritmo}{iInterfazUsada}{\In{$r$}{estrRed}, \In{$c_{0}$}{estrCompu}, \In{$c_{1}$}{estrCompu}}{interfaz}{}
+  \begin{algoritmo}{iInterfazUsada}{\In{r}{estrRed}, \In{c_{0}}{estrCompu}, \In{c_{1}}{estrCompu}}{interfaz}{}
     \tipo{itLista(estrComp)} $it_{0} \gets$ crearIt(r.compus)\;
     \While{siguiente($it_{0}$).IP $\neq c_{0}$.IP}{
       avanzar($it_{0}$)\;
@@ -239,8 +239,8 @@
     $res \gets$ siguiente($it_{1}$).inter\;
   \end{algoritmo}  
     
-  \begin{algoritmo}{iVecinos}{{\In{$r$}{estrRed}, \In{$c$}{estrCompu}}{conj(compu)}{}
-    $res \gets$ vacio()\;
+  \begin{algoritmo}{iVecinos}{\In{r}{estrRed}, \In{c}{estrCompu}}{conj(compu)}{}
+    $res \gets$ vacio() \;
     \tipo{itLista(estrComp)} $it_{0} \gets$ crearIt(r.compus)\;
     \While{siguiente($it_{0}$).IP $\neq c$.IP}{
       avanzar($it_{0}$)\;
@@ -254,7 +254,7 @@
     }
   \end{algoritmo}
 
-  \begin{algoritmo}{iUsaInterfaz?}{\In{$r$}{estrRed}, \In{$c$}{estrCompu}, \In{$i$}{interfaz}}{bool}{}
+  \begin{algoritmo}{iUsaInterfaz?}{\In{r}{estrRed}, \In{c}{estrCompu}, \In{i}{interfaz}}{bool}{}
     \tipo{itLista(estrComp)} $it_{0} \gets$ crearIt(r.compus)\;
     \While{siguiente($it_{0}$).IP $\neq c$.IP}{
       avanzar($it_{0}$)\;
@@ -266,7 +266,7 @@
     $res \gets$ haySiguiente?(siguiente($it_{1}$).itCompu)\;
   \end{algoritmo}
 
-  \begin{algoritmo}{iCaminosMinimos}{\In{$r$}{estrRed}, \In{$c_{0}$}{estrCompu}, \In{$c_{1}$}{estrCompu}}{conj(lista(estrCompu))}{}
+  \begin{algoritmo}{iCaminosMinimos}{\In{r}{estrRed}, \In{c_{0}}{estrCompu}, \In{c_{1}}{estrCompu}}{conj(lista(estrCompu))}{}
     $res \gets$ vacio()\;
     \eIf{pertenece($c_{1}$, vecinos($r$, $c_{1}$))}{
       agregar($res$, agregarAtras(agregarAtras(<>,$c_{0}$), $c_{1}$))\;
@@ -276,7 +276,7 @@
 
   \end{algoritmo}
 
-  \begin{algoritmo}{iHayCaminos?}{\In{$r$}{estrRed}, \In{$c_{0}$}{estrCompu}, \In{$c_{1}$}{estrCompu}}{bool}{}
+  \begin{algoritmo}{iHayCaminos?}{\In{r}{estrRed}, \In{c_{0}}{estrCompu}, \In{c_{1}}{estrCompu}}{bool}{}
     $res \gets$ esVacio?(iCaminosMinimos($r$, $c_{0}$, $c_{1}$))
   \end{algoritmo}
 
@@ -296,7 +296,7 @@
     }
   \end{algoritmo}
   
-  \begin{algoritmo}{iComputadoras}{\In{$r$}{estrRed}}{conj(estrCompu)}{}
+  \begin{algoritmo}{iComputadoras}{\In{r}{estrRed}}{conj(estrCompu)}{}
     $res \gets$ vacio()\;
     \tipo{itRed} $it \gets$ crearItRed()\;
     \While{haySiguiente?($it$)}{

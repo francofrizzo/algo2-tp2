@@ -97,72 +97,63 @@
 
   \end{Estructura} 
 
-  \Rep[estrAB][ab]{
-    ($ab$.cantNodos = 0) = ($ab$.raiz = NULL) $\yluego$ \\
-    ($ab$.cantNodos > 0) $\impluego$ ($ab$.cantNodos = cantHijos(\*($ab$.raiz)) + 1) $\land$ \\
-    (\paratodo{nodo}{n_1, n_2})(($n_1$ $\in$ nodos($ab$) $\land$ $n_2$ $\in$ nodos($ab$)) $\impluego$ (($n_1$.izq $\neq$ $n_2$.der) $\land$ (($n_1$.izq = $n_2$.izq $\lor$ $n_1$.der = $n_2$.der) $\implies$ ($n_1 = n_2$))))
+  \Rep[estrAVL][e]{
+    $e.cantNodos$ = \#(nodos($e$) $\land$ \\
+    \#(claves($e$)) = \#(nodos($e$)) $\land$ \\
+    $(\paratodo{nodo}{n})$ $(n.izq \neq n.der$ $\land$ \\
+    $n.altSubarbol$ = altura(sub\'arbol($n$)) $\land$ \\
+    $((n.padre = \NULL)) \Leftrightarrow \&n = e.raiz) \yluego$ \\
+    $(\&n \neq e.raiz) \impluego (\paratodo{nodo}{n'})(n.padre = \&n' \Leftrightarrow n'.izq = \&n \lor n'.der = \&n)$ $\land$ \\
+    m\'ax(altura(sub\'arbol($n.izq$)), altura(sub\'arbol($n.der$))) $-$ \\
+    m\'in(altura(sub\'arbol($n.izq$)), altura(sub\'arbol($n.der$))) $\leq 1)$
   }
 
-  \AbsFc[estrAB]{ab($\alpha$)}[ab]{
-    \IF $ab$.cantNodos = 0 THEN nil ELSE bin(Abs(plantar($ab$.raiz $\to$ izq)), $ab$.raiz $\to$ dato, Abs(plantar($ab$.raiz $\to$ der))) FI
+  ~
+
+  \Abs[estrAVL]{dicc($\kappa$, $\sigma$))}[e]{$d$}{
+    ($\paratodo{k}{\kappa}$) ((def?($k$, $d$)) $\igobs$ ($k$ $\in$ claves($e$)) $\yluego$
+    (def?($k$, $d$) $\impluego$ obtener($k$, $d$) $\igobs$ significado($k$, $e$)))
   }
+
+  ~
 
   \tadOperacion{hijos}{nodo}{conj(nodo)}{}
-  \tadAxioma{hijos($n$)}{\IF $n$.izq = NULL THEN $\emptyset$ ELSE Ag(\*($n$.izq), hijos(\*($n$.izq))) FI $\cup$ \IF $n$.der = NULL THEN $\emptyset$ ELSE Ag(\*($n$.der), hijos(\*($n$.der))) FI}
+  \tadAxioma{hijos($n$)}{\IF $n.izq$ = NULL THEN $\emptyset$ ELSE Ag($*$($n.izq$), hijos($*$($n.izq$))) FI \\
+  $\cup$ \IF $n.der$ = NULL THEN $\emptyset$ ELSE Ag($*$($n.der$), hijos($*$($n.der$))) FI}
 
-  \tadOperacion{cantHijos}{nodo}{nat}{}
-  \tadAxioma{cantHijos($n$)}{\#(hijos($n$))}
+  ~
 
-  \tadOperacion{nodos}{estrAB}{conj(nodo)}{}
-  \tadAxioma{nodos($ab$)}{\IF $ab$.raiz = NULL THEN $\emptyset$ ELSE Ag(\*($ab$.raiz), hijos(\*($ab$.raiz))) FI}
+  \tadOperacion{nodos}{estrAVL}{conj(nodo)}{}
+  \tadAxioma{nodos($e$)}{\IF $e.raiz$ = NULL THEN $\emptyset$ ELSE Ag($*$($e.raiz$), hijos($*$($e.raiz$))) FI}
 
-  \tadOperacion{plantar}{puntero(nodo)}{estrAB}{}
-  \tadAxioma{plantar($p$)}{$\langle p$, \IF $p$ = NULL THEN 0 ELSE cantHijos(\*($p$)) + 1 FI$\rangle$}
+  ~
+
+  \tadOperacion{sub\'arbol}{nodo}{estrAVL}{}
+  \tadAxioma{sub\'arbol($n$)}{$\langle \&n$, $1 + \#$(hijos($n$))$\rangle$}
+
+  ~
+
+  \tadOperacion{sub\'arbol}{puntero(nodo)}{estrAVL}{}
+  \tadAxioma{sub\'arbol($p$)}{$\langle p$, $1 + \#$(hijos($*$($p$)))$\rangle$}
+
+  ~
+
+  \tadOperacion{claves}{estrAVL}{conj($\kappa$)}{}
+  \tadAxioma{claves($e$)}{\IF $e.raiz = \NULL$ THEN $\emptyset$ ELSE Ag($e.raiz \to clave$, claves(sub\'arbol($e.raiz \to izq$)) $\cup$ claves(sub\'arbol($e.raiz \to der$))) FI}
+
+  ~
+
+  \tadOperacion{altura}{estrAVL}{nat}{}
+  \tadAxioma{altura($e$)}{\IF $e.raiz = \NULL$ THEN 0 ELSE 1 + m\'ax(altura(sub\'arbol($e.raiz \to izq$)), altura(sub\'arbol($e.raiz \to der$))) FI}
+
+  ~
+
+  \tadOperacion{significado}{estrAVL/e,$\kappa$/k}{$\sigma$}{$k$ $\in$ claves($e$)}
+  \tadAxioma{significado($e$, $k$)}{\IF $e.raiz \to clave = k$ THEN $e.raiz \to significado$ ELSE {\IF $k$ $\in$ claves(sub\'arbol($e.raiz \to izq$)) THEN significado($k$, sub\'arbol($e.raiz \to izq$)) ELSE significado($k$, sub\'arbol($e.raiz \to der$)) FI} FI}
 
 \end{Representacion}
 
 \begin{Algoritmos}
-  
-  % Definición de funciones que se usan en el algoritmo:
-  \SetKwFunction{atajoFuncion}{nombreFuncion}
-
-  \begin{algoritmo}{nombreAlgoritmo}{parametros}{tipoSalida}
-    % Crear e inicializar variables:
-    \tipo{tipoVariable} $nombreVariable \gets valor$ \;
-    % Nota: las líneas sin comentario deben terminar en \;
-
-    % Comentarios:
-    Contenido de la linea \tcp*[h]{Comentario pegado al texto, onda C++} \com*{Comentario contra el margen}
-    Contenido de la linea \com*[h]{Comentario pegado al texto} \tcp*{Comentario contra el margen, onda C++}
-
-    % Llamada a función definida antes:
-    \atajoFuncion{parametros}
-
-    % If/then:
-    \If{guarda}{
-      Codigo \;
-    }
-
-    % If/then/else:
-    \eIf(\com*[f]{Comentario opcional}){guarda}{
-      Codigo (then) \;
-    }(\com*[f]{Otro comentario opcional}){
-      Codigo (else) \;
-    }
-
-    % If/then/elseif:
-    \uIf{guarda}{
-      Codigo (then) \;
-    }\ElseIf{otra guarda}{
-      Codigo (else) \;
-    }
-
-    % While:
-    \While(\com*[f]{Comentario opcional}){guarda}{
-      Codigo \;
-    }
-
-  \end{algoritmo}
 
   \SetKwFunction{fdb}{FDB}
   \SetKwFunction{raizq}{RotarAIzquierda}
@@ -170,11 +161,222 @@
   \SetKwFunction{buscar}{Buscar}
   \SetKwFunction{max}{max}
   \SetKwFunction{rebalancear}{RebalancearArbol}
+  \SetKwFunction{recalcAlt}{RecalcularAlturas}
 
-  \begin{algoritmo}{iVacio}{}{estrAVL}{
+  \begin{algoritmo}{iVacio}{}{estrAVL}
     $res \gets \langle$NULL, 0$\rangle$ \com*{$\Theta(1)$}
-  }
   \end{algoritmo}
+  \complejidad{$\Theta(1)$}
+
+  \begin{algoritmo}{iDefinir}{\Inout{e}{estrAVL}, \In{k}{$\kappa$}, \In{s}{$\sigma$}}{}
+    \tipo{puntero(nodo)} $nuevo \gets \new \langle k$, $s$, NULL, NULL, NULL, $0 \rangle$ \tcp{Reservamos memoria para el nuevo nodo} \com*{$\Theta(copy(k) + copy(s))$}
+    \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
+    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \com*{$\Theta(\log(n))$}
+    \eIf{$lugar \neq \NULL$}{
+      $(lugar \to significado) \gets s$ \;
+    }{
+      \eIf{$k \leq (padre \to clave)$}{
+        $(padre \to izq) \gets nuevo$ \;
+      }{
+        $(padre \to der) \gets nuevo$ \;
+      }
+      $(nuevo \to padre) \gets padre$ \;
+      \recalcAlt($padre$) \;
+      \rebalancear($padre$) \;
+      $e.cantNodos ++$ \;
+    }
+  \end{algoritmo}
+  \complejidad{}
+
+  \begin{algoritmo}{iObtener}{\In{e}{estrAVL}, \In{k}{$\kappa$}}{$\sigma$}
+    \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
+    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
+    $res \gets (lugar \to significado)$ \com*{$\Theta(1)$}
+  \end{algoritmo}
+  \complejidad{$\Theta(\log(n) \times order(k))$}
+
+  \begin{algoritmo}{\#Claves}{\In{e}{estrAVL}}{nat}
+    $res \gets e.cantNodos$ \com*{$\Theta(1)$}
+  \end{algoritmo}
+  \complejidad{$\Theta(1)$}
+
+  \begin{algoritmo}{Definido?}{\In{e}{estrAVL}, \In{k}{$\kappa$}}{bool}
+    \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
+    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
+    $res \gets (lugar \neq \NULL)$ \com*{$\Theta(1)$}
+  \end{algoritmo}
+  \complejidad{$\Theta(\log(n) \times order(k))$}
+
+  \begin{algoritmo}{iBorrar}{\Inout{e}{estrAVL}, \In{k}{$\kappa$}}{}
+    \tipo{puntero(nodo)} $padre \gets \NULL$ \;
+    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \;
+    \uIf{$lugar \to izq = \NULL \land lugar \to der = \NULL$}{
+      \eIf{$padre \neq \NULL$}{
+        \eIf{$padre \to izq = lugar$}{
+          $(padre \to izq) \gets \NULL$ \; 
+        }{
+          $(padre \to der) \gets \NULL$ \; 
+        }
+        \recalcAlt{$padre$} \;
+        \rebalancear{$padre$} \;
+      }{
+        $e.raiz = \NULL$ \;
+      }
+    }\uElseIf{$lugar \to der = \NULL$}{
+      $(lugar \to izq \to padre) \gets padre$ \;
+      \eIf{$padre \neq \NULL$}{
+        \eIf{$padre \to izq = lugar$}{
+          $(padre \to izq) \gets (lugar \to izq)$ \; 
+        }{
+          $(padre \to der) \gets (lugar \to izq)$ \; 
+        }
+        \recalcAlt{$padre$} \;
+        \rebalancear{$padre$} \;
+      }{
+        $e.raiz \gets lugar \to izq$ \;
+      }
+    }\uElseIf{$lugar \to izq = \NULL$}{
+      $(lugar \to der \to padre) \gets padre$ \;
+      \eIf{$padre \neq \NULL$}{
+        \eIf{$padre \to izq = lugar$}{
+          $(padre \to izq) \gets (lugar \to der)$ \; 
+        }{
+          $(padre \to der) \gets (lugar \to der)$ \; 
+        }
+        \recalcAlt{$padre$} \;
+        \rebalancear{$padre$} \;
+      }{
+        $e.raiz \gets lugar \to izq$ \;
+      }
+      \delete{$lugar$} \;
+    }
+  \end{algoritmo}
+
+  \begin{contAlgoritmo}{iBorrar}
+    \Else{
+      \tipo{puntero(nodo)} $reemplazo \gets (lugar \to der)$ \;
+      \eIf{$(reemplazo \to izq = \NULL)$}{
+        \eIf{$padre \neq \NULL$}{
+          \eIf{$(padre \to izq) = lugar$}{
+            $(padre \to izq) \gets reemplazo$ \; 
+          }{
+            $(padre \to der) \gets reemplazo$ \; 
+          }
+        }{
+          $e.raiz \gets reemplazo$ \;
+        }
+        $(reemplazo \to padre) \gets padre$ \;
+        $(reemplazo \to izq) \gets lugar \to izq$ \;
+        $(lugar \to izq \to padre) \gets reemplazo$ \;
+        \recalcAlt{$reemplazo$} \;
+        \rebalancear{$reemplazo$} \;
+      }{
+        \While{$(reemplazo \to izq) \neq \NULL$}{
+          $reemplazo \gets (reemplazo \to izq)$ \;
+        }
+        \tipo{puntero(nodo)} $padreReemplazo \gets (reemplazo \to padre)$
+        \eIf{$padre \neq \NULL$}{
+          \eIf{$padre \to izq = lugar$}{
+            $(padre \to izq) \gets reemplazo$ \; 
+          }{
+            $(padre \to der) \gets reemplazo$ \; 
+          }
+        }{
+          $e.raiz \gets reemplazo$ \;
+        }
+        $(reemplazo \to padre) \gets padre$ \;
+        $(reemplazo \to izq) \gets lugar \to izq$ \;
+        $(lugar \to izq \to padre) \gets reemplazo$ \;
+        $(padreReemplazo \to izq) \gets (reemplazo \to der)$ \;
+        \If{$(reemplazo \to der) \neq \NULL$}{
+          $(reemplazo \to der \to padre) \gets padreReemplazo$ \;
+        }
+        $(reemplazo \to der) \gets (lugar \to der)$ \;
+        $(lugar \to der \to padre) \gets reemplazo$ \;
+        \recalcAlt{$reemplazo$} \;
+        \rebalancear{$reemplazo$} \;
+      }
+    }
+    \delete{$lugar$} \;
+  \end{contAlgoritmo}
+  \complejidad{}
+
+  \begin{algoritmo}{iBuscar}{\In{e}{estrAVL}, \In{k}{$\kappa$}, \Out{padre}{puntero(nodo)}}{puntero(nodo)}
+    $padre \gets \NULL$  \com*{$\Theta(1)$}
+    $actual \gets e.raiz$  \com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$actual \neq \NULL \yluego (actual \to clave \neq k)$}{ % ¡Preguntar por el y luego!
+      $padre \gets actual$ \com*{$\Theta(1)$}
+      \eIf(\com*[f]{$\Theta(order(k))$}){$k \leq (padre \to clave)$}{
+        $actual \gets (actual \to izq)$ \com*{$\Theta(1)$}
+      }{
+        $actual \gets (actual \to der)$ \com*{$\Theta(1)$}
+      }
+    }
+    $res \gets actual$ \com*{$\Theta(1)$}
+  \end{algoritmo}
+  \complejidad{$\Theta(\log(n) \times order(k))$}
+
+  \begin{algoritmo}{iRecalcularAlturas}{\In{n}{puntero(nodo)}}{}
+    \tipo{puntero(nodo)} $p \gets n$ \com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$p \neq \NULL$}{
+      \uIf{$p \to izq \neq \NULL \land p \to der \neq \NULL$}{
+        $(p \to altSubarbol) \gets 1$ + \max{$p \to izq \to altSubarbol$, $p \to der \to altSubarbol$} \com*{$\Theta(1)$}
+      }\uElseIf{$p \to izq \neq \NULL$}{
+        $(p \to altSubarbol) \gets 1 + (p \to izq \to altSubarbol)$ \com*{$\Theta(1)$}
+      }\uElseIf{$p \to der \neq \NULL$}{
+        $(p \to altSubarbol) \gets 1 + (p \to der \to altSubarbol)$ \com*{$\Theta(1)$}
+      }\Else{
+        $(p \to altSubarbol) \gets 1$ \com*{$\Theta(1)$}
+      }
+      $p \gets (p \to padre)$ \com*{$\Theta(1)$}
+    }
+  \end{algoritmo}
+  \complejidad{$\Theta(\log(n))$}
+
+  \begin{algoritmo}{iFBD}{\In{n}{puntero(nodo)}}{int}
+    \tipo{int} $altIzq \gets n \to izq = \NULL$ ? 0 : $n \to izq \to altSubarbol$ \com*{$\Theta(1)$}
+    \tipo{int} $altDer \gets n \to der = \NULL$ ? 0 : $n \to izq \to altSubarbol$ \com*{$\Theta(1)$}
+    $res \gets altDer - altIzq$ \com*{$\Theta(1)$}
+  \end{algoritmo}
+  \complejidad{$\Theta(1)$}
+
+  \begin{algoritmo}{iRotarAIzquierda}{\In{n}{puntero(nodo)}}{}
+    \If{$n.padre \neq \NULL$}{
+      \eIf{$n.padre \to izq = n$}{
+        $(n.padre \to izq) \gets n.der$ \;
+      }{
+        $(n.padre \to der) \gets n.der$ \;
+      }
+    }
+    $(n.der \to padre) \gets n.padre$ \; 
+    $n.padre \gets n.der$ \;
+    $n.der \gets (n.der \to izq)$ \;
+    \If{$n.der \neq \NULL$}{
+      $(n.der \to padre) \gets n$ \;
+    }
+    $(n.padre \to izq) \gets n$ \;
+    \recalcAlt{$n$} \;
+  \end{algoritmo}
+  \complejidad{}
+
+  \begin{algoritmo}{iRotarADerecha}{\In{n}{puntero(nodo)}}{}
+    \If(\com*[f]{$\Theta(1)$}){$n.padre \neq \NULL$}{
+      \eIf(\com*[f]{$\Theta(1)$}){$n.padre \to izq = n$}{
+        $(n.padre \to izq) \gets n.izq$ \com*{$\Theta(1)$}
+      }{
+        $(n.padre \to der) \gets n.izq$ \com*{$\Theta(1)$}
+      }
+    }
+    $(n.izq \to padre) \gets n.padre$ \com*{$\Theta(1)$} 
+    $n.padre \gets n.izq$ \com*{$\Theta(1)$}
+    $n.izq \gets (n.izq \to der)$ \com*{$\Theta(1)$}
+    \If(\com*[f]{$\Theta(1)$}){$n.izq \neq \NULL$}{
+      $(n.izq \to padre) \gets n$ \com*{$\Theta(1)$}
+    }
+    $(n.padre \to der) \gets n$ \com*{$\Theta(1)$}
+    \recalcAlt{$n$} \com*{$\Theta(\log(n) + order(k))$}
+  \end{algoritmo}
+  \complejidad{$\Theta(\log(n) + order(k))$}
 
   \begin{algoritmo}{iRebalancearArbol}{\In{n}{puntero(nodo)}}{}
     \tipo{puntero(nodo)} $p \gets n$ \com*{$\Theta(1)$}
@@ -206,117 +408,6 @@
       $p \gets (p \to padre)$ \;
     }
   \end{algoritmo}
-
-  \begin{algoritmo}{iFBD}{\In{n}{puntero(nodo)}}{int}
-    \tipo{int} $altIzq \gets n \to izq = \NULL$ ? 0 : $n \to izq \to altSubarbol$ \;
-    \tipo{int} $altDer \gets n \to der = \NULL$ ? 0 : $n \to izq \to altSubarbol$ \;
-    $res \gets altDer - altIzq$ \;
-  \end{algoritmo}
-
-  \begin{algoritmo}{iRotarAIzquierda}{\In{n}{puntero(nodo)}}{}
-    \If{$n.padre \neq \NULL$}{
-      \eIf{$n.padre \to izq = n$}{
-        $(n.padre \to izq) \gets n.der$ \;
-      }{
-        $(n.padre \to der) \gets n.der$ \;
-      }
-    }
-    $(n.der \to padre) \gets n.padre$ \; 
-    $n.padre \gets n.der$ \;
-    $n.der \gets (n.der \to izq)$ \;
-    \If{$n.der \neq \NULL$}{
-      $(n.der \to padre) \gets n$ \;
-    }
-    $(n.padre \to izq) \gets n$ \;
-    \While{$actual \neq \NULL$}{
-      $(actual \to altSubarbol) \gets 1$ + \max{$actual \to izq \to altSubarbol$, $actual \to der \to altSubarbol$} \;
-      $actual \gets (actual \to padre)$ \;
-    }
-  \end{algoritmo}
-
-  \begin{algoritmo}{iRotarADerecha}{\In{n}{puntero(nodo)}}{}
-    \If{$n.padre \neq \NULL$}{
-      \eIf{$n.padre \to izq = n$}{
-        $(n.padre \to izq) \gets n.izq$ \;
-      }{
-        $(n.padre \to der) \gets n.izq$ \;
-      }
-    }
-    $(n.izq \to padre) \gets n.padre$ \; 
-    $n.padre \gets n.izq$ \;
-    $n.izq \gets (n.izq \to der)$ \;
-    \If{$n.izq \neq \NULL$}{
-      $(n.izq \to padre) \gets n$ \;
-    }
-    $(n.padre \to der) \gets n$ \;
-    \While{$actual \neq \NULL$}{
-      $(actual \to altSubarbol) \gets 1$ + \max{$actual \to izq \to altSubarbol$, $actual \to der \to altSubarbol$} \;
-      $actual \gets (actual \to padre)$ \;
-    }
-  \end{algoritmo}
-
-  \begin{algoritmo}{iBuscar}{\In{e}{estrAVL}, \In{k}{$\kappa$}, \Out{padre}{puntero(nodo)}}{puntero(nodo)}
-    $padre \gets \NULL$ \;
-    $actual \gets e.raiz$ \;
-    \While{$actual \neq \NULL \yluego (actual \to clave \neq k)$}{ % ¡Preguntar por el y luego!
-      $padre \gets actual$ \;
-      \eIf{$k \leq (padre \to clave)$}{
-        $actual \gets (actual \to izq)$ \;
-      }{
-        $actual \gets (actual \to der)$ \;
-      }
-    }
-    $res \gets actual$ \;
-    \end{algoritmo}
-
-    \begin{algoritmo}{iBorrar}{\Inout{e}{estrAVL}, \In{k}{$\kappa$}}{}
-      \tipo{puntero(nodo)} $padre \gets \NULL$ \;
-      \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \;
-      \uIf{$lugar \to izq = \NULL \land lugar \to der = \NULL$}{
-        \eIf{$padre \neq \NULL$}{
-          \eIf{$padre \to izq = lugar$}{
-            $(padre \to izq) \gets \NULL$ \; 
-            $(padre \to altSubarbol) \gets 1 + (padre \to der \to altSubarbol)$ \;
-          }{
-            $(padre \to der) \gets \NULL$ \; 
-            $(padre \to altSubarbol) \gets 1 + (padre \to izq \to altSubarbol)$ \;
-          }
-          \rebalancear{$padre$} \;
-        }{
-          $e.raiz = \NULL$ \;
-        }
-        \delete{$lugar$} \;
-      }\uElseIf{$lugar \to der = \NULL$}{
-        $(lugar \to izq \to padre) \gets padre$ \;
-        \eIf{$padre \neq \NULL$}{
-          \eIf{$padre \to izq = lugar$}{
-            $(padre \to izq) \gets (lugar \to izq)$ \; 
-          }{
-            $(padre \to der) \gets (lugar \to izq)$ \; 
-          }
-          $(padre \to altSubarbol) \gets 1$ + \max{$padre \to der \to altSubarbol$, $padre \to izq \to altSubarbol$} \;
-          \rebalancear{$padre$} \;
-        }{
-          $e.raiz = lugar \to izq$ \;
-        }
-        \delete{$lugar$} \;
-      }\uElseIf{$lugar \to izq = \NULL$}{
-        $(lugar \to der \to padre) \gets padre$ \;
-        \eIf{$padre \neq \NULL$}{
-          \eIf{$padre \to izq = lugar$}{
-            $(padre \to izq) \gets (lugar \to der)$ \; 
-          }{
-            $(padre \to der) \gets (lugar \to der)$ \; 
-          }
-          $(padre \to altSubarbol) \gets 1$ + \max{$padre \to der \to altSubarbol$, $padre \to izq \to altSubarbol$} \;
-          \rebalancear{$padre$} \;
-        }{
-          $e.raiz = lugar \to izq$ \;
-        }
-        \delete{$lugar$} \;
-      }\Else{
-        \com*{Ac\'a viene la parte horrible del algoritmo}
-      }
-    \end{algoritmo}
+  \complejidad{}
 
 \end{Algoritmos}
