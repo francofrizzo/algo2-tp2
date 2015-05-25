@@ -57,16 +57,16 @@
   [Devuelve los paquetes que tiene en espera la compu ``c''. ]%descripcion
   []%aliasing
 
-  \InterfazFuncion{paquetesEnEspera?}{\In{D}{DCNet}, \In{p}{paquete}}{bool}%
+  \InterfazFuncion{paquetesEnTr\'ansito?}{\In{D}{DCNet}, \In{p}{paquete}}{bool}%
   [true]%pre
   {res $\igobs$ paquetesEnTrancito?(D, p)}%pos
   [$\Theta(1234)$]%complejidad
   [Devuelve ``True'' si y solo si el paquete esta en los paquetes en espera de alguna computadora. ]%descripcion
   []%aliasing
 
-  \InterfazFuncion{laQueMasEnvio}{\In{D}{DCNet}}{compu}%
+  \InterfazFuncion{laQueM\'asEnvi\'o}{\In{D}{DCNet}}{compu}%
   [true]%pre
-  {res $\igobs$ laQueMasEnvio(D)}%pos
+  {res $\igobs$ laQueM\'asEnvi\'o(D)}%pos
   [$\Theta(1)$]%complejidad
   [Devuelve una de las computadoras con mas paquetes enviados]%descripcion
   []%aliasing
@@ -102,7 +102,7 @@
 		(tam(e.paquetesEnEspera) = tam(e.IPcompusXID) = tam(e.siguienteCompu) = tam (e.cantPaquetesEnviados) = \#(computaodras(e.estrRed))) $\land$ 
 		($\forall n$: nat)(definido?(e.siguienteCompu,n) $\impluego$ tam(e.siguienteCompu[n]) = \#(computadoras(e.estrRed))) $\land$
 %2
-		Maximo(e.cantPaqEnviados) = e.cantidadEnviados[obtener($\pi_1$(siguiente(e.laQueMasEnvio)),e.IDcompusPorIP)] $\land$
+		Maximo(e.cantPaqEnviados) = e.cantidadEnviados[obtener($\pi_1$(siguiente(e.laQueM\'asEnvi\'o)),e.IDcompusPorIP)] $\land$
 %3 CHEQUEAR PARENTESIS
 		($\forall c$: compu)(c $\in$ computadoras(e.estRed) $\impluego$ obtener($\pi_1$(c),e.IDcompusPorIP) < \#(computadoras(e.estrRed))) $\land$
 		(($\forall c_1$, $c_2$: compu)(($c_1 \in$ computadoras(e.estRed) $\land$ ($c_2 \in$ computadoras(e.estrRed)) $\land$ ($c_1 \neq c_2$)) $\impluego$ ((obtener($\pi_1$($c_1$), e.IDcompusPorIP) $\neq$ obtener($\pi_1$($c_2$), e.IDcompusPorIP))))) $\land$
@@ -164,4 +164,83 @@
 \tadAxioma{finAd$_{\text{aux}}$($a$, $b$, $n$)}{\IF ($n$=0) THEN $b$[0] $\leftarrow$ $a$[1] ELSE finAd$_{\text{aux}}$($a$, $b$[n]$\leftarrow$ $a$[$n$+1], $n$ -1) FI}
 
 \end{Representacion}
+
+\begin{Algoritmos}
+ \begin{algoritmo}{iCrearPaquete}{\Inout{d}{DCNet},\in{p}{paquete}}{}
+    % Crear e inicializar variables:
+    \tipo{nat} $o \gets$ iObtener($p$.origen, $d$.IDsCompusPorIP)\;
+    \tipo{nat} $dest \gets$ iObtener($p$.destino, $d$.IDsCompusPorIP)\;
+    $it \gets$ CrearIt(($d$.paquetesEnEspera[$o$]).enConjunto)\;
+    $it \gets$ iAgregar(($d$.paquetesEnEspeta[$o$]).enConjunto, $p$)\;
+    % Nota: las líneas sin comentario deben terminar en \;
+
+    % Comentarios:
+    iDefinir($d$.paquetesEnEspera[$o$].porID, $p$.ID, $\langle$ $it$, $o$, $dest$, $\rangle$)\;
+    iAgregarHeap($d$.paquetesEnEspera[$o$].porPrioridad, $p$.prioridad, $it$)\; %No se como se llama la funcion "agregar" del heap - Manu
+
+    
+  \end{algoritmo}
+
+  \begin{algoritmo}{iAvanzarSegundo}{\Inout{d}{DCNet}}{}
+    \tipo{nat} $j \gets 0$\;
+    \tipo{nat} $o$\;
+    \tipo{nat} $dest$\;
+    \tipo{paquete} $paq$\;
+    \While{$j$ < iCardinal(iComputadoras($d$.red))}{
+      \If{!(iEsVacio?($d$.paquetesEnEspera[$j$]).enConjunto)}{
+        $paq \gets$ iSiguiente(iDameElDeMayorPrioridad(($d$.paquetesEnEspera[$j$]).porPrioridad))\; %No se como se llama la funcion "DameElDeMayorPrioridad" del heap - Manu
+        iBorrarElDeMaxPrioridad($d$.paquetesEnEspera[$j$].porPrioridad)\; %IDEM con BorrarElDeMaxPrior
+        $o \gets$ (iObtener(($d$.paquetesEnEspera[$j$]).porID, $paq$.ID)).codOrigen\;
+        $dest \gets$ (iObtener(($d$.paquetesEnEspera[$j$]).porID, $paq$.ID)).codDestino\;
+        iBorrar(($d$.paquetesEnEspera[$j$]).porID, $paq$.ID)\;
+        $d$.\#paqEnviados[$j$]++\;
+        \If{!($d$.siquienteCompu[$j$][$dest$] = $dest$)}{
+          $it \gets$ crearIt($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]])\;
+          $it \gets$ iAgregar(($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]]).enConjunto, $p$)\;
+          iDefinir($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]].porID, $p$.ID, $\langle$ $it$, $d$.siguienteCompu[$j$][$dest$], $dest$, $\rangle$)\;
+          iAgregarHeap($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]].porPrioridad, $paq$.prioridad, $it$)\; %No se como se llama la funcion "agregar" del heap - Manu
+        }
+      }
+    }
+    \tipo{nat} $k \gets 0$\;
+    \tipo{nat} $h \gets 0$\;
+    \If{iCardinal(iComputadoras($d$.red))>0}{
+      \While{k<iCardinal(iComputadoras($d$.red))>0}{
+        \If{$d$.\#paqEnviados[$k$]>d.\#paqEnviados[h]}{
+          $h \gets k$\;
+          k++\;
+        }
+      }
+    }
+    $d$.laQueM\'asEnvi\'o $\gets$ $d$.IPsCompusPorID[h]\;
+  \end{algoritmo}
+
+  \begin{algoritmo}{iCaminoRecorrido}{\In{d}{DCNet}, \In{p}{paquete}}{lista(compu)}
+    \tipo{nat} $j \gets 0$\;
+    $res \gets$ iVacia()\;
+    \While{!(iDefinido?(($d$.paquetesEnEspera[$j$]).porID), $p$.ID)}{
+      $j$++\;
+    }
+    \tipo{nat} $o$\;
+    $o \gets$ (iObtener(($d$.paquetesEnEspera[$j$]).porID, $p$.ID)).codOrigen\;
+    \tipo{nat} $dest$\;
+    $dest \gets$ (iObtener(($d$.paquetesEnEspera[$o$]).porID, $p$.ID)).codDestino\;
+    \While{!(iDefinido?(($d$.paquetesEnEspera[$o$]).porID), $p$.ID)}{
+      iAgregarAtras($res$, siguiente($d$.IPsCompusPorID[0]))\;
+      $o \gets$ $d$.siguientesCompus[o][dest]\;
+    }
+    iAgregarAtras($res$, siguiente($d$.IPsCompusPorID[$o$]))\;
+  \end{algoritmo} 
+
+  \begin{algoritmo}{iCantidadEnviados}{\In{d}{DCNet}, \In{c}{compu}}{nat}
+    \tipo{nat} $i \gets$ iObtener($d$.IDsCompusPorIP, $c$.IP)\;
+    $res \gets$ $d$.\#paqEnviados[i]\;
+  \end{algoritmo}
+
+  \begin{algoritmo}{iEnEspera}{\In{d}{DCNet}, \In{c}{compu}}{conj(Paquete)}
+    \tipo{nat} $i \gets$ iObtener($d$.IDsCompusPorIP, $c$.IP)\;
+    $res \gets$ ($d$.paquetesEnEspera[i]).enConjunto\;
+  \end{algoritmo}
+
+\end{Algoritmos}
 
