@@ -280,8 +280,20 @@
     $res \gets$ esVacio?(iCaminosMinimos($r$, $c_{0}$, $c_{1}$))
   \end{algoritmo}
 
-  \begin{algoritmo}{iCaminos}{\In{$r$}{estrRed}, \In{$c_{0}$}{estrCompu}, \In{$c_{1}$}{estrCompu}}{conj(lista(estrCompu))}{}
-
+  \begin{algoritmo}{iCaminos}{\In{$r$}{estrRed}, \In{$c_{0}$}{estrCompu}, \In{$c_{1}$}{estrCompu}, \In{$l$}{lista(estrCompu)}, \In{$vec$}{lista(estrCompu)}}{conj(lista(estrCompu))}{}
+    \eIf{vacia?($vec$)}{
+      $res \gets$ vacia()\;
+    }{
+      \eIf{/'{u}ltimo($l$) = $c_{1}$}{
+        $res \gets$ agregar($l$, vacia())\;
+      }{
+        \eIf{$\not$est\'{a}?(primero($vec$, $l$))}{
+          $res \gets$ uni\'{o}n(caminos($r$, $c_{0}$, $c_{1}$, agregarAtras($l$, primero($vec$)), iVecinos($r$, primeros($vec$))), caminos($r$, $c_{0}$, $c_{1}$, $l$, fin($vec$)))\;
+        }{
+          $res \gets$ caminos($r$, $c_{0}$, $c_{1}$, $l$, fin($vec$))\;
+        }
+      }
+    }
   \end{algoritmo}
   
   \begin{algoritmo}{iComputadoras}{\In{$r$}{estrRed}}{conj(estrCompu)}{}
