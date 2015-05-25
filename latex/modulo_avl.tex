@@ -100,12 +100,13 @@
   \Rep[estrAVL][e]{
     $e.cantNodos$ = \#(nodos($e$)) $\land$ \\
     \#(claves($e$)) = \#(nodos($e$)) $\land$ \\
-    $(\paratodo{nodo}{n})$ ($n$ $\in$ nodos($e$) $\impluego$ $(*(n.izq) \neq *(n.der)$ $\land$ \\
+    $(\paratodo{nodo}{n})$ ($n$ $\in$ nodos($e$) $\impluego$ (\\
     $n.altSubarbol$ = altura(sub\'arbol($\&n$)) $\land$ \\
-    $((n.padre = \NULL)) \Leftrightarrow \&n = e.raiz) \yluego$ \\
-    $(\&n \neq e.raiz) \impluego (\paratodo{nodo}{n'})(n.padre = \&n' \Leftrightarrow n'.izq = \&n \lor n'.der = \&n)$ $\land$ \\
     m\'ax(altura(sub\'arbol($n.izq$)), altura(sub\'arbol($n.der$))) $-$ \\
-    m\'in(altura(sub\'arbol($n.izq$)), altura(sub\'arbol($n.der$))) $\leq 1)$
+    m\'in(altura(sub\'arbol($n.izq$)), altura(sub\'arbol($n.der$))) $\leq 1 \land$ \\
+    $(\paratodo{nodo}{n'})$ ($n' \in$ nodos(sub\'arbol($n$)) $\implies$ $n' \in$ nodos(sub\'arbol($n.der$)) $\Leftrightarrow$ $\not(n'.clave \leq n.clave)$) $\land$ \\
+    $(*(n.izq) \neq *(n.der)$ $\land$ $((n.padre = \NULL)) \Leftrightarrow \&n = e.raiz) \yluego$ \\
+    $((\&n \neq e.raiz) \impluego (\paratodo{nodo}{n'})(n.padre = \&n' \Leftrightarrow n'.izq = \&n \lor n'.der = \&n)$)))
   }
 
   ~
@@ -171,23 +172,23 @@
 
   \begin{algoritmo}{iDefinir}{\Inout{e}{estrAVL}, \In{k}{$\kappa$}, \In{s}{$\sigma$}}{}
     \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
-    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \com*{$\Theta(\log(n))$}
+    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
     \eIf{$lugar \neq \NULL$}{
-      $(lugar \to significado) \gets s$ \;
+      $(lugar \to significado) \gets s$ \com*{$\Theta(copy(s))$}
     }{
       \tipo{puntero(nodo)} $nuevo \gets \new \langle k$, $s$, NULL, NULL, NULL, $1 \rangle$ \tcp{Reservamos memoria para el nuevo nodo} \com*{$\Theta(copy(k) + copy(s))$}
       \eIf{$k \leq (padre \to clave)$}{
-        $(padre \to izq) \gets nuevo$ \;
+        $(padre \to izq) \gets nuevo$ \com*{$\Theta(1)$}
       }{
-        $(padre \to der) \gets nuevo$ \;
+        $(padre \to der) \gets nuevo$ \com*{$\Theta(1)$}
       }
-      $(nuevo \to padre) \gets padre$ \;
+      $(nuevo \to padre) \gets padre$ \com*{$\Theta(1)$}
       % \recalcAlts($padre$) \;
-      \rebalancear($padre$) \;
-      $e.cantNodos ++$ \;
+      \rebalancear($padre$) \com*{$\Theta(\log(n))$}
+      $e.cantNodos ++$ \com*{$\Theta(1)$}
     }
   \end{algoritmo}
-  \complejidad{}
+  \complejidad{$\Theta(\log(n) \times order(k) + copy(k) + copy(s))$}
 
   \begin{algoritmo}{iObtener}{\In{e}{estrAVL}, \In{k}{$\kappa$}}{$\sigma$}
     \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
@@ -357,72 +358,74 @@
   \begin{algoritmo}{iRotarAIzquierda}{\In{n}{puntero(nodo)}}{}
     \If(\com*[f]{$\Theta(1)$}){$n.padre \neq \NULL$}{
       \eIf(\com*[f]{$\Theta(1)$}){$n.padre \to izq = n$}{
-        $(n.padre \to izq) \gets n.der$ \com*{$\Theta(1)$}
+        $(n \to padre \to izq) \gets n \to der$ \com*{$\Theta(1)$}
       }{
-        $(n.padre \to der) \gets n.der$ \com*{$\Theta(1)$}
+        $(n \to padre \to der) \gets n \to der$ \com*{$\Theta(1)$}
       }
     }
-    $(n.der \to padre) \gets n.padre$ \com*{$\Theta(1)$} 
-    $n.padre \gets n.der$ \com*{$\Theta(1)$}
-    $n.der \gets (n.der \to izq)$ \com*{$\Theta(1)$}
-    \If(\com*[f]{$\Theta(1)$}){$n.der \neq \NULL$}{
-      $(n.der \to padre) \gets n$ \com*{$\Theta(1)$}
+    $(n \to der \to padre) \gets n \to padre$ \com*{$\Theta(1)$} 
+    $n \to padre \gets n \to der$ \com*{$\Theta(1)$}
+    $n \to der \gets (n \to der \to izq)$ \com*{$\Theta(1)$}
+    \If(\com*[f]{$\Theta(1)$}){$n \to der \neq \NULL$}{
+      $(n \to der \to padre) \gets n$ \com*{$\Theta(1)$}
     }
-    $(n.padre \to izq) \gets n$ \com*{$\Theta(1)$}
-    % \recalcAlts{$n$} \com*{$\Theta(\log(n) + order(k))$}
+    $(n \to padre \to izq) \gets n$ \com*{$\Theta(1)$}
+    \recalcAlt{$n$} \com*{$\Theta(1)$}
+    \recalcAlt{$n \to padre$} \com*{$\Theta(1)$}
   \end{algoritmo}
   \complejidad{$\Theta(1)$}
 
   \begin{algoritmo}{iRotarADerecha}{\In{n}{puntero(nodo)}}{}
-    \If(\com*[f]{$\Theta(1)$}){$n.padre \neq \NULL$}{
-      \eIf(\com*[f]{$\Theta(1)$}){$n.padre \to izq = n$}{
-        $(n.padre \to izq) \gets n.izq$ \com*{$\Theta(1)$}
+    \If(\com*[f]{$\Theta(1)$}){$n \to padre \neq \NULL$}{
+      \eIf(\com*[f]{$\Theta(1)$}){$n \to padre \to izq = n$}{
+        $(n \to padre \to izq) \gets n \to izq$ \com*{$\Theta(1)$}
       }{
-        $(n.padre \to der) \gets n.izq$ \com*{$\Theta(1)$}
+        $(n \to padre \to der) \gets n \to izq$ \com*{$\Theta(1)$}
       }
     }
-    $(n.izq \to padre) \gets n.padre$ \com*{$\Theta(1)$} 
-    $n.padre \gets n.izq$ \com*{$\Theta(1)$}
-    $n.izq \gets (n.izq \to der)$ \com*{$\Theta(1)$}
-    \If(\com*[f]{$\Theta(1)$}){$n.izq \neq \NULL$}{
-      $(n.izq \to padre) \gets n$ \com*{$\Theta(1)$}
+    $(n \to izq \to padre) \gets n \to padre$ \com*{$\Theta(1)$} 
+    $n \to padre \gets n \to izq$ \com*{$\Theta(1)$}
+    $n \to izq \gets (n \to izq \to der)$ \com*{$\Theta(1)$}
+    \If(\com*[f]{$\Theta(1)$}){$n \to izq \neq \NULL$}{
+      $(n \to izq \to padre) \gets n$ \com*{$\Theta(1)$}
     }
-    $(n.padre \to der) \gets n$ \com*{$\Theta(1)$}
-    % \recalcAlts{$n$} \com*{$\Theta(\log(n) + order(k))$}
+    $(n \to padre \to der) \gets n$ \com*{$\Theta(1)$}
+    \recalcAlt{$n$} \com*{$\Theta(1)$}
+    \recalcAlt{$n \to padre$} \com*{$\Theta(1)$}
   \end{algoritmo}
   \complejidad{$\Theta(1)$}
 
   \begin{algoritmo}{iRebalancearArbol}{\In{n}{puntero(nodo)}}{}
     \tipo{puntero(nodo)} $p \gets n$ \com*{$\Theta(1)$}
-    \While{$p \neq \NULL$}{ 
-      \recalcAlt{$p$} \;
-      \tipo{int} $fdb1 \gets$ \fdb{$p$}\;
+    \While(\com*[h]{$\Theta(\log(n))$ iteraciones}){$p \neq \NULL$}{ 
+      \recalcAlt{$p$} \com*{$\Theta(1)$}
+      \tipo{int} $fdb1 \gets$ \fdb{$p$} \com*{$\Theta(1)$}
       \uIf{$fdb1 = 2$}{
-        \tipo{puntero(nodo)} $q \gets (p \to der)$ \;
-        \tipo{int} $fdb2 \gets$ \fdb{$q$} \;
+        \tipo{puntero(nodo)} $q \gets (p \to der)$ \com*{$\Theta(1)$}
+        \tipo{int} $fdb2 \gets$ \fdb{$q$} \com*{$\Theta(1)$}
         \uIf{$fdb2 = 1 \lor fdb2 = 0$}{
-          \raizq{$p$} \;
-          $p \gets q$ \;
+          \raizq{$p$} \com*{$\Theta(1)$}
+          $p \gets q$ \com*{$\Theta(1)$}
         }\ElseIf{$fbd2 = -1$}{
-          \rader{$q$} \;
-          \raizq{$p$} \;
-          $p \gets (q \to padre)$ \;
+          \rader{$q$} \com*{$\Theta(1)$}
+          \raizq{$p$} \com*{$\Theta(1)$}
+          $p \gets (q \to padre)$ \com*{$\Theta(1)$}
         }
       }\ElseIf{$fdb1 = -2$}{
-        \tipo{puntero(nodo)} $q \gets (p \to izq)$ \;
-        \tipo{int} $fdb2 \gets$ \fdb{$q$} \;
+        \tipo{puntero(nodo)} $q \gets (p \to izq)$ \com*{$\Theta(1)$}
+        \tipo{int} $fdb2 \gets$ \fdb{$q$} \com*{$\Theta(1)$}
         \uIf{$fdb2 = -1 \lor fdb2 = 0$}{
-          \rader{$p$} \;
-          $p \gets q$ \;
+          \rader{$p$} \com*{$\Theta(1)$}
+          $p \gets q$ \com*{$\Theta(1)$}
         }\ElseIf{$fbd2 = 1$}{
-          \raizq{$q$} \;
-          \rader{$p$} \;
-          $p \gets (q \to padre)$ \;
+          \raizq{$q$} \com*{$\Theta(1)$}
+          \rader{$p$} \com*{$\Theta(1)$}
+          $p \gets (q \to padre)$ \com*{$\Theta(1)$}
         }
       }
-      $p \gets (p \to padre)$ \;
+      $p \gets (p \to padre)$ \com*{$\Theta(1)$}
     }
   \end{algoritmo}
-  \complejidad{}
+  \complejidad{$\Theta(\log(n))$}
 
 \end{Algoritmos}
