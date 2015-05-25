@@ -2,80 +2,78 @@
 
 \begin{Interfaz}
   
-  \textbf{se explica con:} \tadNombre{Red, Iterador Bidireccional(Compu)}
+  \seExplicaCon{Red, Iterador Bidireccional(Compu)}
 
-  \textbf{g\'{e}neros:} \TipoVariable{red, itRed}
+  \generos{\tipo{red}, \tipo{itRed}}
   
   \Titulo{Operaciones b\'{a}sicas de red}
 
   \InterfazFuncion{iniciarRed}{}{Red}%
-  [true]%pre
   {res $\igobs$ iniciarRed()}%pos
   [$\Theta(1234)$]%complejidad
-  [Genera una nueva Red sin ninguna computadora. "vac\'{i}a" ]%descripcion
+  [Genera una nueva red sin ninguna computadora.]%descripcion
   []%aliasing
   
   \InterfazFuncion{agregarCompu}{\Inout{R}{Red}, \In{c}{compu}}{}%
-  [$R$ $\igobs$ $R_{0}$ $\land$ ($\forall c'$: compu)($c' \in$ computadoras($r$) $\rightarrow$ ip($c$) \neq ip($c'$))]%pre
+  [$R$ $\igobs$ $R_{0}$ $\land$ ($\forall c'$: compu)($c' \in$ computadoras($r$) $\rightarrow$ ip($c$) $\neq$ ip($c'$))]%pre
   {$R$ $\igobs$ agregarCompu($R_{0}$, c)}%pos
   [$\Theta(1324)$]%complejidad
-  [Agrega una nueva pc a una red. ]%descripcion
+  [Agrega una nueva pc a una red.]%descripcion
   []%aliasing
 
-  \InterfazFuncion{conectar}{\Inout{$R$}{Red}, \In{$c_{0}$}{compu}, \In{$i_{0}$}{interfaz}, \In{$c_{1}$}{compu}, \In{$i_{1}$}{interfaz}}{Red}%
+  \InterfazFuncion{conectar}{\Inout{r}{Red}, \In{c_0}{compu}, \In{i_0}{interfaz}, \In{c_1}{compu}, \In{i_1}{interfaz}}{red}%
   [$R$ $\igobs$ $R_{0}$ $\land c_{1} \in $computadoras($r$) $\land c_{2} \in$ computadoras($r$) $\land$ ip($c_{0} $) $\neq$ ip($c_{1} $) $\land \not$conectadas?($r$, $c_{0}$ ,$c_{1} $) $\land \not$ usaInterfaz?($r$, $c_{0}$, $i_{0}$) $\land \not$ usaInterfaz?($r$, $c_{1}$, $i_{1}$)]%pre
   {$R$ $\igobs$ conectar($R_{0}$, $c_{0}$, $i_{0}$, $c_{1}$, $i_{1}$)}%pos
   [$\Theta(1234)$]%complejidad
-  [Conecta la pc $c_{0}$ con la pc $c_{1}$ a travez de las intergaces $i_{0}$ y $i_{1}$ respectivamente. ]%descripcion
+  [Conecta la pc $c_{0}$ con la pc $c_{1}$ a trav\'es de las interfaces $i_{0}$ y $i_{1}$ respectivamente. ]%descripcion
   []%aliasing
   
   \InterfazFuncion{computadoras}{\In{R}{Red}}{conj(compus)}%
-  [true]%pre
   {$res$ $\igobs$ computadoras(R) } %es alias(res,compus(R))             %pos
   [$\Theta(1234)$]%complejidad
   [Devuelve todas las computadoras de la red. ]%descripcion
   []%aliasing
   
-  \InterfazFuncion{conectadas?}{\In{$R$}{Red}, \In{$c_{0}$}{compu}, \In$c_{1}$}{compu}}{bool}%
-  [$c_{0}$ $\in$ computadoras($R$) $\land c_{1} \in $ computadoras($R$)}]%pre
+  \InterfazFuncion{conectadas?}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{bool}%
+  [$c_{0}$ $\in$ computadoras($R$) $\land c_{1} \in $ computadoras($R$)]%pre
   {$res$ $\igobs$ conectadas?($R$, $c_{0}$, $c_{1}$)}%pos
   [$\Theta(1234)$]%complejidad
   [Devuelve true si y solo si la pc $c_{0}$ esta conectada a la pc $c_{1}$]%descripcion
   []%aliasing
   
-  \InterfazFuncion{interfazUsada}{\In{$R$}{Red}, \In{$c_{0}$}{compu}, \In$c_{1}$}{compu}}{interfaz}%
+  \InterfazFuncion{interfazUsada}{\In{R}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{interfaz}%
   [$c_{0}$ $\in$ computadoras($R$) $\land c_{1} \in $ computadoras($R$) $\yluego$ conectadas?($R$, $c_{0}$, $c_{1}$)]%pre
   {$res$ $\igobs$ interfazUsada($R$, $c_{0}$, $c_{1}$)}%pos
   [$\Theta(1234)$]%complejidad
   [Devuelve la interfaz usada por $c_{0}$ para conectarse a $c_{1}$]%descripcion
   []%aliasing
   
-  \InterfazFuncion{vecinos}{\In{$R$}{Red}, \In{$c$}{compu}}{conj(compus)}%
+  \InterfazFuncion{vecinos}{\In{R}{Red}, \In{c}{compu}}{conj(compus)}%
   [$c$ $\in$ computadoras($R$)]%pre
   {$res$ $\igobs$ vecinos($R$, $c$)}%pos
   [$\Theta(1234)$]%complejidad
-  [Devuelve el conjunto de vecinos de la pc '$c$']%descripcion
+  [Devuelve el conjunto de vecinos de la pc $c$]%descripcion
   []%aliasing
   
-  \InterfazFuncion{usaInterfaz?}{\In{$R$}{Red}, \In{$c$}{compu}, \In{$i$}{interfaz}{bool}%
+  \InterfazFuncion{usaInterfaz?}{\In{R}{Red}, \In{c}{compu}, \In{i}{interfaz}{bool}}%
   [$c$ $\in$ computadoras($R$)]%pre
   {$res$ $\igobs$ usaInterfaz?($R$, $c$, $i$)}%pos
   [$\Theta(1234)$]%complejidad
-  [Devuelve true si y solo si la pc '$c$' esta usando la interfaz '$i$'. ]%descripcion
+  [Devuelve true si y solo si la pc $c$ esta usando la interfaz $i$. ]%descripcion
   []%aliasing
   
-  \InterfazFuncion{caminosMinimos}{\In{$R$}{Red}, \In{$c_{0}$}{compu}, \In{$c_{1}$}{compu}}{conj(secu(compus))}%
+  \InterfazFuncion{caminosMinimos}{\In{R}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{conj(secu(compus))}%
   [$c_{0}$ $\in$ computadoras($R$) $\land c_{1} \in $ computadoras($R$)]%pre
   {$res$ $\igobs$ caminosMinimos($R$, $c_{0}$, $c_{1}$)}%pos
   [$\Theta(1234)$]%complejidad
-  [Devuelve todos los caminos minimos posibles entre $c_{0}$ y $c_{1}$, de no haber ninguno devuelve $\emptyset$. ]%descripcion
+  [Devuelve todos los caminos m\'nimos posibles entre $c_{0}$ y $c_{1}$. De no haber ninguno, devuelve $\emptyset$. ]%descripcion
   []%aliasing
   
-  \InterfazFuncion{hayCamino?}{\In{$R$}{Red}, \In{$c_{0}$}{compu}, \In{$c_{1}$}{compu}}{bool}%
+  \InterfazFuncion{hayCamino?}{\In{R}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{bool}%
   [$c_{0}$ $\in$ computadoras($R$) $\land c_{1} \in $ computadoras($R$)]%pre
   {$res$ $\igobs$ hayCamino?($R$, $c_{0}$, $c_{1}$)}%pos
   [$\Theta(1234)$]%complejidad
-  [Devuelve ture si y solo si hay algun camino posible entre $c_{0}$ y $c_{1}$. ]%descripcion
+  [Devuelve true si y solo si hay alg\'un camino posible entre $c_{0}$ y $c_{1}$. ]%descripcion
   []%aliasing
 
 \end{Interfaz}
