@@ -1,0 +1,156 @@
+\section{M\'{o}dulo Heap($\alpha$)}
+
+\begin{Interfaz}
+  
+  \begin{paramFormales}
+    \paramGeneros{$\alpha$}
+
+%    \paramFuncion{
+%      \InterfazFuncion{$\bullet = \bullet$}{\In{a_{1}}{$\alpha$}, \In{a_{2}}{$\alpha$}}{bool}
+%      {$res \igobs (a_{1} = a_{2})$}
+%      [$\Theta(equal(a_{1}, a_{2}))$]
+%      [funci\'on de igualdad de $\alpha$]
+%    }
+
+    \paramFuncion{
+      \InterfazFuncion{$\bullet < \bullet$}{\In{a_{1}}{$\alpha$}, \In{a_{a}}{$\alpha$}}{bool}
+      {$res \igobs (a_{1} \leq a_{2})$}
+      [$\Theta(compare(a_{1}, a_{2}))$]
+      [funci\'{o}n de comparaci\'{o}n de menor de $\alpha$. ] %Teniendo esta y la anterior, las siguientes funciones son triviales ("$\leq$", ">" y "$\geq$")]
+    }
+
+    \paramFuncion{
+      \InterfazFuncion{Copiar}{\In{a}{$\alpha$}}{$\alpha$}
+      {$res \igobs a$}
+      [$\Theta(copy(a))$]
+      [funci\'{o}n de copia de $\alpha$]
+    }
+
+  \end{paramFormales}
+
+  \seExplicaCon{colaPrior($\alpha$)}
+
+  \generos{heap($\alpha$)}
+
+  \Encabezado{Operaciones del heap}
+
+    \InterfazFuncion{vac\'{i}a}{}{heap($\alpha$)}
+%    \InterfazFuncion{heap}{}{heap($\alpha$)}
+    [true]
+    {$res \igobs$ vac\'{i}a}
+    [$\Theta(1)$]
+    [Constructor por defecto de heap($\alpha$)]
+
+    \InterfazFuncion{encolar}{\Inout{h}{heap($\alpha$)}, \In{a}{$\alpha$}}{}{}
+    [$h \igobs h_{0}$]
+    {$h \igobs$ encolar($a$, $h_{0}$)}
+    [$\Theta(log(h.tama\~{n}o))$]
+    [Agrega un elemento a la cola de prioridades]
+
+    \InterfazFuncion{vac\'{i}a?}{\In{h}{heap($\alpha$)}}{bool}
+    [true]
+    {$h \igobs$ vac\'{i}a()}
+    [$\Theta(1)$]
+    [Devuelve true si y solo si h es un heap vac\'io]
+
+    \InterfazFuncion{pr\'{o}ximo}{\In{h}{heap($alpha$)}}{$\alpha$}
+    [$\not$(vac\'ia?(h))]    % $\land$ $h_{0} \igobs h$]
+    {$res \igobs$ pr\'{o}ximo (h)}
+    [$\Theta(1)$]
+    [Devuelve el proximo elemento en el heap]
+
+    \InterfazFuncion{desencolar}{\Inout{h}{heap($alpha$)}}{}
+    [$\not$(vac\'ia?(h))]
+    {$res \igobs$ desencolar(h)}
+    [$\Theta(log(h.tama\~{n}o))$]
+    [Elimina el proximo elemento en el heap]
+
+\end{Interfaz}
+
+\begin{Representacion}
+
+  \begin{Estructura}{heap($\alpha$)}[hp]
+
+%
+% NOSE COMO SE ESCRIVE ESTO.. DEVERIA DECIR
+%   Genero: heap($\alpha$) se representa con hp
+%       donde hp es vector($\alpha$)
+%
+
+    \begin{vector($\alpha$)}[hp]
+    \end{vector}
+
+  \end{Estructura} 
+
+  \Rep[heap($\alpha$)][hp]{
+  
+  %1) si A es el padre de B entonces A >= B
+  %2) no hay ningun agujero en el vector es decir estan todos cargados consecutivos. por ende el arbol del heap se carga nivel a nivel de izq a der sin dejar ningun nivel con algun nodo sin hijos
+  %3) si A es el padre de B entonces (A = hp[i]) entonces ((B=hp[2i+1]) xor (B=hp2i+2)) 
+  %4) (es redundante pero creo que agrega mas claridad)
+  %    si A es el padre de B entonces (A=hp[i]) entonces (A=hp[((i/2)-((i+1)%2)))])
+  }
+
+  \AbsFc[heap($\alpha$)]{colaPrior($\alpha$)}[h]{
+    \IF h.tama\~{n}o = 0 THEN vacia\'{i}a ELSE encolar(pr\'{o}ximo(h),ABS(desencolar(h))) FI
+  }
+
+\end{Representacion}
+
+\begin{Algoritmos}
+  \begin{algoritmo}{iVac\'{i}o}{}{heap($\alpha$)}
+    $res \gets$ vector<$\alpha$>\;
+  \end{algoritmo}
+
+  \begin{algoritmo}{iEncolar}{\Inout{hp}{heap($\alpha$)}, \In{a}{$\alpha$}}{}
+    $hp$.push_back($a$)\;
+    \tipo{nat} $i \gets$ $hp$.tama\~{n}o - 1\;
+    \tipo{nat} $p \gets$ (i/2) - ((i+1)\%2)\;
+    \While{$hp$[$p$] < $hp$[$i$]}{
+      iSwap($hp$[$p$], $hp$[$i$])\;
+      $i \gets p$\;
+      $p \gets$ ($i$/2) - (($i$+1)\%2)\;
+    }
+  \end{algoritmo}
+
+  \begin{algoritmo}{iVac\'{i}o?}{\In{hp}{heap($\alpha$)}}{bool}
+    $res \gets$ ($hp$ = vac\'{i}o())\;
+  \end{algoritmo}
+
+  \begin{algoritmo}{iProximo}{\In{hp}{heap($\alpha$)}}{$\alpha$}
+    $res \gets$ hp[0]\;
+  \end{algoritmo}
+
+%  \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{$\alpha$}
+  \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{}
+
+    \tipo{nat} $i \gets$ $hp$.tama\~{n}o - 1\;
+    iSwap($hp$[$0$], $hp$[$i$])\;
+%    $res \gets$ $hp$.pop_back()\;
+    $hp$.pop_back()\;
+
+    \tipo{nat} $hijo_{0} \gets$ 0\;
+    \tipo{nat} $hijo_{1} \gets$ 1\;
+
+    \While{$hijo_{0}$ < $hp$.tama\~{n}o $\land$ $hijo_{1}$ < $hp$.tama\~{n}o $\yluego$ ($hp$[$hijo_{0}$] < $hp$[$i$] $\lor$ $hp$[$hijo_{1}$] < $hp$[$i$])}{
+
+      \eIf{$hp$[$hijo_{0}$] $\geq$ $hp$[$hijo_{1}$]}{
+        iSwap($hp$[$hijo_{0}$], $hp$[$i$])\;
+        $i \gets$ $hijo_{0}$
+      }{
+        iSwap($hp$[$hijo_{1}$], $hp$[$i$])\;
+        $i \gets$ $hijo_{1}$
+      }
+      $hijo_{0} \gets$ 2x$i$ +1\;
+      $hijo_{1} \gets$ 2x$i$ +2\;
+    }
+  \end{algoritmo}
+
+  \begin{algoritmo}{iSwap}{\Inout{a}{$\alpha$}, \Inout{b}{$\alpha$}}{}
+    \tipo{$\alpha$} $c$\;
+    $c \gets a$\;
+    $a \gets b$\;
+    $b \gets c$\;
+  \end{algoritmo}
+
+\end{Algoritmos}
