@@ -1,0 +1,60 @@
+\section{M\'{o}dulo Heap($\alpha$)}
+
+\begin{Interfaz}
+  
+  \begin{paramFormales}
+    \paramGeneros{$\alpha$}
+
+    \paramFuncion{
+      \InterfazFuncion{$\bullet = \bullet$}{\In{a_{0}}{$\alpha$}, \In{a_{1}}{$\alpha$}}{bool}
+      {$res \igobs$ equal($a_{1}$, $a_{2}$)}
+      [$\Theta(equal(a_{1}, a_{2}))$]
+      [funci\'on de igualdad de $\alpha$]
+    }
+
+    \paramFuncion{
+      \InterfazFuncion{Copiar}{\In{a}{$\alpha$}}{$\alpha$}
+      {$res \igobs a$}
+      [$\Theta(copy(a))$]
+      [funci\'{o}n de copia de $\alpha$]
+    }
+
+  \end{paramFormales}
+
+  \seExplicaCon{dicc(secu(char), $\alpha$)}
+
+  \generos{diccTrie($\alpha$)}
+
+  \Encabezado{Operaciones del diccTrie}
+
+    \InterfazFuncion{vac\'{i}o}{}{diccTrie($\alpha$)}
+    [true]
+    {$res \igobs$ vac\'{i}o}
+    [$\Theta(1)$]
+    [Constructor por defecto de diccTrie($\alpha$)]
+
+    \InterfazFuncion{definir}{\Inout{d}{diccTrie($\alpha$)}, \In{k}{string}, \In{s}{$\alpha$}}{diccTrie($\alpha$)}
+    [$d \igobs d_{0}$]
+    {$d \igobs$ definir($k$, $s$, $d_{0}$}
+    [$\Theta(L)$]
+    [Define una plabra en el diccTrie($\alpha$)]
+
+    \InterfazFuncion{borrar}{\Inout{d}{diccTrie($\alpha$)}, \In{k}{string}}{diccTrie($\alpha$)}
+    [$d \igobs d_{0}$ $\land$ def?($d$, $k$)]
+    {$d \igobs$ borrar($k$, $s$, $d_{0}$}
+    [$\Theta(L)$]
+    [Borra una definicion en el diccTrie($\alpha$)]
+
+    \InterfazFuncion{def?}{\In{d}{diccTrie($\alpha$)}, \In{k}{string}}{bool}
+    [true]
+    {$res \igobs$ def?($d$, $k$)}
+    [$\Theta(L)$]
+    [Pregunta si la palabra $k$ esta definida en el diccTrie($\alpha$)]
+
+    \InterfazFuncion{obtener}{\In{d}{diccTrie($\alpha$)}, \In{k}{string}}{$\alpha$}
+    [def?($d$, $k$)]
+    {$res \igobs$ obtener($d$, $k$)}
+    [$\Theta(L)$]
+    [Devuelve el significado de la palabra $k$]
+
+\end{Interfaz}
