@@ -6,7 +6,7 @@
 
   \generos{\tipo{red}, \tipo{itRed}}
   
-  \Titulo{Operaciones b\'{a}sicas de red}
+  \Titlo{Operaciones b\'{a}sicas de red}
 
   \InterfazFuncion{iniciarRed}{}{Red}%
   {res $\igobs$ iniciarRed()}%pos
@@ -76,11 +76,41 @@
   [Devuelve true si y solo si hay alg\'un camino posible entre $c_{0}$ y $c_{1}$. ]%descripcion
   []%aliasing
 
+  \Titlo{Operaciones b\'{a}sicas del iterdor de red}
+
+  \InterfazFuncion{crearIt}{\In{r}{red}}{itRed}%
+  [true]%pre
+  {$res$ $\igobs$ crearItUni($r$.compus)}%pos
+  [$\Theta(1)$]%complejidad
+  [??????????. ]%descripcion
+  [Crea un iterador de red. ]%aliasing
+
+  \InterfazFuncion{haySiguiente?}{\In{it}{itRed}}{bool}%
+  [true]%pre
+  {$res$ $\igobs$ hayMas?($it$)}%pos
+  [$\Theta(1)$]%complejidad
+  [Devuelve true si y solo si '$it$' tiene siguiente. ]%descripcion
+  []%aliasing
+
+  \InterfazFuncion{siguiente}{\In{it}{itRed}}{compu}%
+  [true]%pre
+  {$res$ $\igobs$ actual($it$)}%pos
+  [$\Theta(1)$]%complejidad
+  [??????????. ]%descripcion
+  [$res$ se devuelve por referencia]%aliasing
+
+  \InterfazFuncion{avanzar}{\Inout{it}{itRed}}{}%
+  [$it \igobs$ $it_{0}$ $\land$ haySiguiente?($it$)]%pre
+  {$it$ $\igobs$ avanzar($it_{0}$)}%pos
+  [$\Theta(1)$]%complejidad
+  [Avanza el iterador a la siguiente posicion. ]%descripcion
+  []%aliasing
+
 \end{Interfaz}
 
 \begin{Representacion}
 
-  \begin{Estructura}{red}[estrRed]
+  \begin{Estructura}{Red}[estrRed]
 
     \begin{Tupla}[estrRed]
       \tupItem{compus}{lista(estrCompu)}
@@ -112,7 +142,15 @@
     InterfazUsada(r, $c_{1}$, $c_{2}$) = DevolverInterfaz(e.conexiones, $c_{1}$, $c_{2}$)))
   }
 
-  ~      
+  \RepFc[itRed][it]{true}\mbox{}
+
+  ~
+
+  \AbsFc[itRed]{itUni(estrCompu)}[itl]{
+    $itr$: itUni(estrCompu)| siguientes($itr$) $\igobs$ armarCompus(siguiente($itl$))
+  }
+
+  ~
 
   \tadOperacion{ArmarComputadoras}{lista(tupla<string, lista(tupla<Interfaz, ItRed>)>)}{conj(compu)}{} %falta arreglar comas
   \tadAxioma{ArmarComputadoras($l$)}{\IF vacia?(l) THEN $\emptyset$ ELSE Ag(<$\pi_{1}$(prim($l$)), GenerarInterfaces($\pi_{2}$(prim($l$)))>, ArmarComputadoras(fin($l$))) FI}
@@ -141,6 +179,21 @@
   
    \tadOperacion{DevolverInterfazAux}{lista(tupla<Interfaz, ItRed>)/l, compu/c}{Interfaz}{} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
   \tadAxioma{DevolverInterfaz($l$, $c$)}{\IF ($\pi_{1}$($c_{2}$) = $\pi_{1}$(siguiente($\pi_{2}$(prim($l$))))) THEN $\pi_{1}$(prim($l$)) ELSE DevolverInterfazAux(fin($l$, c)) FI}
+
+  ~
+
+  \tadOperacion{armarCompus}{lista(estrCompu)/l}{secu(compu)}{}
+  \tadAxioma{armarCompus($es$)}{\IF vac\'{i}a(es) THEN <> ELSE armarCompu(prim($es$)) $\bullet$ armarCompus(fin($es$)) FI}
+
+  ~
+
+  \tadOperacion{armarCompu}{estrCompu/e}{compu}{}
+  \tadAxioma{armarCompus($e$)}{$\lange e$.IP, dame$\Pi_{1}$($e$.conecciones)$\rangle$}
+
+  ~
+
+  \tadOperacion{dame$\Pi_{1}$}{secu(tupla$\lange inter$: interfaz, $itCompu$: itLista(estrCompu)$\rangle$)/l}{conj(interfaz)}{}
+  \tadAxioma{dame$\Pi_{1}$($l$)}{\IF vac\'{i}a($l$) THEN $\emptyset$ ELSE ag($Pi_{1}$(prim($l$)), dame$\Pi_{1}$(fin($l$)))FI}
 
   ~
 
