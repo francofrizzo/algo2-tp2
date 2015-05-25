@@ -79,7 +79,7 @@
 
 \begin{Representacion}
 
-  \begin{Estructura}{diccAVL($\alpha$)}[estrAVL]
+  \begin{Estructura}{diccAVL($\kappa$, $\sigma$)}[estrAVL]
 
     \begin{Tupla}[estrAVL]
       \tupItemNL{raiz}{puntero(nodo)}%
@@ -161,7 +161,8 @@
   \SetKwFunction{buscar}{Buscar}
   \SetKwFunction{max}{max}
   \SetKwFunction{rebalancear}{RebalancearArbol}
-  \SetKwFunction{recalcAlt}{RecalcularAlturas}
+  \SetKwFunction{recalcAlt}{RecalcularAltura}
+  \SetKwFunction{recalcAlts}{RecalcularAlturas}
 
   \begin{algoritmo}{iVacio}{}{estrAVL}
     $res \gets \langle$NULL, 0$\rangle$ \com*{$\Theta(1)$}
@@ -217,7 +218,7 @@
         }{
           $(padre \to der) \gets \NULL$ \; 
         }
-        \recalcAlt{$padre$} \;
+        \recalcAlts{$padre$} \;
         \rebalancear{$padre$} \;
       }{
         $e.raiz = \NULL$ \;
@@ -230,7 +231,7 @@
         }{
           $(padre \to der) \gets (lugar \to izq)$ \; 
         }
-        \recalcAlt{$padre$} \;
+        \recalcAlts{$padre$} \;
         \rebalancear{$padre$} \;
       }{
         $e.raiz \gets lugar \to izq$ \;
@@ -243,7 +244,7 @@
         }{
           $(padre \to der) \gets (lugar \to der)$ \; 
         }
-        \recalcAlt{$padre$} \;
+        \recalcAlts{$padre$} \;
         \rebalancear{$padre$} \;
       }{
         $e.raiz \gets lugar \to izq$ \;
@@ -268,7 +269,7 @@
         $(reemplazo \to padre) \gets padre$ \;
         $(reemplazo \to izq) \gets lugar \to izq$ \;
         $(lugar \to izq \to padre) \gets reemplazo$ \;
-        \recalcAlt{$reemplazo$} \;
+        \recalcAlts{$reemplazo$} \;
         \rebalancear{$reemplazo$} \;
       }{
         \While{$(reemplazo \to izq) \neq \NULL$}{
@@ -293,7 +294,7 @@
         }
         $(reemplazo \to der) \gets (lugar \to der)$ \;
         $(lugar \to der \to padre) \gets reemplazo$ \;
-        \recalcAlt{$reemplazo$} \;
+        \recalcAlts{$reemplazo$} \;
         \rebalancear{$reemplazo$} \;
       }
     }
@@ -316,22 +317,35 @@
   \end{algoritmo}
   \complejidad{$\Theta(\log(n) \times order(k))$}
 
-  \begin{algoritmo}{iRecalcularAlturas}{\In{n}{puntero(nodo)}}{}
-    \tipo{puntero(nodo)} $p \gets n$ \com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$p \neq \NULL$}{
-      \uIf{$p \to izq \neq \NULL \land p \to der \neq \NULL$}{
-        $(p \to altSubarbol) \gets 1$ + \max{$p \to izq \to altSubarbol$, $p \to der \to altSubarbol$} \com*{$\Theta(1)$}
-      }\uElseIf{$p \to izq \neq \NULL$}{
-        $(p \to altSubarbol) \gets 1 + (p \to izq \to altSubarbol)$ \com*{$\Theta(1)$}
-      }\uElseIf{$p \to der \neq \NULL$}{
-        $(p \to altSubarbol) \gets 1 + (p \to der \to altSubarbol)$ \com*{$\Theta(1)$}
-      }\Else{
-        $(p \to altSubarbol) \gets 1$ \com*{$\Theta(1)$}
-      }
-      $p \gets (p \to padre)$ \com*{$\Theta(1)$}
+  % \begin{algoritmo}{iRecalcularAlturas}{\In{n}{puntero(nodo)}}{}
+  %   \tipo{puntero(nodo)} $p \gets n$ \com*{$\Theta(1)$}
+  %   \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$p \neq \NULL$}{
+  %     \uIf{$p \to izq \neq \NULL \land p \to der \neq \NULL$}{
+  %       $(p \to altSubarbol) \gets 1$ + \max{$p \to izq \to altSubarbol$, $p \to der \to altSubarbol$} \com*{$\Theta(1)$}
+  %     }\uElseIf{$p \to izq \neq \NULL$}{
+  %       $(p \to altSubarbol) \gets 1 + (p \to izq \to altSubarbol)$ \com*{$\Theta(1)$}
+  %     }\uElseIf{$p \to der \neq \NULL$}{
+  %       $(p \to altSubarbol) \gets 1 + (p \to der \to altSubarbol)$ \com*{$\Theta(1)$}
+  %     }\Else{
+  %       $(p \to altSubarbol) \gets 1$ \com*{$\Theta(1)$}
+  %     }
+  %     $p \gets (p \to padre)$ \com*{$\Theta(1)$}
+  %   }
+  % \end{algoritmo}
+  % \complejidad{$\Theta(\log(n))$}
+
+  \begin{algoritmo}{iRecalcularAltura}{\In{n}{puntero(nodo)}}{}
+    \uIf{$n \to izq \neq \NULL \land n \to der \neq \NULL$}{
+      $(n \to altSubarbol) \gets 1$ + \max{$n \to izq \to altSubarbol$, $n \to der \to altSubarbol$} \com*{$\Theta(1)$}
+    }\uElseIf{$n \to izq \neq \NULL$}{
+      $(n \to altSubarbol) \gets 1 + (n \to izq \to altSubarbol)$ \com*{$\Theta(1)$}
+    }\uElseIf{$n \to der \neq \NULL$}{
+      $(n \to altSubarbol) \gets 1 + (n \to der \to altSubarbol)$ \com*{$\Theta(1)$}
+    }\Else{
+      $(n \to altSubarbol) \gets 1$ \com*{$\Theta(1)$}
     }
   \end{algoritmo}
-  \complejidad{$\Theta(\log(n))$}
+  \complejidad{$\Theta(1)$}
 
   \begin{algoritmo}{iFBD}{\In{n}{puntero(nodo)}}{int}
     \tipo{int} $altIzq \gets n \to izq = \NULL$ ? 0 : $n \to izq \to altSubarbol$ \com*{$\Theta(1)$}
@@ -341,23 +355,23 @@
   \complejidad{$\Theta(1)$}
 
   \begin{algoritmo}{iRotarAIzquierda}{\In{n}{puntero(nodo)}}{}
-    \If{$n.padre \neq \NULL$}{
-      \eIf{$n.padre \to izq = n$}{
-        $(n.padre \to izq) \gets n.der$ \;
+    \If(\com*[f]{$\Theta(1)$}){$n.padre \neq \NULL$}{
+      \eIf(\com*[f]{$\Theta(1)$}){$n.padre \to izq = n$}{
+        $(n.padre \to izq) \gets n.der$ \com*{$\Theta(1)$}
       }{
-        $(n.padre \to der) \gets n.der$ \;
+        $(n.padre \to der) \gets n.der$ \com*{$\Theta(1)$}
       }
     }
-    $(n.der \to padre) \gets n.padre$ \; 
-    $n.padre \gets n.der$ \;
-    $n.der \gets (n.der \to izq)$ \;
-    \If{$n.der \neq \NULL$}{
-      $(n.der \to padre) \gets n$ \;
+    $(n.der \to padre) \gets n.padre$ \com*{$\Theta(1)$} 
+    $n.padre \gets n.der$ \com*{$\Theta(1)$}
+    $n.der \gets (n.der \to izq)$ \com*{$\Theta(1)$}
+    \If(\com*[f]{$\Theta(1)$}){$n.der \neq \NULL$}{
+      $(n.der \to padre) \gets n$ \com*{$\Theta(1)$}
     }
-    $(n.padre \to izq) \gets n$ \;
-    \recalcAlt{$n$} \;
+    $(n.padre \to izq) \gets n$ \com*{$\Theta(1)$}
+    % \recalcAlts{$n$} \com*{$\Theta(\log(n) + order(k))$}
   \end{algoritmo}
-  \complejidad{}
+  \complejidad{$\Theta(1)$}
 
   \begin{algoritmo}{iRotarADerecha}{\In{n}{puntero(nodo)}}{}
     \If(\com*[f]{$\Theta(1)$}){$n.padre \neq \NULL$}{
@@ -374,13 +388,14 @@
       $(n.izq \to padre) \gets n$ \com*{$\Theta(1)$}
     }
     $(n.padre \to der) \gets n$ \com*{$\Theta(1)$}
-    \recalcAlt{$n$} \com*{$\Theta(\log(n) + order(k))$}
+    % \recalcAlts{$n$} \com*{$\Theta(\log(n) + order(k))$}
   \end{algoritmo}
-  \complejidad{$\Theta(\log(n) + order(k))$}
+  \complejidad{$\Theta(1)$}
 
   \begin{algoritmo}{iRebalancearArbol}{\In{n}{puntero(nodo)}}{}
     \tipo{puntero(nodo)} $p \gets n$ \com*{$\Theta(1)$}
     \While{$p \neq \NULL$}{ 
+      \recalcAlt{$p$} \;
       \tipo{int} $fdb1 \gets$ \fdb{$p$}\;
       \uIf{$fdb1 = 2$}{
         \tipo{puntero(nodo)} $q \gets (p \to der)$ \;

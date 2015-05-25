@@ -69,17 +69,7 @@
 
 \begin{Representacion}
 
-  \begin{Estructura}{heap($\alpha$)}[hp]
-
-%
-% NOSE COMO SE ESCRIVE ESTO.. DEVERIA DECIR
-%   Genero: heap($\alpha$) se representa con hp
-%       donde hp es vector($\alpha$)
-%
-
-    \begin{vector($\alpha$)}[hp]
-    \end{vector}
-
+  \begin{Estructura}{heap($\alpha$)}[vector($\alpha$)]
   \end{Estructura} 
 
   \Rep[heap($\alpha$)][hp]{
@@ -91,19 +81,20 @@
   %    si A es el padre de B entonces (A=hp[i]) entonces (A=hp[((i/2)-((i+1)%2)))])
   }
 
-  \AbsFc[heap($\alpha$)]{colaPrior($\alpha$)}[h]{
-    \IF h.tama\~{n}o = 0 THEN vacia\'{i}a ELSE encolar(pr\'{o}ximo(h),ABS(desencolar(h))) FI
+  \AbsFc[vector($\alpha$)]{colaPrior($\alpha$)}[h]{
+    \IF h.tama\~{n}o = 0 THEN vac\'{i}a ELSE encolar(pr\'{o}ximo(h), ABS(desencolar(h))) FI
   }
 
 \end{Representacion}
 
 \begin{Algoritmos}
+
   \begin{algoritmo}{iVac\'{i}o}{}{heap($\alpha$)}
     $res \gets$ vector<$\alpha$>\;
   \end{algoritmo}
 
   \begin{algoritmo}{iEncolar}{\Inout{hp}{heap($\alpha$)}, \In{a}{$\alpha$}}{}
-    $hp$.push_back($a$)\;
+    $hp$.push\_back($a$)\;
     \tipo{nat} $i \gets$ $hp$.tama\~{n}o - 1\;
     \tipo{nat} $p \gets$ (i/2) - ((i+1)\%2)\;
     \While{$hp$[$p$] < $hp$[$i$]}{
@@ -126,8 +117,8 @@
 
     \tipo{nat} $i \gets$ $hp$.tama\~{n}o - 1\;
     iSwap($hp$[$0$], $hp$[$i$])\;
-%    $res \gets$ $hp$.pop_back()\;
-    $hp$.pop_back()\;
+%    $res \gets$ $hp$.pop\_back()\;
+    $hp$.pop\_back()\;
 
     \tipo{nat} $hijo_{0} \gets$ 0\;
     \tipo{nat} $hijo_{1} \gets$ 1\;
