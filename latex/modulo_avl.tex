@@ -97,27 +97,59 @@
 
   \end{Estructura} 
 
-  \Rep[estrAB][ab]{
-    ($ab$.cantNodos = 0) = ($ab$.raiz = NULL) $\yluego$ \\
-    ($ab$.cantNodos > 0) $\impluego$ ($ab$.cantNodos = cantHijos(\*($ab$.raiz)) + 1) $\land$ \\
-    (\paratodo{nodo}{n_1, n_2})(($n_1$ $\in$ nodos($ab$) $\land$ $n_2$ $\in$ nodos($ab$)) $\impluego$ (($n_1$.izq $\neq$ $n_2$.der) $\land$ (($n_1$.izq = $n_2$.izq $\lor$ $n_1$.der = $n_2$.der) $\implies$ ($n_1 = n_2$))))
+  \Rep[estrAVL][e]{
+    $e.cantNodos$ = \#(nodos($e$) $\land$ \\
+    \#(claves($e$)) = \#(nodos($e$)) $\land$ \\
+    $(\paratodo{nodo}{n})$ $(n.izq \neq n.der$ $\land$ \\
+    $n.altSubarbol$ = altura(sub\'arbol($n$)) $\land$ \\
+    $((n.padre = \NULL)) \Leftrightarrow \&n = e.raiz) \yluego$ \\
+    $(\&n \neq e.raiz) \impluego (\paratodo{nodo}{n'})(n.padre = \&n' \Leftrightarrow n'.izq = \&n \lor n'.der = \&n)$ $\land$ \\
+    m\'ax(altura(sub\'arbol($n.izq$)), altura(sub\'arbol($n.der$))) $-$ \\
+    m\'in(altura(sub\'arbol($n.izq$)), altura(sub\'arbol($n.der$))) $\leq 1)$
   }
 
-  \AbsFc[estrAB]{ab($\alpha$)}[ab]{
-    \IF $ab$.cantNodos = 0 THEN nil ELSE bin(Abs(plantar($ab$.raiz $\to$ izq)), $ab$.raiz $\to$ dato, Abs(plantar($ab$.raiz $\to$ der))) FI
+  ~
+
+  \Abs[estrAVL]{dicc($\kappa$, $\sigma$))}[e]{$d$}{
+    ($\paratodo{k}{\kappa}$) ((def?($k$, $d$)) $\igobs$ ($k$ $\in$ claves($e$)) $\yluego$
+    (def?($k$, $d$) $\impluego$ obtener($k$, $d$) $\igobs$ significado($k$, $e$)))
   }
+
+  ~
 
   \tadOperacion{hijos}{nodo}{conj(nodo)}{}
-  \tadAxioma{hijos($n$)}{\IF $n$.izq = NULL THEN $\emptyset$ ELSE Ag(\*($n$.izq), hijos(\*($n$.izq))) FI $\cup$ \IF $n$.der = NULL THEN $\emptyset$ ELSE Ag(\*($n$.der), hijos(\*($n$.der))) FI}
+  \tadAxioma{hijos($n$)}{\IF $n.izq$ = NULL THEN $\emptyset$ ELSE Ag($*$($n.izq$), hijos($*$($n.izq$))) FI \\
+  $\cup$ \IF $n.der$ = NULL THEN $\emptyset$ ELSE Ag($*$($n.der$), hijos($*$($n.der$))) FI}
 
-  \tadOperacion{cantHijos}{nodo}{nat}{}
-  \tadAxioma{cantHijos($n$)}{\#(hijos($n$))}
+  ~
 
-  \tadOperacion{nodos}{estrAB}{conj(nodo)}{}
-  \tadAxioma{nodos($ab$)}{\IF $ab$.raiz = NULL THEN $\emptyset$ ELSE Ag(\*($ab$.raiz), hijos(\*($ab$.raiz))) FI}
+  \tadOperacion{nodos}{estrAVL}{conj(nodo)}{}
+  \tadAxioma{nodos($e$)}{\IF $e.raiz$ = NULL THEN $\emptyset$ ELSE Ag($*$($e.raiz$), hijos($*$($e.raiz$))) FI}
 
-  \tadOperacion{plantar}{puntero(nodo)}{estrAB}{}
-  \tadAxioma{plantar($p$)}{$\langle p$, \IF $p$ = NULL THEN 0 ELSE cantHijos(\*($p$)) + 1 FI$\rangle$}
+  ~
+
+  \tadOperacion{sub\'arbol}{nodo}{estrAVL}{}
+  \tadAxioma{sub\'arbol($n$)}{$\langle \&n$, $1 + \#$(hijos($n$))$\rangle$}
+
+  ~
+
+  \tadOperacion{sub\'arbol}{puntero(nodo)}{estrAVL}{}
+  \tadAxioma{sub\'arbol($p$)}{$\langle p$, $1 + \#$(hijos($*$($p$)))$\rangle$}
+
+  ~
+
+  \tadOperacion{claves}{estrAVL}{conj($\kappa$)}{}
+  \tadAxioma{claves($e$)}{\IF $e.raiz = \NULL$ THEN $\emptyset$ ELSE Ag($e.raiz \to clave$, claves(sub\'arbol($e.raiz \to izq$)) $\cup$ claves(sub\'arbol($e.raiz \to der$))) FI}
+
+  ~
+
+  \tadOperacion{altura}{estrAVL}{nat}{}
+  \tadAxioma{altura($e$)}{\IF $e.raiz = \NULL$ THEN 0 ELSE 1 + m\'ax(altura(sub\'arbol($e.raiz \to izq$)), altura(sub\'arbol($e.raiz \to der$))) FI}
+
+  ~
+
+  \tadOperacion{significado}{estrAVL/e,$\kappa$/k}{$\sigma$}{$k$ $\in$ claves($e$)}
+  \tadAxioma{significado($e$, $k$)}{\IF $e.raiz \to clave = k$ THEN $e.raiz \to significado$ ELSE {\IF $k$ $\in$ claves(sub\'arbol($e.raiz \to izq$)) THEN significado($k$, sub\'arbol($e.raiz \to izq$)) ELSE significado($k$, sub\'arbol($e.raiz \to der$)) FI} FI}
 
 \end{Representacion}
 
