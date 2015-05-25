@@ -15,7 +15,7 @@
     }
 
     \paramFuncion{
-      \InterfazFuncion{$\bullet = \bullet$}{\In{k_1}{$\kappa$}, \In{k_2}{$\kappa$}}{\tipo{bool}}
+      \InterfazFuncion{$\bullet \leq \bullet$}{\In{k_1}{$\kappa$}, \In{k_2}{$\kappa$}}{\tipo{bool}}
       {$res \igobs (k_1 \leq k_2)$}
       [$\Theta(order(k_1, k_2))$]
       [funci\'on de comparaci\'on por orden total estricto de $\kappa$]
@@ -98,10 +98,10 @@
   \end{Estructura} 
 
   \Rep[estrAVL][e]{
-    $e.cantNodos$ = \#(nodos($e$) $\land$ \\
+    $e.cantNodos$ = \#(nodos($e$)) $\land$ \\
     \#(claves($e$)) = \#(nodos($e$)) $\land$ \\
-    $(\paratodo{nodo}{n})$ $(n.izq \neq n.der$ $\land$ \\
-    $n.altSubarbol$ = altura(sub\'arbol($n$)) $\land$ \\
+    $(\paratodo{nodo}{n})$ ($n$ $\in$ nodos($e$) $\impluego$ $(*(n.izq) \neq *(n.der)$ $\land$ \\
+    $n.altSubarbol$ = altura(sub\'arbol($\&n$)) $\land$ \\
     $((n.padre = \NULL)) \Leftrightarrow \&n = e.raiz) \yluego$ \\
     $(\&n \neq e.raiz) \impluego (\paratodo{nodo}{n'})(n.padre = \&n' \Leftrightarrow n'.izq = \&n \lor n'.der = \&n)$ $\land$ \\
     m\'ax(altura(sub\'arbol($n.izq$)), altura(sub\'arbol($n.der$))) $-$ \\
@@ -128,10 +128,10 @@
 
   ~
 
-  \tadOperacion{sub\'arbol}{nodo}{estrAVL}{}
-  \tadAxioma{sub\'arbol($n$)}{$\langle \&n$, $1 + \#$(hijos($n$))$\rangle$}
+  % \tadOperacion{sub\'arbol}{nodo}{estrAVL}{}
+  % \tadAxioma{sub\'arbol($n$)}{$\langle \&n$, $1 + \#$(hijos($n$))$\rangle$}
 
-  ~
+  % ~
 
   \tadOperacion{sub\'arbol}{puntero(nodo)}{estrAVL}{}
   \tadAxioma{sub\'arbol($p$)}{$\langle p$, $1 + \#$(hijos($*$($p$)))$\rangle$}
@@ -170,12 +170,12 @@
   \complejidad{$\Theta(1)$}
 
   \begin{algoritmo}{iDefinir}{\Inout{e}{estrAVL}, \In{k}{$\kappa$}, \In{s}{$\sigma$}}{}
-    \tipo{puntero(nodo)} $nuevo \gets \new \langle k$, $s$, NULL, NULL, NULL, $0 \rangle$ \tcp{Reservamos memoria para el nuevo nodo} \com*{$\Theta(copy(k) + copy(s))$}
     \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
     \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \com*{$\Theta(\log(n))$}
     \eIf{$lugar \neq \NULL$}{
       $(lugar \to significado) \gets s$ \;
     }{
+      \tipo{puntero(nodo)} $nuevo \gets \new \langle k$, $s$, NULL, NULL, NULL, $1 \rangle$ \tcp{Reservamos memoria para el nuevo nodo} \com*{$\Theta(copy(k) + copy(s))$}
       \eIf{$k \leq (padre \to clave)$}{
         $(padre \to izq) \gets nuevo$ \;
       }{
