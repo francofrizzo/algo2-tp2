@@ -44,7 +44,7 @@
     \InterfazFuncion{encolar}{\Inout{h}{heap($\alpha$)}, \In{a}{$\alpha$}}{}{}
     [$h \igobs h_{0}$]
     {$h \igobs$ encolar($a$, $h_{0}$)}
-    [$\Theta(log(h.tama\~{n}o))$]
+    [$\Theta(log(h.longitud))$]
     [Agrega un elemento a la cola de prioridades]
 
     \InterfazFuncion{vac\'{i}o?}{\In{h}{heap($\alpha$)}}{bool}
@@ -62,7 +62,7 @@
     \InterfazFuncion{desencolar}{\Inout{h}{heap($alpha$)}}{}
     [$\not$(vac\'ia?(h))]
     {$res \igobs$ desencolar(h)}
-    [$\Theta(log(h.tama\~{n}o))$]
+    [$\Theta(log(h.longitud))$]
     [Elimina el pr\'{o}ximo elemento en el heap]
 
 \end{Interfaz}
@@ -82,7 +82,7 @@
   }
 
   \AbsFc[vector($\alpha$)]{colaPrior($\alpha$)}[h]{
-    \IF h.tama\~{n}o = 0 THEN vac\'{i}a ELSE encolar(pr\'{o}ximo(h), ABS(desencolar(h))) FI
+    \IF h.long = 0 THEN vac\'{i}a() ELSE encolar(prim(h), ABS(fin(h))) FI
   }
 
 \end{Representacion}
@@ -95,7 +95,7 @@
 
   \begin{algoritmo}{iEncolar}{\Inout{hp}{heap($\alpha$)}, \In{a}{$\alpha$}}{}
     $hp$.push\_back($a$)\;
-    \tipo{nat} $i \gets$ $hp$.tama\~{n}o - 1\;
+    \tipo{nat} $i \gets$ $hp$.longitud - 1\;
     \tipo{nat} $p \gets$ (i/2) - ((i+1)\%2)\;
     \While{$hp$[$p$] < $hp$[$i$]}{
       iSwap($hp$[$p$], $hp$[$i$])\;
@@ -115,25 +115,56 @@
 %  \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{$\alpha$}
   \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{}
 
-    \tipo{nat} $i \gets$ $hp$.tama\~{n}o - 1\;
+    \tipo{nat} $i \gets$ $hp$.longitud - 1\;
     iSwap($hp$[$0$], $hp$[$i$])\;
 %    $res \gets$ $hp$.pop\_back()\;
     $hp$.pop\_back()\;
 
-    \tipo{nat} $hijo_{0} \gets$ 0\;
-    \tipo{nat} $hijo_{1} \gets$ 1\;
+    \tipo{nat} $hijo_{0} \gets$ 1\;
+    \tipo{nat} $hijo_{1} \gets$ 2\;
 
-    \While{$hijo_{0}$ < $hp$.tama\~{n}o $\land$ $hijo_{1}$ < $hp$.tama\~{n}o $\yluego$ ($hp$[$hijo_{0}$] < $hp$[$i$] $\lor$ $hp$[$hijo_{1}$] < $hp$[$i$])}{
-
-      \eIf{$hp$[$hijo_{0}$] $\geq$ $hp$[$hijo_{1}$]}{
-        iSwap($hp$[$hijo_{0}$], $hp$[$i$])\;
-        $i \gets$ $hijo_{0}$
+    \While{$\not$estaOrdenado}{
+      \eIf{$hijo_{0}$ < $hp$.longitud}{
+        \eIf{$hijo_{1}$ < $hp$.longitud} {
+          %//ambos hijos son validos
+          \eIf{$hp$[$hijo_{0}$] $\geq$ $hp$[$hijo_{1}$]}{
+            %//hijo0 es mas grande que hijo1
+            \eIf{$hp$[$hijo_{0}$] > $hp$[$i$]}{
+              %//hijo0 es mas grande que el padre -> los swapeo
+              iSwap($hp$[$hijo_{0}$], $hp$[$i$])\;
+              $i \gets hijo_{0}$\;
+            }{
+              %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
+              $estaOrdenado \gets$ True\;
+            }
+          }{
+            %//hijo1 es mas grande que hijo0
+            \eIf{$hp$[$hijo_{1}$] > $hp$[$i$]}{
+              %//hijo1 es mas grande que el padre -> los swapeo
+              iSwap($hp$[$hijo_{1}$], $hp$[$i$])\;
+              $i \gets hijo_{1}$\;
+            }{
+              %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
+              $estaOrdenado \gets$ True\;
+            }
+          }
+        }{
+          %//solo hijo0 es valido
+          \eIf{$hp$[$hijo_{0}$] > $hp$[$i$]} {
+            %//hijo0 es mas grande que el padre -> los swapeo
+            iSwap($hp$[$hijo_{0}$], $hp$[$i$])\;
+            $i \gets hijo_{0}$\;
+          }{
+            %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
+            $estaOrdenado \gets$ True\;
+          }
+        }
       }{
-        iSwap($hp$[$hijo_{1}$], $hp$[$i$])\;
-        $i \gets$ $hijo_{1}$
+        %//ningun hijo es valido por ende no tiene hijos entonces esta ordenado
+        $estaOrdenado \gets$ True\;
       }
-      $hijo_{0} \gets$ 2x$i$ +1\;
-      $hijo_{1} \gets$ 2x$i$ +2\;
+      $hijo_{0} \gets$ 2x$i$+1\;
+      $hijo_{1} \gets$ 2x$i$+2\;
     }
   \end{algoritmo}
 
