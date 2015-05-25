@@ -71,12 +71,12 @@
   [Devuelve una de las computadoras con mas paquetes enviados]%descripcion
   []%aliasing
 
-  \InterfazFuncion{NOMBRE}{PARAMTROS}{RES}%
-  []%pre
-  {}%pos
-  []%complejidad
-  []%descripcion
-  []%aliasing
+%  \InterfazFuncion{NOMBRE}{PARAMTROS}{RES}%
+%  []%pre
+%  {}%pos
+%  []%complejidad
+%  []%descripcion
+%  []%aliasing
 
 \end{Interfaz}
 
@@ -193,7 +193,39 @@
 
 \begin{Algoritmos}
 
- \begin{algoritmo}{iCrearPaquete}{\Inout{d}{DCNet},\In{p}{paquete}}{}
+  \begin{algoritmo}{iIniciarDCNet}{\In{r}{Red}}{DCNet}
+    $res \gets$ iCopiar($r$)\;
+    $res$.\#PaqEnviados $\gets$ crearArreglo(cantCompus($res$.red))\;
+    $res$.IPsCompuPorID $\gets$ crearArreglo(cantCompus($res$.red))\;
+    $res$.siguientesCompus $\gets$ crearArreglo(cantCompus($res$.red))\;
+    $res$.paquetesEnEspera $\gets$ crearArreglo(cantCompus($res$.red))\;
+    \tipo{itRed} $it_{0} \gets$ crearItRed($res$.red)\;
+    \tipo{nat} $j \gets$ 0\;
+    \While{$j$ < iCardinal(iComputadoras($res$.red))}{
+      $res$.siguientesCompus[$j$] $\gets$ crearArreglo(cantCompus($res$.red))\;
+      $res$.\#PaqEnviados[$j$] $\gets$ 0\;
+      $res$.paquetesEnEspera[$j$] $\gets$ $\langle$vac\'{i}o(),vac\'{i}o(),vac\'{i}o()$\rangle$\;
+      definir(siguiente($it_{0}$).IP, $j$, $res$.IDsCompusPorIP)\;
+      $res$.IPsCompusPorID[$j$] $\gets$ $it_{0}$\;
+      $j \gets j + 1$\;
+      avanzar($it_{0}$)\;
+    }
+    \tipo{nat} $k \gets$ 0\;
+    $j \gets 0$\;
+    \While{$j$ < iCardinal(iComputadoras($res$.red))}{
+      \While{$k$ < iCardinal(iComputadoras($res$.red))}{
+        \If{conectadas?($res$.red, siguiente($res$.IPsCompusPorID[j]), siguiente($res$.IPsCompusPorID[k]))}{
+          \tipo{itConj} $it_{0} \gets$ crearIt(caminosMinimos($res$.red, siguiente($res$.IPsCompusPorID[j]), siguiente($res$.IPsCompusPorID[k])))\;
+          $res$.siguientesCompus[$j$][$k$] $\gets$ prim(fin(siguiente($it_{1}$)))\;
+        }
+        $k \gets k + 1$\;
+      }
+      $j \gets j + 1$\;
+    }
+  \end{algoritmo}
+
+
+  \begin{algoritmo}{iCrearPaquete}{\Inout{d}{DCNet},\In{p}{paquete}}{}
     % Crear e inicializar variables:
     \tipo{nat} $o \gets$ iObtener($p$.origen, $d$.IDsCompusPorIP)\;
     \tipo{nat} $dest \gets$ iObtener($p$.destino, $d$.IDsCompusPorIP)\;
