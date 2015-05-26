@@ -46,7 +46,7 @@
   []%aliasing
 
   \InterfazFuncion{caminoRecorido}{\In{D}{DCNet}, \In{p}{paquete}}{secu(compu)}%
-  [paqueteEnTrancito?(D, p)]%pre
+  [paqueteEnTransito?(D, p)]%pre
   {res $\igobs$ caminoRecorrido(D, p)}%pos
   [$\Theta(n.log(max(n,k)))$]%complejidad
   [Devuelve la secuencia que contiene de forma ordenada todas las computadoras por las que fue pasando. ]%descripcion
@@ -239,85 +239,126 @@
  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {\com*{$\Theta()$}} % Complejidad
+  {$\Theta()$} % Complejidad
   {} % Justificacíón
 
 
   \begin{algoritmo}{iCrearPaquete}{\Inout{d}{DCNet},\In{p}{paquete}}{}
     % Crear e inicializar variables:
-    \tipo{nat} $o \gets$ iObtener($p$.origen, $d$.IDsCompusPorIP)\;
-    \tipo{nat} $dest \gets$ iObtener($p$.destino, $d$.IDsCompusPorIP)\;
-    $it \gets$ CrearIt(($d$.paquetesEnEspera[$o$]).enConjunto)\;
-    $it \gets$ iAgregar(($d$.paquetesEnEspeta[$o$]).enConjunto, $p$)\;
-    % Nota: las líneas sin comentario deben terminar en \;
-
-    % Comentarios:
-    iDefinir($d$.paquetesEnEspera[$o$].porID, $p$.ID, $\langle$ $it$, $o$, $dest$, $\rangle$)\;
-    iAgregarHeap($d$.paquetesEnEspera[$o$].porPrioridad, $p$.prioridad, $it$)\; %No se como se llama la funcion "agregar" del heap - Manu
-
-    
-  \end{algoritmo}
+    \tipo{nat} $o \gets$ iObtener($p$.origen, $d$.IDsCompusPorIP)\com*{$\Theta(L)$}
+    \tipo{nat} $dest \gets$ iObtener($p$.destino, $d$.IDsCompusPorIP)\com*{$\Theta(L)$}
+    $it \gets$ CrearIt(($d$.paquetesEnEspera[$o$]).enConjunto)\com*{$\Theta(1)$}
+    $it \gets$ Agregar(($d$.paquetesEnEspeta[$o$]).enConjunto, $p$)\com*{$\Theta(k)$}
+    Definir($d$.paquetesEnEspera[$o$].porID, $p$.ID, $\langle$ $it$, $o$, $dest$, $\rangle$)\com*{$\Theta(log(k))$}
+    encolar($d$.paquetesEnEspera[$o$].porPrioridad, $p$.prioridad, $it$)\com*{$\Theta(log(k))$}
+    \end{algoritmo}
+   \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(L+log(k))$} % Complejidad
+  {} % Justificacíón
 
   \begin{algoritmo}{iAvanzarSegundo}{\Inout{d}{DCNet}}{}
-    \tipo{nat} $j \gets 0$\;
-    \tipo{nat} $o$\;
-    \tipo{nat} $dest$\;
-    \tipo{paquete} $paq$\;
-    \While{$j$ < iCardinal(iComputadoras($d$.red))}{
-      \If{!(iEsVacio?($d$.paquetesEnEspera[$j$]).enConjunto)}{
-        $paq \gets$ iSiguiente(iDameElDeMayorPrioridad(($d$.paquetesEnEspera[$j$]).porPrioridad))\; %No se como se llama la funcion "DameElDeMayorPrioridad" del heap - Manu
-        iBorrarElDeMaxPrioridad($d$.paquetesEnEspera[$j$].porPrioridad)\; %IDEM con BorrarElDeMaxPrior
-        $o \gets$ (iObtener(($d$.paquetesEnEspera[$j$]).porID, $paq$.ID)).codOrigen\;
-        $dest \gets$ (iObtener(($d$.paquetesEnEspera[$j$]).porID, $paq$.ID)).codDestino\;
-        iBorrar(($d$.paquetesEnEspera[$j$]).porID, $paq$.ID)\;
-        $d$.\#paqEnviados[$j$]++\;
-        \If{!($d$.siquienteCompu[$j$][$dest$] = $dest$)}{
-          $it \gets$ crearIt($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]])\;
-          $it \gets$ iAgregar(($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]]).enConjunto, $p$)\;
-          iDefinir($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]].porID, $p$.ID, $\langle$ $it$, $d$.siguienteCompu[$j$][$dest$], $dest$, $\rangle$)\;
-          iAgregarHeap($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]].porPrioridad, $paq$.prioridad, $it$)\; %No se como se llama la funcion "agregar" del heap - Manu
+    \tipo{nat} $j \gets 0$\com*{$\Theta(1)$}
+    \tipo{nat} $o$\com*{$\Theta(1)$}
+    \tipo{nat} $dest$\com*{$\Theta(1)$}
+    \tipo{paquete} $paq$\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(n)$}){$j$ < Cardinal(Computadoras($d$.red))}{
+      \If(\com*[f]{$\Theta(1)$}){!(EsVacio?($d$.paquetesEnEspera[$j$]).enConjunto)}{
+        $paq \gets$ Siguiente(desencolar(($d$.paquetesEnEspera[$j$]).porPrioridad))\com*{$\Theta(log(k))$}
+        $o \gets$ (Obtener(($d$.paquetesEnEspera[$j$]).porID, $paq$.ID)).codOrigen\com*{$\Theta(log(k))$}
+        $dest \gets$ (Obtener(($d$.paquetesEnEspera[$j$]).porID, $paq$.ID)).codDestino\com*{$\Theta(log(k))$}
+        $i \gets$ (Obtener(($d$.paquetesEnEspera[$j$]).porID, $paq$.ID)).iPaquete\com*{$\Theta(log(k))$}
+        Borrar(($d$.paquetesEnEspera[$j$]).porID, $paq$.ID)\com*{$\Theta(log(k))$}
+        EliminarSiguiente(i)\com*{$\Theta(log(1))$}
+        $d$.\#paqEnviados[$j$]++\com*{$\Theta(1)$}
+        \If(\com*[f]{$\Theta(1)$}){!($d$.siquienteCompu[$j$][$dest$] = $dest$)}{
+          $it \gets$ crearIt($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]])\com*{$\Theta(1)$}
+          $it \gets$ AgregarRapido(($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]]).enConjunto, $p$)\com*{$\Theta(I)$ lo tomamos como $\Theta(1)$}
+          Definir($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]].porID, $p$.ID, $\langle$ $it$, $d$.siguienteCompu[$j$][$dest$], $dest$, $\rangle$)\com*{$\Theta(log(k))$}
+          encolar($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]].porPrioridad, $paq$.prioridad, $it$)\com*{$\Theta(log(k))$}
         }
       }
     }
-    \tipo{nat} $k \gets 0$\;
-    \tipo{nat} $h \gets 0$\;
-    \If{iCardinal(iComputadoras($d$.red))>0}{
-      \While{k<iCardinal(iComputadoras($d$.red))>0}{
-        \If{$d$.\#paqEnviados[$k$]>d.\#paqEnviados[h]}{
-          $h \gets k$\;
-          k++\;
+    \tipo{nat} $k \gets 0$\com*{$\Theta(1)$}
+    \tipo{nat} $h \gets 0$\com*{$\Theta(1)$}
+    \If(\com*[f]{$\Theta(1)$}){Cardinal(Computadoras($d$.red))>0}{
+      \While(\com*[f]{$\Theta(n)$ iteraciones}){k<Cardinal(Computadoras($d$.red))}{
+        \If(\com*[f]{$\Theta(1)$}){$d$.\#paqEnviados[$k$]>d.\#paqEnviados[h]}{
+          $h \gets k$\com*{$\Theta(1)$}
+          k++\com*{$\Theta(1)$}
         }
       }
     }
-    $d$.laQueM\'asEnvi\'o $\gets$ $d$.IPsCompusPorID[h]\;
+    $d$.laQueM\'asEnvi\'o $\gets$ $d$.IPsCompusPorID[h]\com*{$\Theta(1)$}
   \end{algoritmo}
+ \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {\com*{$\Theta(n \times log(k))$ esta incluido en \com*{$\Theta(n \times (L+log(k)+log(n))$}}} % Complejidad
+  {} % Justificacíón
+
 
   \begin{algoritmo}{iCaminoRecorrido}{\In{d}{DCNet}, \In{p}{paquete}}{lista(compu)}
-    \tipo{nat} $j \gets 0$\;
-    $res \gets$ iVacia()\;
-    \While{!(iDefinido?(($d$.paquetesEnEspera[$j$]).porID), $p$.ID)}{
-      $j$++\;
+    \tipo{nat} $j \gets 0$\com*{$\Theta(1)$}
+    $res \gets$ iVacia()\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(log(k))$ iteraciones}){!(iDefinido?(($d$.paquetesEnEspera[$j$]).porID), $p$.ID)}{
+      $j$++\com*{$\Theta(1)$}
     }
-    \tipo{nat} $o$\;
-    $o \gets$ (iObtener(($d$.paquetesEnEspera[$j$]).porID, $p$.ID)).codOrigen\;
-    \tipo{nat} $dest$\;
-    $dest \gets$ (iObtener(($d$.paquetesEnEspera[$o$]).porID, $p$.ID)).codDestino\;
-    \While{!(iDefinido?(($d$.paquetesEnEspera[$o$]).porID), $p$.ID)}{
-      iAgregarAtras($res$, siguiente($d$.IPsCompusPorID[0]))\;
-      $o \gets$ $d$.siguientesCompus[o][dest]\;
+    \tipo{nat} $o$\com*{$\Theta(1)$}
+    $o \gets$ (Obtener(($d$.paquetesEnEspera[$j$]).porID, $p$.ID)).codOrigen\com*{$\Theta(log(k))$}
+    \tipo{nat} $dest$\com*{$\Theta(1)$}
+    $dest \gets$ (Obtener(($d$.paquetesEnEspera[$o$]).porID, $p$.ID)).codDestino\com*{$\Theta(log(k)$}
+    \While(\com*[f]{$\Theta(n \times log(k))$}){!(Definido?(($d$.paquetesEnEspera[$o$]).porID), $p$.ID)}{
+      iAgregarAtras($res$, siguiente($d$.IPsCompusPorID[0]))\com*{$\Theta(I)$ lo tomamos como $\Theta(1)$}
+      $o \gets$ $d$.siguientesCompus[o][dest]\com*{$\Theta(1)$}
     }
-    iAgregarAtras($res$, siguiente($d$.IPsCompusPorID[$o$]))\;
+    AgregarAtras($res$, siguiente($d$.IPsCompusPorID[$o$]))\com*{$\Theta(I)$ lo tomamos como $\Theta(1)$}
   \end{algoritmo} 
 
   \begin{algoritmo}{iCantidadEnviados}{\In{d}{DCNet}, \In{c}{compu}}{nat}
-    \tipo{nat} $i \gets$ iObtener($d$.IDsCompusPorIP, $c$.IP)\;
-    $res \gets$ $d$.\#paqEnviados[i]\;
+    \tipo{nat} $i \gets$ Obtener($d$.IDsCompusPorIP, $c$.IP)\com*{$\Theta(L)$}
+    $res \gets$ $d$.\#paqEnviados[i]\com*{$\Theta(1)$}
   \end{algoritmo}
+ \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {\com*{$\Theta(L)$} % Complejidad
+  {} % Justificacíón
 
   \begin{algoritmo}{iEnEspera}{\In{d}{DCNet}, \In{c}{compu}}{conj(Paquete)}
-    \tipo{nat} $i \gets$ iObtener($d$.IDsCompusPorIP, $c$.IP)\;
-    $res \gets$ ($d$.paquetesEnEspera[i]).enConjunto\;
+    \tipo{nat} $i \gets$ iObtener($d$.IDsCompusPorIP, $c$.IP)\com*{$\Theta(L)$}
+    $res \gets$ ($d$.paquetesEnEspera[i]).enConjunto\com*{$\Theta(1)$}
+  \end{algoritmo}
+ \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {\com*{$\Theta(L)$} % Complejidad
+  {} % Justificacíón
+
+  \begin{algoritmo{ilaQueM\'{a}sEnvio}{\In{d}{DCNet}}{compu}
+    $res \gets$ siguiente($d$.laQueM\'{a}sEnvio)\com*{$\Theta(I)$ lo tomamos como \com*{$\Theta(1)$} ya que, copiar una computadora o devolver el siguiente de un iterador a computadora es $\Theta(I)$ }
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {} % Justificacíón
   \end{algoritmo}
 
+  \begin{algoritmo}{paquetesEntr\'{a}nsito?}{\In{d}{DCNet}}{conj(paquete)}
+    $res \gets$ false \com*{$\Theta(1)$}
+    \tipo{nat} $i \gets 0$\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(n)$}){$i$<longitud($d$.paquetesEnEspera)}{
+      \If(\com*[f]{$\Theta(log(k))$}){definido?($p$, ($d$.paquetesEnEspera[$i$]).porID)}{
+          $res \gets$ true\com*{$\Theta(1)$}
+      }
+    }
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(n \times log(k))$} % Complejidad
+  {} % Justificacíón
 \end{Algoritmos}
 

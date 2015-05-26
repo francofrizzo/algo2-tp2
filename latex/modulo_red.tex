@@ -404,14 +404,19 @@
     \eIf(\com*[f]{$\Theta(1)$}){esVacio?($c$)}{
       $res \gets$ vacio()\com*{$\Theta(1)$}
     }{
+<<<<<<< HEAD
       \tipo{itConj(lista(compu))} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
       $res \gets$ dameMinimosAux($c$, minimaLong($c$, long(siguiente($it$))))\;
+=======
+      \tipo{ItConj(lista(compu))} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
+      $res \gets$ dameMinimosAux($c$, minimaLong($c$, long(siguiente($it$))))\com*{$\Theta(n \times n!)$}
+>>>>>>> 981271449c4d3ac022a97874211b6c60f3588743
     }
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {} % Complejidad
+  {\com*{$\Theta(n \times n!)$}} % Complejidad
   {Devuelve, del total de caminos posibles, solo los de longitud m\'{i}nima} % Justificacíón
 
   \begin{algoritmo}{dameMinimosAux}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{conj(lista(compu))}
@@ -434,10 +439,10 @@
 
   \begin{algoritmo}{minimaLong}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{nat}
     \tipo{nat} $i \gets n$\com*{$\Theta(1)$}
-    \tipo{ItConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
+    \tipo{itConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
     \While{haySiguiente($it$)}{
       \eIf{long(siguiente($it$))}{
-        $i \gets$ longitud(siguiente($it$))\;
+        $i \gets$ longitud(siguiente($it$))\com*{$\Theta(1)$}
         avanzar($it$)\com*{$\Theta(1)$}
       }{
         avanzar($it$)\com*{$\Theta(1)$}
@@ -448,7 +453,7 @@
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {} % Complejidad
+  {\com*{$\Theta(n!)$}} % Complejidad
   {Devuelve la longitud de la secuencia m\'{a}s chica} % Justificacíón
     
 	\begin{algoritmo}{pasarConjASecu}{\In{c}{conj(compu)}}{secu(compu)}{}
@@ -496,8 +501,9 @@
 
   \begin{algoritmo}{iUni\'{o}n}{\In{c_{1}}{conj(lista(compu))}, \In{c_{2}}{conj(lista(compu))}}{conj(lista(compu))}
     $res \gets$ vacio()\com*{$\Theta(1)$}     
-    \eIf(\com*[f]{$\Theta(1)$}     ){vacio?($c_{1}$)}{
-      $res \gets$ $c_{2}$}{
+    \eIf(\com*[f]{$\Theta(1)$}){vacio?($c_{1}$)}{
+      $res \gets$ $c_{2}$\com*{$\Theta(I \times n \times n!)$} 
+      }{
       \tipo{itConj(lista(compu))} $it \gets$ crearIt($c_{1}$)\com*{$\Theta(1)$}     
       \While(\com[f]*{$\Theta(n)$}){haySiguiente($it$)}{
         Ag(siguiente($it$), $c_{2}$)\com*{$\Theta(n)$}
@@ -508,7 +514,7 @@
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {} % Complejidad
+  {$\Theta(n² + n \times I \times n!)$} % Complejidad
   {Devuelve la uni\'{o}n de dos conjuntos. } % Justificacíón
 
   \begin{algoritmo}{iEsta?}{\In{c}{compu}, \In{l}{lista(compu)}}{bool}
