@@ -404,13 +404,8 @@
     \eIf(\com*[f]{$\Theta(1)$}){esVacio?($c$)}{
       $res \gets$ vacio()\com*{$\Theta(1)$}
     }{
-<<<<<<< HEAD
       \tipo{itConj(lista(compu))} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
-      $res \gets$ dameMinimosAux($c$, minimaLong($c$, long(siguiente($it$))))\;
-=======
-      \tipo{ItConj(lista(compu))} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
       $res \gets$ dameMinimosAux($c$, minimaLong($c$, long(siguiente($it$))))\com*{$\Theta(n \times n!)$}
->>>>>>> 981271449c4d3ac022a97874211b6c60f3588743
     }
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
@@ -591,7 +586,7 @@
     \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(I²)$} % Complejidad
+  {$\Theta(I^{2})$} % Complejidad
   {} % Justificacíón   
     
   \begin{algoritmo}{iCrearIt}{\In{e}{estrRed}}{}
