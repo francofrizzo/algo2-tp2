@@ -145,6 +145,7 @@
     ($\forall$ $it_{1}$: ItConj(paquete)) ($\forall$ $it_{2}$: ItConj(paquete)) $it_{1}$ $\in$ dame$\pi_{2}$(juntarColaPriorEnConj($\pi_{3}$(e.paquetesEnEspera[L]))) $\land$ $it_{2}$ $\in$ dame$\pi_{2}$(juntarColaPriorEnConj($\pi_{3}$(e.paquetesEnEspera[L]))) $it_{1}$ $\neq$ $it_{2}$ $\impluego$ siguiente($it_{1}$) $\neq$ siguiente($it_{2}$)
     }\mbox{} %habia un parentesis no se de donde sale (estaba cerrando en esta linea)
 
+
 \AbsFc[estrDCNet]{DCNet}[e]{red($d$) = e.estrRed $\land$ \\
 
   ($\forall p$: paquete) paqueteEnTr\'ansito?($d$, $p$) $\impluego$ caminoRecorrido($d$, $p$) = caminoDelPaquete(e.siguienteCompu, e.IPsCompusPorID, e.PaquetesEnEspera, $p$) $\land$ \\
