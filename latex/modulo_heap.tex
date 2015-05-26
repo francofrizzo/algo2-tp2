@@ -1,4 +1,10 @@
-\section{M\'{o}dulo Heap($\alpha$)}
+\section{M\'{o}dulo Heap}
+
+\Encabezado{Notas preliminares}
+  En todos los casos, al indicar las complejidades de los algoritmos, las variables que se utilizan corresponden a:
+  \vspace{-0.5em}\begin{itemize}
+    \item $n$: N\'umero de elementos presentes en la cola de prioridad.
+  \end{itemize}
 
 \begin{Interfaz}
   
@@ -46,7 +52,7 @@
     [Devuelve true si y solo si el heap no tiene elementos.]
 
     \InterfazFuncion{desencolar}{\Inout{h}{heap($alpha$)}}{}
-    [$\not$(vac\'ia?(h))]
+    [$\neg$(vac\'ia?(h))]
     {$res \igobs$ desencolar(h)}
     [$\Theta(log(n))$]
     [Devuelve uno de los elementos de m\'axima prioridad del heap, y lo elimina de la estructura.]
@@ -62,7 +68,7 @@
     ($\paratodo{i}{nat}$) ((($2 \* i < $long($v$)) $\impluego$ i\'esimo($2 \* i$, $v$) $\leq$ i\'esimo($i$, $v$)) $\land$ (($2 \* i + 1< $long($v$)) $\impluego$ i\'esimo($2 \* i + 1$, $v$) $\leq$ i\'esimo($i$, $v$)))
   }
 
-  \tadOperacion{i\'esimo}{nat/$i$,secu($\alpha$/$s$)}{$\alpha$}{$n \leq long($\alpha$)$}  
+  \tadOperacion{i\'esimo}{nat/i,secu($\alpha$)/s}{$\alpha$}{$i \leq$ long($\alpha$)}  
 
   \tadAxioma{i\'esimo($i$, $s$)}{\IF $i = 0$ THEN prim($s$) ELSE i\'esimo($i - 1$, fin($s$)) FI}
 
@@ -110,7 +116,7 @@
     $res \gets v[0]$ \;
     \tipo{nat} $i \gets 0$ \;
     \While{(($2i + 1 \leq$ long($v$)) $\land$ $v[i] < v[2i + 1]$) $\lor$ ($2i + 2 \leq$ long($v$)) $\land$ $v[i] < v[2i + 2]$)}{
-      \EIf{$2i + 2 \leq$ long($v$)}{
+      \eIf{$2i + 2 \leq$ long($v$)}{
         \eIf{$v[i] < v[2i + 2]$}{
           swap($v$, $i$, $2i + 2$) \;
           $i \gets 2i + 2$ \;
@@ -130,8 +136,8 @@
   {} % Complejidad
   {} % Justificación
 
-  \begin{algoritmo}{iSwap}{\Inout{v}{vector($\alpha$), \In{i}{nat}, \In{j}{nat}}}
-    $\alpha aux \gets v[i]$ \;
+  \begin{algoritmo}{iSwap}{\Inout{v}{vector($\alpha$)}, \In{i}{nat}, \In{j}{nat}}{}
+    \tipo{$\alpha$} $aux \gets v[i]$ \;
     $v[i] \gets v[j]$ \;
     $v[j] \gets aux$ \;
   \end{algoritmo}
