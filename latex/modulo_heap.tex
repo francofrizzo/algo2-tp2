@@ -109,7 +109,7 @@
     \tipo{nat} $i \gets$ $hp$.longitud - 1\; \com*{$\Theta(1)$}
     \tipo{nat} $p \gets$ (i/2) - ((i+1)\%2)\; \com*{$\Theta(1)$}
     \While{$hp$[$p$] < $hp$[$i$]}{ \com*{$\Theta(log(n))$}
-      iSwap($hp$[$p$], $hp$[$i$])\; \com*{$\Theta(1)$}
+      iSwap($hp$, $p$, $i$)\; \com*{$\Theta(copy(\alpha))$}
       $i \gets p$\; \com*{$\Theta(1)$}
       $p \gets$ ($i$/2) - (($i$+1)\%2)\; \com*{$\Theta(1)$}
     }
@@ -117,44 +117,34 @@
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(log(n))$} % Complejidad
-  {El while se repite como maximo $log(n)$ veces, donde $n$ es la longitud del vector. } % Justificacíón
+  {$\Theta(log(n) \times copy(\alpha))$} % Complejidad
+  {El while se repite como maximo $log(n)$ veces, donde $n$ es la longitud del vector, y cada iteracion del while tiene complegidad $copy(\alpha)$. } % Justificacíón
 
-<<<<<<< HEAD
-  \begin{algoritmo}{iVac\'{i}o?}{\In{hp}{heap($\alpha$)}}{bool}
-    $res \gets$ ($hp$ = vac\'{i}o())\; \com*{$\Theta(1)$}
-  \end{algoritmo}
-
-  \begin{algoritmo}{iProximo}{\In{hp}{heap($\alpha$)}}{$\alpha$}
-    $res \gets$ hp[0]\; \com*{$\Theta(1)$}
-  \end{algoritmo}
-
-  \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{$\alpha$}
-=======
   \begin{algoritmo}{iVac\'{i}o?}{\In{v}{vector($\alpha$)}}{bool}
-    $res \gets$ esVac\'io?($v$) \;
+    $res \gets$ esVac\'io?($v$) \; \com*{$\Theta(1)$}
   \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {} % Justificacíón
 
   \begin{algoritmo}{iDesencolar}{\Inout{v}{vector($\alpha$)}}{$\alpha$}
->>>>>>> d4eb108eb897a91487a4eaca8d13cb372707de4e
-
-    \tipo{nat} $i \gets$ $hp$.longitud - 1\;
-    iSwap($hp$[$0$], $hp$[$i$])\; \com*{$\Theta(1)$}
-    $res \gets$ $hp$.pop\_back()\; \com*{$\Theta(1)$}
-
+    \tipo{nat} $i \gets$ $v$.longitud - 1\;
+    iSwap($v$, $0$, $i$)\; \com*{$\Theta(copy(\alpha))$}
+    $res \gets$ $v$.pop\_back()\; \com*{$\Theta(1)$}
     \tipo{nat} $hijo_{0} \gets$ 1\; \com*{$\Theta(1)$}
     \tipo{nat} $hijo_{1} \gets$ 2\; \com*{$\Theta(1)$}
     \tipo{bool} $estaOrdenado \gets$ false\; \com*{$\Theta(1)$}
-
     \While{$\not$estaOrdenado}{ \com*{$\Theta(log(n))$}
-      \eIf{$hijo_{0}$ < $hp$.longitud}{
-        \eIf{$hijo_{1}$ < $hp$.longitud} {
+      \eIf{$hijo_{0}$ < $v$.longitud}{
+        \eIf{$hijo_{1}$ < $v$.longitud} {
           %//ambos hijos son validos
-          \eIf{$hp$[$hijo_{0}$] $\geq$ $hp$[$hijo_{1}$]}{
+          \eIf{$v$[$hijo_{0}$] $\geq$ $v$[$hijo_{1}$]}{
             %//hijo0 es mas grande que hijo1
-            \eIf{$hp$[$hijo_{0}$] > $hp$[$i$]}{
+            \eIf{$v$[$hijo_{0}$] > $v$[$i$]}{
               %//hijo0 es mas grande que el padre -> los swapeo
-              iSwap($hp$[$hijo_{0}$], $hp$[$i$])\; \com*{$\Theta(1)$}
+              iSwap($v$, $hijo_{0}$, $i$)\; \com*{$\Theta(copy(\alpha))$}
               $i \gets hijo_{0}$\; \com*{$\Theta(1)$}
             }{
               %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
@@ -162,9 +152,9 @@
             }
           }{
             %//hijo1 es mas grande que hijo0
-            \eIf{$hp$[$hijo_{1}$] > $hp$[$i$]}{
+            \eIf{$v$[$hijo_{1}$] > $v$[$i$]}{
               %//hijo1 es mas grande que el padre -> los swapeo
-              iSwap($hp$[$hijo_{1}$], $hp$[$i$])\; \com*{$\Theta(1)$}
+              iSwap($v$, $hijo_{1}$, $i$)\; \com*{$\Theta(copy(\alpha))$}
               $i \gets hijo_{1}$\; \com*{$\Theta(1)$}
             }{
               %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
@@ -173,9 +163,9 @@
           }
         }{
           %//solo hijo0 es valido
-          \eIf{$hp$[$hijo_{0}$] > $hp$[$i$]} {
+          \eIf{$v$[$hijo_{0}$] > $v$[$i$]} {
             %//hijo0 es mas grande que el padre -> los swapeo
-            iSwap($hp$[$hijo_{0}$], $hp$[$i$])\; \com*{$\Theta(1)$}
+            iSwap($v$ ,$hijo_{0}$, $i$)\; \com*{$\Theta(copy(\alpha))$}
             $i \gets hijo_{0}$\; \com*{$\Theta(1)$}
           }{
             %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
@@ -190,12 +180,22 @@
       $hijo_{1} \gets$ 2x$i$+2\; \com*{$\Theta(1)$}
     }
   \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(log(n) \times copy(\alpha))$} % Complejidad
+  {El while se repite como m\'{a}ximo $log(n)$ veces, y cada iteracion del while tiene como complegidad $copy(\alpha)$} % Justificacíón
 
-  \begin{algoritmo}{iSwap}{\Inout{a}{$\alpha$}, \Inout{b}{$\alpha$}}{}
+  \begin{algoritmo}{iSwap}{\Inout{v}{vector($\alpha$)}, \In{a}{$nat$}, \In{b}{$nat$}}{}
     \tipo{$\alpha$} $c$\; \com*{$\Theta(1)$}
-    $c \gets a$\; \com*{$\Theta(1)$}
-    $a \gets b$\; \com*{$\Theta(1)$}
-    $b \gets c$\; \com*{$\Theta(1)$}
+    $c \gets v$[$a$]\; \com*{$\Theta(copy(\alpha))$}
+    $v$[$a$] $\gets v$[$b$]\; \com*{$\Theta(copy(\alpha))$}
+    $v$[$a$] $\gets v$[$c$]\; \com*{$\Theta(copy(\alpha))$}
   \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(copy(\alpha))$} % Complejidad
+  {} % Justificacíón
 
 \end{Algoritmos}
