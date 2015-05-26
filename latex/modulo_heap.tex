@@ -117,63 +117,7 @@
     $res \gets$ hp[0]\;
   \end{algoritmo}
 
-%  \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{$\alpha$}
-  \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{}
-
-    \tipo{nat} $i \gets$ $hp$.longitud - 1\;
-    iSwap($hp$[$0$], $hp$[$i$])\;
-%    $res \gets$ $hp$.pop\_back()\;
-    $hp$.pop\_back()\;
-
-    \tipo{nat} $hijo_{0} \gets$ 1\;
-    \tipo{nat} $hijo_{1} \gets$ 2\;
-
-    \While{$\not$estaOrdenado}{
-      \eIf{$hijo_{0}$ < $hp$.longitud}{
-        \eIf{$hijo_{1}$ < $hp$.longitud} {
-          %//ambos hijos son validos
-          \eIf{$hp$[$hijo_{0}$] $\geq$ $hp$[$hijo_{1}$]}{
-            %//hijo0 es mas grande que hijo1
-            \eIf{$hp$[$hijo_{0}$] > $hp$[$i$]}{
-              %//hijo0 es mas grande que el padre -> los swapeo
-              iSwap($hp$[$hijo_{0}$], $hp$[$i$])\;
-              $i \gets hijo_{0}$\;
-            }{
-              %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-              $estaOrdenado \gets$ True\;
-            }
-          }{
-            %//hijo1 es mas grande que hijo0
-            \eIf{$hp$[$hijo_{1}$] > $hp$[$i$]}{
-              %//hijo1 es mas grande que el padre -> los swapeo
-              iSwap($hp$[$hijo_{1}$], $hp$[$i$])\;
-              $i \gets hijo_{1}$\;
-            }{
-              %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-              $estaOrdenado \gets$ True\;
-            }
-          }
-        }{
-          %//solo hijo0 es valido
-          \eIf{$hp$[$hijo_{0}$] > $hp$[$i$]} {
-            %//hijo0 es mas grande que el padre -> los swapeo
-            iSwap($hp$[$hijo_{0}$], $hp$[$i$])\;
-            $i \gets hijo_{0}$\;
-          }{
-            %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-            $estaOrdenado \gets$ True\;
-          }
-        }
-      }{
-        %//ningun hijo es valido por ende no tiene hijos entonces esta ordenado
-        $estaOrdenado \gets$ True\;
-      }
-      $hijo_{0} \gets$ 2x$i$+1\;
-      $hijo_{1} \gets$ 2x$i$+2\;
-    }
-  \end{algoritmo}
-
-  \begin{algoritmo}{iDesencolar2}{\Inout{hp}{heap($\alpha$)}}{$\alpha$}
+  \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{$\alpha$}
 
     \tipo{nat} $i \gets$ $hp$.longitud - 1\;
     iSwap($hp$[$0$], $hp$[$i$])\;
@@ -181,6 +125,7 @@
 
     \tipo{nat} $hijo_{0} \gets$ 1\;
     \tipo{nat} $hijo_{1} \gets$ 2\;
+    \tipo{bool} $estaOrdenado \gets$ false\;
 
     \While{$\not$estaOrdenado}{
       \eIf{$hijo_{0}$ < $hp$.longitud}{
