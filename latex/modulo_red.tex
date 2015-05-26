@@ -18,55 +18,55 @@
 
   \InterfazFuncion{iniciarRed}{}{Red}%
   {res $\igobs$ iniciarRed()}%pos
-  [$\Theta(1234)$]%complejidad
+  [$\Theta(1)$]%complejidad
   [Genera una nueva red sin ninguna computadora.]%descripcion
   []%aliasing
   
   \InterfazFuncion{agregarCompu}{\Inout{r}{Red}, \In{c}{compu}}{}%
   [$r$ $\igobs$ $r_{0}$ $\land$ ($\forall c'$: compu)($c' \in$ computadoras($r$) $\rightarrow$ ip($c$) $\neq$ ip($c'$))]%pre
   {$r$ $\igobs$ agregarCompu($r_{0}$, c)}%pos
-  [$\Theta(1324)$]%complejidad
+  [$\Theta(I)$]%complejidad
   [Agrega una nueva pc a una red.]%descripcion
   []%aliasing
 
   \InterfazFuncion{conectar}{\Inout{r}{Red}, \In{c_0}{compu}, \In{i_0}{interfaz}, \In{c_1}{compu}, \In{i_1}{interfaz}}{Red}%
   [$r$ $\igobs$ $r_{0}$ $\land$ $c_{1} \in$ computadoras($r$) $\land$ $c_{2} \in$ computadoras($r$) $\land$ ip($c_{0} $) $\neq$ ip($c_{1}$) $\land$ $\lnot$conectadas?($r$, $c_{0}$ , $c_{1} $) $\land$ $\lnot$usaInterfaz?($r$, $c_{0}$, $i_{0}$) $\land$ $\lnot$usaInterfaz?($r$, $c_{1}$, $i_{1}$)]%pre
   {$r$ $\igobs$ conectar($r_{0}$, $c_{0}$, $i_{0}$, $c_{1}$, $i_{1}$)}%pos
-  [$\Theta(1234)$]%complejidad
+  [$\Theta(n+I)$]%complejidad
   [Conecta la pc $c_{0}$ con la pc $c_{1}$ a trav\'es de las interfaces $i_{0}$ y $i_{1}$ respectivamente. ]%descripcion
   []%aliasing
   
   \InterfazFuncion{computadoras}{\In{r}{Red}}{conj(compu)}%
   {$res$ $\igobs$ computadoras(r)} %es alias(res,compus(R))             %pos
-  [$\Theta(1234)$]%complejidad
+  [$\Theta(n \times (n+I²))$]%complejidad
   [Devuelve todas las computadoras de la red. ]%descripcion
   []%aliasing
   
   \InterfazFuncion{conectadas?}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{bool}%
   [$c_{0}$ $\in$ computadoras($r$) $\land$ $c_{1} \in $ computadoras($r$)]%pre
   {$res$ $\igobs$ conectadas?($r$, $c_{0}$, $c_{1}$)}%pos
-  [$\Theta(1234)$]%complejidad
+  [$\Theta(n+I)$]%complejidad
   [Devuelve true si y solo si la pc $c_{0}$ esta conectada a la pc $c_{1}$]%descripcion
   []%aliasing
   
   \InterfazFuncion{interfazUsada}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{interfaz}%
   [$c_{0}$ $\in$ computadoras($r$) $\land$ $c_{1} \in $ computadoras($r$) $\yluego$ conectadas?($r$, $c_{0}$, $c_{1}$)]%pre
   {$res$ $\igobs$ interfazUsada($r$, $c_{0}$, $c_{1}$)}%pos
-  [$\Theta(1234)$]%complejidad
+  [$\Theta(n+I)$]%complejidad
   [Devuelve la interfaz usada por $c_{0}$ para conectarse a $c_{1}$]%descripcion
   []%aliasing
   
   \InterfazFuncion{vecinos}{\In{r}{Red}, \In{c}{compu}}{conj(compu)}%
   [$c$ $\in$ computadoras($r$)]%pre
   {$res$ $\igobs$ vecinos($r$, $c$)}%pos
-  [$\Theta(1234)$]%complejidad
+  [$\Theta(n+I³)$]%complejidad
   [Devuelve el conjunto de vecinos de la pc $c$]%descripcion
   []%aliasing
   
   \InterfazFuncion{usaInterfaz?}{\In{r}{Red}, \In{c}{compu}, \In{i}{interfaz}}{bool}%
   [$c$ $\in$ computadoras($r$)]%pre
   {$res$ $\igobs$ usaInterfaz?($r$, $c$, $i$)}%pos
-  [$\Theta(1234)$]%complejidad
+  [$\Theta(n+I)$]%complejidad
   [Devuelve true si y solo si la pc $c$ esta usando la interfaz $i$. ]%descripcion
   []%aliasing
   
@@ -84,6 +84,13 @@
   [Devuelve true si y solo si hay alg\'un camino posible entre $c_{0}$ y $c_{1}$. ]%descripcion
   []%aliasing
   
+  \InterfazFuncion{cantCompus}{\In{r}{Red}}}{nat}%
+  [true]%pre
+  {$res$ $\igobs$ \#(computadoras(r))}%pos
+  [$\Theta(1)$]%complejidad
+  [Devuelve cuantas computadoras hay en la red ]%descripcion
+  []%aliasing
+
   \InterfazFuncion{copiar}{\In{r}{Red}}{Red}%
   [true]%pre
   {$res$ $\igobs$ $r$}%pos
@@ -110,7 +117,7 @@
   \InterfazFuncion{siguiente}{\In{it}{itRed}}{compu}%
   [true]%pre
   {$res$ $\igobs$ actual($it$)}%pos
-  [$\Theta(1)$]%complejidad
+  [$\Theta(I²)$]%complejidad
   [??????????. ]%descripcion
   [$res$ se devuelve por referencia]%aliasing
 
@@ -236,13 +243,21 @@
     $res \gets \langle$<>, 0$\rangle$ \com*{$\Theta(1)$}
   }
   \end{algoritmo}
-   \complejidad{$\Theta(1)$}
+ \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {} % Justificacíón
 
   \begin{algoritmo}{iAgregarCompu}{\Inout{r}{estrRed}, \In{c}{compu}}{}
     agregarAtras(r.compus, $\langle$c.IP, iArmarLista(c.interfaces)$\rangle$)\com*{$\Theta(I)$}
     $r.cantidadCompus \gets r.cantidadCompus+1$ \com*{$\Theta(1)$}
   \end{algoritmo}
-  \complejidad{$\Theta(I)$}
+ \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(I)$} % Complejidad
+  {} % Justificacíón
   
   \begin{algoritmo}{iArmarLista}{\In{c}{conj(interfaz)}}{lista($\langle$Interfaz, itLista(estrCompu)$\rangle$)}
     $res \gets$ vacia()\com*{$\Theta(1)$}
@@ -252,7 +267,11 @@
       avanzar($it$)\com*{$\Theta(1)$}
     }
   \end{algoritmo}
-  \complejidad{$\Theta(I)$}
+ \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(I)$} % Complejidad
+  {Dado un conjunto de interfaces, arma una lista, que representa las computadoras sin conexiones  n tuplas de Interfaz e Iterador a NULL (ya que cuando una computadora se agrega a la red no est\'{a} conectada a ninguna otra)} % Justificacíón
   
   \begin{algoritmo}{iConectar}{\Inout{r}{estrRed)}, \In{c_{1}}{compu}, \In{i_{1}}{interfaz}, \In{c_{2}}{compu}, \In{i_{2}}{interfaz}}{}
     \tipo{itLista(estrComp)} $it_{1} \gets$ crearIt(r.compus)\com*{$\Theta(1)$}
@@ -276,7 +295,12 @@
     siguiente($it_{3}$).com $\gets$ $it_{2}$\com*{$\Theta(1)$}
     siguiente($it_{4}$).com $\gets$ $it_{1}$\com*{$\Theta(1)$}
   \end{algoritmo}
-  \complejidad{$\Theta(n+I)$}
+ \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(n+I)$} % Complejidad
+  {} % Justificacíón
+  
   
   \begin{algoritmo}{iConectadas?}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{bool}{}
     \tipo{itLista(estrCompu)} $it_{1} \gets$ crearIt(r.compus)\com*{$\Theta(1)$}
@@ -289,7 +313,11 @@
     }
     $res \gets$ (siguiente(siguiente($it_{2}$).com)).IP $= c_{2}$.IP)\com*{$\Theta(1)$}
   \end{algoritmo}  
-  \complejidad{$\Theta(n+I)$}
+ \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(n+I)$} % Complejidad
+  {} % Justificacíón
 
   \begin{algoritmo}{iInterfazUsada}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{interfaz}{}
     \tipo{itLista(estrCompu)} $it_{1} \gets$ crearIt(r.compus)\com*{$\Theta(1)$}  
@@ -302,7 +330,11 @@
     }
     $res \gets$ siguiente($it_{2}$).inter\com*{$\Theta(1)$}
   \end{algoritmo}  
-  \complejidad{$\Theta(n+I)$}
+ \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(n+I)$} % Complejidad
+  {} % Justificacíón
     
   \begin{algoritmo}{iVecinos}{\In{r}{estrRed}, \In{c}{compu}}{conj(compu)}{}
     $res \gets$ vacio() \com*{$\Theta(1)$}
@@ -318,7 +350,11 @@
       avanzar($it_{2}$)\com*{$\Theta(1)$}
     }
   \end{algoritmo}
-   \complejidad{$\Theta(n+I³)$}
+   \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(n+I³)$} % Complejidad
+  {} % Justificacíón
   
    \begin{algoritmo}{iCrearConjunto}{\In{l}{lista(tupla(inter: interfaz, com: itLista(estrCompu)))}}{conj(interfaz)}{}
     \tipo{nat} $n \gets$ 0\com*{$\Theta(1)$}
@@ -328,7 +364,11 @@
       $n \gets n+1$\com*{$\Theta(1)$}
     }
   \end{algoritmo} 
-   \complejidad{$\Theta(I²)$}
+ \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(I²)$} % Complejidad
+  {Dada una lista de tupla de $\langle$Interfaz,Iterador$\rangle$ (que representa las conexiones de la computadora), devuelve el conjunto de todas las interfaces que se encuentran en ella. } % Justificacíón
 
   \begin{algoritmo}{iUsaInterfaz?}{\In{r}{estrRed}, \In{c}{compu}, \In{i}{interfaz}}{bool}{}
     \tipo{itLista(estrComp)} $it_{1} \gets$ crearIt(r.compus)\com*{$\Theta(1)$}
@@ -340,8 +380,11 @@
      avanzar($it_{2}$)\com*{$\Theta(1)$}
     }
     $res \gets$ haySiguiente(siguiente($it_{2}$).com)\com*{$\Theta(1)$}
-  \end{algoritmo}
-   \complejidad{$\Theta(n+I)$}
+  \end{algoritmo} \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(n+I)$} % Complejidad
+  {} % Justificacíón
    
   \begin{algoritmo}{iCaminosMinimos}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{conj(lista(compu))}{}
     $res \gets$ vacio()\com*{$\Theta(1)$}
@@ -351,33 +394,47 @@
       $res \gets$ dameMinimos(Caminos($r$, $c_{1}$, $c_{2}$, agregarAtras(<>,$c_{1}$), pasarConjASecu(vecinos($r$, $c_{1}$))))\;
     }
   \end{algoritmo}
+   \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {} % Complejidad
+  {} % Justificacíón
 
   \begin{algoritmo}{dameMinimos}{\In{c}{conj(lista(compu))}}{conj(lista(compu))}
-    \eIf{esVacio?($c$)}{
-      $res \gets$ vacio()\;
+    \eIf(\com*[f]{$\Theta(1)$}){esVacio?($c$)}{
+      $res \gets$ vacio()\com*{$\Theta(1)$}
     }{
-      \Tipo{ItConj(lista(compu))} $it \gets$ crearIt(c)\;
+      \Tipo{ItConj(lista(compu))} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
       $res \gets$ dameMinimosAux($c$, minimaLong($c$, long(siguiente($it$))))\;
     }
   \end{algoritmo}
+   \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {} % Complejidad
+  {Devuelve, del total de caminos posibles, solo los de longitud m\'{i}nima} % Justificacíón
 
   \begin{algoritmo}{dameMinimosAux}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{conj(lista(compu))}
-    \Tipo{ItConj(lista(compu))} $it \gets$ crearIt($c$)\;
-    $res \gets$ vacio()\;
-    \While{haySiguiente($it$)}{
-      \eIf{long(siguiente($it$))$=n$}{
-        agregar($res$, siguiente($it$))\;
-        avanzar($it$)\;
+    \Tipo{ItConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
+    $res \gets$ vacio()\;\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(n!)$ iteraciones}){haySiguiente($it$)}{
+      \eIf(\com*[f]{$\Theta(1)$}){long(siguiente($it$))$=n$}{
+        agregar($res$, siguiente($it$))\com*{$\Theta(n)$}
+        avanzar($it$)\com*{$\Theta(1)$}
       }{
-        avanzar($it$)\;
+        avanzar($it$)\com*{$\Theta(1)$}
       }
     }
   \end{algoritmo}
-
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {\com*{$\Theta(n \times n!)$}} % Complejidad
+  {} % Justificacíón
 
 \begin{algoritmo}{minimaLong}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{nat}
-  \Tipo{nat} $i \gets n$\;
-  \Tipo{ItConj(lista(compu))} $it \gets$ crearIt($c$)\;
+  \Tipo{nat} $i \gets n$\com*{$\Theta(1)$}
+  \Tipo{ItConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
   \While{haySiguiente($it$)}{
     \eIf{long(siguiente($it$))}{
       $i \gets$ longitud(siguiente($it$))\;
@@ -388,6 +445,11 @@
   }
   $res \gets i$\;
 \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {} % Complejidad
+  {Devuelve la longitud de la secuencia m\'{a}s chica} % Justificacíón
     
 	\begin{algoritmo}{pasarConjASecu}{\In{c}{conj(compu)}}{secu(compu)}{}
 		$res \gets$ vacia()\com*{$\Theta(1)$}
@@ -396,11 +458,20 @@
 			agregarAtras($res$, siguiente($it$))\com*{$\Theta(I)$} 		
 		}
 	\end{algoritmo}    
-    \complejidad{$\Theta(n \times I)$}   
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(n \times I)$} % Complejidad
+  {Devuelve una secuencia que contiene a todos los elementos del conjunto pasado por par\'{a}metro} % Justificacíón
      
   \begin{algoritmo}{iHayCamino?}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{bool}{}
     $res \gets$ ($\neg$esVacio?(iCaminosMinimos($r$, $c_{1}$, $c_{2}$)))
   \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {} % Complejidad
+  {} % Justificacíón
 
   \begin{algoritmo}{iCaminos}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}, \In{l}{lista(estrCompu)}, \In{vec}{lista(estrCompu)}}{conj(lista(estrCompu))}{}
     \eIf{vacia?($vec$)}{
@@ -417,6 +488,11 @@
       }
     }
   \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {} % Complejidad
+  {Dada una red, dos compus, los vecinos de la primer compu, y una lista que usamos para guardar las computadoras por las que ya preguntamos, iteramos sobre todas las computadoras y devolvemos el conjunto de todos los caminos posibles desde la primer computadora hasta la segunda. } % Justificacíón
 
   \begin{algoritmo}{iUni\'{o}n}{\In{c_{1}}{conj(lista(compu))}, \In{c_{2}}{conj(lista(compu))}}{conj(lista(compu))}
     $res \gets$ vacio()\com*{$\Theta(1)$}     
@@ -429,7 +505,11 @@
       } 
     }
   \end{algoritmo}
-  \complejidad{$\Theta(n²)$}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {} % Complejidad
+  {Devuelve la uni\'{o}n de dos conjuntos. } % Justificacíón
 
   \begin{algoritmo}{iEsta?}{\In{c}{compu}, \In{l}{lista(compu)}}{bool}
     \eIf(\com*{$\Theta(1)$}){vacia?($l$)}{
@@ -442,7 +522,11 @@
     }
     $res \gets$ (haySiguiente($it$))\com*{$\Theta(1)$}
   \end{algoritmo}
-  \complejidad{$\Theta(n)$}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(n)$} % Complejidad
+  {Devuelve True si y solo si la compu c se encuentra en la lista l.} % Justificacíón
 
   \begin{algoritmo}{iComputadoras}{\In{r}{estrRed}}{conj(compu)}{}
     $res \gets$ vacio()\com*{$\Theta(1)$}
@@ -452,20 +536,40 @@
       avanzar($it$)\com*{$\Theta(1)$}
     }
   \end{algoritmo}
-   \complejidad{$\Theta(n \times (n+I²))$}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(n \times (n+I²))$} % Complejidad
+  {} % Justificacíón
    
    \begin{algoritmo}{iCopiar}{\In r:estrRed}{Red}
    	$res \gets$ $\langle$copiar(r.compus, r.cantidadCompus$\rangle$\com*{$\Theta(n \times I)$}
    \end{algoritmo}
-   \complejidad{$\Theta(n \times I)$}    
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(n \times I)$} % Complejidad
+  {Devuelve una copia de la Red} % Justificacíón
 
+   \begin{algoritmo}{iCantCompus}{\In{r}{Red}}{nat}
+    $res \gets$ $r$.cantCompus\com*{$\Theta(1)$}
+   \end{algoritmo}   
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {} % Justificacíón
 
    \Encabezado{Algoritmos del iterador de Red}
 
   \begin{algoritmo}{iHaySiguiente?}{\In{it}{itLista(estrCompu)}}{bool}{}
   $res \gets$ haySiguiente?($it$)\com*{$\Theta(1)$}
   \end{algoritmo}
-    \complejidad{$\Theta(1)$}  
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {} % Justificacíón
 
   \begin{algoritmo}{iSiguiente}{\In{it}{itLista(estrCompu)}}{compu}{}
     \tipo{estrCompu} $e \gets$ siguiente($it$)\com*{$\Theta(1)$}
@@ -478,17 +582,29 @@
     }
     $res$.Interfaces $\gets$ $e$.Interfaces\com*{$\Theta(I)$}
   \end{algoritmo}
-   \complejidad{$\Theta(I²)$}   
+    \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(I²)$} % Complejidad
+  {} % Justificacíón   
     
   \begin{algoritmo}{iCrearIt}{\In{e}{estrRed}}{}
   $res \gets$ crearIt($e$.compus)\com*{$\Theta(1)$}
   \end{algoritmo}
-   \complejidad{$\Theta(1)$} 
+      \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {} % Justificacíón  
    
   \begin{algoritmo}{iAvanzar}{\Inout{it}{itLista(estrCompu)}}
   $it \gets$ avanzar($it$)\com*{$\Theta(1)$}
   \end{algoritmo}
-   \complejidad{$\Theta(1)$} 
+      \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {} % Justificacíón  
    
 
 \end{Algoritmos}
