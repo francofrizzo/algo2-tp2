@@ -105,7 +105,7 @@
   {$res$ $\igobs$ crearItUni($r$.compus)}%pos
   [$\Theta(1)$]%complejidad
   [Crea un iterador de red.  ]%descripcion
-  [??????????]%aliasing
+  []%aliasing
 
   \InterfazFuncion{haySiguiente?}{\In{it}{itRed}}{bool}%
   [true]%pre
@@ -179,12 +179,12 @@
   ~
 
   \tadOperacion{ArmarComputadoras}{secu(tupla(string{,} secu(tupla(Interfaz{,} ItRed))))}{conj(compu)}{}
-  \tadAxioma{ArmarComputadoras($l$)}{\IF vacia?(l) THEN $\emptyset$ ELSE Ag($\langle \pi_{1}$(prim($l$)), GenerarInterfaces($\pi_{2}$(prim($l$)))$\rangle$, ArmarComputadoras(fin($l$))) FI}
+  \tadAxioma{ArmarComputadoras($l$)}{\IF vacia?(l) THEN $\emptyset$ ELSE Ag($\langle \Pi_{1}$(prim($l$)), GenerarInterfaces($\Pi_{2}$(prim($l$)))$\rangle$, ArmarComputadoras(fin($l$))) FI}
 
   ~
   
   \tadOperacion{ArmarSecuencia}{secu(tupla(string{,} secu(tupla(interfaz{,} itLista(compu)))))}{secu(string)}{}
-  \tadAxioma{ArmarSecuencia(s)}{\IF vacia?($s$) THEN <> ELSE ($\pi_{1}$(prim(s))) $\puntito$ ArmarSecuencia(fin($s$)) FI}
+  \tadAxioma{ArmarSecuencia(s)}{\IF vacia?($s$) THEN <> ELSE ($\Pi_{1}$(prim(s))) $\puntito$ ArmarSecuencia(fin($s$)) FI}
   
   \tadOperacion{sinRepetidos}{secu(string)}{bool}{}
   \tadAxioma{sinRepetidos($s$)}{\#(pasarSecuAConj($s$) $=$ long($s$)}
@@ -194,27 +194,27 @@
   
 
   \tadOperacion{GenerarInterfaces}{secu(tupla(Interfaz{,} ItLista(estrCompu)))}{conj(Interfaz)}{}
-  \tadAxioma{GenerarInterfaces($l$)}{\IF vacia?($l$) THEN $\emptyset$ ELSE Ag($\pi_{1}$(prim($l$)), GenerarInterfaces(fin($l$))) FI}
+  \tadAxioma{GenerarInterfaces($l$)}{\IF vacia?($l$) THEN $\emptyset$ ELSE Ag($\Pi_{1}$(prim($l$)), GenerarInterfaces(fin($l$))) FI}
 
   ~
 
   \tadOperacion{Pertenece?}{secu(tupla(string{,} secu(tupla(Interfaz{,} ItRed))))/l, compu/c_{1}, compu/c_{2}}{bool}{}
-  \tadAxioma{Pertenece?($l$, $c_{1}$, $c_{2}$)}{\IF ($\pi_{1}$(prim($l$) = $\pi_{1}$($c_{1}$))) THEN $\pi_{1}$($c_{2}$) $\in$ GenerarCompus($\pi_{2}$(prim($l$))) ELSE Pertenece?(fin($l$), $c_{1}$, $c_{2}$) FI}
+  \tadAxioma{Pertenece?($l$, $c_{1}$, $c_{2}$)}{\IF ($\Pi_{1}$(prim($l$) = $\Pi_{1}$($c_{1}$))) THEN $\Pi_{1}$($c_{2}$) $\in$ GenerarCompus($\Pi_{2}$(prim($l$))) ELSE Pertenece?(fin($l$), $c_{1}$, $c_{2}$) FI}
 
   ~
 
   \tadOperacion{GenerarCompus}{secu(tupla<Interfaz, ItLista(estrCompu)>)}{conj(string)}{}
-  \tadAxioma{GenerarCompus($l$)}{\IF vacia?($l$) THEN $\emptyset$ ELSE Ag($\pi_{1}$(siguiente($\pi_{2}$(prim($l$)))), GenerarCompus(fin($l$))) FI}
+  \tadAxioma{GenerarCompus($l$)}{\IF vacia?($l$) THEN $\emptyset$ ELSE Ag($\Pi_{1}$(siguiente($\Pi_{2}$(prim($l$)))), GenerarCompus(fin($l$))) FI}
 
   ~
 
   \tadOperacion{DevolverInterfaz}{secu(tupla(string, secu(tupla(Interfaz, ItRed))))/l, compu/c_{1}, compu/c_{2}}{Interfaz}{Pertenece?($l$, $c_{1}$, $c_{2}$} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
-  \tadAxioma{DevolverInterfaz($l$, $c_{1}$, $c_{2}$)}{\IF ($\pi_{1}$(prim($l$)) = $\pi_{1}$($c_{1}$)) THEN DevolverInterfazAux($\pi_{2}$(prim($l$), $c_{2}$)) ELSE DevolverInterfaz(fin($l$, $c_{1}$, $c_{2}$)) FI}
+  \tadAxioma{DevolverInterfaz($l$, $c_{1}$, $c_{2}$)}{\IF ($\Pi_{1}$(prim($l$)) = $\Pi_{1}$($c_{1}$)) THEN DevolverInterfazAux($\Pi_{2}$(prim($l$), $c_{2}$)) ELSE DevolverInterfaz(fin($l$, $c_{1}$, $c_{2}$)) FI}
 
   ~  
   
    \tadOperacion{DevolverInterfazAux}{secu(tupla(Interfaz, ItRed))/l, compu/c}{Interfaz}{} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
-  \tadAxioma{DevolverInterfaz($l$, $c$)}{\IF ($\pi_{1}$($c_{2}$) = $\pi_{1}$(siguiente($\pi_{2}$(prim($l$))))) THEN $\pi_{1}$(prim($l$)) ELSE DevolverInterfazAux(fin($l$, c)) FI}
+  \tadAxioma{DevolverInterfaz($l$, $c$)}{\IF ($\Pi_{1}$($c_{2}$) = $\Pi_{1}$(siguiente($\Pi_{2}$(prim($l$))))) THEN $\Pi_{1}$(prim($l$)) ELSE DevolverInterfazAux(fin($l$, c)) FI}
 
   ~
 

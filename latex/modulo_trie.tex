@@ -1,5 +1,11 @@
 \section{M\'{o}dulo Diccionario Trie}
 
+\Encabezado{Notas preliminares}
+  En todos los casos, al indicar las complejidades de los algoritmos, las variables que se utilizan corresponden a:
+  \vspace{-0.5em}\begin{itemize}
+    \item $n$: Cantidad de claves definidas en el diccionario.
+  \end{itemize}
+
 \begin{Interfaz}
   
   \begin{paramFormales}
@@ -21,7 +27,7 @@
 
   \end{paramFormales}
 
-  \seExplicaCon{dicc(secu(char), $\alpha$)}
+  \seExplicaCon{Diccionario(Secuencia(Char), $\alpha$)}
 
   \generos{diccTrie($\alpha$)}
 
@@ -31,30 +37,30 @@
     [true]
     {$res \igobs$ vac\'{i}o}
     [$\Theta(1)$]
-    [Constructor por defecto de diccTrie($\alpha$)]
+    [Devuelve un diccionario vac\'io.]
 
     \InterfazFuncion{definir}{\Inout{d}{diccTrie($\alpha$)}, \In{k}{string}, \In{s}{$\alpha$}}{diccTrie($\alpha$)}
     [$d \igobs d_{0}$]
     {$d \igobs$ definir($k$, $s$, $d_{0}$}
     [$\Theta(L)$]
-    [Define una plabra en el diccTrie($\alpha$)]
+    [Define una palabra en el diccionario.]
 
     \InterfazFuncion{borrar}{\Inout{d}{diccTrie($\alpha$)}, \In{k}{string}}{diccTrie($\alpha$)}
     [$d \igobs d_{0}$ $\land$ def?($d$, $k$)]
     {$d \igobs$ borrar($k$, $s$, $d_{0}$}
     [$\Theta(L)$]
-    [Borra una definicion en el diccTrie($\alpha$)]
+    [Borra una palabra del diccionario.]
 
     \InterfazFuncion{def?}{\In{d}{diccTrie($\alpha$)}, \In{k}{string}}{bool}
     [true]
     {$res \igobs$ def?($d$, $k$)}
     [$\Theta(L)$]
-    [Pregunta si la palabra $k$ esta definida en el diccTrie($\alpha$)]
+    [Devuelve true si y solo si la clave $k$ est\'a definida en el diccionario.]
 
     \InterfazFuncion{obtener}{\In{d}{diccTrie($\alpha$)}, \In{k}{string}}{$\alpha$}
     [def?($d$, $k$)]
     {$res \igobs$ obtener($d$, $k$)}
     [$\Theta(L)$]
-    [Devuelve el significado de la palabra $k$]
+    [Devuelve el significado asociado a la clave $k$.]
 
 \end{Interfaz}

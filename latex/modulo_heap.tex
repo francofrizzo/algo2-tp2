@@ -1,4 +1,10 @@
-\section{M\'{o}dulo Heap($\alpha$)}
+\section{M\'{o}dulo Heap}
+
+\Encabezado{Notas preliminares}
+  En todos los casos, al indicar las complejidades de los algoritmos, las variables que se utilizan corresponden a:
+  \vspace{-0.5em}\begin{itemize}
+    \item $n$: N\'umero de elementos presentes en la cola de prioridad.
+  \end{itemize}
 
 \begin{Interfaz}
   
@@ -46,7 +52,7 @@
     [Devuelve true si y solo si el heap no tiene elementos.]
 
     \InterfazFuncion{desencolar}{\Inout{h}{heap($alpha$)}}{}
-    [$\not$(vac\'ia?(h))]
+    [$\neg$(vac\'ia?(h))]
     {$res \igobs$ desencolar(h)}
     [$\Theta(log(n))$]
     [Devuelve uno de los elementos de m\'axima prioridad del heap, y lo elimina de la estructura.]
@@ -62,7 +68,7 @@
     ($\paratodo{i}{nat}$) ((($2 \* i + 1 < $long($v$)) $\impluego$ i\'esimo($2 \* i + 1$, $v$) $\leq$ i\'esimo($i$, $v$)) $\land$ (($2 \* i + 2 < $long($v$)) $\impluego$ i\'esimo($2 \* i + 2$, $v$) $\leq$ i\'esimo($i$, $v$)))
   }
 
-  \tadOperacion{i\'esimo}{nat/$i$,secu($\alpha$/$s$)}{$\alpha$}{$n \leq long($\alpha$)$}  
+  \tadOperacion{i\'esimo}{nat/i,secu($\alpha$)/s}{$\alpha$}{$i \leq$ long($\alpha$)}  
 
   \tadAxioma{i\'esimo($i$, $s$)}{\IF $i = 0$ THEN prim($s$) ELSE i\'esimo($i - 1$, fin($s$)) FI}
 
@@ -74,8 +80,13 @@
 
 \begin{Algoritmos}
 
-  \begin{algoritmo}{iVac\'io}{}{vector($\alpha$)}
-    $res \gets Vac\'ia()$ \; \com*{$\Theta(1)$}
+  \SetKwFunction{vacia}{Vac\'ia}
+  \SetKwFunction{lon}{long}
+  \SetKwFunction{swap}{Swap}
+  \SetKwFunction{esVacio}{esVac\'io?}
+
+  \begin{algoritmo}{iVac\'io}{}{}
+    $res \gets$ \vacia{} \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -84,21 +95,21 @@
   {} % Justificación
 
   \begin{algoritmo}{iEncolar}{\Inout{v}{vector($\alpha$)}, \In{a}{$\alpha$}}{}
-    agregarAtras($v$, $a$) \; \com*{$\Theta(1)$}
-    \tipo{nat} $i \gets $long$(v)$ \; \com*{$\Theta(1)$}
+    agregarAtras($v$, $a$) \com*{$\Theta(1)$}
+    \tipo{nat} $i \gets$ \lon{$v$} \com*{$\Theta(1)$}
     \While{$i \neq 0 \land v[i] < v[i \text{ div } 2 - (i + 1)\%2]$}{
-      swap($v$, $i$, $i \text{ div } 2 - (i + 1)\%2$) \; \com*{$\Theta(copy(\alpha))$}
-      $i \gets i \text{ div } 2 - (i + 1)\%2$ \; \com*{$\Theta(1)$}
+      \swap{$v$, $i$, $i \text{ div } 2 - (i + 1)\%2$} \com*{$\Theta(copy(\alpha))$}
+      $i \gets i \text{ div } 2 - (i + 1)\%2$ \com*{$\Theta(1)$}
     }
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(log(n)) \times \Theta(copy(\alpha))$} % Complejidad
-  {El while se repite como m\'aximo $log(n)$ veces y cada repetici\'on tiene $\Theta(copy(\alpha))$. } % Justificación
+  {El ciclo se repite como m\'aximo $log(n)$ veces y cada repetici\'on tiene $\Theta(copy(\alpha))$. } % Justificación
 
   \begin{algoritmo}{iVac\'{i}o?}{\In{v}{vector($\alpha$)}}{bool}
-    $res \gets$ esVac\'io?($v$) \; \com*{$\Theta(1)$}
+    $res \gets$ \esVacio{$v$} \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -107,36 +118,36 @@
   {} % Justificación
 
   \begin{algoritmo}{iDesencolar}{\Inout{v}{vector($\alpha$)}}{$\alpha$}
-    $res \gets v[0]$ \; \com*{$\Theta(1)$}
-    \tipo{nat} $i \gets 0$ \; \com*{$\Theta(1)$}
-    \While{(($2i + 1 \leq$ long($v$)) $\land$ $v[i] < v[2i + 1]$) $\lor$ ($2i + 2 \leq$ long($v$)) $\land$ $v[i] < v[2i + 2]$)}{
-      \EIf{$2i + 2 \leq$ long($v$)}{
+    $res \gets v[0]$ \com*{$\Theta(1)$}
+    \tipo{nat} $i \gets 0$ \com*{$\Theta(1)$}
+    \While{(($2i + 1 \leq$ \lon{$v$}) $\land$ $v[i] < v[2i + 1]$) $\lor$ ($2i + 2 \leq$ \lon{$v$}) $\land$ $v[i] < v[2i + 2]$)}{
+      \eIf{$2i + 2 \leq$ \lon{$v$}}{
         \eIf{$v[i] < v[2i + 2]$}{
-          swap($v$, $i$, $2i + 2$) \; \com*{$\Theta(copy(\alpha))$}
-          $i \gets 2i + 2$ \; \com*{$\Theta(1)$}
+          \swap{$v$, $i$, $2i + 2$} \com*{$\Theta(copy(\alpha))$}
+          $i \gets 2i + 2$ \com*{$\Theta(1)$}
         }{
-          swap($v$, $i$, $2i + 1$) \; \com*{$\Theta(copy(\alpha))$}
-          $i \gets 2i + 1$ \; \com*{$\Theta(1)$}
+          \swap{$v$, $i$, $2i + 1$} \com*{$\Theta(copy(\alpha))$}
+          $i \gets 2i + 1$ \com*{$\Theta(1)$}
         }
       }{
-        swap($v$, $i$, $2i + 1$) \; \com*{$\Theta(copy(\alpha))$}
-        $i \gets 2i + 1$ \; \com*{$\Theta(1)$}
+        \swap{$v$, $i$, $2i + 1$} \com*{$\Theta(copy(\alpha))$}
+        $i \gets 2i + 1$ \com*{$\Theta(1)$}
       }
     }
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
-  {$\not$(vac\'ia?(h))} % Pre
+  {} % Pre
   {} % Post
   {$\Theta(log(n)) \times \Theta(copy(\alpha))$} % Complejidad
-  {El while se repite como m\'aximo $log(n)$ veces y cada repetici\'on tiene $\Theta(copy(\alpha))$. } % Justificación
+  {El ciclo se repite como m\'aximo $log(n)$ veces y cada repetici\'on tiene $\Theta(copy(\alpha))$. } % Justificación
 
-  \begin{algoritmo}{iSwap}{\Inout{v}{vector($\alpha$), \In{i}{nat}, \In{j}{nat}}}
-    $\alpha aux \gets v[i]$ \; \com*{$\Theta(copy(\alpha))$}
-    $v[i] \gets v[j]$ \; \com*{$\Theta(copy(\alpha))$}
-    $v[j] \gets aux$ \; \com*{$\Theta(copy(\alpha))$}
+  \begin{algoritmo}{iSwap}{\Inout{v}{vector($\alpha$)}, \In{i}{nat}, \In{j}{nat}}{}
+    \tipo{$\alpha$} $aux \gets v[i]$ \com*{$\Theta(copy(\alpha))$}
+    $v[i] \gets v[j]$ \com*{$\Theta(copy(\alpha))$}
+    $v[j] \gets aux$ \com*{$\Theta(copy(\alpha))$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
-  {$i$ < long($v$) $\land$ $j$ < long($v$)} % Pre
+  {$i < \,$ long($v$) $\land$ $j < \,$ long($v$)} % Pre
   {} % Post
   {$\Theta(copy(\alpha))$} % Complejidad
   {$3 \times \Theta(copy(\alpha)) = \Theta(copy(\alpha))$} % Justificación
