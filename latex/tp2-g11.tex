@@ -180,9 +180,20 @@
   \end{algorithm}
 }
 
-\newcommand{\complejidad}[1]{\textbf{Complejidad:} #1 \vspace{1em}}
+\newcommand{\datosAlgoritmo}[5]{
+  \ifx#1\empty\else \textbf{Descripci\'on:} #1
+
+  \fi \ifx#2\empty\else\textbf{Pre} $\equiv$ \{#2\}
+
+  \fi \ifx#3\empty\else\textbf{Post} $\equiv$ \{#3\}
+
+  \fi \textbf{Complejidad:} #4 
+
+  \ifx#5\empty\else\textbf{Justificaci\'on:} #5 \fi \vspace{1em}
+}
 
 \SetKwComment{com}{ $\triangleright$ }{}
+\SetKwFunction{copiar}{Copiar}
 \SetKwFunction{delete}{delete}
 \def\NULL{\textrm{NULL}}
 \def\new{\textbf{\&}}
