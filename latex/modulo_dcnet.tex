@@ -1,5 +1,14 @@
 \section{M\'{o}dulo DCNet}
 
+\Encabezado{Notas preliminares}
+  En todos los casos, al indicar las complejidades de los algoritmos, las variables que se utilizan corresponden a:
+  \vspace{-0.5em}\begin{itemize}
+    \item $n$: N\'umero de computadoras en la red.
+    \item $k$: Longitud de la cola de paquetes m\'as larga al momento.
+    \item $L$: Longitud de nombre de computadora m\'as largo de la red.
+    \item $i$: Mayor cantidad de interfaces que tiene alguna computadora en la red en el momento.
+  \end{itemize}
+
 \begin{Interfaz}
   
   \seExplicaCon{DCNet}
@@ -12,7 +21,7 @@
   [true]%pre
   {res $\igobs$ iniciarDCNet(r)}%pos
   [$\Theta(1234)$]%complejidad
-  [Genera un nuevo DCNet sin paquetes. ``vac\'ia'' ]%descripcion
+  [Genera un nuevo DCNet sin paquetes. ]%descripcion
   []%aliasing
   
   \InterfazFuncion{crearPaquete}{\Inout{D}{DCNet}, \In{p}{paquete}}{}%
