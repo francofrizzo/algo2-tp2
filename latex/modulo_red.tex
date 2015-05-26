@@ -6,7 +6,7 @@
 
   \generos{\tipo{red}, \tipo{itRed}}
   
-  \Encabezado{Operaciones b\'{a}sicas de red}
+  \Encabezado{Operaciones b\'{a}sicas de Red}
 
   \InterfazFuncion{iniciarRed}{}{Red}%
   {res $\igobs$ iniciarRed()}%pos
@@ -75,15 +75,22 @@
   [$\Theta(1234)$]%complejidad
   [Devuelve true si y solo si hay alg\'un camino posible entre $c_{0}$ y $c_{1}$. ]%descripcion
   []%aliasing
+  
+  \InterfazFuncion{copiar}{\In{r}{Red}}{Red}%
+  [true]%pre
+  {$res$ $\igobs$ $r$}%pos
+  [$\Theta(n \times I)$]%complejidad
+  [Devuelve una copia de la red]%descripcion
+  []%aliasing
 
-  \Encabezado{Operaciones b\'{a}sicas del iterador de red}
+  \Encabezado{Operaciones b\'{a}sicas del iterador de Red}
 
   \InterfazFuncion{crearIt}{\In{r}{Red}}{itRed}%
   [true]%pre
   {$res$ $\igobs$ crearItUni($r$.compus)}%pos
   [$\Theta(1)$]%complejidad
-  [??????????. ]%descripcion
-  [Crea un iterador de red. ]%aliasing
+  [Crea un iterador de red.  ]%descripcion
+  [??????????]%aliasing
 
   \InterfazFuncion{haySiguiente?}{\In{it}{itRed}}{bool}%
   [true]%pre
@@ -105,11 +112,14 @@
   [$\Theta(1)$]%complejidad
   [Avanza el iterador a la siguiente posicion. ]%descripcion
   []%aliasing
+  
 
 \end{Interfaz}
 
 \begin{Representacion}
 
+  \Encabezado{Estructura Red}
+  
   \begin{Estructura}{Red}[estrRed]
 
     \begin{Tupla}[estrRed]
@@ -119,28 +129,29 @@
 
     \begin{Tupla}[estrCompu]
       \tupItem{IP}{string}
-      \tupItem{conexiones}{lista(tupla(interfaz, itLista(estrCompu)))}
+      \tupItem{conexiones}{lista(tupla(inter: interfaz, com: itLista(estrCompu)))}
     \end{Tupla}
 
   \end{Estructura}
 
-  \begin{Estructura}{itRed}[itLista(estrCompu)]
-  \end{Estructura}
-
-  \RepFc[Red][e]{($\forall c$: compu)(c $\in$ ArmarComputadoras(e.conexiones) $\impluego$ $\lnot$ Pertenece?(e.conexiones, c, c))$\land$ \\
-    $\#$ArmarComputadoras(e.conexiones) = e.cantidadCompus $\land$ \\
-    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) ($c_{1}$ $\in$ ArmarComputadoras(e.conexiones) $\land$ $c_{2}$ $\in$ ArmarComputadoras(e.conexiones) $\impluego$ Pertenece?(e.conexiones, $c_{1}$, $c_{2}$) $\Leftrightarrow$ Pertenece?(e.conexiones, $c_{2}$, $c_{1}$))) $\land$ \\
-    ($\forall c_{1}$: compu)($c_{1}$ $\in$ ArmarComputadoras(e.conexiones) $\impluego$ ($\forall c_{2}$: compu) (Pertenece?(e.conexiones, $c_{1}$, $c_{2}$) $\Rightarrow$ $c_{2}$ $\in$ ArmarComputadoras(e.conexiones))) $\land$ \\
-    sinRepetidos(ArmarSecuencia(e.conexiones)) 
-    %FALTAN SINREPETIDOS Y ARMAR SECUENCIA
+  \RepFc[Red][e]{($\forall c$: compu)(c $\in$ ArmarComputadoras(e.compus) $\impluego$ $\lnot$ Pertenece?(e.compus, c, c))$\land$ \\
+    $\#$ArmarComputadoras(e.compus) = e.cantCompus $\land$ \\
+    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) ($c_{1}$ $\in$ ArmarComputadoras(e.compus) $\land$ $c_{2}$ $\in$ ArmarComputadoras(e.compus) $\impluego$ Pertenece?(e.compus, $c_{1}$, $c_{2}$) $\Leftrightarrow$ Pertenece?(e.compus, $c_{2}$, $c_{1}$))) $\land$ \\
+    ($\forall c_{1}$: compu)($c_{1}$ $\in$ ArmarComputadoras(e.compus) $\impluego$ ($\forall c_{2}$: compu) (Pertenece?(e.compus, $c_{1}$, $c_{2}$) $\Rightarrow$ $c_{2}$ $\in$ ArmarComputadoras(e.compus))) $\land$ \\
+    sinRepetidos(ArmarSecuencia(e.compus)) 
     }\mbox{}
 
   ~
 
-  \AbsFc[estrRed]{Red}[e]{(r: Red | computadoras(r) = ArmarComputadoras(e.conexiones) $\land$ \\
-    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) conectados?(r, $c_{1}$, $c_{2}$) = Pertenece?(e.conexiones, $c_{1}$, $c_{2}$) $\land$ \\
-    InterfazUsada(r, $c_{1}$, $c_{2}$) = DevolverInterfaz(e.conexiones, $c_{1}$, $c_{2}$)))
+  \AbsFc[estrRed]{Red}[e]{(r: Red | computadoras(r) = ArmarComputadoras(e.compus) $\land$ \\
+    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) conectados?(r, $c_{1}$, $c_{2}$) = Pertenece?(e.compus, $c_{1}$, $c_{2}$) $\land$ \\
+    InterfazUsada(r, $c_{1}$, $c_{2}$) = DevolverInterfaz(e.compus, $c_{1}$, $c_{2}$)))
   }
+  
+   \Encabezado{Estructura iterador de Red}
+  
+  \begin{Estructura}{itRed}[itLista(estrCompu)]
+  \end{Estructura}
 
   \RepFc[itRed][it]{true}\mbox{}
 
@@ -152,43 +163,53 @@
 
   ~
 
-  \tadOperacion{ArmarComputadoras}{lista(tupla<string, lista(tupla<Interfaz, ItRed>)>)}{conj(compu)}{} %falta arreglar comas
-  \tadAxioma{ArmarComputadoras($l$)}{\IF vacia?(l) THEN $\emptyset$ ELSE Ag(<$\pi_{1}$(prim($l$)), GenerarInterfaces($\pi_{2}$(prim($l$)))>, ArmarComputadoras(fin($l$))) FI}
+  \tadOperacion{ArmarComputadoras}{secu(tupla(string{,} secu(tupla(Interfaz{,} ItRed))))}{conj(compu)}{}
+  \tadAxioma{ArmarComputadoras($l$)}{\IF vacia?(l) THEN $\emptyset$ ELSE Ag($\langle \pi_{1}$(prim($l$)), GenerarInterfaces($\pi_{2}$(prim($l$)))$\rangle$, ArmarComputadoras(fin($l$))) FI}
 
   ~
+  
+  \tadOperacion{ArmarSecuencia}{secu(tupla(string{,} secu(tupla(interfaz{,} itLista(compu)))))}{secu(string)}{}
+  \tadAxioma{ArmarSecuencia(s)}{\IF vacia?($s$) THEN <> ELSE ($\pi_{1}$(prim(s))) $\puntito$ ArmarSecuencia(fin($s$)) FI}
+  
+  \tadOperacion{sinRepetidos}{secu(string)}{bool}{}
+  \tadAxioma{sinRepetidos($s$)}{\#(pasarSecuAConj($s$) $=$ long($s$)}
+  
+  \tadOperacion{pasarSecuAConj}{secu(string)}{conj(string)}{}
+  \tadAxioma{pasarSecuAConj($s$)}{\IF vacia?($s$) THEN $\emptyset$ ELSE Ag(prim($s$), pasarSecuAConj(fin($s$))) FI}
+  
 
-  \tadOperacion{GenerarInterfaces}{lista(tupla<Interfaz, ItLista(estrCompu)>)}{conj(Interfaz)}{}
+  \tadOperacion{GenerarInterfaces}{secu(tupla(Interfaz{,} ItLista(estrCompu)))}{conj(Interfaz)}{}
   \tadAxioma{GenerarInterfaces($l$)}{\IF vacia?($l$) THEN $\emptyset$ ELSE Ag($\pi_{1}$(prim($l$)), GenerarInterfaces(fin($l$))) FI}
 
   ~
 
-  \tadOperacion{Pertenece?}{lista(tupla<string, lista(tupla<Interfaz, ItRed>)>)/l, compu/c_{1}, compu/c_{2}}{bool}{}
+  \tadOperacion{Pertenece?}{secu(tupla(string{,} secu(tupla(Interfaz{,} ItRed))))/l, compu/c_{1}, compu/c_{2}}{bool}{}
   \tadAxioma{Pertenece?($l$, $c_{1}$, $c_{2}$)}{\IF ($\pi_{1}$(prim($l$) = $\pi_{1}$($c_{1}$))) THEN $\pi_{1}$($c_{2}$) $\in$ GenerarCompus($\pi_{2}$(prim($l$))) ELSE Pertenece?(fin($l$), $c_{1}$, $c_{2}$) FI}
 
   ~
 
-  \tadOperacion{GenerarCompus}{lista(tupla<Interfaz, ItLista(estrCompu)>)}{conj(string)}{}
+  \tadOperacion{GenerarCompus}{secu(tupla<Interfaz, ItLista(estrCompu)>)}{conj(string)}{}
   \tadAxioma{GenerarCompus($l$)}{\IF vacia?($l$) THEN $\emptyset$ ELSE Ag($\pi_{1}$(siguiente($\pi_{2}$(prim($l$)))), GenerarCompus(fin($l$))) FI}
 
   ~
 
-  \tadOperacion{DevolverInterfaz}{lista(tupla<string, lista(tupla<Interfaz, ItRed>)>)/l, compu/c_{1}, compu/c_{2}}{Interfaz}{} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
+  \tadOperacion{DevolverInterfaz}{secu(tupla<string, secu(tupla<Interfaz, ItRed>)>)/l, compu/c_{1}, compu/c_{2}}{Interfaz}{Pertenece?($l$, $c_{1}$, $c_{2}$} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
   \tadAxioma{DevolverInterfaz($l$, $c_{1}$, $c_{2}$)}{\IF ($\pi_{1}$(prim($l$)) = $\pi_{1}$($c_{1}$)) THEN DevolverInterfazAux($\pi_{2}$(prim($l$), $c_{2}$)) ELSE DevolverInterfaz(fin($l$, $c_{1}$, $c_{2}$)) FI}
 
   ~  
   
-   \tadOperacion{DevolverInterfazAux}{lista(tupla<Interfaz, ItRed>)/l, compu/c}{Interfaz}{} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
+   \tadOperacion{DevolverInterfazAux}{secu(tupla<Interfaz, ItRed>)/l, compu/c}{Interfaz}{} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
   \tadAxioma{DevolverInterfaz($l$, $c$)}{\IF ($\pi_{1}$($c_{2}$) = $\pi_{1}$(siguiente($\pi_{2}$(prim($l$))))) THEN $\pi_{1}$(prim($l$)) ELSE DevolverInterfazAux(fin($l$, c)) FI}
 
   ~
 
-  \tadOperacion{armarCompus}{lista(estrCompu)/l}{secu(compu)}{}
+  \tadOperacion{armarCompus}{secu(estrCompu)/l}{secu(compu)}{}
   \tadAxioma{armarCompus($es$)}{\IF vac\'{i}a(es) THEN <> ELSE armarCompu(prim($es$)) $\bullet$ armarCompus(fin($es$)) FI}
 
   ~
 
   \tadOperacion{armarCompu}{estrCompu/e}{compu}{}
-  \tadAxioma{armarCompus($e$)}{$\langle e$.IP, dame$\Pi_{1}$($e$.conecciones)$\rangle$}
+  \tadAxioma{armarCompu($e$)}{$\langle e$.IP, dame$\Pi_{1}$($e$.conexiones)$\rangle$}
 
   ~
 
@@ -201,136 +222,139 @@
 
 \begin{Algoritmos}
 
-  \begin{Estructura}{red}[estrRed]
-
-    \begin{Tupla}[estrRed]
-      \tupItem{compus}{lista(estrCompu)}
-      \tupItem{cantidadCompus}{nat}
-    \end{Tupla}
-
-    \begin{Tupla}[estrCompu]
-      \tupItem{IP}{string}
-      \tupItem{conexiones}{lista(tupla($inter$: interfaz, $itCompu$: itLista(estrCompu)))} %un it a la lista de las interfaces, asi llego al ip. idem para conexiones... siguiente($Pi_{2}$(siguiente($it_{x}$))).IP O siguiente(siguiente($it_{x}$).itCompu).IP
-    \end{Tupla}
-
-  \end{Estructura}
-
-
-  \begin{algoritmo}{iVacia}{}{estrRed}{
+  \Encabezado{Algoritmos de Red}
+  
+  \begin{algoritmo}{iIniciarRed}{}{estrRed}{
     $res \gets \langle$<>, 0$\rangle$ \com*{$\Theta(1)$}
   }
   \end{algoritmo}
+   \complejidad{$\Theta(1)$}
 
-  \begin{algoritmo}{iAgregarCompu}{\Inout{r}{estrRed}, \In{c}{estrCompu}}{}
-    agregarAtras(r.compus, $\langle$c.IP, iArmarLista(c.interfaces)$\rangle$)\;
+  \begin{algoritmo}{iAgregarCompu}{\Inout{r}{estrRed}, \In{c}{compu}}{}
+    agregarAtras(r.compus, $\langle$c.IP, iArmarLista(c.interfaces)$\rangle$)\com*{$\Theta(I)$}
     $r.cantidadCompus \gets r.cantidadCompus+1$ \com*{$\Theta(1)$}
   \end{algoritmo}
-
-  \begin{algoritmo}{iArmarLista}{\In{ci}{conj(interfaz)}}{lista($\langle$Interfaz, itLista(estrComp)$\rangle$)}
-    $res \gets$ vacia()\;
-    \tipo{itConj(interfaz)} $it \gets$ crearIt(ci)\;
-    \While{haySiguiente($it$)}{
-      agregarAtras($res$, $\langle$siguiente($it$), NULL$\rangle$)\;
-      avanzar($it$)\;
+  \complejidad{$\Theta(I)$}
+  
+  \begin{algoritmo}{iArmarLista}{\In{c}{conj(interfaz)}}{lista($\langle$Interfaz, itLista(estrCompu)$\rangle$)}
+    $res \gets$ vacia()\com*{$\Theta(1)$}
+    \tipo{itConj(interfaz)} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(I)$ iteraciones}){haySiguiente($it$)}{
+      agregarAtras($res$, $\langle$siguiente($it$), NULL$\rangle$)\com*{$\Theta(1)$}
+      avanzar($it$)\com*{$\Theta(1)$}
     }
   \end{algoritmo}
+  \complejidad{$\Theta(I)$}
   
-  \begin{algoritmo}{iConectar}{\Inout{r}{estrRed)}, \In{c_{0}}{estrCompu}, \In{i_{0}}{interfaz}, \In{c_{1}}{estrCompu}, \In{i_{1}}{interfaz}}{}
-    \tipo{itLista(estrComp)} $it_{0} \gets$ crearIt(r.compus)\;
-    \tipo{itLista(estrComp)} $it_{1} \gets$ crearIt(r.compus)\;
-    \While{siguiente($it_{0}$.IP $\neq$ $c_{0}$.IP)}{
-      avanzar($it_{0}$)\;
+  \begin{algoritmo}{iConectar}{\Inout{r}{estrRed)}, \In{c_{1}}{compu}, \In{i_{1}}{interfaz}, \In{c_{2}}{compu}, \In{i_{2}}{interfaz}}{}
+    \tipo{itLista(estrComp)} $it_{1} \gets$ crearIt(r.compus)\com*{$\Theta(1)$}
+    \tipo{itLista(estrComp)} $it_{2} \gets$ crearIt(r.compus)\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq$ $c_{1}$.IP}{
+      avanzar($it_{1}$)\com*{$\Theta(1)$}
     }
-   \While{siguiente($it_{1}$.IP $\neq$ $c_{1}$.IP)}{
-      avanzar($it_{1}$)\;
+   \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{2}$).IP $\neq$ $c_{2}$.IP}{
+      avanzar($it_{2}$)\com*{$\Theta(1)$}
     }
-
-    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{2} \gets$ crearIt(siguiente($it_{0}$.conexiones))\;
-    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{3} \gets$ crearIt(siguiente($it_{1}$.conexiones))\;
-
-   \While{siguiente($it_{2}$.inter $\neq$ $i_{0}$)}{
-      avanzar($it_{2}$)\;
-    }
-   \While{siguiente($it_{3}$.inter $\neq$ $i_{1}$)}{
-      avanzar($it_{3}$)\;
-    }
-
-    siguiente($it_{2}$).itCompu $\gets$ $i_{0}$
-    siguiente($it_{3}$).itCompu $\gets$ $i_{1}$
-  \end{algoritmo}
-
-  \begin{algoritmo}{iCrearConjuntoDeInterfaces}{\In{l}{lista(tupla(interfaz, itLista(estrCompu)))}}{conj(estrInterfaz)}{}
-    \tipo{nat} $n \gets$ 0\;
-    $res \gets$ vacio()\;
-   \While{n < longitud(l)}{
-      agregar($res$, $\Pi_{1}$(l[n]))\;
-      $n \gets n+1$\;
-    }
-  \end{algoritmo}  
-  
-  \begin{algoritmo}{iConectadas?}{\In{r}{estrRed}, \In{c_{0}}{estrCompu}, \In{c_{1}}{estrCompu}}{bool}{}
-    \tipo{itLista(estrComp)} $it_{0} \gets$ crearIt(r.compus)\;
-    \While{siguiente($it_{0}$).IP $\neq c_{0}$.IP}{
-      avanzar($it_{0}$)\;
-    }
-    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{1} \gets$ crearIt(siguiente($it_{0}$.conexiones))\;
-    \While{haySiguiente($it_{1}$) $\yluego$ siguiente(siguiente($it_{1}$).itCompu).IP $\neq c_{1}$.IP}{
-      avanzar($it_{1}$)\;
-    }
-    $res \gets$ (siguiente(siguiente($it_{1}$).itCompu).IP $= c_{1}$.IP)\;
-  \end{algoritmo}  
-
-  \begin{algoritmo}{iInterfazUsada}{\In{r}{estrRed}, \In{c_{0}}{estrCompu}, \In{c_{1}}{estrCompu}}{interfaz}{}
-    \tipo{itLista(estrComp)} $it_{0} \gets$ crearIt(r.compus)\;
-    \While{siguiente($it_{0}$).IP $\neq c_{0}$.IP}{
-      avanzar($it_{0}$)\;
-    }
-    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{1} \gets$ crearIt(siguiente($it_{0}$.conexiones))\;
-    \While{haySiguiente($it_{1}$) $\yluego$ siguiente(siguiente($it_{1}$).itCompu).IP $\neq c_{1}$.IP}{
-      avanzar($it_{1}$)\;
-    }
-    $res \gets$ siguiente($it_{1}$).inter\;
-  \end{algoritmo}  
+    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{3} \gets$ crearIt(siguiente($it_{1}$).conexiones))\com*{$\Theta(1)$}
+    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{4} \gets$ crearIt(siguiente($it_{2}$).conexiones)\com*{$\Theta(1)$}
     
-  \begin{algoritmo}{iVecinos}{\In{r}{estrRed}, \In{c}{estrCompu}}{conj(compu)}{}
-    $res \gets$ vacio() \;
-    \tipo{itLista(estrComp)} $it_{0} \gets$ crearIt(r.compus)\;
-    \While{siguiente($it_{0}$).IP $\neq c$.IP}{
-      avanzar($it_{0}$)\;
+   \While(\com*[f]{$\Theta(I)$ iteraciones}){siguiente($it_{3}$).inter $\neq$ $i_{1}$}{
+      avanzar($it_{3}$)\com*{$\Theta(1)$}
     }
-    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{1} \gets$ crearIt(siguiente($it_{0}$.conexiones))\;
-    \While{haySiguiente?($it_{1}$)}{
-      \If{haySiguiente?(siguiente($it_{1}$).itCompu)}{
-        agregar($res$, siguiente(siguiente($it_{1}$).itCompu))\;
+   \While(\com*[f]{$\Theta(I)$ iteraciones}){siguiente($it_{4}$).inter $\neq$ $i_{2}$}{
+      avanzar($it_{4}$)\com*{$\Theta(1)$}
+    }
+
+    siguiente($it_{3$).com $\gets$ $it_{2}$\com*{$\Theta(1)$}
+    siguiente($it_{4}$).com $\gets$ $it_{1}$\com*{$\Theta(1)$}
+  \end{algoritmo}
+  \complejidad{$\Theta(n+I)$}
+  
+  \begin{algoritmo}{iConectadas?}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{bool}{}
+    \tipo{itLista(estrCompu)} $it_{1} \gets$ crearIt(r.compus)\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq c_{1}$.IP}{
+      avanzar($it_{1}$)\com*{$\Theta(1)$}
+    }
+    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(I)$ iteraciones}){haySiguiente($it_{2}$) $\yluego$ siguiente(siguiente($it_{2}$).com)).IP $\neq c_{2}$.IP}{
+      avanzar($it_{2}$)\com*{$\Theta(1)$}
+    }
+    $res \gets$ (siguiente(siguiente($it_{2}$).com)).IP $= c_{2}$.IP)\com*{$\Theta(1)$}
+  \end{algoritmo}  
+  \complejidad{$\Theta(n+I)$}
+
+  \begin{algoritmo}{iInterfazUsada}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{interfaz}{}
+    \tipo{itLista(estrCompu)} $it_{1} \gets$ crearIt(r.compus)\com*{$\Theta(1)$}  
+    \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq c_{1}$.IP}{
+      avanzar($it_{1}$)\com*{$\Theta(1)$}
+    }
+    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(I)$ iteraciones}){(siguiente(siguiente($it_{2}$).com)).IP $\neq c_{2}$.IP}{
+      avanzar($it_{1}$)\com*{$\Theta(1)$}
+    }
+    $res \gets$ siguiente($it_{2}$).inter\com*{$\Theta(1)$}
+  \end{algoritmo}  
+  \complejidad{$\Theta(n+I)$}
+    
+  \begin{algoritmo}{iVecinos}{\In{r}{estrRed}, \In{c}{compu}}{conj(compu)}{}
+    $res \gets$ vacio() \com*{$\Theta(1)$}
+    \tipo{itLista(estrComp)} $it_{1} \gets$ crearIt(r.compus)\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq c$.IP}{
+      avanzar($it_{1}$)\com*{$\Theta(1)$}
+    }
+    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(n)$ iteraciones}){haySiguiente?($it_{2}$)}{
+      \If(\com*[f]{$\Theta(1)$}){haySiguiente?(siguiente($it_{2}$).com)}{
+        agregar($res$, $\langle$siguiente(siguiente($it_{2}$).com).IP, crearConjunto(siguiente(siguiente($it_{2}$).com).conexiones))$\rangle$)\com*{$\Theta(I²)$}
       }
-      avanzar($it_{1}$)\;
+      avanzar($it_{2}$)\com*{$\Theta(1)$}
     }
   \end{algoritmo}
+   \complejidad{$\Theta(n+I³)$}
+  
+   \begin{algoritmo}{iCrearConjunto}{\In{l}{lista(tupla(inter: interfaz, com: itLista(estrCompu)))}}{conj(interfaz)}{}
+    \tipo{nat} $n \gets$ 0\com*{$\Theta(1)$}
+    $res \gets$ vacio()\com*{$\Theta(1)$}
+   \While(\com*[f]{$\Theta(I)$ iteraciones}){n < longitud(l)}{
+      agregar($res$, (l[n]).inter)\com*{$\Theta(I)$}
+      $n \gets n+1$\com*{$\Theta(1)$}
+    }
+  \end{algoritmo} 
+   \complejidad{$\Theta(I²)$}
 
-  \begin{algoritmo}{iUsaInterfaz?}{\In{r}{estrRed}, \In{c}{estrCompu}, \In{i}{interfaz}}{bool}{}
-    \tipo{itLista(estrComp)} $it_{0} \gets$ crearIt(r.compus)\;
-    \While{siguiente($it_{0}$).IP $\neq c$.IP}{
-      avanzar($it_{0}$)\;
+  \begin{algoritmo}{iUsaInterfaz?}{\In{r}{estrRed}, \In{c}{compu}, \In{i}{interfaz}}{bool}{}
+    \tipo{itLista(estrComp)} $it_{1} \gets$ crearIt(r.compus)\com*{$\Theta(1)$}
+    \While(\com*{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq c$.IP}{
+      avanzar($it_{1}$)\com*{$\Theta(1)$}
     }
-    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{1} \gets$ crearIt(siguiente($it_{0}$.conexiones))\;
-    \While{siguiente($it_{1}$).inter $\neq i$}{
-     avanzar($it_{1}$)\;
+    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(I)$ iteraciones}){siguiente($it_{2}$).inter $\neq i$}{
+     avanzar($it_{2}$)\com*{$\Theta(1)$}
     }
-    $res \gets$ haySiguiente?(siguiente($it_{1}$).itCompu)\;
+    $res \gets$ haySiguiente(siguiente($it_{2}$).com)\com*{$\Theta(1)$}
   \end{algoritmo}
-
-  \begin{algoritmo}{iCaminosMinimos}{\In{r}{estrRed}, \In{c_{0}}{estrCompu}, \In{c_{1}}{estrCompu}}{conj(lista(estrCompu))}{}
-    $res \gets$ vacio()\;
-    \eIf{pertenece($c_{1}$, vecinos($r$, $c_{1}$))}{
-      agregar($res$, agregarAtras(agregarAtras(<>,$c_{0}$), $c_{1}$))\;
+   \complejidad{$\Theta(n+I)$}
+   
+  \begin{algoritmo}{iCaminosMinimos}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{conj(lista(compu))}{}
+    $res \gets$ vacio()\com*{$\Theta(1)$}
+    \eIf(\com*[f]{$\Theta(I)$}){pertenece?($c_{2}$, vecinos($r$, $c_{1}$))}{
+      agregar($res$, agregarAtras(agregarAtras(<>,$c_{1}$), $c_{2}$))\com*{$\Theta(n+I)$}
     }{
-      $res \gets$ dameMinimos(iCaminos($r$, $c_{0}$, $c_{1}$, agregarAtras(<>,$c_{0}$), pasarConjASecu(vecinos($r$, $c_{0}$))))\;
+      $res \gets$ dameMinimos(Caminos($r$, $c_{1}$, $c_{2}$, agregarAtras(<>,$c_{1}$), pasarConjASecu(vecinos($r$, $c_{1}$))))\;
     }
-
   \end{algoritmo}
-
-  \begin{algoritmo}{iHayCaminos?}{\In{r}{estrRed}, \In{c_{0}}{estrCompu}, \In{c_{1}}{estrCompu}}{bool}{}
-    $res \gets$ esVacio?(iCaminosMinimos($r$, $c_{0}$, $c_{1}$))
+    
+	\begin{algoritmo}{pasarConjASecu}{\In{c}{conj(compu)}}{secu(compu)}{}
+		$res \gets$ vacia()\com*{$\Theta(1)$}
+		\Tipo{ItConj} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
+		While(\com*[f]{$\Theta(n)$ iteraciones}{haySiguiente($it$)}{
+			agregarAtras($res$, siguiente($it$))\com*{$\Theta(I)$} 		
+		}
+	\end{algoritmo}    
+    \complejidad{$\Theta(n \times I)$}   
+     
+  \begin{algoritmo}{iHayCamino?}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{bool}{}
+    $res \gets$ ($\neg$esVacio?(iCaminosMinimos($r$, $c_{1}$, $c_{2}$)))
   \end{algoritmo}
 
   \begin{algoritmo}{iCaminos}{\In{r}{estrRed}, \In{c_{0}}{estrCompu}, \In{c_{1}}{estrCompu}, \In{l}{lista(estrCompu)}, \In{vec}{lista(estrCompu)}}{conj(lista(estrCompu))}{}
@@ -349,38 +373,53 @@
     }
   \end{algoritmo}
   
-  \begin{algoritmo}{iComputadoras}{\In{r}{estrRed}}{conj(estrCompu)}{}
-    $res \gets$ vacio()\;
-    \tipo{itRed} $it \gets$ crearItRed()\;
-    \While{haySiguiente?($it$)}{
-      agregar($res$, siguiente($it$))\;
-      avanzar($it$)\;
+  \begin{algoritmo}{iComputadoras}{\In{r}{estrRed}}{conj(compu)}{}
+    $res \gets$ vacio()\com*{$\Theta(1)$}
+    \tipo{itRed} $it \gets$ crearItRed()\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(n)$ iteraciones}){haySiguiente?($it$)}{
+      agregar($res$, siguiente($it$))\com*{$\Theta(n+I²)$}
+      avanzar($it$)\com*{$\Theta(1)$}
     }
   \end{algoritmo}
+   \complejidad{$\Theta(n \times (n+I²))$}
+   
+   \begin{algoritmo}{iCopiar}{\In r:estrRed}{Red}
+   	$res \gets$ $\langle$copiar(r.compus, r.cantCompus$\rangle$\com*{$\Theta(n \times I)$}
+   \end{algoritmo}
+   \complejidad{$\Theta(n \times I)$}    
+
+
+   \Encabezado{Algoritmos del iterador de Red}
 
   \begin{algoritmo}{iHaySiguiente?}{\In{it}{itLista(estrCompu)}}{bool}{}
-  $res \gets$ haySiguiente?($it$)\;
+  $res \gets$ haySiguiente?($it$)\com*{$\Theta(1)$}
   \end{algoritmo}
+    \complejidad{$\Theta(1)$}  
 
   \begin{algoritmo}{iSiguiente}{\In{it}{itLista(estrCompu)}}{compu}{}
-    \tipo{estrCompu} $e \gets$ siguiente($it$)\;
-    $res$.IP $\gets$ $e$.IP\;
-    \tipo{conoj(interfaz)} $interfaces \gets$ vac\'{i}o()\;
-    \tipo{itLista(tupla$\langle$ $inter$: interfaz, $itCompu$: itLista(estrCompu)$\rangle$)} $itInterfaces \gets$ crearIt($e$.conexiones)\;
-    \While{haySiguiente?($itInterfaces$)}{
-      agregar($interfaces$, siguiente($itInterfaces$).inter)\;
-      avanzar($itInterfaces$)\;
+    \tipo{estrCompu} $e \gets$ siguiente($it$)\com*{$\Theta(1)$}
+    $res$.IP $\gets$ $e$.IP\com*{$\Theta(1)$}
+    \tipo{conj(interfaz)} $interfaces \gets$ vac\'{i}o()\com*{$\Theta(1)$}
+    \tipo{itLista(tupla$\langle$ $inter$: interfaz, $com$: itLista(estrCompu)$\rangle$)} $itInterfaces \gets$ crearIt($e$.conexiones)\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(I)$ iteraciones}){haySiguiente?($itInterfaces$)}{
+      agregar($interfaces$, siguiente($itInterfaces$).inter)\com*{$\Theta(I)$}
+      avanzar($itInterfaces$)\com*{$\Theta(1)$}
     }
-    $res$.Interfaces $\gets$ $e$.Interfaces\;
+    $res$.Interfaces $\gets$ $e$.Interfaces\com*{$\Theta(I)$}
   \end{algoritmo}
+   \complejidad{$\Theta(I²)$}   
+    
+  \begin{algoritmo}{iCrearIt}{\In{e}{estrRed}}{}
+  $res \gets$ crearIt($e$.compus)\com*{$\Theta(1)$}
+  \end{algoritmo}
+   \complejidad{$\Theta(1)$} 
+   
+  \begin{algoritmo}{iAvanzar}{\Inout{it}{itLista(estrCompu)}}
+  $it \gets$ avanzar($it$)\com*{$\Theta(1)$}
+  \end{algoritmo}
+   \complejidad{$\Theta(1)$} 
+   
 
-  \begin{algoritmo}{iCrearIt}{\In{e}{estrRed}}{}{}
-  $res \gets$ crearIt($e$.compus)\;
-  \end{algoritmo}
-
-  \begin{algoritmo}{iAvanzar}{\Inout{it}{itLista(estrCompu)}}{}{}
-  $it \gets$ avanzar($it$)\;
-  \end{algoritmo}
 \end{Algoritmos}
 
 
