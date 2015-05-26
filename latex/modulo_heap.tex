@@ -77,7 +77,8 @@
   \begin{Estructura}{heap($\alpha$)}[vector($\alpha$)]
   \end{Estructura} 
 
-  \Rep[heap($\alpha$)][hp]{
+  \Rep[vector($\alpha$)][v]{
+    ($\paratodo{i}{nat}$) ((($2 \* i < $long($v$)) $\impluego$ i\'esimo($2 \* i$, $v$) $\leq$ i\'esimo($i$, $v$)) $\land$ (($2 \* i + 1< $long($v$)) $\impluego$ i\'esimo($2 \* i + 1$, $v$) $\leq$ i\'esimo($i$, $v$)))
   
   %1) si A es el padre de B entonces A >= B
   %2) no hay ningun agujero en el vector es decir estan todos cargados consecutivos. por ende el arbol del heap se carga nivel a nivel de izq a der sin dejar ningun nivel con algun nodo sin hijos
@@ -86,16 +87,16 @@
   %    si A es el padre de B entonces (A=hp[i]) entonces (A=hp[((i/2)-((i+1)%2)))])
   }
 
-  \AbsFc[vector($\alpha$)]{colaPrior($\alpha$)}[h]{
-    \IF h.long = 0 THEN vac\'{i}a() ELSE encolar(prim(h), ABS(fin(h))) FI
+  \AbsFc[vector($\alpha$)]{colaPrior($\alpha$)}[v]{
+    \IF long($v$) = 0 THEN vac\'{i}a() ELSE encolar(prim($v$), Abs(fin($v$))) FI
   }
 
 \end{Representacion}
 
 \begin{Algoritmos}
 
-  \begin{algoritmo}{iVac\'{i}o}{}{heap($\alpha$)}
-    $res \gets$ vector<$\alpha$>\;
+  \begin{algoritmo}{iVacio}{}{vector($\alpha$)}
+    $res \gets Vac\'ia()$ \;
   \end{algoritmo}
 
   \begin{algoritmo}{iEncolar}{\Inout{hp}{heap($\alpha$)}, \In{a}{$\alpha$}}{}
@@ -109,71 +110,11 @@
     }
   \end{algoritmo}
 
-  \begin{algoritmo}{iVac\'{i}o?}{\In{hp}{heap($\alpha$)}}{bool}
-    $res \gets$ ($hp$ = vac\'{i}o())\;
+  \begin{algoritmo}{iVac\'{i}o?}{\In{v}{vector($\alpha$)}}{bool}
+    $res \gets$ esVac\'io?($v$) \;
   \end{algoritmo}
 
-  \begin{algoritmo}{iProximo}{\In{hp}{heap($\alpha$)}}{$\alpha$}
-    $res \gets$ hp[0]\;
-  \end{algoritmo}
-
-%  \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{$\alpha$}
-  \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{}
-
-    \tipo{nat} $i \gets$ $hp$.longitud - 1\;
-    iSwap($hp$[$0$], $hp$[$i$])\;
-%    $res \gets$ $hp$.pop\_back()\;
-    $hp$.pop\_back()\;
-
-    \tipo{nat} $hijo_{0} \gets$ 1\;
-    \tipo{nat} $hijo_{1} \gets$ 2\;
-
-    \While{$\not$estaOrdenado}{
-      \eIf{$hijo_{0}$ < $hp$.longitud}{
-        \eIf{$hijo_{1}$ < $hp$.longitud} {
-          %//ambos hijos son validos
-          \eIf{$hp$[$hijo_{0}$] $\geq$ $hp$[$hijo_{1}$]}{
-            %//hijo0 es mas grande que hijo1
-            \eIf{$hp$[$hijo_{0}$] > $hp$[$i$]}{
-              %//hijo0 es mas grande que el padre -> los swapeo
-              iSwap($hp$[$hijo_{0}$], $hp$[$i$])\;
-              $i \gets hijo_{0}$\;
-            }{
-              %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-              $estaOrdenado \gets$ True\;
-            }
-          }{
-            %//hijo1 es mas grande que hijo0
-            \eIf{$hp$[$hijo_{1}$] > $hp$[$i$]}{
-              %//hijo1 es mas grande que el padre -> los swapeo
-              iSwap($hp$[$hijo_{1}$], $hp$[$i$])\;
-              $i \gets hijo_{1}$\;
-            }{
-              %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-              $estaOrdenado \gets$ True\;
-            }
-          }
-        }{
-          %//solo hijo0 es valido
-          \eIf{$hp$[$hijo_{0}$] > $hp$[$i$]} {
-            %//hijo0 es mas grande que el padre -> los swapeo
-            iSwap($hp$[$hijo_{0}$], $hp$[$i$])\;
-            $i \gets hijo_{0}$\;
-          }{
-            %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-            $estaOrdenado \gets$ True\;
-          }
-        }
-      }{
-        %//ningun hijo es valido por ende no tiene hijos entonces esta ordenado
-        $estaOrdenado \gets$ True\;
-      }
-      $hijo_{0} \gets$ 2x$i$+1\;
-      $hijo_{1} \gets$ 2x$i$+2\;
-    }
-  \end{algoritmo}
-
-  \begin{algoritmo}{iDesencolar2}{\Inout{hp}{heap($\alpha$)}}{$\alpha$}
+  \begin{algoritmo}{iDesencolar}{\Inout{v}{vector($\alpha$)}}{$\alpha$}
 
     \tipo{nat} $i \gets$ $hp$.longitud - 1\;
     iSwap($hp$[$0$], $hp$[$i$])\;
