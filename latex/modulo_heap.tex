@@ -77,7 +77,8 @@
   \begin{Estructura}{heap($\alpha$)}[vector($\alpha$)]
   \end{Estructura} 
 
-  \Rep[heap($\alpha$)][hp]{
+  \Rep[vector($\alpha$)][v]{
+    ($\paratodo{i}{nat}$) ((($2 \* i < $long($v$)) $\impluego$ i\'esimo($2 \* i$, $v$) $\leq$ i\'esimo($i$, $v$)) $\land$ (($2 \* i + 1< $long($v$)) $\impluego$ i\'esimo($2 \* i + 1$, $v$) $\leq$ i\'esimo($i$, $v$)))
   
   %1) si A es el padre de B entonces A >= B
   %2) no hay ningun agujero en el vector es decir estan todos cargados consecutivos. por ende el arbol del heap se carga nivel a nivel de izq a der sin dejar ningun nivel con algun nodo sin hijos
@@ -86,49 +87,66 @@
   %    si A es el padre de B entonces (A=hp[i]) entonces (A=hp[((i/2)-((i+1)%2)))])
   }
 
-  \AbsFc[vector($\alpha$)]{colaPrior($\alpha$)}[h]{
-    \IF h.long = 0 THEN vac\'{i}a() ELSE encolar(prim(h), ABS(fin(h))) FI
+  \AbsFc[vector($\alpha$)]{colaPrior($\alpha$)}[v]{
+    \IF long($v$) = 0 THEN vac\'{i}a() ELSE encolar(prim($v$), Abs(fin($v$))) FI
   }
 
 \end{Representacion}
 
 \begin{Algoritmos}
 
-  \begin{algoritmo}{iVac\'{i}o}{}{heap($\alpha$)}
-    $res \gets$ vector<$\alpha$>\;
+  \begin{algoritmo}{iVacio}{}{vector($\alpha$)}
+    $res \gets Vac\'ia()$ \;
   \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {La funci\'{o}n Vac\'{i}o() de vector es $\Theta(1)$ por ende Vac\'{i}o() de heap es $\Theta(1)$. } % Justificacíón
 
   \begin{algoritmo}{iEncolar}{\Inout{hp}{heap($\alpha$)}, \In{a}{$\alpha$}}{}
-    $hp$.push\_back($a$)\;
-    \tipo{nat} $i \gets$ $hp$.longitud - 1\;
-    \tipo{nat} $p \gets$ (i/2) - ((i+1)\%2)\;
-    \While{$hp$[$p$] < $hp$[$i$]}{
-      iSwap($hp$[$p$], $hp$[$i$])\;
-      $i \gets p$\;
-      $p \gets$ ($i$/2) - (($i$+1)\%2)\;
+    $hp$.push\_back($a$)\; \com*{$\Theta(1)$}
+    \tipo{nat} $i \gets$ $hp$.longitud - 1\; \com*{$\Theta(1)$}
+    \tipo{nat} $p \gets$ (i/2) - ((i+1)\%2)\; \com*{$\Theta(1)$}
+    \While{$hp$[$p$] < $hp$[$i$]}{ \com*{$\Theta(log(n))$}
+      iSwap($hp$[$p$], $hp$[$i$])\; \com*{$\Theta(1)$}
+      $i \gets p$\; \com*{$\Theta(1)$}
+      $p \gets$ ($i$/2) - (($i$+1)\%2)\; \com*{$\Theta(1)$}
     }
   \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(log(n))$} % Complejidad
+  {El while se repite como maximo $log(n)$ veces, donde $n$ es la longitud del vector. } % Justificacíón
 
+<<<<<<< HEAD
   \begin{algoritmo}{iVac\'{i}o?}{\In{hp}{heap($\alpha$)}}{bool}
-    $res \gets$ ($hp$ = vac\'{i}o())\;
+    $res \gets$ ($hp$ = vac\'{i}o())\; \com*{$\Theta(1)$}
   \end{algoritmo}
 
   \begin{algoritmo}{iProximo}{\In{hp}{heap($\alpha$)}}{$\alpha$}
-    $res \gets$ hp[0]\;
+    $res \gets$ hp[0]\; \com*{$\Theta(1)$}
   \end{algoritmo}
 
-%  \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{$\alpha$}
-  \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{}
+  \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{$\alpha$}
+=======
+  \begin{algoritmo}{iVac\'{i}o?}{\In{v}{vector($\alpha$)}}{bool}
+    $res \gets$ esVac\'io?($v$) \;
+  \end{algoritmo}
+
+  \begin{algoritmo}{iDesencolar}{\Inout{v}{vector($\alpha$)}}{$\alpha$}
+>>>>>>> d4eb108eb897a91487a4eaca8d13cb372707de4e
 
     \tipo{nat} $i \gets$ $hp$.longitud - 1\;
-    iSwap($hp$[$0$], $hp$[$i$])\;
-%    $res \gets$ $hp$.pop\_back()\;
-    $hp$.pop\_back()\;
+    iSwap($hp$[$0$], $hp$[$i$])\; \com*{$\Theta(1)$}
+    $res \gets$ $hp$.pop\_back()\; \com*{$\Theta(1)$}
 
-    \tipo{nat} $hijo_{0} \gets$ 1\;
-    \tipo{nat} $hijo_{1} \gets$ 2\;
+    \tipo{nat} $hijo_{0} \gets$ 1\; \com*{$\Theta(1)$}
+    \tipo{nat} $hijo_{1} \gets$ 2\; \com*{$\Theta(1)$}
+    \tipo{bool} $estaOrdenado \gets$ false\; \com*{$\Theta(1)$}
 
-    \While{$\not$estaOrdenado}{
+    \While{$\not$estaOrdenado}{ \com*{$\Theta(log(n))$}
       \eIf{$hijo_{0}$ < $hp$.longitud}{
         \eIf{$hijo_{1}$ < $hp$.longitud} {
           %//ambos hijos son validos
@@ -136,102 +154,48 @@
             %//hijo0 es mas grande que hijo1
             \eIf{$hp$[$hijo_{0}$] > $hp$[$i$]}{
               %//hijo0 es mas grande que el padre -> los swapeo
-              iSwap($hp$[$hijo_{0}$], $hp$[$i$])\;
-              $i \gets hijo_{0}$\;
+              iSwap($hp$[$hijo_{0}$], $hp$[$i$])\; \com*{$\Theta(1)$}
+              $i \gets hijo_{0}$\; \com*{$\Theta(1)$}
             }{
               %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-              $estaOrdenado \gets$ True\;
+              $estaOrdenado \gets$ True\; \com*{$\Theta(1)$}
             }
           }{
             %//hijo1 es mas grande que hijo0
             \eIf{$hp$[$hijo_{1}$] > $hp$[$i$]}{
               %//hijo1 es mas grande que el padre -> los swapeo
-              iSwap($hp$[$hijo_{1}$], $hp$[$i$])\;
-              $i \gets hijo_{1}$\;
+              iSwap($hp$[$hijo_{1}$], $hp$[$i$])\; \com*{$\Theta(1)$}
+              $i \gets hijo_{1}$\; \com*{$\Theta(1)$}
             }{
               %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-              $estaOrdenado \gets$ True\;
+              $estaOrdenado \gets$ True\; \com*{$\Theta(1)$}
             }
           }
         }{
           %//solo hijo0 es valido
           \eIf{$hp$[$hijo_{0}$] > $hp$[$i$]} {
             %//hijo0 es mas grande que el padre -> los swapeo
-            iSwap($hp$[$hijo_{0}$], $hp$[$i$])\;
-            $i \gets hijo_{0}$\;
+            iSwap($hp$[$hijo_{0}$], $hp$[$i$])\; \com*{$\Theta(1)$}
+            $i \gets hijo_{0}$\; \com*{$\Theta(1)$}
           }{
             %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-            $estaOrdenado \gets$ True\;
+            $estaOrdenado \gets$ True\; \com*{$\Theta(1)$}
           }
         }
       }{
         %//ningun hijo es valido por ende no tiene hijos entonces esta ordenado
-        $estaOrdenado \gets$ True\;
+        $estaOrdenado \gets$ True\; \com*{$\Theta(1)$}
       }
-      $hijo_{0} \gets$ 2x$i$+1\;
-      $hijo_{1} \gets$ 2x$i$+2\;
-    }
-  \end{algoritmo}
-
-  \begin{algoritmo}{iDesencolar2}{\Inout{hp}{heap($\alpha$)}}{$\alpha$}
-
-    \tipo{nat} $i \gets$ $hp$.longitud - 1\;
-    iSwap($hp$[$0$], $hp$[$i$])\;
-    $res \gets$ $hp$.pop\_back()\;
-
-    \tipo{nat} $hijo_{0} \gets$ 1\;
-    \tipo{nat} $hijo_{1} \gets$ 2\;
-
-    \While{$\not$estaOrdenado}{
-      \eIf{$hijo_{0}$ < $hp$.longitud}{
-        \eIf{$hijo_{1}$ < $hp$.longitud} {
-          %//ambos hijos son validos
-          \eIf{$hp$[$hijo_{0}$] $\geq$ $hp$[$hijo_{1}$]}{
-            %//hijo0 es mas grande que hijo1
-            \eIf{$hp$[$hijo_{0}$] > $hp$[$i$]}{
-              %//hijo0 es mas grande que el padre -> los swapeo
-              iSwap($hp$[$hijo_{0}$], $hp$[$i$])\;
-              $i \gets hijo_{0}$\;
-            }{
-              %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-              $estaOrdenado \gets$ True\;
-            }
-          }{
-            %//hijo1 es mas grande que hijo0
-            \eIf{$hp$[$hijo_{1}$] > $hp$[$i$]}{
-              %//hijo1 es mas grande que el padre -> los swapeo
-              iSwap($hp$[$hijo_{1}$], $hp$[$i$])\;
-              $i \gets hijo_{1}$\;
-            }{
-              %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-              $estaOrdenado \gets$ True\;
-            }
-          }
-        }{
-          %//solo hijo0 es valido
-          \eIf{$hp$[$hijo_{0}$] > $hp$[$i$]} {
-            %//hijo0 es mas grande que el padre -> los swapeo
-            iSwap($hp$[$hijo_{0}$], $hp$[$i$])\;
-            $i \gets hijo_{0}$\;
-          }{
-            %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-            $estaOrdenado \gets$ True\;
-          }
-        }
-      }{
-        %//ningun hijo es valido por ende no tiene hijos entonces esta ordenado
-        $estaOrdenado \gets$ True\;
-      }
-      $hijo_{0} \gets$ 2x$i$+1\;
-      $hijo_{1} \gets$ 2x$i$+2\;
+      $hijo_{0} \gets$ 2x$i$+1\; \com*{$\Theta(1)$}
+      $hijo_{1} \gets$ 2x$i$+2\; \com*{$\Theta(1)$}
     }
   \end{algoritmo}
 
   \begin{algoritmo}{iSwap}{\Inout{a}{$\alpha$}, \Inout{b}{$\alpha$}}{}
-    \tipo{$\alpha$} $c$\;
-    $c \gets a$\;
-    $a \gets b$\;
-    $b \gets c$\;
+    \tipo{$\alpha$} $c$\; \com*{$\Theta(1)$}
+    $c \gets a$\; \com*{$\Theta(1)$}
+    $a \gets b$\; \com*{$\Theta(1)$}
+    $b \gets c$\; \com*{$\Theta(1)$}
   \end{algoritmo}
 
 \end{Algoritmos}

@@ -5,7 +5,7 @@
   \vspace{-0.5em}\begin{itemize}
     \item $n$: N\'umero de computadoras en la red.
     \item $L$: Longitud de nombre de computadora m\'as largo de la red.
-    \item $i$: Mayor cantidad de interfaces que tiene alguna computadora en la red en el momento.
+    \item $I$: Mayor cantidad de interfaces que tiene alguna computadora en la red en el momento.
   \end{itemize}
 
 \begin{Interfaz}
@@ -84,7 +84,7 @@
   [Devuelve true si y solo si hay alg\'un camino posible entre $c_{0}$ y $c_{1}$. ]%descripcion
   []%aliasing
   
-  \InterfazFuncion{cantCompus}{\In{r}{Red}}}{nat}%
+  \InterfazFuncion{cantCompus}{\In{r}{Red}}{nat}%
   [true]%pre
   {$res$ $\igobs$ \#(computadoras(r))}%pos
   [$\Theta(1)$]%complejidad
@@ -404,7 +404,7 @@
     \eIf(\com*[f]{$\Theta(1)$}){esVacio?($c$)}{
       $res \gets$ vacio()\com*{$\Theta(1)$}
     }{
-      \Tipo{ItConj(lista(compu))} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
+      \tipo{ItConj(lista(compu))} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
       $res \gets$ dameMinimosAux($c$, minimaLong($c$, long(siguiente($it$))))\;
     }
   \end{algoritmo}
@@ -415,7 +415,7 @@
   {Devuelve, del total de caminos posibles, solo los de longitud m\'{i}nima} % Justificacíón
 
   \begin{algoritmo}{dameMinimosAux}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{conj(lista(compu))}
-    \Tipo{ItConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
+    \tipo{ItConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
     $res \gets$ vacio()\;\com*{$\Theta(1)$}
     \While(\com*[f]{$\Theta(n!)$ iteraciones}){haySiguiente($it$)}{
       \eIf(\com*[f]{$\Theta(1)$}){long(siguiente($it$))$=n$}{
@@ -433,8 +433,8 @@
   {} % Justificacíón
 
 \begin{algoritmo}{minimaLong}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{nat}
-  \Tipo{nat} $i \gets n$\com*{$\Theta(1)$}
-  \Tipo{ItConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
+  \tipo{nat} $i \gets n$\com*{$\Theta(1)$}
+  \tipo{ItConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
   \While{haySiguiente($it$)}{
     \eIf{long(siguiente($it$))}{
       $i \gets$ longitud(siguiente($it$))\;
@@ -453,7 +453,7 @@
     
 	\begin{algoritmo}{pasarConjASecu}{\In{c}{conj(compu)}}{secu(compu)}{}
 		$res \gets$ vacia()\com*{$\Theta(1)$}
-		\Tipo{ItConj} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
+		\tipo{ItConj} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
 		While(\com*[f]{$\Theta(n)$ iteraciones}{haySiguiente($it$)}{
 			agregarAtras($res$, siguiente($it$))\com*{$\Theta(I)$} 		
 		}
@@ -498,7 +498,7 @@
     $res \gets$ vacio()\com*{$\Theta(1)$}     
     \eIf(\com*[f]{$\Theta(1)$}     ){vacio?($c_{1}$)}{
       $res \gets$ $c_{2}$}{
-      \Tipo{itConj(lista(compu))} $it \gets$ crearIt($c_{1}$)\com*{$\Theta(1)$}     
+      \tipo{itConj(lista(compu))} $it \gets$ crearIt($c_{1}$)\com*{$\Theta(1)$}     
       \While(\com[f]*{$\Theta(n)$}){haySiguiente($it$)}{
         Ag(siguiente($it$), $c_{2}$)\com*{$\Theta(n)$}
         avanzar(it)\com*{$\Theta(1)$}
@@ -515,7 +515,7 @@
     \eIf(\com*{$\Theta(1)$}){vacia?($l$)}{
       $res \gets$ false\com*{$\Theta(1)$}
     }{
-    \Tipo{ItLista(compu)} $it \gets$ crearIt($l$)\com*{$\Theta(1)$}
+    \tipo{ItLista(compu)} $it \gets$ crearIt($l$)\com*{$\Theta(1)$}
       \While(\com*{$\Theta(n)$}){haySiguiente($it$) $\yluego$ siguiente($it$) $\neq$ $c$}{
         avanzar(it)\com*{$\Theta(1)$}
       }
@@ -597,7 +597,7 @@
   {$\Theta(1)$} % Complejidad
   {} % Justificacíón  
    
-  \begin{algoritmo}{iAvanzar}{\Inout{it}{itLista(estrCompu)}}
+  \begin{algoritmo}{iAvanzar}{\Inout{it}{itLista(estrCompu)}}{}
   $it \gets$ avanzar($it$)\com*{$\Theta(1)$}
   \end{algoritmo}
       \datosAlgoritmo{} % Descripción
@@ -608,13 +608,3 @@
    
 
 \end{Algoritmos}
-
-
-
-
-
-
-
-
-
-
