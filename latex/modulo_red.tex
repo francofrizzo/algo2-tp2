@@ -353,10 +353,42 @@
     $res \gets$ vacio()\;
     \tipo{itRed} $it \gets$ crearItRed()\;
     \While{haySiguiente?($it$)}{
-      agregar($res$, siguiente($it$))
+      agregar($res$, siguiente($it$))\;
       avanzar($it$)\;
     }
-
   \end{algoritmo}
 
+  \begin{algoritmo}{iHaySiguiente?}{\In{it}{itLista(estrCompu)}}{bool}{}
+  $res \gets$ haySiguiente?($it$)\;
+  \end{algoritmo}
+
+  \begin{algoritmo}{iSiguiente}{\In{it}{itLista(estrCompu)}}{compu}{}
+    \tipo{estrCompu} $e \gets$ siguiente($it$)\;
+    $res$.IP $\gets$ $e$.IP\;
+    \tipo{conoj(interfaz)} $interfaces \gets$ vac\'{i}o()\;
+    \tipo{itLista(tupla$\langle$ $inter$: interfaz, $itCompu$: itLista(estrCompu)$\rangle$)} $itInterfaces \gets$ crearIt($e$.conexiones)\;
+    \While{haySiguiente?($itInterfaces$)}{
+      agregar($interfaces$, siguiente($itInterfaces$).inter)\;
+      avanzar($itInterfaces$)\;
+    }
+    $res$.Interfaces $\gets$ $e$.Interfaces\;
+  \end{algoritmo}
+
+  \begin{algoritmo}{iCrearIt}{\In{e}{estrRed}}{}{}
+  $res \gets$ crearIt($e$.compus)\;
+  \end{algoritmo}
+
+  \begin{algoritmo}{iAvanzar}{\Inout{it}{itLista(estrCompu)}}{}{}
+  $it \gets$ avanzar($it$)\;
+  \end{algoritmo}
 \end{Algoritmos}
+
+
+
+
+
+
+
+
+
+
