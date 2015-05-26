@@ -159,20 +159,33 @@
 
 \newcommand{\generos}[1]{\parbox{3cm}{\textbf{g\'eneros}:} #1}
 
-\usepackage{algorithm2e}
+\usepackage[noresetcount]{algorithm2e}
 \usepackage{float}
+
+\NoCaptionOfAlgo\SetAlgoLongEnd\LinesNumbered\SetAlgoLined\RestyleAlgo{ruled}\IncMargin{1em}\DontPrintSemicolon\SetArgSty{}\SetCommentSty{textsf}\SetFuncSty{textsf}
+
 \newenvironment{algoritmo}[3]{
-  \NoCaptionOfAlgo\SetAlgoLongEnd\LinesNumbered\SetAlgoLined\RestyleAlgo{ruled}\IncMargin{1em}\DontPrintSemicolon\SetArgSty{}\SetCommentSty{textsf}\SetFuncSty{textsf}
+  \setcounter{AlgoLine}{0}
   \begin{algorithm}[H]
-  \SetKwComment{com}{ $\triangleright$ }{}
   \caption{\TipoFuncion{#1}{#2}{#3}}
 }{
   \end{algorithm}
-  \vspace{0.5em}
+  \vspace{0em}
 }
 
+\newenvironment{contAlgoritmo}[1]{
+  \begin{algorithm}[H]
+  \caption{\NombreFuncion{#1} \emph{(cont.)}}
+}{
+  \end{algorithm}
+}
+
+\newcommand{\complejidad}[1]{\textbf{Complejidad:} #1 \vspace{1em}}
+
+\SetKwComment{com}{ $\triangleright$ }{}
 \SetKwFunction{delete}{delete}
 \def\NULL{\textrm{NULL}}
+\def\new{\textbf{\&}}
 
 \sloppy
 
