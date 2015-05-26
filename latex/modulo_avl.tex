@@ -210,96 +210,95 @@
   \complejidad{$\Theta(\log(n) \times order(k))$}
 
   \begin{algoritmo}{iBorrar}{\Inout{e}{estrAVL}, \In{k}{$\kappa$}}{}
-    \tipo{puntero(nodo)} $padre \gets \NULL$ \;
-    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \;
-    \uIf{$lugar \to izq = \NULL \land lugar \to der = \NULL$}{
-      \eIf{$padre \neq \NULL$}{
-        \eIf{$padre \to izq = lugar$}{
-          $(padre \to izq) \gets \NULL$ \; 
+    \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
+    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
+    \uIf(\com*[f]{$\Theta(1)$}){$lugar \to izq = \NULL \land lugar \to der = \NULL$}{
+      \eIf(\com*[f]{$\Theta(1)$}){$padre \neq \NULL$}{
+        \eIf(\com*[f]{$\Theta(1)$}){$padre \to izq = lugar$}{
+          $(padre \to izq) \gets \NULL$ \com*{$\Theta(1)$}
         }{
-          $(padre \to der) \gets \NULL$ \; 
+          $(padre \to der) \gets \NULL$ \com*{$\Theta(1)$}
         }
         % \recalcAlts{$padre$} \;
-        \rebalancear{$padre$} \;
+        \rebalancear{$padre$} \com*{$\Theta(\log(n))$}
       }{
-        $e.raiz = \NULL$ \;
+        $e.raiz = \NULL$ \com*{$\Theta(1)$}
       }
-    }\uElseIf{$lugar \to der = \NULL$}{
-      $(lugar \to izq \to padre) \gets padre$ \;
-      \eIf{$padre \neq \NULL$}{
-        \eIf{$padre \to izq = lugar$}{
-          $(padre \to izq) \gets (lugar \to izq)$ \; 
+    }\uElseIf(\com*[f]{$\Theta(1)$}){$lugar \to der = \NULL$}{
+      $(lugar \to izq \to padre) \gets padre$ \com*{$\Theta(1)$}
+      \eIf(\com*[f]{$\Theta(1)$}){$padre \neq \NULL$}{
+        \eIf(\com*[f]{$\Theta(1)$}){$padre \to izq = lugar$}{
+          $(padre \to izq) \gets (lugar \to izq)$ \com*{$\Theta(1)$}
         }{
-          $(padre \to der) \gets (lugar \to izq)$ \; 
+          $(padre \to der) \gets (lugar \to izq)$ \com*{$\Theta(1)$}
         }
         % \recalcAlts{$padre$} \;
-        \rebalancear{$padre$} \;
+        \rebalancear{$padre$} \com*{$\Theta(\log(n))$}
       }{
-        $e.raiz \gets lugar \to izq$ \;
+        $e.raiz \gets lugar \to izq$ \com*{$\Theta(1)$}
       }
-    }\uElseIf{$lugar \to izq = \NULL$}{
-      $(lugar \to der \to padre) \gets padre$ \;
-      \eIf{$padre \neq \NULL$}{
-        \eIf{$padre \to izq = lugar$}{
-          $(padre \to izq) \gets (lugar \to der)$ \; 
+    }\uElseIf(\com*[f]{$\Theta(1)$}){$lugar \to izq = \NULL$}{
+      $(lugar \to der \to padre) \gets padre$ \com*{$\Theta(1)$}
+      \eIf(\com*[f]{$\Theta(1)$}){$padre \neq \NULL$}{
+        \eIf(\com*[f]{$\Theta(1)$}){$padre \to izq = lugar$}{
+          $(padre \to izq) \gets (lugar \to der)$ \com*{$\Theta(1)$}
         }{
-          $(padre \to der) \gets (lugar \to der)$ \; 
+          $(padre \to der) \gets (lugar \to der)$ \com*{$\Theta(1)$}
         }
         % \recalcAlts{$padre$} \;
-        \rebalancear{$padre$} \;
+        \rebalancear{$padre$} \com*{$\Theta(\log(n))$}
       }{
-        $e.raiz \gets lugar \to izq$ \;
+        $e.raiz \gets lugar \to izq$ \com*{$\Theta(1)$}
       }
-      \delete{$lugar$} \;
     }
   \end{algoritmo}
 
   \begin{contAlgoritmo}{iBorrar}
     \Else{
-      \tipo{puntero(nodo)} $reemplazo \gets (lugar \to der)$ \;
-      \eIf{$(reemplazo \to izq = \NULL)$}{
-        \eIf{$padre \neq \NULL$}{
-          \eIf{$(padre \to izq) = lugar$}{
-            $(padre \to izq) \gets reemplazo$ \; 
+      \tipo{puntero(nodo)} $reemplazo \gets (lugar \to der)$ \com*{$\Theta(1)$}
+      \eIf(\com*[f]{$\Theta(1)$}){$(reemplazo \to izq = \NULL)$}{
+        \eIf(\com*[f]{$\Theta(1)$}){$padre \neq \NULL$}{
+          \eIf(\com*[f]{$\Theta(1)$}){$(padre \to izq) = lugar$}{
+            $(padre \to izq) \gets reemplazo$ \com*{$\Theta(1)$}
           }{
-            $(padre \to der) \gets reemplazo$ \; 
+            $(padre \to der) \gets reemplazo$ \com*{$\Theta(1)$}
           }
         }{
-          $e.raiz \gets reemplazo$ \;
+          $e.raiz \gets reemplazo$ \com*{$\Theta(1)$}
         }
-        $(reemplazo \to padre) \gets padre$ \;
-        $(reemplazo \to izq) \gets lugar \to izq$ \;
-        $(lugar \to izq \to padre) \gets reemplazo$ \;
+        $(reemplazo \to padre) \gets padre$ \com*{$\Theta(1)$}
+        $(reemplazo \to izq) \gets lugar \to izq$ \com*{$\Theta(1)$}
+        $(lugar \to izq \to padre) \gets reemplazo$ \com*{$\Theta(1)$}
         % \recalcAlts{$reemplazo$} \;
-        \rebalancear{$reemplazo$} \;
+        \rebalancear{$reemplazo$} \com*{$\Theta(\log(n))$}
       }{
-        \While{$(reemplazo \to izq) \neq \NULL$}{
-          $reemplazo \gets (reemplazo \to izq)$ \;
+        \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$(reemplazo \to izq) \neq \NULL$}{
+          $reemplazo \gets (reemplazo \to izq)$ \com*{$\Theta(1)$}
         }
-        \tipo{puntero(nodo)} $padreReemplazo \gets (reemplazo \to padre)$
-        \eIf{$padre \neq \NULL$}{
-          \eIf{$padre \to izq = lugar$}{
-            $(padre \to izq) \gets reemplazo$ \; 
+        \tipo{puntero(nodo)} $padreReemplazo \gets (reemplazo \to padre)$ \com*{$\Theta(1)$}
+        \eIf(\com*[f]{$\Theta(1)$}){$padre \neq \NULL$}{
+          \eIf(\com*[f]{$\Theta(1)$}){$padre \to izq = lugar$}{
+            $(padre \to izq) \gets reemplazo$ \com*{$\Theta(1)$}
           }{
-            $(padre \to der) \gets reemplazo$ \; 
+            $(padre \to der) \gets reemplazo$ \com*{$\Theta(1)$}
           }
         }{
-          $e.raiz \gets reemplazo$ \;
+          $e.raiz \gets reemplazo$ \com*{$\Theta(1)$}
         }
-        $(reemplazo \to padre) \gets padre$ \;
-        $(reemplazo \to izq) \gets lugar \to izq$ \;
-        $(lugar \to izq \to padre) \gets reemplazo$ \;
-        $(padreReemplazo \to izq) \gets (reemplazo \to der)$ \;
-        \If{$(reemplazo \to der) \neq \NULL$}{
-          $(reemplazo \to der \to padre) \gets padreReemplazo$ \;
+        $(reemplazo \to padre) \gets padre$ \com*{$\Theta(1)$}
+        $(reemplazo \to izq) \gets lugar \to izq$ \com*{$\Theta(1)$}
+        $(lugar \to izq \to padre) \gets reemplazo$ \com*{$\Theta(1)$}
+        $(padreReemplazo \to izq) \gets (reemplazo \to der)$ \com*{$\Theta(1)$}
+        \If(\com*[f]{$\Theta(1)$}){$(reemplazo \to der) \neq \NULL$}{
+          $(reemplazo \to der \to padre) \gets padreReemplazo$ \com*{$\Theta(1)$}
         }
-        $(reemplazo \to der) \gets (lugar \to der)$ \;
-        $(lugar \to der \to padre) \gets reemplazo$ \;
+        $(reemplazo \to der) \gets (lugar \to der)$ \com*{$\Theta(1)$}
+        $(lugar \to der \to padre) \gets reemplazo$ \com*{$\Theta(1)$}
         % \recalcAlts{$reemplazo$} \;
-        \rebalancear{$reemplazo$} \;
+        \rebalancear{$reemplazo$} \com*{$\Theta(\log(n))$}
       }
     }
-    \delete{$lugar$} \;
+    \delete{$lugar$} \com*{$\Theta(1)$}
   \end{contAlgoritmo}
   \complejidad{}
 
