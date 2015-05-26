@@ -208,12 +208,12 @@
 
   ~
 
-  \tadOperacion{DevolverInterfaz}{secu(tupla<string, secu(tupla<Interfaz, ItRed>)>)/l, compu/c_{1}, compu/c_{2}}{Interfaz}{Pertenece?($l$, $c_{1}$, $c_{2}$} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
+  \tadOperacion{DevolverInterfaz}{secu(tupla(string, secu(tupla(Interfaz, ItRed))))/l, compu/c_{1}, compu/c_{2}}{Interfaz}{Pertenece?($l$, $c_{1}$, $c_{2}$} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
   \tadAxioma{DevolverInterfaz($l$, $c_{1}$, $c_{2}$)}{\IF ($\Pi_{1}$(prim($l$)) = $\Pi_{1}$($c_{1}$)) THEN DevolverInterfazAux($\Pi_{2}$(prim($l$), $c_{2}$)) ELSE DevolverInterfaz(fin($l$, $c_{1}$, $c_{2}$)) FI}
 
   ~  
   
-   \tadOperacion{DevolverInterfazAux}{secu(tupla<Interfaz, ItRed>)/l, compu/c}{Interfaz}{} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
+   \tadOperacion{DevolverInterfazAux}{secu(tupla(Interfaz, ItRed))/l, compu/c}{Interfaz}{} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
   \tadAxioma{DevolverInterfaz($l$, $c$)}{\IF ($\Pi_{1}$($c_{2}$) = $\Pi_{1}$(siguiente($\Pi_{2}$(prim($l$))))) THEN $\Pi_{1}$(prim($l$)) ELSE DevolverInterfazAux(fin($l$, c)) FI}
 
   ~
@@ -228,7 +228,7 @@
 
   ~
 
-  \tadOperacion{dame$\Pi_{1}$}{secu(tupla$\langle inter$: interfaz, $itCompu$: itLista(estrCompu)$\rangle$)/l}{conj(interfaz)}{}
+  \tadOperacion{dame$\Pi_{1}$}{secu(tupla($inter$: interfaz, $itCompu$: itLista(estrCompu)))/l}{conj(interfaz)}{}
   \tadAxioma{dame$\Pi_{1}$($l$)}{\IF vac\'{i}a($l$) THEN $\emptyset$ ELSE ag($Pi_{1}$(prim($l$)), dame$\Pi_{1}$(fin($l$)))FI}
 
   ~
@@ -282,8 +282,8 @@
    \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{2}$).IP $\neq$ $c_{2}$.IP}{
       avanzar($it_{2}$)\com*{$\Theta(1)$}
     }
-    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{3} \gets$ crearIt(siguiente($it_{1}$).conexiones))\com*{$\Theta(1)$}
-    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{4} \gets$ crearIt(siguiente($it_{2}$).conexiones)\com*{$\Theta(1)$}
+    \tipo{itLista(tupla(interfaz, itLista(estrCompu)))} $it_{3} \gets$ crearIt(siguiente($it_{1}$).conexiones))\com*{$\Theta(1)$}
+    \tipo{itLista(tupla(interfaz, itLista(estrCompu)))} $it_{4} \gets$ crearIt(siguiente($it_{2}$).conexiones)\com*{$\Theta(1)$}
     
    \While(\com*[f]{$\Theta(I)$ iteraciones}){siguiente($it_{3}$).inter $\neq$ $i_{1}$}{
       avanzar($it_{3}$)\com*{$\Theta(1)$}
@@ -307,7 +307,7 @@
     \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq c_{1}$.IP}{
       avanzar($it_{1}$)\com*{$\Theta(1)$}
     }
-    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
+    \tipo{itLista(tupla(interfaz, itLista(estrCompu)))} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
     \While(\com*[f]{$\Theta(I)$ iteraciones}){haySiguiente($it_{2}$) $\yluego$ siguiente(siguiente($it_{2}$).com)).IP $\neq c_{2}$.IP}{
       avanzar($it_{2}$)\com*{$\Theta(1)$}
     }
@@ -324,7 +324,7 @@
     \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq c_{1}$.IP}{
       avanzar($it_{1}$)\com*{$\Theta(1)$}
     }
-    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
+    \tipo{itLista(tupla(interfaz, itLista(estrCompu)))} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
     \While(\com*[f]{$\Theta(I)$ iteraciones}){(siguiente(siguiente($it_{2}$).com)).IP $\neq c_{2}$.IP}{
       avanzar($it_{1}$)\com*{$\Theta(1)$}
     }
@@ -342,8 +342,8 @@
     \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq c$.IP}{
       avanzar($it_{1}$)\com*{$\Theta(1)$}
     }
-    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(n)$ iteraciones}){haySiguiente?($it_{2}$)}{
+    \tipo{itLista(tupla(interfaz, itLista(estrCompu)))} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
+    \While{haySiguiente?($it_{2}$)}\com*{$\Theta(n)$ iteraciones}
       \If(\com*[f]{$\Theta(1)$}){haySiguiente?(siguiente($it_{2}$).com)}{
         agregar($res$, $\langle$siguiente(siguiente($it_{2}$).com).IP, crearConjunto(siguiente(siguiente($it_{2}$).com).conexiones))$\rangle$)\com*{$\Theta(I²)$}
       }
@@ -356,7 +356,7 @@
   {$\Theta(n+I³)$} % Complejidad
   {} % Justificacíón
   
-   \begin{algoritmo}{iCrearConjunto}{\In{l}{lista(tupla(inter: interfaz, com: itLista(estrCompu)))}}{conj(interfaz)}{}
+   \begin{algoritmo}{iCrearConjunto}{\In{l}{lista(tupla($inter$: interfaz, $com$: itLista(estrCompu)))}}{conj(interfaz)}{}
     \tipo{nat} $n \gets$ 0\com*{$\Theta(1)$}
     $res \gets$ vacio()\com*{$\Theta(1)$}
    \While(\com*[f]{$\Theta(I)$ iteraciones}){n < longitud(l)}{
@@ -375,7 +375,7 @@
     \While(\com*{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq c$.IP}{
       avanzar($it_{1}$)\com*{$\Theta(1)$}
     }
-    \tipo{itLista(tupla$\langle$interfaz, itLista(estrCompu)$\rangle$)} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
+    \tipo{itLista(tupla(interfaz, itLista(estrCompu)))} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
     \While(\com*[f]{$\Theta(I)$ iteraciones}){siguiente($it_{2}$).inter $\neq i$}{
      avanzar($it_{2}$)\com*{$\Theta(1)$}
     }
@@ -394,7 +394,7 @@
       $res \gets$ dameMinimos(Caminos($r$, $c_{1}$, $c_{2}$, agregarAtras(<>,$c_{1}$), pasarConjASecu(vecinos($r$, $c_{1}$))))\;
     }
   \end{algoritmo}
-   \datosAlgoritmo{} % Descripción
+  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {} % Complejidad
@@ -408,17 +408,17 @@
       $res \gets$ dameMinimosAux($c$, minimaLong($c$, long(siguiente($it$))))\com*{$\Theta(n \times n!)$}
     }
   \end{algoritmo}
-   \datosAlgoritmo{} % Descripción
+  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {\com*{$\Theta(n \times n!)$}} % Complejidad
   {Devuelve, del total de caminos posibles, solo los de longitud m\'{i}nima} % Justificacíón
 
   \begin{algoritmo}{dameMinimosAux}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{conj(lista(compu))}
-    \tipo{ItConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
+    \tipo{itConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
     $res \gets$ vacio()\;\com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(n!)$ iteraciones}){haySiguiente($it$)}{
-      \eIf(\com*[f]{$\Theta(1)$}){long(siguiente($it$))$=n$}{
+    \While{haySiguiente($it$)}\com*{$\Theta(n!)$ iteraciones}
+      \eIf{long(siguiente($it$))$=n$}\com*{$\Theta(1)$}
         agregar($res$, siguiente($it$))\com*{$\Theta(n)$}
         avanzar($it$)\com*{$\Theta(1)$}
       }{
@@ -432,19 +432,19 @@
   {\com*{$\Theta(n \times n!)$}} % Complejidad
   {} % Justificacíón
 
-\begin{algoritmo}{minimaLong}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{nat}
-  \tipo{nat} $i \gets n$\com*{$\Theta(1)$}
-  \tipo{ItConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
-  \While(\com*[f]{$\Theta(n!)$}){haySiguiente($it$)}{
-    \eIf(\com*[f]{$\Theta(1)$}){long(siguiente($it$))}{
-      $i \gets$ longitud(siguiente($it$))\com*{$\Theta(1)$}
-      avanzar($it$)\com*{$\Theta(1)$}
-    }{
-      avanzar($it$)\com*{$\Theta(1)$}
+  \begin{algoritmo}{minimaLong}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{nat}
+    \tipo{nat} $i \gets n$\com*{$\Theta(1)$}
+    \tipo{itConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
+    \While{haySiguiente($it$)}{
+      \eIf{long(siguiente($it$))}{
+        $i \gets$ longitud(siguiente($it$))\com*{$\Theta(1)$}
+        avanzar($it$)\com*{$\Theta(1)$}
+      }{
+        avanzar($it$)\com*{$\Theta(1)$}
+      }
     }
-  }
-  $res \gets i$\com*{$\Theta(1)$}
-\end{algoritmo}
+    $res \gets i$\com*{$\Theta(1)$}
+  \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
@@ -576,12 +576,12 @@
     \tipo{estrCompu} $e \gets$ siguiente($it$)\com*{$\Theta(1)$}
     $res$.IP $\gets$ $e$.IP\com*{$\Theta(1)$}
     \tipo{conj(interfaz)} $interfaces \gets$ vac\'{i}o()\com*{$\Theta(1)$}
-    \tipo{itLista(tupla$\langle$ $inter$: interfaz, $com$: itLista(estrCompu)$\rangle$)} $itInterfaces \gets$ crearIt($e$.conexiones)\com*{$\Theta(1)$}
+    \tipo{itLista(tupla($inter$: interfaz, $com$: itLista(estrCompu)))} $itInterfaces \gets$ crearIt($e$.conexiones)\com*{$\Theta(1)$}
     \While(\com*[f]{$\Theta(I)$ iteraciones}){haySiguiente?($itInterfaces$)}{
       agregar($interfaces$, siguiente($itInterfaces$).inter)\com*{$\Theta(I)$}
       avanzar($itInterfaces$)\com*{$\Theta(1)$}
     }
-    $res$.Interfaces $\gets$ $e$.Interfaces\com*{$\Theta(I)$}
+    $res$.Interfaces $\gets$ $e$.interfaces\com*{$\Theta(I)$}
   \end{algoritmo}
     \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -601,11 +601,8 @@
   \begin{algoritmo}{iAvanzar}{\Inout{it}{itLista(estrCompu)}}{}
   $it \gets$ avanzar($it$)\com*{$\Theta(1)$}
   \end{algoritmo}
-      \datosAlgoritmo{} % Descripción
+  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(1)$} % Complejidad
   {} % Justificacíón  
-   
-
-\end{Algoritmos}
