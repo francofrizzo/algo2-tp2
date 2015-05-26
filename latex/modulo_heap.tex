@@ -9,7 +9,7 @@
       \InterfazFuncion{$\bullet \leq \bullet$}{\In{a_{1}}{$\alpha$}, \In{a_{a}}{$\alpha$}}{bool}
       {$res \igobs (a_{1} \leq a_{2})$}
       [$\Theta(compare(a_{1}, a_{2}))$]
-      [funci\'on de comparaci\'on por orden total estricto de $\alpha$] %Teniendo esta y la anterior, las siguientes funciones son triviales ("$\leq$", ">" y "$\geq$")]
+      [funci\'on de comparaci\'on por orden total estricto de $\alpha$]
     }
 
     \paramFuncion{
@@ -59,97 +59,86 @@
   \end{Estructura} 
 
   \Rep[vector($\alpha$)][v]{
-  \AbsFc[vector($\alpha$)]{colaPrior($\alpha$)}[h]{
-    \IF h.long = 0 THEN vac\'{i}a() ELSE encolar(prim(h), ABS(fin(h))) FI
+    ($\paratodo{i}{nat}$) ((($2 \* i < $long($v$)) $\impluego$ i\'esimo($2 \* i$, $v$) $\leq$ i\'esimo($i$, $v$)) $\land$ (($2 \* i + 1< $long($v$)) $\impluego$ i\'esimo($2 \* i + 1$, $v$) $\leq$ i\'esimo($i$, $v$)))
+  }
+
+  \tadOperacion{i\'esimo}{nat/$i$,secu($\alpha$/$s$)}{$\alpha$}{$n \leq long($\alpha$)$}  
+
+  \tadAxioma{i\'esimo($i$, $s$)}{\IF $i = 0$ THEN prim($s$) ELSE i\'esimo($i - 1$, fin($s$)) FI}
+
+  \AbsFc[vector($\alpha$)]{colaPrior($\alpha$)}[v]{
+    \IF long($v$) = 0 THEN vac\'{i}a() ELSE encolar(prim($v$), Abs(fin($v$))) FI
   }
 
 \end{Representacion}
 
 \begin{Algoritmos}
 
-  \begin{algoritmo}{iVac\'{i}o}{}{heap($\alpha$)}
-    $res \gets$ vector<$\alpha$>\;
+  \begin{algoritmo}{iVacio}{}{vector($\alpha$)}
+    $res \gets Vac\'ia()$ \;
   \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {} % Complejidad
+  {} % Justificación
 
   \begin{algoritmo}{iEncolar}{\Inout{hp}{heap($\alpha$)}, \In{a}{$\alpha$}}{}
-    $hp$.push\_back($a$)\;
-    \tipo{nat} $i \gets$ $hp$.longitud - 1\;
-    \tipo{nat} $p \gets$ (i/2) - ((i+1)\%2)\;
-    \While{$hp$[$p$] < $hp$[$i$]}{
-      iSwap($hp$[$p$], $hp$[$i$])\;
-      $i \gets p$\;
-      $p \gets$ ($i$/2) - (($i$+1)\%2)\;
+    agregarAtras($v$, $a$) \;
+    \tipo{nat} $i \gets $long$(v)$ \;
+    \While{$i \neq 1 \land v[i] < v[i \text{ div } 2]$}{
+      swap($v$, $i$, $i \text{ div } 2$) \;
+      $i \gets i \text{ div } 2$ \;
     }
   \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {} % Complejidad
+  {} % Justificación
 
-  \begin{algoritmo}{iVac\'{i}o?}{\In{hp}{heap($\alpha$)}}{bool}
-    $res \gets$ ($hp$ = vac\'{i}o())\;
+  \begin{algoritmo}{iVac\'{i}o?}{\In{v}{vector($\alpha$)}}{bool}
+    $res \gets$ esVac\'io?($v$) \;
   \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {} % Complejidad
+  {} % Justificación
 
-  \begin{algoritmo}{iProximo}{\In{hp}{heap($\alpha$)}}{$\alpha$}
-    $res \gets$ hp[0]\;
-  \end{algoritmo}
-
-  \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{$\alpha$}
-
-    \tipo{nat} $i \gets$ $hp$.longitud - 1\;
-    iSwap($hp$[$0$], $hp$[$i$])\;
-    $res \gets$ $hp$.pop\_back()\;
-
-    \tipo{nat} $hijo_{0} \gets$ 1\;
-    \tipo{nat} $hijo_{1} \gets$ 2\;
-    \tipo{bool} $estaOrdenado \gets$ false\;
-
-    \While{$\not$estaOrdenado}{
-      \eIf{$hijo_{0}$ < $hp$.longitud}{
-        \eIf{$hijo_{1}$ < $hp$.longitud} {
-          %//ambos hijos son validos
-          \eIf{$hp$[$hijo_{0}$] $\geq$ $hp$[$hijo_{1}$]}{
-            %//hijo0 es mas grande que hijo1
-            \eIf{$hp$[$hijo_{0}$] > $hp$[$i$]}{
-              %//hijo0 es mas grande que el padre -> los swapeo
-              iSwap($hp$[$hijo_{0}$], $hp$[$i$])\;
-              $i \gets hijo_{0}$\;
-            }{
-              %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-              $estaOrdenado \gets$ True\;
-            }
-          }{
-            %//hijo1 es mas grande que hijo0
-            \eIf{$hp$[$hijo_{1}$] > $hp$[$i$]}{
-              %//hijo1 es mas grande que el padre -> los swapeo
-              iSwap($hp$[$hijo_{1}$], $hp$[$i$])\;
-              $i \gets hijo_{1}$\;
-            }{
-              %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-              $estaOrdenado \gets$ True\;
-            }
-          }
+  \begin{algoritmo}{iDesencolar}{\Inout{v}{vector($\alpha$)}}{$\alpha$}
+    $res \gets v[i]$ \;
+    \tipo{nat} $v \gets 1$ \;
+    \While{(($2i \leq$ long($v$)) $\land$ $v[i] < v[2i]$) $\lor$ ($2i + 1 \leq$ long($v$)) $\land$ $v[i] < v[2i + 1]$)}{
+      \EIf{$2i + 1 \leq$ long($v$)}{
+        \eIf{$v[i] < v[2i + 1]$}{
+          swap($v$, $i$, $2i + 1$) \;
+          $i \gets 2i + 1$ \;
         }{
-          %//solo hijo0 es valido
-          \eIf{$hp$[$hijo_{0}$] > $hp$[$i$]} {
-            %//hijo0 es mas grande que el padre -> los swapeo
-            iSwap($hp$[$hijo_{0}$], $hp$[$i$])\;
-            $i \gets hijo_{0}$\;
-          }{
-            %//el hijo mas grande es menor a el padre...ESTA ORDENADO!
-            $estaOrdenado \gets$ True\;
-          }
+          swap($v$, $i$, $2i$) \;
+          $i \gets 2i$ \;
         }
       }{
-        %//ningun hijo es valido por ende no tiene hijos entonces esta ordenado
-        $estaOrdenado \gets$ True\;
+        swap($v$, $i$, $2i$) \;
+        $i \gets 2i$ \;
       }
-      $hijo_{0} \gets$ 2x$i$+1\;
-      $hijo_{1} \gets$ 2x$i$+2\;
     }
   \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {} % Complejidad
+  {} % Justificación
 
-  \begin{algoritmo}{iSwap}{\Inout{a}{$\alpha$}, \Inout{b}{$\alpha$}}{}
-    \tipo{$\alpha$} $c$\;
-    $c \gets a$\;
-    $a \gets b$\;
-    $b \gets c$\;
+  \begin{algoritmo}{iSwap}{\Inout{v}{vector($\alpha$), Inout{i}{nat}, Inout{j}{nat}}}
+    $\alpha aux \gets v[i]$ \;
+    $v[i] \gets v[j]$ \;
+    $v[j] \gets aux$ \;
   \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {} % Complejidad
+  {} % Justificación
 
 \end{Algoritmos}
