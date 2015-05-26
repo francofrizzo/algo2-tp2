@@ -143,7 +143,7 @@
   \end{Estructura}
 
   \RepFc[Red][e]{($\forall c$: compu)(c $\in$ ArmarComputadoras(e.compus) $\impluego$ $\lnot$ Pertenece?(e.compus, c, c))$\land$ \\
-    $\#$ArmarComputadoras(e.compus) = e.cantCompus $\land$ \\
+    $\#$ArmarComputadoras(e.compus) = e.cantidadCompus $\land$ \\
     ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) ($c_{1}$ $\in$ ArmarComputadoras(e.compus) $\land$ $c_{2}$ $\in$ ArmarComputadoras(e.compus) $\impluego$ Pertenece?(e.compus, $c_{1}$, $c_{2}$) $\Leftrightarrow$ Pertenece?(e.compus, $c_{2}$, $c_{1}$))) $\land$ \\
     ($\forall c_{1}$: compu)($c_{1}$ $\in$ ArmarComputadoras(e.compus) $\impluego$ ($\forall c_{2}$: compu) (Pertenece?(e.compus, $c_{1}$, $c_{2}$) $\Rightarrow$ $c_{2}$ $\in$ ArmarComputadoras(e.compus))) $\land$ \\
     sinRepetidos(ArmarSecuencia(e.compus)) 
@@ -273,7 +273,7 @@
       avanzar($it_{4}$)\com*{$\Theta(1)$}
     }
 
-    siguiente($it_{3$).com $\gets$ $it_{2}$\com*{$\Theta(1)$}
+    siguiente($it_{3}$).com $\gets$ $it_{2}$\com*{$\Theta(1)$}
     siguiente($it_{4}$).com $\gets$ $it_{1}$\com*{$\Theta(1)$}
   \end{algoritmo}
   \complejidad{$\Theta(n+I)$}
@@ -351,6 +351,43 @@
       $res \gets$ dameMinimos(Caminos($r$, $c_{1}$, $c_{2}$, agregarAtras(<>,$c_{1}$), pasarConjASecu(vecinos($r$, $c_{1}$))))\;
     }
   \end{algoritmo}
+
+  \begin{algoritmo}{dameMinimos}{\In{c}{conj(lista(compu))}}{conj(lista(compu))}
+    \eIf{esVacio?($c$)}{
+      $res \gets$ vacio()\;
+    }{
+      \Tipo{ItConj(lista(compu))} $it \gets$ crearIt(c)\;
+      $res \gets$ dameMinimosAux($c$, minimaLong($c$, long(siguiente($it$))))\;
+    }
+  \end{algoritmo}
+
+  \begin{algoritmo}{dameMinimosAux}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{conj(lista(compu))}
+    \Tipo{ItConj(lista(compu))} $it \gets$ crearIt($c$)\;
+    $res \gets$ vacio()\;
+    \While{haySiguiente($it$)}{
+      \eIf{long(siguiente($it$))$=n$}{
+        agregar($res$, siguiente($it$))\;
+        avanzar($it$)\;
+      }{
+        avanzar($it$)\;
+      }
+    }
+  \end{algoritmo}
+
+
+\begin{algoritmo}{minimaLong}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{nat}
+  \Tipo{nat} $i \gets n$\;
+  \Tipo{ItConj(lista(compu))} $it \gets$ crearIt($c$)\;
+  \While{haySiguiente($it$)}{
+    \eIf{long(siguiente($it$))}{
+      $i \gets$ longitud(siguiente($it$))\;
+      avanzar($it$)\;
+    }{
+      avanzar($it$)\;
+    }
+  }
+  $res \gets i$\;
+\end{algoritmo}
     
 	\begin{algoritmo}{pasarConjASecu}{\In{c}{conj(compu)}}{secu(compu)}{}
 		$res \gets$ vacia()\com*{$\Theta(1)$}
@@ -365,7 +402,7 @@
     $res \gets$ ($\neg$esVacio?(iCaminosMinimos($r$, $c_{1}$, $c_{2}$)))
   \end{algoritmo}
 
-  \begin{algoritmo}{iCaminos}{\In{r}{estrRed}, \In{c_{0}}{estrCompu}, \In{c_{1}}{estrCompu}, \In{l}{lista(estrCompu)}, \In{vec}{lista(estrCompu)}}{conj(lista(estrCompu))}{}
+  \begin{algoritmo}{iCaminos}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}, \In{l}{lista(estrCompu)}, \In{vec}{lista(estrCompu)}}{conj(lista(estrCompu))}{}
     \eIf{vacia?($vec$)}{
       $res \gets$ vacia()\;
     }{
@@ -380,7 +417,33 @@
       }
     }
   \end{algoritmo}
-  
+
+  \begin{algoritmo}{iUni\'{o}n}{\In{c_{1}}{conj(lista(compu))}, \In{c_{2}}{conj(lista(compu))}}{conj(lista(compu))}
+    $res \gets$ vacio()\com*{$\Theta(1)$}     
+    \eIf(\com*[f]{$\Theta(1)$}     ){vacio?($c_{1}$)}{
+      $res \gets$ $c_{2}$}{
+      \Tipo{itConj(lista(compu))} $it \gets$ crearIt($c_{1}$)\com*{$\Theta(1)$}     
+      \While(\com[f]*{$\Theta(n)$}){haySiguiente($it$)}{
+        Ag(siguiente($it$), $c_{2}$)\com*{$\Theta(n)$}
+        avanzar(it)\com*{$\Theta(1)$}
+      } 
+    }
+  \end{algoritmo}
+  \complejidad{$\Theta(n²)$}
+
+  \begin{algoritmo}{iEsta?}{\In{c}{compu}, \In{l}{lista(compu)}}{bool}
+    \eIf(\com*{$\Theta(1)$}){vacia?($l$)}{
+      $res \gets$ false\com*{$\Theta(1)$}
+    }{
+    \Tipo{ItLista(compu)} $it \gets$ crearIt($l$)\com*{$\Theta(1)$}
+      \While(\com*{$\Theta(n)$}){haySiguiente($it$) $\yluego$ siguiente($it$) $\neq$ $c$}{
+        avanzar(it)\com*{$\Theta(1)$}
+      }
+    }
+    $res \gets$ (haySiguiente($it$))\com*{$\Theta(1)$}
+  \end{algoritmo}
+  \complejidad{$\Theta(n)$}
+
   \begin{algoritmo}{iComputadoras}{\In{r}{estrRed}}{conj(compu)}{}
     $res \gets$ vacio()\com*{$\Theta(1)$}
     \tipo{itRed} $it \gets$ crearItRed()\com*{$\Theta(1)$}
@@ -392,7 +455,7 @@
    \complejidad{$\Theta(n \times (n+I²))$}
    
    \begin{algoritmo}{iCopiar}{\In r:estrRed}{Red}
-   	$res \gets$ $\langle$copiar(r.compus, r.cantCompus$\rangle$\com*{$\Theta(n \times I)$}
+   	$res \gets$ $\langle$copiar(r.compus, r.cantidadCompus$\rangle$\com*{$\Theta(n \times I)$}
    \end{algoritmo}
    \complejidad{$\Theta(n \times I)$}    
 
