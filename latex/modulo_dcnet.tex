@@ -227,13 +227,13 @@
     $j \gets 0$\com*{$\Theta(1)$}   
     \While(\com*[f]{$\Theta(n)$}){$j$ < Cardinal(Computadoras($res$.red))}{
       \While(\com*[f]{$\Theta(n)$}){$k$ < Cardinal(Computadoras($res$.red))}{
-        \If(\com*[f]{$\Theta(n)$}){conectadas?($res$.red, siguiente($res$.IPsCompusPorID[j]), siguiente($res$.IPsCompusPorID[k]))}{
+        \If(\com*[f]{$\Theta(n+I)$}){conectadas?($res$.red, siguiente($res$.IPsCompusPorID[j]), siguiente($res$.IPsCompusPorID[k]))}{
           \tipo{itConj} $it_{0} \gets$ crearIt(caminosMinimos($res$.red, siguiente($res$.IPsCompusPorID[j]), siguiente($res$.IPsCompusPorID[k])))\;
-          $res$.siguientesCompus[$j$][$k$] $\gets$ prim(fin(siguiente($it_{1}$)))\;
+          $res$.siguientesCompus[$j$][$k$] $\gets$ prim(fin(siguiente($it_{1}$)))\com*{$\Theta(1)$}   
         }
-        $k \gets k + 1$\;
+        $k \gets k + 1$\com*{$\Theta(1)$}  
       }
-      $j \gets j + 1$\;
+      $j \gets j + 1$\com*{$\Theta(1)$}  
     }
   \end{algoritmo}
  \datosAlgoritmo{} % Descripción
