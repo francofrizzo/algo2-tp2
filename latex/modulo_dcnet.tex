@@ -98,37 +98,53 @@
 
 	\Rep[e][l]{
 	($\forall e$: estr)(
+
 %1
 		(tam(e.paquetesEnEspera) = tam(e.IPcompusXID) = tam(e.siguienteCompu) = tam (e.cantPaquetesEnviados) = \#(computaodras(e.estrRed))) $\land$ 
 		($\forall n$: nat)(definido?(e.siguienteCompu,n) $\impluego$ tam(e.siguienteCompu[n]) = \#(computadoras(e.estrRed))) $\land$
+
 %2
 		Maximo(e.cantPaqEnviados) = e.cantidadEnviados[obtener($\pi_1$(siguiente(e.laQueMasEnvio)),e.IDcompusPorIP)] $\land$
+
 %3 CHEQUEAR PARENTESIS
 		($\forall c$: compu)(c $\in$ computadoras(e.estRed) $\impluego$ obtener($\pi_1$(c),e.IDcompusPorIP) < \#(computadoras(e.estrRed))) $\land$
 		(($\forall c_1$, $c_2$: compu)(($c_1 \in$ computadoras(e.estRed) $\land$ ($c_2 \in$ computadoras(e.estrRed)) $\land$ ($c_1 \neq c_2$)) $\impluego$ ((obtener($\pi_1$($c_1$), e.IDcompusPorIP) $\neq$ obtener($\pi_1$($c_2$), e.IDcompusPorIP))))) $\land$
+
 %4
 		(dameNombres(computadoras(e.estrRed)) = claus(IDcompusPorIP)) $\land$
+
 %5
 		($\forall L$: nat)( 0 $\leq$ L < tam(e.paqEnEspera) $\impluego$ (
+
+      ($\forall$ $it_1$: ItConj(paquete)) $it$ $\in$ dame$\pi_1$(juntarSignificado($\pi_2$(e.paquetesEnEspera[L]))) $\impluego$ haySiguiente?($it_1$) $\land$
+      ($\forall$ $it_2$: ITconj(pauqete)) $it_2$ $\in$ dame$pi_2$(juntarColaEnConjunto($\pi_3$(e.paquetesEnEspera[L]))) $\impluego$ haySiguiente?($it_2$) $\yluego$ 
+
 			($\forall i$: ItConj(paquete))(siguiente(i) $\in$ (dameSiguientes(dame$\pi_1$($juntarSignificados_1$($\pi_2$(e.paquetesEnEspera[L])))$\impluego$ siguiente(i) $\in \pi_1$(e.paquetesEnEspera[L])))) $\land$ 
 			($\forall c$: ID)(c$\in$ claves($\pi_2$(e.paquetesEnEspera[L])) $\impluego \pi_1$(siguiente($\pi_1$(obtener($\pi_2$(c), e.paquetesEnEspera[L])))) = c) $\land$
-			($\forall i$: ItConj(paquete))(siguiente(i)$\in$ dameSiguientes(dame$\pi_1$($juntarSignificados_2$($\pi_3$(e.paquetesEnEspera[L])))) $\impluego$ siguiente(i) $\in \pi_1$(e.paquetesEnEspera[L]))$\land$
-			($\forall n$: prioridad)(definido?($\pi_3$(e.paquetesEnEspera[L]),n) $\impluego$ ($\forall p$: paquete)(esta?(p, obtener(n, $\pi_3$(e.paquetesEnEspera[L]))) $\impluego$ $\pi_2$(p) = n)) $\land$
+      ($\forall$ $it$:ItConj(paquete)) siguiente($it$) $\in$ dameSiguientes(dame$\pi_2$(juntarColaPrioriEnConj($\pi_3$(e.paquetesEnEspera[L])))) $\impluego$ siguiente($it$) $\in$ $\pi_1$(e.paquetesEnEspera[L])
+			($\forall$ $t$: tupla <prioridad,ItConj(paquete)>) $t$ $\in$ juntarColaPrioriEnConj($\pi_3$(e.paquetesEnEspera[L])) $\rightarrow$ siguiente($\pi_2$($t$)).prioridad = $\pi_1$($t$)
+
 % *1
     ($\forall x$, $z$: nat)((0 $\leq$ x < tam(e.paquetesEnEspera) $\land$ 0 $\leq$ z < tam(e.paquetesEnEspera) $\land$ x $\neq$ z) $\impluego$ ($\pi_1$(e.paquetesEnEspera[x]) $\cap$ $\pi_2$(e.paquetesEnEspera[z])) = $\emptyset$) $\land$
+
 %6
 		($\forall i$: nat)(0 $\leq$ i < \#(computadoras(e.estrRed)) $\land$ obtener($\pi_1$(siguiente(e.IPcompusPorID[i])), e.IDcompusPorID) = i) $\land$
+
 %7
-		($\forall n$, $m$: nat)(0 $\leq$ n < \#(computadoras(e.estrRed)) $\land$ 0 $\leq$ n < \#(computadoras(e.estrRed)) $\impluego$ e.siguienteCompu[n][m] = prim(dameuno(caminosminimos(e.estrRed,siguiente(e.IPcompusporID[n]),siguiente(e.IPcompusPorID[m]))))) $\land$
+		($\forall n$, $m$: nat)(0 $\leq$ n < \#(computadoras(e.estrRed)) $\land$ 0 $\leq$ n < \#(computadoras(e.estrRed)) $\impluego$ ($\exists$ $x$: (secu(compu))) $x$ $\in$ caminosminimos(e.estrRed, siguiente(e.IPcompusPorID[n]), siguiente(e.IPcompusPorID[m])) $\land$ prim($x$) $=$ e.siguienteCompu[n][m] 
+
 %8
     ($\forall i$: nat)(0 $\leq$ i $\leq$ \#computadoras(e.estrRed) $\impluego$ siguiente(e.IPcompusPorID[i]) $\in$ compitadoras(e.estrRed)) $\land$
+
 % *2
     ($\forall x$, $y$: nat)((0 $\leq$ x < \#computadoras(e.estrRed) $\land$ 0 $\leq$ y < \#computadoras(e.estrRed) $\land$ x $\neq$ y) $\impluego$ (siguiente(e.IPcompusPorID[x]) $\neq$ siguiente(e.IPcompusPorID[y]))))) $\land$
+
 %9
     \#($\pi_1$(e.paquetesEnEspera)) = \#claves($\pi_2$(e.paquetesEnEspera)) $\land$ = \#(juntarSecuenciasEnConj(juntarSignificados($\pi_3$(e.paquetesEnEspera)))) $\land$
-%10?
-    ($\forall it_1$: ItConj(paquete))($\forall it_2$: ItConj(paquete))(($it_1 \in$ juntarSecuEnConj(JuntarSignificado($\pi_3$(e.paquetesEnEspera[L])))) $\land$ ($it_2 \in$ juntarSecuEnConj(JuntarSignificado($\pi_3$(e.paquetesEnEspera[L])))) $\land$ ($it_1$ $\neq$ $it_2$) $\impluego$ (siguiente($it_1)$ $\neq$ siguiente($it_2$)))
-	)}\mbox{}
+
+%10
+    ($\forall$ $\it_{1}$: ItConj(paquete)) ($\forall$ $\it_{2}$: ItConj(paquete)) $\it_{1}$ $\in$ dame$\pi_{2}$(juntarColaPriorEnConj($\pi_{3}$(e.paquetesEnEspera[L]))) $\land$ $\it_{2}$ $\in$ dame$\pi_{2}$(juntarColaPriorEnConj($\pi_{3}$(e.paquetesEnEspera[L]))) $\it_{1}$ $\neq$ $\it_{2}$ $\impluego$ siguiente($\it_{1}$) $\neq$ siguiente($\it_{2}$)
+    }\mbox{} %habia un parentesis no se de donde sale (estaba cerrando en esta linea)
 
 \AbsFc[estrDCNet]{DCNet}[e]{red($d$) = e.estrRed $\land$ \\
 
@@ -162,6 +178,16 @@
 \tadOperacion{finAd$_{\text{aux}}$}{ad(tupla(enConjunto: conj(paquete), porID: dicc$_{\text{AVL}}$(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))))/a, ad(tupla(enConjunto: conj(paquete), porID: dicc$_{\text{AVL}}$(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))))/b, nat}{ad(tupla(enConjunto: conj(paquete), porID: dicc$_{\text{AVL}}$(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))))}{tam(a)>1 $\land$ tam(b)>0}
 
 \tadAxioma{finAd$_{\text{aux}}$($a$, $b$, $n$)}{\IF ($n$=0) THEN $b$[0] $\leftarrow$ $a$[1] ELSE finAd$_{\text{aux}}$($a$, $b$[n]$\leftarrow$ $a$[$n$+1], $n$ -1) FI}
+
+ % aca estoy poniendo los axiomas de las funciones que use en el rep
+  \tadOperacion{juntarColaPriorEnConj}{colaPrior(tupla<prioridad{,} ItConj(paquete)>)}{conj(tupla<prioridad{,} ItConj(paquete)>)}{}
+  \tadAxioma{juntarColaPriorEnConj(c)}{\IF vacia?(c) THEN $\emptyset$ ELSE ag(proximo(c), juntarColaPriorEnConj(desencolar(c))) FI}
+  
+  \tadOperacion{dame$\pi_{2}$}{conj(tupla<prioridad, ItConj(paquete)>)}{conj(ItConj(paquete))}{}
+  \tadAxioma{dame$\pi_{2}$(c)}{\IF $\emptyset$?(c) THEN $\emptyset$ ELSE ag($\pi_{2}$(dameuno(c)), dame$\pi_{2}$(sinuno(c))) FI}
+  
+  \tadOperacion{dameSiguientes}{conj(ItConj(paquete))}{conj(paquete)}{restricciones}
+  \tadAxioma{dameSiguientes(c)}{\IF $\emptyset$?(c) THEN $\emptyset$ ELSE ag(siguiente(dameuno(c)), dameSiguientes(sinuno(c))) FI}
 
 \end{Representacion}
 
