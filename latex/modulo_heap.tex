@@ -77,7 +77,8 @@
   \begin{Estructura}{heap($\alpha$)}[vector($\alpha$)]
   \end{Estructura} 
 
-  \Rep[heap($\alpha$)][hp]{
+  \Rep[vector($\alpha$)][v]{
+    ($\paratodo{i}{nat}$) ((($2 \* i < $long($v$)) $\impluego$ i\'esimo($2 \* i$, $v$) $\leq$ i\'esimo($i$, $v$)) $\land$ (($2 \* i + 1< $long($v$)) $\impluego$ i\'esimo($2 \* i + 1$, $v$) $\leq$ i\'esimo($i$, $v$)))
   
   %1) si A es el padre de B entonces A >= B
   %2) no hay ningun agujero en el vector es decir estan todos cargados consecutivos. por ende el arbol del heap se carga nivel a nivel de izq a der sin dejar ningun nivel con algun nodo sin hijos
@@ -86,16 +87,16 @@
   %    si A es el padre de B entonces (A=hp[i]) entonces (A=hp[((i/2)-((i+1)%2)))])
   }
 
-  \AbsFc[vector($\alpha$)]{colaPrior($\alpha$)}[h]{
-    \IF h.long = 0 THEN vac\'{i}a() ELSE encolar(prim(h), ABS(fin(h))) FI
+  \AbsFc[vector($\alpha$)]{colaPrior($\alpha$)}[v]{
+    \IF long($v$) = 0 THEN vac\'{i}a() ELSE encolar(prim($v$), Abs(fin($v$))) FI
   }
 
 \end{Representacion}
 
 \begin{Algoritmos}
 
-  \begin{algoritmo}{iVac\'{i}o}{}{heap($\alpha$)}
-    $res \gets$ vector<$\alpha$>\; \com*{$\Theta(1)$}
+  \begin{algoritmo}{iVacio}{}{vector($\alpha$)}
+    $res \gets Vac\'ia()$ \;
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -119,6 +120,7 @@
   {$\Theta(log(n))$} % Complejidad
   {El while se repite como maximo $log(n)$ veces, donde $n$ es la longitud del vector. } % Justificacíón
 
+<<<<<<< HEAD
   \begin{algoritmo}{iVac\'{i}o?}{\In{hp}{heap($\alpha$)}}{bool}
     $res \gets$ ($hp$ = vac\'{i}o())\; \com*{$\Theta(1)$}
   \end{algoritmo}
@@ -128,6 +130,13 @@
   \end{algoritmo}
 
   \begin{algoritmo}{iDesencolar}{\Inout{hp}{heap($\alpha$)}}{$\alpha$}
+=======
+  \begin{algoritmo}{iVac\'{i}o?}{\In{v}{vector($\alpha$)}}{bool}
+    $res \gets$ esVac\'io?($v$) \;
+  \end{algoritmo}
+
+  \begin{algoritmo}{iDesencolar}{\Inout{v}{vector($\alpha$)}}{$\alpha$}
+>>>>>>> d4eb108eb897a91487a4eaca8d13cb372707de4e
 
     \tipo{nat} $i \gets$ $hp$.longitud - 1\;
     iSwap($hp$[$0$], $hp$[$i$])\; \com*{$\Theta(1)$}
