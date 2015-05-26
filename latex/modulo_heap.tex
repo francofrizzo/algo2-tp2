@@ -80,8 +80,13 @@
 
 \begin{Algoritmos}
 
-  \begin{algoritmo}{iVac\'io}{}{vector($\alpha$)}
-    $res \gets Vac\'ia()$ \com*{$\Theta(1)$}
+  \SetKwFunction{vacia}{Vac\'ia}
+  \SetKwFunction{lon}{long}
+  \SetKwFunction{swap}{Swap}
+  \SetKwFunction{esVacio}{esVac\'io?}
+
+  \begin{algoritmo}{iVac\'io}{}{}
+    $res \gets$ \vacia{} \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -91,9 +96,9 @@
 
   \begin{algoritmo}{iEncolar}{\Inout{v}{vector($\alpha$)}, \In{a}{$\alpha$}}{}
     agregarAtras($v$, $a$) \com*{$\Theta(1)$}
-    \tipo{nat} $i \gets $long$(v)$ \com*{$\Theta(1)$}
+    \tipo{nat} $i \gets$ \lon{$v$} \com*{$\Theta(1)$}
     \While{$i \neq 0 \land v[i] < v[i \text{ div } 2 - (i + 1)\%2]$}{
-      swap($v$, $i$, $i \text{ div } 2 - (i + 1)\%2$) \com*{$\Theta(copy(\alpha))$}
+      \swap{$v$, $i$, $i \text{ div } 2 - (i + 1)\%2$} \com*{$\Theta(copy(\alpha))$}
       $i \gets i \text{ div } 2 - (i + 1)\%2$ \com*{$\Theta(1)$}
     }
   \end{algoritmo}
@@ -101,10 +106,10 @@
   {} % Pre
   {} % Post
   {$\Theta(log(n)) \times \Theta(copy(\alpha))$} % Complejidad
-  {El while se repite como m\'aximo $log(n)$ veces y cada repetici\'on tiene $\Theta(copy(\alpha))$. } % Justificación
+  {El ciclo se repite como m\'aximo $log(n)$ veces y cada repetici\'on tiene $\Theta(copy(\alpha))$. } % Justificación
 
   \begin{algoritmo}{iVac\'{i}o?}{\In{v}{vector($\alpha$)}}{bool}
-    $res \gets$ esVac\'io?($v$) \com*{$\Theta(1)$}
+    $res \gets$ \esVacio{$v$} \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -115,17 +120,17 @@
   \begin{algoritmo}{iDesencolar}{\Inout{v}{vector($\alpha$)}}{$\alpha$}
     $res \gets v[0]$ \com*{$\Theta(1)$}
     \tipo{nat} $i \gets 0$ \com*{$\Theta(1)$}
-    \While{(($2i + 1 \leq$ long($v$)) $\land$ $v[i] < v[2i + 1]$) $\lor$ ($2i + 2 \leq$ long($v$)) $\land$ $v[i] < v[2i + 2]$)}{
-      \eIf{$2i + 2 \leq$ long($v$)}{
+    \While{(($2i + 1 \leq$ \lon{$v$}) $\land$ $v[i] < v[2i + 1]$) $\lor$ ($2i + 2 \leq$ \lon{$v$}) $\land$ $v[i] < v[2i + 2]$)}{
+      \eIf{$2i + 2 \leq$ \lon{$v$}}{
         \eIf{$v[i] < v[2i + 2]$}{
-          swap($v$, $i$, $2i + 2$) \com*{$\Theta(copy(\alpha))$}
+          \swap{$v$, $i$, $2i + 2$} \com*{$\Theta(copy(\alpha))$}
           $i \gets 2i + 2$ \com*{$\Theta(1)$}
         }{
-          swap($v$, $i$, $2i + 1$) \com*{$\Theta(copy(\alpha))$}
+          \swap{$v$, $i$, $2i + 1$} \com*{$\Theta(copy(\alpha))$}
           $i \gets 2i + 1$ \com*{$\Theta(1)$}
         }
       }{
-        swap($v$, $i$, $2i + 1$) \com*{$\Theta(copy(\alpha))$}
+        \swap{$v$, $i$, $2i + 1$} \com*{$\Theta(copy(\alpha))$}
         $i \gets 2i + 1$ \com*{$\Theta(1)$}
       }
     }
@@ -134,8 +139,7 @@
   {} % Pre
   {} % Post
   {$\Theta(log(n)) \times \Theta(copy(\alpha))$} % Complejidad
-  {El while se repite como m\'aximo $log(n)$ veces y cada repetici\'on tiene $\Theta(copy(\alpha))$. } % Justificación
-
+  {El ciclo se repite como m\'aximo $log(n)$ veces y cada repetici\'on tiene $\Theta(copy(\alpha))$. } % Justificación
 
   \begin{algoritmo}{iSwap}{\Inout{v}{vector($\alpha$)}, \In{i}{nat}, \In{j}{nat}}{}
     \tipo{$\alpha$} $aux \gets v[i]$ \com*{$\Theta(copy(\alpha))$}
