@@ -83,12 +83,12 @@
   {} % Complejidad
   {} % Justificación
 
-  \begin{algoritmo}{iEncolar}{\Inout{hp}{heap($\alpha$)}, \In{a}{$\alpha$}}{}
+  \begin{algoritmo}{iEncolar}{\Inout{v}{vector($\alpha$)}, \In{a}{$\alpha$}}{}
     agregarAtras($v$, $a$) \;
     \tipo{nat} $i \gets $long$(v)$ \;
-    \While{$i \neq 1 \land v[i] < v[i \text{ div } 2]$}{
-      swap($v$, $i$, $i \text{ div } 2$) \;
-      $i \gets i \text{ div } 2$ \;
+    \While{$i \neq 0 \land v[i] < v[i \text{ div } 2 - (i + 1)\%2]$}{
+      swap($v$, $i$, $i \text{ div } 2 - (i + 1)\%2$) \;
+      $i \gets i \text{ div } 2 - (i + 1)\%2$ \;
     }
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
@@ -107,20 +107,20 @@
   {} % Justificación
 
   \begin{algoritmo}{iDesencolar}{\Inout{v}{vector($\alpha$)}}{$\alpha$}
-    $res \gets v[i]$ \;
-    \tipo{nat} $v \gets 1$ \;
-    \While{(($2i \leq$ long($v$)) $\land$ $v[i] < v[2i]$) $\lor$ ($2i + 1 \leq$ long($v$)) $\land$ $v[i] < v[2i + 1]$)}{
-      \EIf{$2i + 1 \leq$ long($v$)}{
-        \eIf{$v[i] < v[2i + 1]$}{
+    $res \gets v[0]$ \;
+    \tipo{nat} $i \gets 0$ \;
+    \While{(($2i + 1 \leq$ long($v$)) $\land$ $v[i] < v[2i + 1]$) $\lor$ ($2i + 2 \leq$ long($v$)) $\land$ $v[i] < v[2i + 2]$)}{
+      \EIf{$2i + 2 \leq$ long($v$)}{
+        \eIf{$v[i] < v[2i + 2]$}{
+          swap($v$, $i$, $2i + 2$) \;
+          $i \gets 2i + 2$ \;
+        }{
           swap($v$, $i$, $2i + 1$) \;
           $i \gets 2i + 1$ \;
-        }{
-          swap($v$, $i$, $2i$) \;
-          $i \gets 2i$ \;
         }
       }{
-        swap($v$, $i$, $2i$) \;
-        $i \gets 2i$ \;
+        swap($v$, $i$, $2i + 1$) \;
+        $i \gets 2i + 1$ \;
       }
     }
   \end{algoritmo}
@@ -130,7 +130,7 @@
   {} % Complejidad
   {} % Justificación
 
-  \begin{algoritmo}{iSwap}{\Inout{v}{vector($\alpha$), Inout{i}{nat}, Inout{j}{nat}}}
+  \begin{algoritmo}{iSwap}{\Inout{v}{vector($\alpha$), \In{i}{nat}, \In{j}{nat}}}
     $\alpha aux \gets v[i]$ \;
     $v[i] \gets v[j]$ \;
     $v[j] \gets aux$ \;
