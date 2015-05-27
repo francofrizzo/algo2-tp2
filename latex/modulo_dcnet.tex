@@ -251,7 +251,7 @@
     $it \gets$ Agregar(($d$.paquetesEnEspeta[$o$]).enConjunto, $p$)\com*{$\Theta(k)$}
     Definir($d$.paquetesEnEspera[$o$].porID, $p$.ID, $\langle$ $it$, $o$, $dest$, $\rangle$)\com*{$\Theta(log(k))$}
     encolar($d$.paquetesEnEspera[$o$].porPrioridad, $p$.prioridad, $it$)\com*{$\Theta(log(k))$}
-    \end{algoritmo}
+  \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
@@ -261,6 +261,11 @@
   \begin{algoritmo}{iRed}{\In{d}{DCNet}}{Red}
     $res \gets$ $d$.Red \com*{$\Theta(1)$}
   \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(L+log(k))$} % Complejidad
+  {} % Justificacíón
 
   \begin{algoritmo}{iAvanzarSegundo}{\Inout{d}{DCNet}}{}
     \tipo{nat} $j \gets 0$\com*{$\Theta(1)$}
