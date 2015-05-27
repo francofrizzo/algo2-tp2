@@ -20,42 +20,42 @@
   \InterfazFuncion{iniciarDCNet}{\In{r}{Red}}{DCNet}%
   [true]%pre
   {res $\igobs$ iniciarDCNet(r)}%pos
-  [$\Theta(1234)$]%complejidad
+  [$\Theta(n^3 \times I^2 \times L + camMin)$]%complejidad
   [Genera un nuevo DCNet sin paquetes. ]%descripcion
   []%aliasing
   
   \InterfazFuncion{crearPaquete}{\Inout{D}{DCNet}, \In{p}{paquete}}{}%
   [D $\igobs$ $D_{0}$ $\land$ $\not$(($\exists p'$: paquete)(paqueteEnTransito?(D,p') $\land$ id(p') = id(p)) $\land$ origen(p) $\in$ computadoras(red(D)) $\yluego$ destino(p) $\in$ computadoras(red(D)) $\yluego$ hayCamino?(red(D), origen(p), destino(p)))]%pre
   {D $\igobs$ crearPaquete($D_{0}$, p)}%pos
-  [$\Theta(l+log(k))$]%complejidad
+  [$\Theta(L+log(k))$]%complejidad
   [Crea un nuevo paquete que no exite en el DCNet anterior. ]%descripcion
   []%aliasing
 
   \InterfazFuncion{avanzarSegundo}{\Inout{D}{DCNet}}{}%
   [D $\igobs$ $D_{0}$]%pre
   {D $\igobs$ avanzarSegundo($D_{0}$)}%pos
-  [$\Theta(n.(L+log(n)+log(k)))$]%complejidad
+  [$\Theta(n \times log(k))$]%complejidad
   [Avanza un segundo en el DCNet, moviendo todos los paquetes correspondientes. ]%descripcion
   []%aliasing
 
   \InterfazFuncion{red}{\In{D}{DCNet}}{red}%
   [true]%pre
-  {res $\igobs$ red(D)}%pos
-  [$\Theta(1234)$]%complejidad
+  {esAlias(res $\igobs$ red(D))}%pos
+  [$\Theta(1)$]%complejidad
   [Devuelve la red donde esta funcionando el DCNet. ]%descripcion
-  []%aliasing
+  [Pasamos la red por referencia]%aliasing
 
   \InterfazFuncion{caminoRecorido}{\In{D}{DCNet}, \In{p}{paquete}}{secu(compu)}%
   [paqueteEnTransito?(D, p)]%pre
   {res $\igobs$ caminoRecorrido(D, p)}%pos
-  [$\Theta(n.log(max(n,k)))$]%complejidad
+  [$\Theta(n \times log(k))$]%complejidad
   [Devuelve la secuencia que contiene de forma ordenada todas las computadoras por las que fue pasando. ]%descripcion
   []%aliasing
 
   \InterfazFuncion{cantidadEnviados}{\In{D}{DCNet}, \In{c}{compu}}{nat}%
   [c $\in$ computadoras(red(D))]%pre
   {res $\igobs$ cantidadEnviados(D, c)}%pos
-  [$\Theta(1234)$]%complejidad
+  [$\Theta(L)$]%complejidad
   [Devuelve la cantidad de paquetes que envi\'o la computadora ``c''. ]%descripcion
   []%aliasing
 
@@ -69,7 +69,7 @@
   \InterfazFuncion{paquetesEnTr\'ansito?}{\In{D}{DCNet}, \In{p}{paquete}}{bool}%
   [true]%pre
   {res $\igobs$ paquetesEnTrancito?(D, p)}%pos
-  [$\Theta(1234)$]%complejidad
+  [$\Theta(n \times log(k))$]%complejidad
   [Devuelve ``True'' si y solo si el paquete esta en los paquetes en espera de alguna computadora. ]%descripcion
   []%aliasing
 
@@ -218,7 +218,7 @@
       $res$.siguientesCompus[$j$] $\gets$ crearArreglo(cantCompus($res$.red))\com*{$\Theta(n)$}   
       $res$.\#PaqEnviados[$j$] $\gets$ 0\com*{$\Theta(1)$}   
       $res$.paquetesEnEspera[$j$] $\gets$ $\langle$vac\'{i}o(),vac\'{i}o(),vac\'{i}o()$\rangle$\com*{$\Theta(1)$}   
-      definir(siguiente($it_{0}$).IP, $j$, $res$.IDsCompusPorIP)\com*{$\Theta(L+I²)$}   
+      definir(siguiente($it_{0}$).IP, $j$, $res$.IDsCompusPorIP)\com*{$\Theta(L+I^2)$}   
       $res$.IPsCompusPorID[$j$] $\gets$ $it_{1}$\com*{$\Theta(1)$}   
       $j \gets j + 1$\com*{$\Theta(1)$}   
       avanzar($it_{1}$)\com*{$\Theta(1)$}   
@@ -239,7 +239,7 @@
  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta()$} % Complejidad
+  {$\Theta(n \times I + 4 n + n \times (n + I^2 + L) + n \times (n \times (n + I + camMin)))$ = $\Theta(n \times I + n + n^2+ n \times I^2 + n \times L + n^3 + n^2 \times I + camMin)$ que esta incluido en $\Theta(n^3 \times I^2 \times L + camMin)$} % Complejidad
   {} % Justificacíón
 
 
@@ -257,6 +257,10 @@
   {} % Post
   {$\Theta(L+log(k))$} % Complejidad
   {} % Justificacíón
+
+  \begin{algoritmo}{iRed}{\In{d}{DCNet}}{Red}
+    $res \gets$ $d$.Red \com*{$\Theta(1)$}
+  \end{algoritmo}
 
   \begin{algoritmo}{iAvanzarSegundo}{\Inout{d}{DCNet}}{}
     \tipo{nat} $j \gets 0$\com*{$\Theta(1)$}
@@ -315,6 +319,11 @@
     }
     AgregarAtras($res$, siguiente($d$.IPsCompusPorID[$o$]))\com*{$\Theta(I)$ lo tomamos como $\Theta(1)$}
   \end{algoritmo} 
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(n \times log(k))$} % Complejidad
+  {} % Justificacíón
 
   \begin{algoritmo}{iCantidadEnviados}{\In{d}{DCNet}, \In{c}{compu}}{nat}
     \tipo{nat} $i \gets$ Obtener($d$.IDsCompusPorIP, $c$.IP)\com*{$\Theta(L)$}
@@ -323,7 +332,7 @@
  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {\com*{$\Theta(L)$}} % Complejidad
+  {$\Theta(L)$} % Complejidad
   {} % Justificacíón
 
   \begin{algoritmo}{iEnEspera}{\In{d}{DCNet}, \In{c}{compu}}{conj(Paquete)}
@@ -333,7 +342,7 @@
  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {\com*{$\Theta(L)$}} % Complejidad
+  {$\Theta(L)$} % Complejidad
   {} % Justificacíón
 
   \begin{algoritmo}{ilaQueM\'{a}sEnvio}{\In{d}{DCNet}}{compu}
