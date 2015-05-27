@@ -213,7 +213,7 @@
 
   ~  
   
-   \tadOperacion{DevolverInterfazAux}{secu(tupla(Interfaz, ItRed))/l, compu/c}{Interfaz}{} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
+  \tadOperacion{DevolverInterfazAux}{secu(tupla(Interfaz, ItRed))/l, compu/c}{Interfaz}{} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
   \tadAxioma{DevolverInterfaz($l$, $c$)}{\IF ($\Pi_{1}$($c_{2}$) = $\Pi_{1}$(siguiente($\Pi_{2}$(prim($l$))))) THEN $\Pi_{1}$(prim($l$)) ELSE DevolverInterfazAux(fin($l$, c)) FI}
 
   ~
@@ -243,7 +243,7 @@
     $res \gets \langle$<>, 0$\rangle$ \com*{$\Theta(1)$}
   }
   \end{algoritmo}
- \datosAlgoritmo{} % Descripción
+  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(1)$} % Complejidad
@@ -253,7 +253,7 @@
     agregarAtras(r.compus, $\langle$c.IP, iArmarLista(c.interfaces)$\rangle$)\com*{$\Theta(I)$}
     $r.cantidadCompus \gets r.cantidadCompus+1$ \com*{$\Theta(1)$}
   \end{algoritmo}
- \datosAlgoritmo{} % Descripción
+  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(I)$} % Complejidad
@@ -267,7 +267,7 @@
       avanzar($it$)\com*{$\Theta(1)$}
     }
   \end{algoritmo}
- \datosAlgoritmo{} % Descripción
+  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(I)$} % Complejidad
@@ -279,16 +279,16 @@
     \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq$ $c_{1}$.IP}{
       avanzar($it_{1}$)\com*{$\Theta(1)$}
     }
-   \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{2}$).IP $\neq$ $c_{2}$.IP}{
+    \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{2}$).IP $\neq$ $c_{2}$.IP}{
       avanzar($it_{2}$)\com*{$\Theta(1)$}
     }
     \tipo{itLista(tupla(interfaz, itLista(estrCompu)))} $it_{3} \gets$ crearIt(siguiente($it_{1}$).conexiones))\com*{$\Theta(1)$}
     \tipo{itLista(tupla(interfaz, itLista(estrCompu)))} $it_{4} \gets$ crearIt(siguiente($it_{2}$).conexiones)\com*{$\Theta(1)$}
     
-   \While(\com*[f]{$\Theta(I)$ iteraciones}){siguiente($it_{3}$).inter $\neq$ $i_{1}$}{
+    \While(\com*[f]{$\Theta(I)$ iteraciones}){siguiente($it_{3}$).inter $\neq$ $i_{1}$}{
       avanzar($it_{3}$)\com*{$\Theta(1)$}
     }
-   \While(\com*[f]{$\Theta(I)$ iteraciones}){siguiente($it_{4}$).inter $\neq$ $i_{2}$}{
+    \While(\com*[f]{$\Theta(I)$ iteraciones}){siguiente($it_{4}$).inter $\neq$ $i_{2}$}{
       avanzar($it_{4}$)\com*{$\Theta(1)$}
     }
 

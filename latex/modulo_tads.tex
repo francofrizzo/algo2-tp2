@@ -1,0 +1,61 @@
+\section{M\'{o}dulo IP}
+  \begin{Representacion}
+    \begin{Estructura}{IP}[string]
+    \end{Estructura} 
+  \end{Representacion}
+
+\section{M\'{o}dulo Interfaz}
+  \begin{Representacion}
+    \begin{Estructura}{Interfaz}[nat]
+    \end{Estructura} 
+  \end{Representacion}
+
+\section{M\'{o}dulo Prioridad}
+  \begin{Representacion}
+    \begin{Estructura}{Prioridad}[nat]
+    \end{Estructura} 
+  \end{Representacion}
+
+\section{M\'{o}dulo ID}
+  \begin{Representacion}
+    \begin{Estructura}{ID}[nat]
+    \end{Estructura} 
+  \end{Representacion}
+
+\section{M\'{o}dulo Paquete}
+  \begin{Interfaz}
+    \InterfazFuncion{$\bullet$ < $\bullet$}{\In{a}{paquete}, \In{b}{paquete}}{bool}%
+    [true]%pre
+    {$res$ $\igobs$ $a$.prioridad < $b$.prioridad}%pos
+    [$\Theta(1)$]%complejidad
+    [Da una relacio\'on de orden a los paquetes por prioridad. ]%descripcion
+    []%aliasing
+  \end{Interfaz}
+  \begin{Representacion}
+    \begin{Estructura}{Paquete}[paquete]
+      \begin{Tupla}[paquete]
+        \tupItem{ID}{ID}
+        \tupItem{prioridad}{prioridad}
+        \tupItem{origen}{compu}
+        \tupItem{destino}{compu}
+      \end{Tupla}
+    \end{Estructura}
+  \end{Representacion}
+  \begin{algoritmo}{i<}{\In{a}{paquete}, \In{a}{paquete}}{bool}
+    $res$ $\gets$ ($a$.prioridad < $b$.prioridad)\com*{$\Theta(1)$}
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {} % Justificacíón  
+
+\section{M\'{o}dulo Compu}
+  \begin{Representacion}
+    \begin{Estructura}{Compu}[compu]
+      \begin{Tupla}[compu]
+        \tupItem{IP}{IP}
+        \tupItem{Interfaces}{conj(interfaz)}
+      \end{Tupla}
+    \end{Estructura}
+  \end{Representacion}
