@@ -252,7 +252,7 @@
     Definir($d$.paquetesEnEspera[$o$].porID, $p$.ID, $\langle$ $it$, $o$, $dest$, $\rangle$)\com*{$\Theta(log(k))$}
     encolar($d$.paquetesEnEspera[$o$].porPrioridad, $p$.prioridad, $it$)\com*{$\Theta(log(k))$}
     \end{algoritmo}
-   \datosAlgoritmo{} % Descripción
+  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(L+log(k))$} % Complejidad
@@ -323,7 +323,7 @@
  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {\com*{$\Theta(L)$} % Complejidad
+  {\com*{$\Theta(L)$}} % Complejidad
   {} % Justificacíón
 
   \begin{algoritmo}{iEnEspera}{\In{d}{DCNet}, \In{c}{compu}}{conj(Paquete)}
@@ -333,10 +333,10 @@
  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {\com*{$\Theta(L)$} % Complejidad
+  {\com*{$\Theta(L)$}} % Complejidad
   {} % Justificacíón
 
-  \begin{algoritmo{ilaQueM\'{a}sEnvio}{\In{d}{DCNet}}{compu}
+  \begin{algoritmo}{ilaQueM\'{a}sEnvio}{\In{d}{DCNet}}{compu}
     $res \gets$ siguiente($d$.laQueM\'{a}sEnvio)\com*{$\Theta(I)$ lo tomamos como \com*{$\Theta(1)$} ya que, copiar una computadora o devolver el siguiente de un iterador a computadora es $\Theta(I)$ }
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
@@ -344,7 +344,6 @@
   {} % Post
   {$\Theta(1)$} % Complejidad
   {} % Justificacíón
-  \end{algoritmo}
 
   \begin{algoritmo}{paquetesEntr\'{a}nsito?}{\In{d}{DCNet}}{conj(paquete)}
     $res \gets$ false \com*{$\Theta(1)$}
@@ -360,5 +359,6 @@
   {} % Post
   {$\Theta(n \times log(k))$} % Complejidad
   {} % Justificacíón
+
 \end{Algoritmos}
 

@@ -44,6 +44,7 @@
     {$h \igobs$ encolar($a$, $h_{0}$)}
     [$\Theta(log(n))$]
     [Agrega un elemento al heap.]
+    [El elemento se agrega al heap por copia.]
 
     \InterfazFuncion{vac\'{i}o?}{\In{h}{heap($\alpha$)}}{bool}
     [true]
@@ -56,6 +57,7 @@
     {$res \igobs$ desencolar(h)}
     [$\Theta(log(n))$]
     [Devuelve uno de los elementos de m\'axima prioridad del heap, y lo elimina de la estructura.]
+    [El elemento es devuelto por copia.]
 
 \end{Interfaz}
 
@@ -95,7 +97,7 @@
   {} % Justificación
 
   \begin{algoritmo}{iEncolar}{\Inout{v}{vector($\alpha$)}, \In{a}{$\alpha$}}{}
-    agregarAtras($v$, $a$) \com*{$\Theta(1)$}
+    agregarAtras($v$, $a$) \com*{$\Theta(copy(a))$}
     \tipo{nat} $i \gets$ \lon{$v$} \com*{$\Theta(1)$}
     \While{$i \neq 0 \land v[i] < v[i \text{ div } 2 - (i + 1)\%2]$}{
       \swap{$v$, $i$, $i \text{ div } 2 - (i + 1)\%2$} \com*{$\Theta(copy(\alpha))$}
@@ -118,7 +120,7 @@
   {} % Justificación
 
   \begin{algoritmo}{iDesencolar}{\Inout{v}{vector($\alpha$)}}{$\alpha$}
-    $res \gets v[0]$ \com*{$\Theta(1)$}
+    $res \gets$ \copiar{$v[0]$} \com*{$\Theta(copy(v[0]))$}
     \tipo{nat} $i \gets 0$ \com*{$\Theta(1)$}
     \While{(($2i + 1 \leq$ \lon{$v$}) $\land$ $v[i] < v[2i + 1]$) $\lor$ ($2i + 2 \leq$ \lon{$v$}) $\land$ $v[i] < v[2i + 2]$)}{
       \eIf{$2i + 2 \leq$ \lon{$v$}}{
