@@ -61,10 +61,10 @@
 
   \InterfazFuncion{enEspera}{\In{D}{DCNet}, \In{c}{compu}}{conj(paquete)}%
   [c $\in$ computadoras(red(D))]%pre
-  {res $\igobs$ enEspera(D, c)}%pos
+  {esAlias(res $\igobs$ enEspera(D, c))}%pos
   [$\Theta(L)$]%complejidad
   [Devuelve los paquetes que tiene en espera la compu ``c''. ]%descripcion
-  []%aliasing
+  [El conjunto de paquetes en espera se devuelve por referencia]%aliasing
 
   \InterfazFuncion{paquetesEnTr\'ansito?}{\In{D}{DCNet}, \In{p}{paquete}}{bool}%
   [true]%pre

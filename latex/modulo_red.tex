@@ -40,7 +40,7 @@
   {$res$ $\igobs$ computadoras(r)} %es alias(res,compus(R))             %pos
   [$\Theta(n \times (n+I²))$]%complejidad
   [Devuelve todas las computadoras de la red. ]%descripcion
-  []%aliasing
+  [devuelve las computadoras por copia]%aliasing
   
   \InterfazFuncion{conectadas?}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{bool}%
   [$c_{0}$ $\in$ computadoras($r$) $\land$ $c_{1} \in $ computadoras($r$)]%pre
@@ -61,7 +61,7 @@
   {$res$ $\igobs$ vecinos($r$, $c$)}%pos
   [$\Theta(n+I³)$]%complejidad
   [Devuelve el conjunto de vecinos de la pc $c$]%descripcion
-  []%aliasing
+  [Devuelve el conjunto por copia]%aliasing
   
   \InterfazFuncion{usaInterfaz?}{\In{r}{Red}, \In{c}{compu}, \In{i}{interfaz}}{bool}%
   [$c$ $\in$ computadoras($r$)]%pre
@@ -73,14 +73,14 @@
   \InterfazFuncion{caminosMinimos}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{conj(secu(compu))}%
   [$c_{0}$ $\in$ computadoras($r$) $\land$ $c_{1} \in $ computadoras($r$)]%pre
   {$res$ $\igobs$ caminosMinimos($r$, $c_{0}$, $c_{1}$)}%pos
-  [$\Theta(1234)$]%complejidad
+  [$\Theta(n³ \times n! \times n! + I)$]%complejidad
   [Devuelve todos los caminos m\'nimos posibles entre $c_{0}$ y $c_{1}$. De no haber ninguno, devuelve $\emptyset$. ]%descripcion
-  []%aliasing
+  [Devuelve el conjunto por copia]%aliasing
   
   \InterfazFuncion{hayCamino?}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{bool}%
   [$c_{0}$ $\in$ computadoras($r$) $\land$ $c_{1} \in $ computadoras($r$)]%pre
   {$res$ $\igobs$ hayCamino?($r$, $c_{0}$, $c_{1}$)}%pos
-  [$\Theta(1234)$]%complejidad
+  [$\Theta(n² \times n!)$]%complejidad
   [Devuelve true si y solo si hay alg\'un camino posible entre $c_{0}$ y $c_{1}$. ]%descripcion
   []%aliasing
   
@@ -390,13 +390,13 @@
     \eIf(\com*[f]{$\Theta(I)$}){pertenece?($c_{2}$, vecinos($r$, $c_{1}$))}{
       agregar($res$, agregarAtras(agregarAtras(<>,$c_{1}$), $c_{2}$))\com*{$\Theta(n+I)$}
     }{
-      $res \gets$ dameMinimos(Caminos($r$, $c_{1}$, $c_{2}$, agregarAtras(<>,$c_{1}$), pasarConjASecu(vecinos($r$, $c_{1}$))))\;
+      $res \gets$ dameMinimos(Caminos($r$, $c_{1}$, $c_{2}$, agregarAtras(<>,$c_{1}$), pasarConjASecu(vecinos($r$, $c_{1}$))))\com*{$\Theta(n³ \times n! \times n!)$}
     }
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {} % Complejidad
+  {$\Theta(n³ \times n! \times n! + I$} % Complejidad
   {} % Justificacíón
 
   \begin{algoritmo}{dameMinimos}{\In{c}{conj(lista(compu))}}{conj(lista(compu))}
@@ -464,7 +464,7 @@
   {Devuelve una secuencia que contiene a todos los elementos del conjunto pasado por par\'{a}metro} % Justificacíón
      
   \begin{algoritmo}{iHayCamino?}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{bool}{}
-    $res \gets$ ($\neg$esVacio?(iCaminosMinimos($r$, $c_{1}$, $c_{2}$)))
+    $res \gets$ ($\neg$esVacio?(iCaminosMinimos($r$, $c_{1}$, $c_{2}$)))$\Theta(n² \times n!)$
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -490,7 +490,7 @@
   \datosAlgoritmo{Dada una red, dos compus, los vecinos de la primer compu, y una lista que usamos para guardar las computadoras por las que ya preguntamos, iteramos sobre todas las computadoras y devolvemos el conjunto de todos los caminos posibles desde la primer computadora hasta la segunda. } % Descripción
   {} % Pre
   {} % Post
-  {} % Complejidad
+  {$\Theta(n² \times n!)$} % Complejidad
   {} % Justificacíón
 
   \begin{algoritmo}{iUni\'{o}n}{\In{c_{1}}{conj(lista(compu))}, \In{c_{2}}{conj(lista(compu))}}{conj(lista(compu))}
