@@ -9,7 +9,7 @@
     \item $i$: Mayor cantidad de interfaces que tiene alguna computadora en la red en el momento.
   \end{itemize}
 
-\servUsados{AVL, Heap, Red, dicc\_trie, tupla, conjunto }
+\servUsados{diccAVL, Heap, Red, dicc\_trie, tupla, conjunto }
 
 \begin{Interfaz}
   
@@ -22,7 +22,7 @@
   \InterfazFuncion{iniciarDCNet}{\In{r}{Red}}{DCNet}%
   [true]%pre
   {res $\igobs$ iniciarDCNet(r)}%pos
-  [$\Theta(n^3 \times I^2 \times L + camMin)$]%complejidad
+  [$\Theta(n^3 \times I^2 \times L + n^2 \times n!)$]%complejidad
   [Genera un nuevo DCNet sin paquetes. ]%descripcion
   []%aliasing
   
@@ -96,112 +96,149 @@
   \begin{Estructura}{dcnet}[estrDCNet]
 
     \begin{Tupla}[estrDCNet]
-      \tupItem{red}{red}
-      \tupItem{IDsCompusPorIP}{dicc\_trie(string, nat)}
-      \tupItem{siguientesCompus}{ad(ad(nat))}
-      \tupItem{paquetesEnEspera}{ad(tupla(enConjunto: conj(paquete), porID: dicc\_AVL(ID, tupla(iPaquete: itConj(paquete),codOrigen: nat, codDestino: nat), porPrioridad: heap(tupla(prioridad, itConjunto(paquete))))))}
-      \tupItem{\#PaqEnviados}{ad(nat)}
-      \tupItem{laQueM\'asEnvi\'o}{itRed}
-      \tupItem{IPsCompuPorID}{ad(itRed)}
+      \tupItemNL{red}{red}
+      \tupItemNL{IDsCompusPorIP}{dicc\_trie(string, nat)}
+      \tupItemNL{siguientesCompus}{ad(ad(nat))}
+      \tupItemNL{paquetesEnEspera}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID, tupla(iPaquete: itConj(paquete),codOrigen: nat, codDestino: nat), porPrioridad: heap(tupla(prioridad, itConjunto(paquete))))))}
+      \tupItemNL{\#PaqEnviados}{ad(nat)}
+      \tupItemNL{laQueM\'asEnvi\'o}{itRed}
+      \tupItemNL{IPsCompuPorID}{ad(itRed)}
     \end{Tupla}
 
   \end{Estructura} 
 
 	\Rep[e][l]{
-	($\forall e$: estr)(
+	($\forall e$: estrDCNet)(
 
 %1
-		(tam(e.paquetesEnEspera) = tam(e.IPcompusXID) = tam(e.siguienteCompu) = tam (e.cantPaquetesEnviados) = \#(computaodras(e.estrRed))) $\land$ 
-		($\forall n$: nat)(definido?(e.siguienteCompu,n) $\impluego$ tam(e.siguienteCompu[n]) = \#(computadoras(e.estrRed))) $\land$
+		(tam($e$.paquetesEnEspera) = tam($e$.IPcompusPorID) = tam($e$.siguienteCompu) = tam($e$.cantPaquetesEnviados) = \#(computaodras($e$.estrRed))) $\land$ 
+		($\forall n$: nat)(definido?($e$.siguienteCompu,n) $\impluego$ tam($e$.siguienteCompu[n]) = \#(computadoras($e$.estrRed))) $\land$
 
 %2
-		Maximo(e.cantPaqEnviados) = e.cantidadEnviados[obtener($\Pi_1$(siguiente(e.laQueM\'asEnvi\'o)),e.IDcompusPorIP)] $\land$
+		Maximo($e$.cantPaqEnviados) = $e$.cantidadEnviados[obtener($\Pi_1$(siguiente($e$.laQueM\'asEnvi\'o)), $e$.IDcompusPorIP)] $\land$
 %3 CHEQUEAR PARENTESIS
-		($\forall c$: compu)(c $\in$ computadoras(e.estRed) $\impluego$ obtener($\Pi_1$(c),e.IDcompusPorIP) < \#(computadoras(e.estrRed))) $\land$
-		(($\forall c_1$, $c_2$: compu)(($c_1 \in$ computadoras(e.estRed) $\land$ ($c_2 \in$ computadoras(e.estrRed)) $\land$ ($c_1 \neq c_2$)) $\impluego$ ((obtener($\Pi_1$($c_1$), e.IDcompusPorIP) $\neq$ obtener($\Pi_1$($c_2$), e.IDcompusPorIP))))) $\land$
+		($\forall c$: compu)(c $\in$ computadoras($e$.estRed) $\impluego$ obtener($\Pi_1$(c),$e$.IDcompusPorIP) < \#(computadoras($e$.estrRed))) $\land$
+		(($\forall c_1$, $c_2$: compu)(($c_1 \in$ computadoras($e$.estRed) $\land$ ($c_2 \in$ computadoras($e$.estrRed)) $\land$ ($c_1 \neq c_2$)) $\impluego$ ((obtener($\Pi_1$($c_1$), $e$.IDcompusPorIP) $\neq$ obtener($\Pi_1$($c_2$), $e$.IDcompusPorIP))))) $\land$
 
 %4
-		(dameNombres(computadoras(e.estrRed)) = claus(IDcompusPorIP)) $\land$
+		(dameNombres(computadoras($e$.estrRed)) = claus(IDcompusPorIP)) $\land$
 
 %5
-		($\forall L$: nat)( 0 $\leq$ L < tam(e.paqEnEspera) $\impluego$ (
+		($\forall L$: nat)( 0 $\leq$ $L$ < tam($e$.paqEnEspera) $\impluego$ (
 
-      ($\forall$ $it_1$: ItConj(paquete)) $it$ $\in$ dame$\Pi_1$(juntarSignificado($\Pi_2$(e.paquetesEnEspera[L]))) $\impluego$ haySiguiente?($it_1$) $\land$ \\
+      ($\forall$ $it_1$: ItConj(paquete)) $it$ $\in$ dame$\Pi_1$(juntarSignificado($\Pi_2$($e$.paquetesEnEspera[$L$]))) $\impluego$ haySiguiente?($it_1$) $\land$ \\
 
-      ($\forall$ $it_2$: ITconj(pauqete)) $it_2$ $\in$ dame$Pi_2$(juntarColaEnConjunto($\Pi_3$(e.paquetesEnEspera[L]))) $\impluego$ haySiguiente?($it_2$) $\yluego$ \\
+      ($\forall$ $it_2$: ITconj(pauqete)) $it_2$ $\in$ dame$\Pi_2$(juntarColaEnConjunto($\Pi_3$($e$.paquetesEnEspera[$L$]))) $\impluego$ haySiguiente?($it_2$) $\yluego$ \\
 
-			($\forall i$: ItConj(paquete))(siguiente(i) $\in$ (dameSiguientes(dame$\Pi_1$($juntarSignificados_1$($\Pi_2$(e.paquetesEnEspera[L])))$\impluego$ siguiente(i) $\in \Pi_1$(e.paquetesEnEspera[L])))) $\land$ \\
+			($\forall i$: ItConj(paquete))(siguiente(i) $\in$ (dameSiguientes(dame$\Pi_1$(juntarSignificados$_1$( $\Pi_2$($e$.paquetesEnEspera[$L$])))$\impluego$ siguiente(i) $\in$ $\Pi_1$($e$.paquetesEnEspera[$L$])))) $\land$ \\
 
-			($\forall c$: ID)(c$\in$ claves($\Pi_2$(e.paquetesEnEspera[L])) $\impluego \Pi_1$(siguiente($\Pi_1$(obtener($\Pi_2$(c), e.paquetesEnEspera[L])))) = c) $\land$ \\
+			($\forall c$: ID) (c$\in$ claves($\Pi_2$($e$.paquetesEnEspera[$L$])) $\impluego$ $\Pi_1$(siguiente($\Pi_1$(obtener($\Pi_2$(c), $e$.paquetesEnEspera[$L$])))) = c) $\land$ \\
 
-      ($\forall$ $it$:ItConj(paquete)) siguiente($it$) $\in$ dameSiguientes(dame$\Pi_2$(juntarColaPrioriEnConj($\Pi_3$(e.paquetesEnEspera[L])))) $\impluego$ siguiente($it$) $\in$ $\Pi_1$(e.paquetesEnEspera[L]) \\
+      ($\forall$ $it$:ItConj(paquete)) siguiente($it$) $\in$ dameSiguientes(dame$\Pi_2$(colaPriorAConj($\Pi_3$($e$.paquetesEnEspera[$L$])))) $\impluego$ siguiente($it$) $\in$ $\Pi_1$($e$.paquetesEnEspera[$L$]) \\
 
-			($\forall$ $t$: tupla <prioridad,ItConj(paquete)>) $t$ $\in$ juntarColaPrioriEnConj($\Pi_3$(e.paquetesEnEspera[L])) $\rightarrow$ siguiente($\Pi_2$($t$)).prioridad = $\Pi_1$($t$) \\
+			($\forall$ $t$: tupla <prioridad,ItConj(paquete)>) $t$ $\in$ colaPriorAConj($\Pi_3$($e$.paquetesEnEspera[$L$])) $\rightarrow$ siguiente($\Pi_2$($t$)).prioridad = $\Pi_1$($t$) \\
 
       % *1
-    ($\forall x$, $z$: nat)((0 $\leq$ x < tam(e.paquetesEnEspera) $\land$ 0 $\leq$ z < tam(e.paquetesEnEspera) $\land$ x $\neq$ z) $\impluego$ ($\Pi_1$(e.paquetesEnEspera[x]) $\cap$ $\Pi_2$(e.paquetesEnEspera[z])) = $\emptyset$) $\land$ \\
+    ($\forall x$, $z$: nat)((0 $\leq$ x < tam($e$.paquetesEnEspera) $\land$ 0 $\leq$ z < tam($e$.paquetesEnEspera) $\land$ x $\neq$ z) $\impluego$ ($\Pi_1$($e$.paquetesEnEspera[x]) $\cap$ $\Pi_2$($e$.paquetesEnEspera[z])) = $\emptyset$) $\land$ \\
 
 %6
-		($\forall i$: nat)(0 $\leq$ i < \#(computadoras(e.estrRed)) $\land$ obtener($\Pi_1$(siguiente(e.IPcompusPorID[i])), e.IDcompusPorID) = i) $\land$ \\
+		($\forall i$: nat)(0 $\leq$ i < \#(computadoras($e$.estrRed)) $\land$ obtener($\Pi_1$(siguiente($e$.IPcompusPorID[$i$])), $e$.IDcompusPorID) = i) $\land$ \\
 
 %7
-		($\forall n$, $m$: nat)(0 $\leq$ n < \#(computadoras(e.estrRed)) $\land$ 0 $\leq$ n < \#(computadoras(e.estrRed)) $\impluego$ ($\exists$ $x$: (secu(compu))) $x$ $\in$ caminosminimos(e.estrRed, siguiente(e.IPcompusPorID[n]), siguiente(e.IPcompusPorID[m])) $\land$ prim($x$) $=$ e.siguienteCompu[n][m] \\
+		($\forall n$, $m$: nat)(0 $\leq$ n < \#(computadoras($e$.estrRed)) $\land$ 0 $\leq$ n < \#(computadoras($e$.estrRed)) $\impluego$ ($\exists$ $x$: (secu(compu))) $x$ $\in$ caminosminimos($e$.estrRed, siguiente($e$.IPcompusPorID[n]), siguiente($e$.IPcompusPorID[m])) $\land$ prim($x$) $=$ $e$.siguienteCompu[n][m] \\
 
 %8
-    ($\forall i$: nat)(0 $\leq$ i $\leq$ \#computadoras(e.estrRed) $\impluego$ siguiente(e.IPcompusPorID[i]) $\in$ compitadoras(e.estrRed)) $\land$ \\
+    ($\forall i$: nat)(0 $\leq$ i $\leq$ \#computadoras($e$.estrRed) $\impluego$ siguiente($e$.IPcompusPorID[$i$]) $\in$ computadoras($e$.estrRed)) $\land$ \\
 
 % *2
-    ($\forall x$, $y$: nat)((0 $\leq$ x < \#computadoras(e.estrRed) $\land$ 0 $\leq$ y < \#computadoras(e.estrRed) $\land$ x $\neq$ y) $\impluego$ (siguiente(e.IPcompusPorID[x]) $\neq$ siguiente(e.IPcompusPorID[y]))))) $\land$ \\
+    ($\forall x$, $y$: nat)((0 $\leq$ x < \#computadoras($e$.estrRed) $\land$ 0 $\leq$ y < \#computadoras($e$.estrRed) $\land$ $x$ $\neq$ y) $\impluego$ (siguiente($e$.IPcompusPorID[x]) $\neq$ siguiente($e$.IPcompusPorID[y]))))) $\land$ \\
 
 %9
-    \#($\Pi_1$(e.paquetesEnEspera)) = \#claves($\Pi_2$(e.paquetesEnEspera)) $\land$ = \#(juntarSecuenciasEnConj(juntarSignificados($\Pi_3$(e.paquetesEnEspera)))) $\land$ \\
+    \#($\Pi_1$($e$.paquetesEnEspera)) = \#claves($\Pi_2$($e$.paquetesEnEspera)) $\land$ = \#(juntarSecuenciasEnConj(juntarSignificados($\Pi_3$($e$.paquetesEnEspera)))) $\land$ \\
 
 %10
-    ($\forall$ $it_{1}$: ItConj(paquete)) ($\forall$ $it_{2}$: ItConj(paquete)) $it_{1}$ $\in$ dame$\Pi_{2}$(juntarColaPriorEnConj($\Pi_{3}$(e.paquetesEnEspera[L]))) $\land$ $it_{2}$ $\in$ dame$\Pi_{2}$(juntarColaPriorEnConj($\Pi_{3}$(e.paquetesEnEspera[L]))) $it_{1}$ $\neq$ $it_{2}$ $\impluego$ siguiente($it_{1}$) $\neq$ siguiente($it_{2}$)
+    ($\forall$ $it_{1}$: ItConj(paquete)) ($\forall$ $it_{2}$: ItConj(paquete)) $it_{1}$ $\in$ dame$\Pi_{2}$(colaPriorAConj($\Pi_{3}$($e$.paquetesEnEspera[$L$]))) $\land$ $it_{2}$ $\in$ dame$\Pi_{2}$(colaPriorAConj($\Pi_{3}$($e$.paquetesEnEspera[$L$]))) $it_{1}$ $\neq$ $it_{2}$ $\impluego$ siguiente($it_{1}$) $\neq$ siguiente($it_{2}$)
     }\mbox{} %habia un parentesis no se de donde sale (estaba cerrando en esta linea)
 
 
-\AbsFc[estrDCNet]{DCNet}[e]{red($d$) = e.estrRed $\land$ \\
+\AbsFc[estrDCNet]{DCNet}[e]{red($d$) = $e$.estrRed $\land$ \\
 
-  ($\forall p$: paquete) paqueteEnTr\'ansito?($d$, $p$) $\impluego$ caminoRecorrido($d$, $p$) = caminoDelPaquete(e.siguienteCompu, e.IPsCompusPorID, e.PaquetesEnEspera, $p$) $\land$ \\
+  ($\forall p$: paquete) paqueteEnTr\'ansito?($d$, $p$) $\impluego$ caminoRecorrido($d$, $p$) = caminoDelPaquete($e$.siguienteCompu, $e$.IPsCompusPorID, $e$.PaquetesEnEspera, $p$) $\land$ \\
 
-  ($\forall c$: compu) $c$ $\in$ computadoras(red($d$)) $\impluego$ cantidadEnviados($d$, $c$) = e.\#PaqEnviados[obtener($c$, e.IDsCompusPorIP)] $\land$ \\
+  ($\forall c$: compu) $c$ $\in$ computadoras(red($d$)) $\impluego$ cantidadEnviados($d$, $c$) = $e$.\#PaqEnviados[obtener($c$, $e$.IDsCompusPorIP)] $\land$ \\
 
-  ($\forall c$: compu) $c$ $\in$ computadoras(red($d$)) $\impluego$ enEspera($d$, $c$) = enConjunto(e.paquetesEnEspera[obtener($c$, e.IDsCompusPorIP)])
+  ($\forall c$: compu) $c$ $\in$ computadoras(red($d$)) $\impluego$ enEspera($d$, $c$) = enConjunto($e$.paquetesEnEspera[obtener($c$, $e$.IDsCompusPorIP)])
 }
 
   ~      
 
-\tadOperacion{caminoDelPaquete}{ad(ad(nat)), ad(ItRed), ad(tupla(enConjunto: conj(paquete), porID: dicc$_{\text{AVL}}$(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))), paquete, ad(tupla(enConjunto: conj(paquete), porID: dicc\_AVL(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete))))))}{secu(compu)}{} %FALTA AGREGAR RESTRICCION y alinear bien los parametros - Manu  
+\tadOperacion{caminoDelPaquete}{ad(ad(nat)), ad(ItRed), ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))), paquete, ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete))))))}{secu(compu)}{} %FALTA AGREGAR RESTRICCION y alinear bien los parametros - Manu 
+
+\small\begin{verbatim}
+\\ Nuestra intencion era que arriba se leyera esto,
+\\ pero las macros no estaban preparadas para argumentos tan grandes:
+\tadOperacion{caminoDelPaquete}{ad(ad(nat)), ad(ItRed), ad(tupla(enConjunto:
+conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen:
+nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))),
+paquete, ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete:
+itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad:
+heap(tupla(prioridad{,} itConjunto(paquete))))))}{secu(compu)}{}
+\end{verbatim}
 
 \tadAxioma{caminoDelPaquete($t$, $CsxID$, $ps$, $p$, $Psr$)}{\IF def?(ID($p$), porID($ps$[0])) THEN caminoDelPaquete$_{\text{aux}}$($t$, $CsxID$, $ps$, $p$, codOrigen(obtener(ID($p$), porId($ps$[0]))), codDestino(obtener(ID($p$), porId($ps$[0])))) ELSE caminoDelPaquete($t$, $CsxID$, $ps$, $p$, finAd(psr)) FI}
 
   ~
 
-\tadOperacion{caminoDelPaquete$_{\text{aux}}$}{ad(ad(nat)), ad(ItRed), ad(tupla(enConjunto: conj(paquete)\, porID: dicc$_{\text{AVL}}$, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))), paquete, ad(tupla(enConjunto: conj(paquete), porID: dicc\_AVL(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))), nat, nat}{secu(compu)}{} %AGREGAR RESTRICCION  
+\tadOperacion{caminoDelPaquete$_{\text{aux}}$}{ad(ad(nat)), ad(ItRed), ad(tupla(enConjunto: conj(paquete){,} porID: diccAVL, tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))), paquete, ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))), nat, nat}{secu(compu)}{} %AGREGAR RESTRICCION  
+
+\small\begin{verbatim}
+\tadOperacion{caminoDelPaquete$_{\text{aux}}$}{ad(ad(nat)), ad(ItRed), ad(tupla(enConjunto:
+conj(paquete){,} porID: diccAVL, tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,}
+codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))),
+paquete, ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete:
+itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,}
+itConjunto(paquete)))))), nat, nat}{secu(compu)}{}
+\end{verbatim}
 
 \tadAxioma{caminoDelPaquete$_{\text{aux}}$($t$, $CsxID$, $ps$, $p$, $Psr$, $compuActual$, $d$)}{\IF def?(ID($p$), porID($ps$[$compuActual$])) THEN siguiente($CsxID$[$compuActual$]) $\puntito$ <> ELSE siguiente($CsxID$[$compuActual$]) $\puntito$ caminoDelPaquete$_{\text{aux}}$($t$, $CsxID$, $ps$, $p$, $Psr$, $t$[$compuActual$][$d$], $d$) FI}
 
   ~
 
-\tadOperacion{finAd}{ad(tupla(enConjunto: conj(paquete), porID: dicc$_{\text{AVL}}$(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))))}{ad(tupla(enConjunto: conj(paquete), porID: dicc\_AVL(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))))}{} 
+\tadOperacion{finAd}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))))}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))))}{}
+\small\begin{verbatim}
+\tadOperacion{finAd}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete:
+itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,}
+itConjunto(paquete)))))))}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete:
+itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,}
+itConjunto(paquete)))))))}{}
+\end{verbatim}
 
 \tadAxioma{finAd($a$)}{\IF (tam(a) $\leq$ 1) THEN crearArreglo(0) ELSE finAd$_{\text{aux}}$(a, crearArreglo(tam(a)-1), tam(a)-2) FI}
 
   ~
 
-\tadOperacion{finAd$_{\text{aux}}$}{ad(tupla(enConjunto: conj(paquete), porID: dicc$_{\text{AVL}}$(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))))/a, ad(tupla(enConjunto: conj(paquete), porID: dicc$_{\text{AVL}}$(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))))/b, nat}{ad(tupla(enConjunto: conj(paquete), porID: dicc$_{\text{AVL}}$(ID\, tupla(iPaquete: itConj(paquete)\,codOrigen: nat\, codDestino: nat\, porPrioridad: heap(tupla(prioridad\, itConjunto(paquete)))))))}{tam(a)>1 $\land$ tam(b)>0}
+\tadOperacion{finAd$_{\text{aux}}$}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))))/a, ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))))/b, nat}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))))}{tam(a)>1 $\land$ tam(b)>0}
+
+\small\begin{verbatim}
+\tadOperacion{finAd$_{\text{aux}}$}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,}
+tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad:heap(tupla(prioridad{,}
+itConjunto(paquete)))))))/a, ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete:
+itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,}
+itConjunto(paquete)))))))/b, nat}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,}
+tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad:
+heap(tupla(prioridad{,} itConjunto(paquete)))))))}{tam(a)>1 $\land$ tam(b)>0}
+\end{verbatim}
 
 \tadAxioma{finAd$_{\text{aux}}$($a$, $b$, $n$)}{\IF ($n$=0) THEN $b$[0] $\leftarrow$ $a$[1] ELSE finAd$_{\text{aux}}$($a$, $b$[n]$\leftarrow$ $a$[$n$+1], $n$ -1) FI}
 
  % aca estoy poniendo los axiomas de las funciones que use en el rep
-  \tadOperacion{juntarColaPriorEnConj}{colaPrior(tupla<prioridad{,} ItConj(paquete)>)}{conj(tupla<prioridad{,} ItConj(paquete)>)}{}
-  \tadAxioma{juntarColaPriorEnConj(c)}{\IF vacia?(c) THEN $\emptyset$ ELSE ag(proximo(c), juntarColaPriorEnConj(desencolar(c))) FI}
+  \tadOperacion{colaPriorAConj}{colaPrior(tupla<prioridad{,} ItConj(paquete)>)}{conj(tupla<prioridad{,} ItConj(paquete)>)}{}
+  \tadAxioma{colaPriorAConj(c)}{\IF vacia?(c) THEN $\emptyset$ ELSE ag(proximo(c), colaPriorAConj(desencolar(c))) FI}
   
   \tadOperacion{dame$\Pi_{2}$}{conj(tupla<prioridad, ItConj(paquete)>)}{conj(ItConj(paquete))}{}
   \tadAxioma{dame$\Pi_{2}$(c)}{\IF $\emptyset$?(c) THEN $\emptyset$ ELSE ag($\Pi_{2}$(dameuno(c)), dame$\Pi_{2}$(sinuno(c))) FI}
   
-  \tadOperacion{dameSiguientes}{conj(ItConj(paquete))}{conj(paquete)}{restricciones}
+  \tadOperacion{dameSiguientes}{conj(ItConj(paquete))}{conj(paquete)}{}
   \tadAxioma{dameSiguientes(c)}{\IF $\emptyset$?(c) THEN $\emptyset$ ELSE ag(siguiente(dameuno(c)), dameSiguientes(sinuno(c))) FI}
 
 \end{Representacion}
@@ -241,17 +278,17 @@
  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n \times I + 4 n + n \times (n + I^2 + L) + n \times (n \times (n + I + camMin)))$ = $\Theta(n \times I + n + n^2+ n \times I^2 + n \times L + n^3 + n^2 \times I + camMin)$ que esta incluido en $\Theta(n^3 \times I^2 \times L + camMin)$} % Complejidad
+  {$\Theta(n \times I + 4 n + n \times (n + I^2 + L) + n \times (n \times (n + I + n^2 \times n!)))$ = $\Theta(n \times I + n + n^2+ n \times I^2 + n \times L + n^3 + n^2 \times I + n^2 \times n!)$ = $\Theta(n^3 \times I^2 \times L + n^2 \times n!)$} % Complejidad
   {} % Justificacíón
 
   \begin{algoritmo}{iCrearPaquete}{\Inout{d}{DCNet},\In{p}{paquete}}{}
     % Crear e inicializar variables:
-    \tipo{nat} $o \gets$ iObtener($p$.origen, $d$.IDsCompusPorIP)\com*{$\Theta(L)$}
-    \tipo{nat} $dest \gets$ iObtener($p$.destino, $d$.IDsCompusPorIP)\com*{$\Theta(L)$}
+    \tipo{nat} $o \gets$ Obtener($p$.origen, $d$.IDsCompusPorIP)\com*{$\Theta(L)$}
+    \tipo{nat} $dest \gets$ Obtener($p$.destino, $d$.IDsCompusPorIP)\com*{$\Theta(L)$}
     $it \gets$ CrearIt(($d$.paquetesEnEspera[$o$]).enConjunto)\com*{$\Theta(1)$}
     $it \gets$ Agregar(($d$.paquetesEnEspeta[$o$]).enConjunto, $p$)\com*{$\Theta(k)$}
-    Definir($d$.paquetesEnEspera[$o$].porID, $p$.ID, $\langle$ $it$, $o$, $dest$, $\rangle$)\com*{$\Theta(log(k))$}
-    encolar($d$.paquetesEnEspera[$o$].porPrioridad, $p$.prioridad, $it$)\com*{$\Theta(log(k))$}
+    Definir($d$.paquetesEnEspera[$o$].porID, $p$.ID, $\langle$ $it$, $o$, $dest$ $\rangle$)\com*{$\Theta(log(k))$}
+    encolar($d$.paquetesEnEspera[$o$].porPrioridad, $it$)\com*{$\Theta(log(k))$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -286,7 +323,7 @@
           $it \gets$ crearIt($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]])\com*{$\Theta(1)$}
           $it \gets$ AgregarRapido(($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]]).enConjunto, $p$)\com*{$\Theta(I)$ lo tomamos como $\Theta(1)$}
           Definir($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]].porID, $p$.ID, $\langle$ $it$, $d$.siguienteCompu[$j$][$dest$], $dest$, $\rangle$)\com*{$\Theta(log(k))$}
-          encolar($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]].porPrioridad, $paq$.prioridad, $it$)\com*{$\Theta(log(k))$}
+          encolar($d$.paquetesEnEspera[$d$.siguienteCompu[$j$][$dest$]].porPrioridad, $it$)\com*{$\Theta(log(k))$}
         }
       }
     }
@@ -305,13 +342,13 @@
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {\com*{$\Theta(n \times log(k))$ esta incluido en \com*{$\Theta(n \times (L+log(k)+log(n))$}}} % Complejidad
+  {$\Theta(n \times log(k))$ esta incluido en $\Theta(n \times (L+log(k)+log(n))$} % Complejidad
   {} % Justificacíón
 
 
   \begin{algoritmo}{iCaminoRecorrido}{\In{d}{DCNet}, \In{p}{paquete}}{lista(compu)}
     \tipo{nat} $j \gets 0$\com*{$\Theta(1)$}
-    $res \gets$ iVacia()\com*{$\Theta(1)$}
+    $res \gets$ Vacia()\com*{$\Theta(1)$}
     \While(\com*[f]{$\Theta(log(k))$ iteraciones}){!(iDefinido?(($d$.paquetesEnEspera[$j$]).porID), $p$.ID)}{
       $j$++\com*{$\Theta(1)$}
     }
@@ -320,7 +357,7 @@
     \tipo{nat} $dest$\com*{$\Theta(1)$}
     $dest \gets$ (Obtener(($d$.paquetesEnEspera[$o$]).porID, $p$.ID)).codDestino\com*{$\Theta(log(k)$}
     \While(\com*[f]{$\Theta(n \times log(k))$}){!(Definido?(($d$.paquetesEnEspera[$o$]).porID), $p$.ID)}{
-      iAgregarAtras($res$, siguiente($d$.IPsCompusPorID[0]))\com*{$\Theta(I)$ lo tomamos como $\Theta(1)$}
+      AgregarAtras($res$, siguiente($d$.IPsCompusPorID[0]))\com*{$\Theta(I)$ lo tomamos como $\Theta(1)$}
       $o \gets$ $d$.siguientesCompus[o][dest]\com*{$\Theta(1)$}
     }
     AgregarAtras($res$, siguiente($d$.IPsCompusPorID[$o$]))\com*{$\Theta(I)$ lo tomamos como $\Theta(1)$}
@@ -333,7 +370,7 @@
 
   \begin{algoritmo}{iCantidadEnviados}{\In{d}{DCNet}, \In{c}{compu}}{nat}
     \tipo{nat} $i \gets$ Obtener($d$.IDsCompusPorIP, $c$.IP)\com*{$\Theta(L)$}
-    $res \gets$ $d$.\#paqEnviados[i]\com*{$\Theta(1)$}
+    $res \gets$ $d$.\#paqEnviados[$i$]\com*{$\Theta(1)$}
   \end{algoritmo}
  \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -342,8 +379,8 @@
   {} % Justificacíón
 
   \begin{algoritmo}{iEnEspera}{\In{d}{DCNet}, \In{c}{compu}}{conj(Paquete)}
-    \tipo{nat} $i \gets$ iObtener($d$.IDsCompusPorIP, $c$.IP)\com*{$\Theta(L)$}
-    $res \gets$ ($d$.paquetesEnEspera[i]).enConjunto\com*{$\Theta(1)$}
+    \tipo{nat} $i \gets$ Obtener($d$.IDsCompusPorIP, $c$.IP)\com*{$\Theta(L)$}
+    $res \gets$ ($d$.paquetesEnEspera[$i$]).enConjunto\com*{$\Theta(1)$}
   \end{algoritmo}
  \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -351,14 +388,14 @@
   {$\Theta(L)$} % Complejidad
   {} % Justificacíón
 
-  \begin{algoritmo}{ilaQueM\'{a}sEnvio}{\In{d}{DCNet}}{compu}
-    $res \gets$ siguiente($d$.laQueM\'{a}sEnvio)\com*{$\Theta(I)$ lo tomamos como \com*{$\Theta(1)$} ya que, copiar una computadora o devolver el siguiente de un iterador a computadora es $\Theta(I)$ }
+  \begin{algoritmo}{iLaQueM\'{a}sEnvio}{\In{d}{DCNet}}{compu}
+    $res \gets$ siguiente($d$.laQueM\'{a}sEnvio) \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(1)$} % Complejidad
-  {} % Justificacíón
+  {Lo tomamos como $\Theta(1)$, aunque copiar una computadora o devolver el siguiente de un iterador a computadora es $\Theta(I)$} % Justificacíón
 
   \begin{algoritmo}{paquetesEntr\'{a}nsito?}{\In{d}{DCNet}}{conj(paquete)}
     $res \gets$ false \com*{$\Theta(1)$}

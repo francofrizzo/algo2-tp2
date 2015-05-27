@@ -1,42 +1,39 @@
-\section{M\'{o}dulo IP}
+\section{Peque\~nos m\'odulos}
+
+\subsection{M\'{o}dulo IP}
   \servUsados{string}
-  \begin{Representacion}
+  \Encabezado{Representaci\'on}
     \begin{Estructura}{IP}[string]
     \end{Estructura} 
-  \end{Representacion}
 
-\section{M\'{o}dulo Interfaz}
+\subsection{M\'{o}dulo Interfaz}
   \servUsados{nat}
-  \begin{Representacion}
+  \Encabezado{Representaci\'on}
     \begin{Estructura}{Interfaz}[nat]
     \end{Estructura} 
-  \end{Representacion}
 
-\section{M\'{o}dulo Prioridad}
+\subsection{M\'{o}dulo Prioridad}
   \servUsados{nat}
-  \begin{Representacion}
+  \Encabezado{Representaci\'on}
     \begin{Estructura}{Prioridad}[nat]
     \end{Estructura} 
-  \end{Representacion}
 
-\section{M\'{o}dulo ID}
+\subsection{M\'{o}dulo ID}
   \servUsados{nat}
-  \begin{Representacion}
+  \Encabezado{Representaci\'on}
     \begin{Estructura}{ID}[nat]
     \end{Estructura} 
-  \end{Representacion}
 
-\section{M\'{o}dulo Paquete}
+\subsection{M\'{o}dulo Paquete}
   \servUsados{tupla, ID, prioridad, compu}
-  \begin{Interfaz}
+  \Encabezado{Interfaz}
     \InterfazFuncion{$\bullet$ < $\bullet$}{\In{a}{paquete}, \In{b}{paquete}}{bool}%
     [true]%pre
     {$res$ $\igobs$ $a$.prioridad < $b$.prioridad}%pos
     [$\Theta(1)$]%complejidad
     [Da una relacio\'on de orden a los paquetes por prioridad. ]%descripcion
     []%aliasing
-  \end{Interfaz}
-  \begin{Representacion}
+  \Encabezado{Representaci\'on}
     \begin{Estructura}{Paquete}[paquete]
       \begin{Tupla}[paquete]
         \tupItem{ID}{ID}
@@ -45,7 +42,6 @@
         \tupItem{destino}{compu}
       \end{Tupla}
     \end{Estructura}
-  \end{Representacion}
   \begin{algoritmo}{i<}{\In{a}{paquete}, \In{a}{paquete}}{bool}
     $res$ $\gets$ ($a$.prioridad < $b$.prioridad)\com*{$\Theta(1)$}
   \end{algoritmo}
@@ -55,13 +51,12 @@
   {$\Theta(1)$} % Complejidad
   {} % Justificacíón  
 
-\section{M\'{o}dulo Compu}
+\subsection{M\'{o}dulo Compu}
   \servUsados{tupla, IP, conjunto, interfaz}
-  \begin{Representacion}
+  \Encabezado{Representaci\'on}
     \begin{Estructura}{Compu}[compu]
       \begin{Tupla}[compu]
         \tupItem{IP}{IP}
         \tupItem{Interfaces}{conj(interfaz)}
       \end{Tupla}
     \end{Estructura}
-  \end{Representacion}

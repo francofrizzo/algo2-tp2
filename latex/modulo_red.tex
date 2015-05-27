@@ -251,7 +251,7 @@
   {} % Justificacíón
 
   \begin{algoritmo}{iAgregarCompu}{\Inout{r}{estrRed}, \In{c}{compu}}{}
-    agregarAtras(r.compus, $\langle$c.IP, iArmarLista(c.interfaces)$\rangle$)\com*{$\Theta(I)$}
+    agregarAtras(r.compus, $\langle$c.IP, ArmarLista(c.interfaces)$\rangle$)\com*{$\Theta(I)$}
     $r.cantidadCompus \gets r.cantidadCompus+1$ \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
@@ -373,8 +373,8 @@
 
   \begin{algoritmo}{iUsaInterfaz?}{\In{r}{estrRed}, \In{c}{compu}, \In{i}{interfaz}}{bool}{}
     \tipo{itLista(estrComp)} $it_{1} \gets$ crearIt(r.compus)\com*{$\Theta(1)$}
-    \While(\com*{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq c$.IP}{
-      avanzar($it_{1}$)\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq c$.IP}{
+      avanzar($it_{1}$) \com*{$\Theta(1)$}
     }
     \tipo{itLista(tupla(interfaz, itLista(estrCompu)))} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
     \While(\com*[f]{$\Theta(I)$ iteraciones}){siguiente($it_{2}$).inter $\neq i$}{
@@ -398,7 +398,7 @@
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n³ \times n! \times n! + I$} % Complejidad
+  {$\Theta(n³ \times n! \times n! + I$)} % Complejidad
   {} % Justificacíón
 
   \begin{algoritmo}{dameMinimos}{\In{c}{conj(lista(compu))}}{conj(lista(compu))}
@@ -409,15 +409,15 @@
       $res \gets$ dameMinimosAux($c$, minimaLong($c$, long(siguiente($it$))))\com*{$\Theta(n \times n!)$}
     }
   \end{algoritmo}
-  \datosAlgoritmo{} % Descripción
+  \datosAlgoritmo{Devuelve, del total de caminos posibles, solo los de longitud m\'{i}nima} % Descripción
   {} % Pre
   {} % Post
-  {\com*{$\Theta(n \times n!)$}} % Complejidad
-  {Devuelve, del total de caminos posibles, solo los de longitud m\'{i}nima} % Justificacíón
+  {$\Theta(n \times n!)$} % Complejidad
+  {} % Justificacíón
 
   \begin{algoritmo}{dameMinimosAux}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{conj(lista(compu))}
     \tipo{itConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
-    $res \gets$ vacio()\;\com*{$\Theta(1)$}
+    $res \gets$ vacio() \com*{$\Theta(1)$}
     \While(\com*[f]{$\Theta(n!)$ iteraciones}){haySiguiente($it$)}{
       \eIf(\com*[f]{$\Theta(1)$}){long(siguiente($it$))$=n$}{
         agregar($res$, siguiente($it$))\com*{$\Theta(n)$}
@@ -430,7 +430,7 @@
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {\com*{$\Theta(n \times n!)$}} % Complejidad
+  {$\Theta(n \times n!)$} % Complejidad
   {} % Justificacíón
 
   \begin{algoritmo}{minimaLong}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{nat}
@@ -449,13 +449,13 @@
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {\com*{$\Theta(n!)$}} % Complejidad
+  {$\Theta(n!)$} % Complejidad
   {Devuelve la longitud de la secuencia m\'{a}s chica} % Justificacíón
     
 	\begin{algoritmo}{pasarConjASecu}{\In{c}{conj(compu)}}{secu(compu)}{}
 		$res \gets$ vacia()\com*{$\Theta(1)$}
 		\tipo{ItConj} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
-		While(\com*[f]{$\Theta(n)$ iteraciones}{haySiguiente($it$)}{
+		\While(\com*[f]{$\Theta(n)$ iteraciones}){haySiguiente($it$)}{
 			agregarAtras($res$, siguiente($it$))\com*{$\Theta(I)$} 		
 		}
 	\end{algoritmo}    
@@ -466,23 +466,23 @@
   {Devuelve una secuencia que contiene a todos los elementos del conjunto pasado por par\'{a}metro} % Justificacíón
      
   \begin{algoritmo}{iHayCamino?}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{bool}{}
-    $res \gets$ ($\neg$esVacio?(iCaminosMinimos($r$, $c_{1}$, $c_{2}$)))$\Theta(n² \times n!)$
+    $res \gets$ ($\neg$esVacio?(iCaminosMinimos($r$, $c_{1}$, $c_{2}$))) \com*{$\Theta(n² \times n!)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {} % Complejidad
+  {$\Theta(n² \times n!)$} % Complejidad
   {} % Justificacíón
 
   \begin{algoritmo}{iCaminos}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}, \In{l}{lista(estrCompu)}, \In{vec}{lista(estrCompu)}}{conj(lista(estrCompu))}{}
     \eIf{vacia?($vec$)}{
       $res \gets$ vacia()\;
     }{
-      \eIf{/'{u}ltimo($l$) = $c_{1}$}{
+      \eIf{\'{u}ltimo($l$) = $c_{1}$}{
         $res \gets$ agregar($l$, vacia())\;
       }{
-        \eIf{$\not$est\'{a}?(primero($vec$, $l$))}{
-          $res \gets$ uni\'{o}n(caminos($r$, $c_{0}$, $c_{1}$, agregarAtras($l$, primero($vec$)), iVecinos($r$, primeros($vec$))), caminos($r$, $c_{0}$, $c_{1}$, $l$, fin($vec$)))\;
+        \eIf{$\neg$est\'{a}?(primero($vec$, $l$))}{
+          $res \gets$ uni\'{o}n(caminos($r$, $c_{0}$, $c_{1}$, agregarAtras($l$, primero($vec$)), Vecinos($r$, primeros($vec$))), caminos($r$, $c_{0}$, $c_{1}$, $l$, fin($vec$)))\;
         }{
           $res \gets$ caminos($r$, $c_{0}$, $c_{1}$, $l$, fin($vec$))\;
         }
@@ -501,7 +501,7 @@
       $res \gets$ $c_{2}$\com*{$\Theta(I \times n \times n!)$} 
       }{
       \tipo{itConj(lista(compu))} $it \gets$ crearIt($c_{1}$)\com*{$\Theta(1)$}     
-      \While(\com[f]*{$\Theta(n)$}){haySiguiente($it$)}{
+      \While(\com*[f]{$\Theta(n)$}){haySiguiente($it$)}{
         Ag(siguiente($it$), $c_{2}$)\com*{$\Theta(n)$}
         avanzar(it)\com*{$\Theta(1)$}
       } 
@@ -514,7 +514,7 @@
   {Devuelve la uni\'{o}n de dos conjuntos. } % Justificacíón
 
   \begin{algoritmo}{iEsta?}{\In{c}{compu}, \In{l}{lista(compu)}}{bool}
-    \eIf(\com*{$\Theta(1)$}){vacia?($l$)}{
+    \eIf(\com*[f]{$\Theta(1)$}){vacia?($l$)}{
       $res \gets$ false\com*{$\Theta(1)$}
     }{
     \tipo{ItLista(compu)} $it \gets$ crearIt($l$)\com*{$\Theta(1)$}
