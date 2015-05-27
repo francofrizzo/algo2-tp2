@@ -9,6 +9,8 @@
     \item $i$: Mayor cantidad de interfaces que tiene alguna computadora en la red en el momento.
   \end{itemize}
 
+\servUsados{ AVL, Heap, Red }
+
 \begin{Interfaz}
   
   \seExplicaCon{DCNet}
@@ -242,7 +244,6 @@
   {$\Theta(n \times I + 4 n + n \times (n + I^2 + L) + n \times (n \times (n + I + camMin)))$ = $\Theta(n \times I + n + n^2+ n \times I^2 + n \times L + n^3 + n^2 \times I + camMin)$ que esta incluido en $\Theta(n^3 \times I^2 \times L + camMin)$} % Complejidad
   {} % Justificacíón
 
-
   \begin{algoritmo}{iCrearPaquete}{\Inout{d}{DCNet},\In{p}{paquete}}{}
     % Crear e inicializar variables:
     \tipo{nat} $o \gets$ iObtener($p$.origen, $d$.IDsCompusPorIP)\com*{$\Theta(L)$}
@@ -301,7 +302,7 @@
     }
     $d$.laQueM\'asEnvi\'o $\gets$ $d$.IPsCompusPorID[h]\com*{$\Theta(1)$}
   \end{algoritmo}
- \datosAlgoritmo{} % Descripción
+  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {\com*{$\Theta(n \times log(k))$ esta incluido en \com*{$\Theta(n \times (L+log(k)+log(n))$}}} % Complejidad
