@@ -20,7 +20,7 @@
   \InterfazFuncion{iniciarDCNet}{\In{r}{Red}}{DCNet}%
   [true]%pre
   {res $\igobs$ iniciarDCNet(r)}%pos
-  [$\Theta(n³ \times I² \times L + camMin)$]%complejidad
+  [$\Theta(n^3 \times I^2 \times L + camMin)$]%complejidad
   [Genera un nuevo DCNet sin paquetes. ]%descripcion
   []%aliasing
   
@@ -218,7 +218,7 @@
       $res$.siguientesCompus[$j$] $\gets$ crearArreglo(cantCompus($res$.red))\com*{$\Theta(n)$}   
       $res$.\#PaqEnviados[$j$] $\gets$ 0\com*{$\Theta(1)$}   
       $res$.paquetesEnEspera[$j$] $\gets$ $\langle$vac\'{i}o(),vac\'{i}o(),vac\'{i}o()$\rangle$\com*{$\Theta(1)$}   
-      definir(siguiente($it_{0}$).IP, $j$, $res$.IDsCompusPorIP)\com*{$\Theta(L+I²)$}   
+      definir(siguiente($it_{0}$).IP, $j$, $res$.IDsCompusPorIP)\com*{$\Theta(L+I^2)$}   
       $res$.IPsCompusPorID[$j$] $\gets$ $it_{1}$\com*{$\Theta(1)$}   
       $j \gets j + 1$\com*{$\Theta(1)$}   
       avanzar($it_{1}$)\com*{$\Theta(1)$}   
@@ -239,7 +239,7 @@
  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n \times I + 4 n + n \times (n + I² + L) + n \times (n \times (n + I + camMin)))$ = $\Theta(n \times I + n + n²+ n \times I² + n \times L + n³ + n² \times I + camMin)$ que esta incluido en $\Theta(n³ \times I² \times L + camMin)$} % Complejidad
+  {$\Theta(n \times I + 4 n + n \times (n + I^2 + L) + n \times (n \times (n + I + camMin)))$ = $\Theta(n \times I + n + n^2+ n \times I^2 + n \times L + n^3 + n^2 \times I + camMin)$ que esta incluido en $\Theta(n^3 \times I^2 \times L + camMin)$} % Complejidad
   {} % Justificacíón
 
 
@@ -252,7 +252,7 @@
     Definir($d$.paquetesEnEspera[$o$].porID, $p$.ID, $\langle$ $it$, $o$, $dest$, $\rangle$)\com*{$\Theta(log(k))$}
     encolar($d$.paquetesEnEspera[$o$].porPrioridad, $p$.prioridad, $it$)\com*{$\Theta(log(k))$}
     \end{algoritmo}
-   \datosAlgoritmo{} % Descripción
+  \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(L+log(k))$} % Complejidad
@@ -345,7 +345,7 @@
   {$\Theta(L)$} % Complejidad
   {} % Justificacíón
 
-  \begin{algoritmo{ilaQueM\'{a}sEnvio}{\In{d}{DCNet}}{compu}
+  \begin{algoritmo}{ilaQueM\'{a}sEnvio}{\In{d}{DCNet}}{compu}
     $res \gets$ siguiente($d$.laQueM\'{a}sEnvio)\com*{$\Theta(I)$ lo tomamos como \com*{$\Theta(1)$} ya que, copiar una computadora o devolver el siguiente de un iterador a computadora es $\Theta(I)$ }
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
@@ -353,7 +353,6 @@
   {} % Post
   {$\Theta(1)$} % Complejidad
   {} % Justificacíón
-  \end{algoritmo}
 
   \begin{algoritmo}{paquetesEntr\'{a}nsito?}{\In{d}{DCNet}}{conj(paquete)}
     $res \gets$ false \com*{$\Theta(1)$}
@@ -369,5 +368,6 @@
   {} % Post
   {$\Theta(n \times log(k))$} % Complejidad
   {} % Justificacíón
+
 \end{Algoritmos}
 
