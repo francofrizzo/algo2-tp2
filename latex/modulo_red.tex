@@ -8,6 +8,8 @@
     \item $I$: Mayor cantidad de interfaces que tiene alguna computadora en la red en el momento.
   \end{itemize}
 
+\servUsados{interfaz, tupla, nat, IP, lista\_enlazada}
+
 \begin{Interfaz}
   
   \seExplicaCon{Red, Iterador Unidireccional(Compu)}
@@ -143,7 +145,7 @@
     \end{Tupla}
 
     \begin{Tupla}[estrCompu]
-      \tupItem{IP}{string}
+      \tupItem{IP}{IP}
       \tupItem{conexiones}{lista(tupla(inter: interfaz, com: itLista(estrCompu)))}
     \end{Tupla}
 
