@@ -195,10 +195,38 @@
 }
 
 \SetKwComment{com}{ $\triangleright$ }{}
+\def\new{\textbf{\&}}
+\def\NULL{\textrm{NULL}}
+
+% Operaciones básicas para algoritmos
 \SetKwFunction{copiar}{Copiar}
 \SetKwFunction{delete}{delete}
-\def\NULL{\textrm{NULL}}
-\def\new{\textbf{\&}}
+
+\SetKwFunction{vacio}{Vacio}
+\SetKwFunction{vacia}{Vacia}
+
+\SetKwFunction{ag}{Agregar}
+\SetKwFunction{agRap}{AgregarRapido}
+\SetKwFunction{agAtras}{AgregarAtras}
+\SetKwFunction{agAdelante}{AgregarAdelante}
+
+\SetKwFunction{definir}{Definir}
+\SetKwFunction{defRap}{DefinirRapido}
+\SetKwFunction{isDef}{Definido?}
+\SetKwFunction{signif}{Significado}
+
+\SetKwFunction{crearIt}{CrearIt}
+\SetKwFunction{haySig}{HaySiguiente?}
+\SetKwFunction{sig}{Siguiente}
+\SetKwFunction{avanzar}{Avanzar}
+\SetKwFunction{sigClave}{SiguienteClave}
+\SetKwFunction{sigSignif}{SiguienteSignificado}
+
+\usepackage[tikz]{bclogo}
+\newcommand{\nuevoAlgo}[0]{
+  \begin{bclogo}[logo=\bcattention, noborder=true, barre=none]{Algoritmo renovado}
+  \end{bclogo}
+}
 
 \sloppy
 
