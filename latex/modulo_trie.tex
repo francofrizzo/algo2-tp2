@@ -1,4 +1,4 @@
-\section{M\'{o}dulo Diccionario Trie}
+\section{M\'{o}dulo Diccionario de Strings}
 
 \Encabezado{Notas preliminares}
   En todos los casos, al indicar las complejidades de los algoritmos, las variables que se utilizan corresponden a:
@@ -29,35 +29,35 @@
 
   \seExplicaCon{Diccionario(Secuencia(Char), $\alpha$)}
 
-  \generos{diccTrie($\alpha$)}
+  \generos{diccStr($\alpha$)}
 
   \Encabezado{Operaciones de diccionario}
 
-    \InterfazFuncion{vac\'{i}o}{}{diccTrie($\alpha$)}
+    \InterfazFuncion{vac\'{i}o}{}{diccStr($\alpha$)}
     [true]
     {$res \igobs$ vac\'{i}o}
     [$\Theta(1)$]
     [Devuelve un diccionario vac\'io.]
 
-    \InterfazFuncion{definir}{\Inout{d}{diccTrie($\alpha$)}, \In{k}{string}, \In{s}{$\alpha$}}{diccTrie($\alpha$)}
+    \InterfazFuncion{definir}{\Inout{d}{diccStr($\alpha$)}, \In{k}{string}, \In{s}{$\alpha$}}{diccStr($\alpha$)}
     [$d \igobs d_{0}$]
     {$d \igobs$ definir($k$, $s$, $d_{0}$}
     [$\Theta(L)$]
     [Define una palabra en el diccionario.]
 
-    \InterfazFuncion{borrar}{\Inout{d}{diccTrie($\alpha$)}, \In{k}{string}}{diccTrie($\alpha$)}
+    \InterfazFuncion{borrar}{\Inout{d}{diccStr($\alpha$)}, \In{k}{string}}{diccStr($\alpha$)}
     [$d \igobs d_{0}$ $\land$ def?($d$, $k$)]
     {$d \igobs$ borrar($k$, $s$, $d_{0}$}
     [$\Theta(L)$]
     [Borra una palabra del diccionario.]
 
-    \InterfazFuncion{def?}{\In{d}{diccTrie($\alpha$)}, \In{k}{string}}{bool}
+    \InterfazFuncion{def?}{\In{d}{diccStr($\alpha$)}, \In{k}{string}}{bool}
     [true]
     {$res \igobs$ def?($d$, $k$)}
     [$\Theta(L)$]
     [Devuelve true si y solo si la clave $k$ est\'a definida en el diccionario.]
 
-    \InterfazFuncion{obtener}{\In{d}{diccTrie($\alpha$)}, \In{k}{string}}{$\alpha$}
+    \InterfazFuncion{obtener}{\In{d}{diccStr($\alpha$)}, \In{k}{string}}{$\alpha$}
     [def?($d$, $k$)]
     {$res \igobs$ obtener($d$, $k$)}
     [$\Theta(L)$]

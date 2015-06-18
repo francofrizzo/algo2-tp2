@@ -9,7 +9,7 @@
     \item $i$: Mayor cantidad de interfaces que tiene alguna computadora en la red en el momento.
   \end{itemize}
 
-\servUsados{diccAVL, Heap, Red, dicc\_trie, tupla, conjunto }
+\servUsados{diccLog, Heap, Red, diccStr, tupla, conjunto }
 
 \begin{Interfaz}
   
@@ -97,9 +97,9 @@
 
     \begin{Tupla}[estrDCNet]
       \tupItemNL{red}{red}
-      \tupItemNL{IDsCompusPorIP}{dicc\_trie(string, nat)}
+      \tupItemNL{IDsCompusPorIP}{diccStr(string, nat)}
       \tupItemNL{siguientesCompus}{ad(ad(nat))}
-      \tupItemNL{paquetesEnEspera}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID, tupla(iPaquete: itConj(paquete),codOrigen: nat, codDestino: nat), porPrioridad: heap(tupla(prioridad, itConjunto(paquete))))))}
+      \tupItemNL{paquetesEnEspera}{ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID, tupla(iPaquete: itConj(paquete),codOrigen: nat, codDestino: nat), porPrioridad: colaPrior(tupla(prioridad, itConjunto(paquete))))))}
       \tupItemNL{\#PaqEnviados}{ad(nat)}
       \tupItemNL{laQueM\'asEnvi\'o}{itRed}
       \tupItemNL{IPsCompuPorID}{ad(itRed)}
@@ -172,31 +172,31 @@
 
   ~      
 
-\tadOperacion{caminoDelPaquete}{ad(ad(nat)), ad(ItRed), ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))), paquete, ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete))))))}{secu(compu)}{} %FALTA AGREGAR RESTRICCION y alinear bien los parametros - Manu 
+\tadOperacion{caminoDelPaquete}{ad(ad(nat)), ad(ItRed), ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,} itConjunto(paquete)))))), paquete, ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,} itConjunto(paquete))))))}{secu(compu)}{} %FALTA AGREGAR RESTRICCION y alinear bien los parametros - Manu 
 
 \small\begin{verbatim}
 \\ Nuestra intencion era que arriba se leyera esto,
 \\ pero las macros no estaban preparadas para argumentos tan grandes:
 \tadOperacion{caminoDelPaquete}{ad(ad(nat)), ad(ItRed), ad(tupla(enConjunto:
-conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen:
-nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))),
-paquete, ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete:
+conj(paquete), porID: diccLog(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen:
+nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,} itConjunto(paquete)))))),
+paquete, ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,} tupla(iPaquete:
 itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad:
-heap(tupla(prioridad{,} itConjunto(paquete))))))}{secu(compu)}{}
+colaPrior(tupla(prioridad{,} itConjunto(paquete))))))}{secu(compu)}{}
 \end{verbatim}
 
 \tadAxioma{caminoDelPaquete($t$, $CsxID$, $ps$, $p$, $Psr$)}{\IF def?(ID($p$), porID($ps$[0])) THEN caminoDelPaquete$_{\text{aux}}$($t$, $CsxID$, $ps$, $p$, codOrigen(obtener(ID($p$), porId($ps$[0]))), codDestino(obtener(ID($p$), porId($ps$[0])))) ELSE caminoDelPaquete($t$, $CsxID$, $ps$, $p$, finAd(psr)) FI}
 
   ~
 
-\tadOperacion{caminoDelPaquete$_{\text{aux}}$}{ad(ad(nat)), ad(ItRed), ad(tupla(enConjunto: conj(paquete){,} porID: diccAVL, tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))), paquete, ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))), nat, nat}{secu(compu)}{} %AGREGAR RESTRICCION  
+\tadOperacion{caminoDelPaquete$_{\text{aux}}$}{ad(ad(nat)), ad(ItRed), ad(tupla(enConjunto: conj(paquete){,} porID: diccLog, tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,} itConjunto(paquete)))))), paquete, ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,} itConjunto(paquete)))))), nat, nat}{secu(compu)}{} %AGREGAR RESTRICCION  
 
 \small\begin{verbatim}
 \tadOperacion{caminoDelPaquete$_{\text{aux}}$}{ad(ad(nat)), ad(ItRed), ad(tupla(enConjunto:
-conj(paquete){,} porID: diccAVL, tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,}
-codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))),
-paquete, ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete:
-itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,}
+conj(paquete){,} porID: diccLog, tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,}
+codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,} itConjunto(paquete)))))),
+paquete, ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,} tupla(iPaquete:
+itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,}
 itConjunto(paquete)))))), nat, nat}{secu(compu)}{}
 \end{verbatim}
 
@@ -204,12 +204,12 @@ itConjunto(paquete)))))), nat, nat}{secu(compu)}{}
 
   ~
 
-\tadOperacion{finAd}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))))}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))))}{}
+\tadOperacion{finAd}{ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,} itConjunto(paquete)))))))}{ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,} itConjunto(paquete)))))))}{}
 \small\begin{verbatim}
-\tadOperacion{finAd}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete:
-itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,}
-itConjunto(paquete)))))))}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete:
-itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,}
+\tadOperacion{finAd}{ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,} tupla(iPaquete:
+itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,}
+itConjunto(paquete)))))))}{ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,} tupla(iPaquete:
+itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,}
 itConjunto(paquete)))))))}{}
 \end{verbatim}
 
@@ -217,16 +217,16 @@ itConjunto(paquete)))))))}{}
 
   ~
 
-\tadOperacion{finAd$_{\text{aux}}$}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))))/a, ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))))/b, nat}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,} itConjunto(paquete)))))))}{tam(a)>1 $\land$ tam(b)>0}
+\tadOperacion{finAd$_{\text{aux}}$}{ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,} itConjunto(paquete)))))))/a, ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,} itConjunto(paquete)))))))/b, nat}{ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,} tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,} itConjunto(paquete)))))))}{tam(a)>1 $\land$ tam(b)>0}
 
 \small\begin{verbatim}
-\tadOperacion{finAd$_{\text{aux}}$}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,}
-tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad:heap(tupla(prioridad{,}
-itConjunto(paquete)))))))/a, ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,} tupla(iPaquete:
-itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: heap(tupla(prioridad{,}
-itConjunto(paquete)))))))/b, nat}{ad(tupla(enConjunto: conj(paquete), porID: diccAVL(ID{,}
+\tadOperacion{finAd$_{\text{aux}}$}{ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,}
+tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad:colaPrior(tupla(prioridad{,}
+itConjunto(paquete)))))))/a, ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,} tupla(iPaquete:
+itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,}
+itConjunto(paquete)))))))/b, nat}{ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID{,}
 tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad:
-heap(tupla(prioridad{,} itConjunto(paquete)))))))}{tam(a)>1 $\land$ tam(b)>0}
+colaPrior(tupla(prioridad{,} itConjunto(paquete)))))))}{tam(a)>1 $\land$ tam(b)>0}
 \end{verbatim}
 
 \tadAxioma{finAd$_{\text{aux}}$($a$, $b$, $n$)}{\IF ($n$=0) THEN $b$[0] $\leftarrow$ $a$[1] ELSE finAd$_{\text{aux}}$($a$, $b$[n]$\leftarrow$ $a$[$n$+1], $n$ -1) FI}
@@ -245,16 +245,21 @@ heap(tupla(prioridad{,} itConjunto(paquete)))))))}{tam(a)>1 $\land$ tam(b)>0}
 
 \begin{Algoritmos}
 
+  \SetKwFunction{crearArr}{CrearArreglo}
+  \SetKwFunction{crearItRed}{CrearItRed}
+  \SetKwFunction{card}{Cardinal}
+  \SetKwFunction{compus}{Computadoras}
+
   \begin{algoritmo}{iIniciarDCNet}{\In{r}{Red}}{DCNet}
-    $res \gets$ iCopiar($r$)\com*{$\Theta(n \times I)$}   
-    $res$.\#PaqEnviados $\gets$ crearArreglo(cantCompus($res$.red))\com*{$\Theta(n)$}   
-    $res$.IPsCompuPorID $\gets$ crearArreglo(cantCompus($res$.red))\com*{$\Theta(n)$}   
-    $res$.siguientesCompus $\gets$ crearArreglo(cantCompus($res$.red))\com*{$\Theta(n)$}   
-    $res$.paquetesEnEspera $\gets$ crearArreglo(cantCompus($res$.red))\com*{$\Theta(n)$}   
-    \tipo{itRed} $it_{0} \gets$ crearItRed($res$.red)\com*{$\Theta(1)$}   
+    $res$.red $\gets$ \copiar{$r$}\com*{$\Theta(n \times I)$}   
+    $res$.\#PaqEnviados $\gets$ \crearArr{cantCompus($res$.red)} \com*{$\Theta(n)$}   
+    $res$.IPsCompuPorID $\gets$ \crearArr{cantCompus($res$.red)} \com*{$\Theta(n)$}   
+    $res$.siguientesCompus $\gets$ \crearArr{cantCompus($res$.red)} \com*{$\Theta(n)$}   
+    $res$.paquetesEnEspera $\gets$ \crearArr{cantCompus($res$.red)} \com*{$\Theta(n)$}   
+    \tipo{itRed} $it_{0} \gets$ \crearItRed{$res$.red} \com*{$\Theta(1)$}   
     \tipo{nat} $j \gets$ 0\com*{$\Theta(1)$}   
-    \While(\com*[f]{$\Theta(n)$}){$j$ < Cardinal(Computadoras($res$.red))}{
-      $res$.siguientesCompus[$j$] $\gets$ crearArreglo(cantCompus($res$.red))\com*{$\Theta(n)$}   
+    \While(\com*[f]{$\Theta(n)$}){$j$ < \card{\compus{$res$.red}}}{
+      $res$.siguientesCompus[$j$] $\gets$ \crearArr{cantCompus($res$.red)} \com*{$\Theta(n)$}   
       $res$.\#PaqEnviados[$j$] $\gets$ 0\com*{$\Theta(1)$}   
       $res$.paquetesEnEspera[$j$] $\gets$ $\langle$vac\'{i}o(),vac\'{i}o(),vac\'{i}o()$\rangle$\com*{$\Theta(1)$}   
       definir(siguiente($it_{0}$).IP, $j$, $res$.IDsCompusPorIP)\com*{$\Theta(L+I^2)$}   

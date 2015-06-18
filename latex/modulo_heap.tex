@@ -1,4 +1,4 @@
-\section{M\'{o}dulo Heap}
+\section{M\'{o}dulo Cola de Prioridad}
 
 \Encabezado{Notas preliminares}
   En todos los casos, al indicar las complejidades de los algoritmos, las variables que se utilizan corresponden a:
@@ -16,7 +16,7 @@
     \paramFuncion{
       \InterfazFuncion{$\bullet \leq \bullet$}{\In{a_{1}}{$\alpha$}, \In{a_{a}}{$\alpha$}}{bool}
       {$res \igobs (a_{1} \leq a_{2})$}
-      [$\Theta(compare(a_{1}, a_{2}))$]
+      [$\Theta(order(a_{1}, a_{2}))$]
       [funci\'on de comparaci\'on por orden total estricto de $\alpha$]
     }
 
@@ -31,41 +31,41 @@
 
   \seExplicaCon{Cola de Prioridad($\alpha$)}
 
-  \generos{\tipo{heap($\alpha$)}}
+  \generos{\tipo{colaPrior($\alpha$)}}
 
   \Encabezado{Operaciones de cola de prioridad}
 
-    \InterfazFuncion{vac\'{i}o}{}{heap($\alpha$)}
+    \InterfazFuncion{Vac\'ia}{}{colaPrior($\alpha$)}
     [true]
-    {$res \igobs$ vac\'{i}o}
+    {$res \igobs$ vac\'ia}
     [$\Theta(1)$]
-    [Devuelve un heap vac\'io.]
+    [Devuelve una cola de prioridad vac\'ia.]
 
-    \InterfazFuncion{encolar}{\Inout{h}{heap($\alpha$)}, \In{a}{$\alpha$}}{}{}
-    [$h \igobs h_{0}$]
-    {$h \igobs$ encolar($a$, $h_{0}$)}
+    \InterfazFuncion{Encolar}{\Inout{cp}{colaPrior($\alpha$)}, \In{a}{$\alpha$}}{}
+    [$cp \igobs cp_0$]
+    {$cp \igobs$ encolar($a$, $cp_0$)}
     [$\Theta(log(n))$]
-    [Agrega un elemento al heap.]
-    [El elemento se agrega al heap por copia.]
+    [Agrega un elemento a la cola de prioridad.]
+    [El elemento se agrega a la cola de prioridad por copia.]
 
-    \InterfazFuncion{vac\'{i}o?}{\In{h}{heap($\alpha$)}}{bool}
+    \InterfazFuncion{Vac\'ia?}{\In{cp}{colaPrior($\alpha$)}}{bool}
     [true]
-    {$h \igobs$ vac\'{i}o()}
+    {$cp \igobs$ vac\'ia($cp$)}
     [$\Theta(1)$]
-    [Devuelve true si y solo si el heap no tiene elementos.]
+    [Devuelve true si y solo si la cola de prioridad no tiene elementos.]
 
-    \InterfazFuncion{desencolar}{\Inout{h}{heap($alpha$)}}{}
-    [$\neg$(vac\'ia?(h))]
-    {$res \igobs$ desencolar(h)}
+    \InterfazFuncion{Desencolar}{\Inout{cp}{colaPrior($\alpha$)}}{}
+    [$\neg$(vac\'ia?($cp$))]
+    {$res \igobs$ desencolar($cp$)}
     [$\Theta(log(n))$]
-    [Devuelve uno de los elementos de m\'axima prioridad del heap, y lo elimina de la estructura.]
+    [Devuelve uno de los elementos de m\'axima prioridad de la cola de prioridad, y lo elimina de la misma.]
     [El elemento es devuelto por copia.]
 
 \end{Interfaz}
 
 \begin{Representacion}
 
-  \begin{Estructura}{heap($\alpha$)}[vector($\alpha$)]
+  \begin{Estructura}{colaPrior($\alpha$)}[vector($\alpha$)]
   \end{Estructura} 
 
   \Rep[vector($\alpha$)][v]{
@@ -110,9 +110,9 @@
   {} % Pre
   {} % Post
   {$\Theta(log(n)) \times \Theta(copy(\alpha))$} % Complejidad
-  {El ciclo se repite como m\'aximo $log(n)$ veces y cada repetici\'on tiene $\Theta(copy(\alpha))$. } % Justificación
+  {El ciclo se repite como m\'aximo $log(n)$ veces y cada repetici\'on tiene complejidad $\Theta(copy(\alpha))$. } % Justificación
 
-  \begin{algoritmo}{iVac\'{i}o?}{\In{v}{vector($\alpha$)}}{bool}
+  \begin{algoritmo}{iVac\'ia?}{\In{v}{vector($\alpha$)}}{bool}
     $res \gets$ \esVacio{$v$} \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción

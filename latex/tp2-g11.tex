@@ -164,11 +164,11 @@
 \usepackage[noresetcount]{algorithm2e}
 \usepackage{float}
 
-\NoCaptionOfAlgo\SetAlgoLongEnd\LinesNumbered\SetAlgoLined\RestyleAlgo{ruled}\IncMargin{1em}\DontPrintSemicolon\SetArgSty{}\SetCommentSty{textsf}\SetFuncSty{textsf}
+\NoCaptionOfAlgo\LinesNumbered\RestyleAlgo{ruled}\IncMargin{1em}\DontPrintSemicolon\SetArgSty{}\SetCommentSty{textsf}\SetFuncSty{textsf}
 
 \newenvironment{algoritmo}[3]{
   \setcounter{AlgoLine}{0}
-  \begin{algorithm}[H]
+  \begin{algorithm}[H]\SetAlgoLined\SetAlgoLongEnd
   \caption{\TipoFuncion{#1}{#2}{#3}}
 }{
   \end{algorithm}
@@ -176,7 +176,7 @@
 }
 
 \newenvironment{contAlgoritmo}[1]{
-  \begin{algorithm}[H]
+  \begin{algorithm}[H]\SetAlgoLined\SetAlgoLongEnd
   \caption{\NombreFuncion{#1} \emph{(cont.)}}
 }{
   \end{algorithm}
@@ -243,16 +243,25 @@
 \maketitle
 \newpage\null\thispagestyle{empty}\newpage
 
-\include{modulo_tads}
+\tableofcontents
+\newpage\null\thispagestyle{empty}\newpage
+
+% \include{notas_preliminares}
+
+% \include{ext_mod_basicos}
+
+% \include{modulo_tads}
 
 \include{modulo_red}
 
-\include{modulo_dcnet}
+% \include{modulo_dcnet}
 
-\include{modulo_avl}
+% \include{modulo_ab}
 
-\include{modulo_heap}
+% \include{modulo_avl}
 
-\include{modulo_trie}
+% \include{modulo_heap}
+
+% \include{modulo_trie}
 
 \end{document}

@@ -1,6 +1,6 @@
-\newcommand{\avlKS}{diccAVL(\ensuremath{\kappa}, \ensuremath{\sigma})} % Macro para diccAVL(k, s)
+\newcommand{\diccLogKS}{diccLog(\ensuremath{\kappa}, \ensuremath{\sigma})} % Macro para diccAVL(k, s)
 
-\section{M\'odulo Diccionario AVL}
+\section{M\'odulo Diccionario Logar\'itmico}
 
 \Encabezado{Notas preliminares}
   En todos los casos, al indicar las complejidades de los algoritmos, las variables que se utilizan corresponden a:
@@ -46,39 +46,39 @@
 
   \seExplicaCon{Diccionario($\kappa$, $\sigma$)}
 
-  \generos{\tipo{\avlKS}}
+  \generos{\tipo{\diccLogKS}}
 
   \Encabezado{Operaciones de diccionario}
 
-    \InterfazFuncion{Vacio}{}{\avlKS}
+    \InterfazFuncion{Vacio}{}{\diccLogKS}
     {$res \igobs$ vac\'io}
     [$\Theta(1)$]
     [Crea y devuelve un diccionario AVL vac\'io.]
 
-    \InterfazFuncion{Definir}{\Inout{d}{\avlKS}, \In{k}{$\kappa$}, \In{s}{$\sigma$}}{}
+    \InterfazFuncion{Definir}{\Inout{d}{\diccLogKS}, \In{k}{$\kappa$}, \In{s}{$\sigma$}}{}
     [$d \igobs d_0$]
     {$d \igobs$ definir($k$, $s$, $d_0$)}
     [$\Theta(\log(n) \times order(k) + copy(k) + copy(s))$]
     [Define en el diccionario la clave pasada por par\'ametro con el significado pasado por par\'ametro. En caso de que la clave ya est\'e definida, sobreescribe su significado con el nuevo.]
     [Las claves y significados se almacenan por copia.]
 
-    \InterfazFuncion{Borrar}{\Inout{d}{\avlKS}, \In{k}{$\kappa$}}{}
+    \InterfazFuncion{Borrar}{\Inout{d}{\diccLogKS}, \In{k}{$\kappa$}}{}
     [$d \igobs d_0 \land$ def?($k$, $d$)]
     {$d \igobs$ borrar($k$, $d_0$)}
     [$\Theta(\log(n) \times order(k))$]
     [Elimina del diccionario la clave pasada por par\'ametro.]
 
-    \InterfazFuncion{\#Claves}{\In{d}{\avlKS}}{nat}
+    \InterfazFuncion{\#Claves}{\In{d}{\diccLogKS}}{nat}
     {$res \igobs$ \#(claves($d$))}
     [$\Theta(1)$]
     [Devuelve la cantidad de claves del diccionario.]
 
-    \InterfazFuncion{Definido?}{\In{d}{\avlKS}, \In{k}{$\kappa$}}{bool}
+    \InterfazFuncion{Definido?}{\In{d}{\diccLogKS}, \In{k}{$\kappa$}}{bool}
     {$res \igobs$ def?($k$, $d$)}
     [$\Theta(\log(n) \times order(k))$]
     [Devuelve true si y solo si la clave pasada por par\'ametro est\'a definida en el diccionario.]
 
-    \InterfazFuncion{Obtener}{\In{d}{\avlKS}, \In{k}{$\kappa$}}{$\sigma$}
+    \InterfazFuncion{Obtener}{\In{d}{\diccLogKS}, \In{k}{$\kappa$}}{$\sigma$}
     [def?($k$, $d$)]
     {alias($res \igobs$ obtener($k$, $d$))}
     [$\Theta(\log(n) \times order(k))$]
@@ -89,7 +89,7 @@
 
 \begin{Representacion}
 
-  \begin{Estructura}{diccAVL($\kappa$, $\sigma$)}[estrAVL]
+  \begin{Estructura}{\diccLogKS}[estrAVL]
 
     \begin{Tupla}[estrAVL]
       \tupItemNL{raiz}{puntero(nodo)}%
@@ -166,7 +166,7 @@
 
 \begin{Algoritmos}
 
-  \SetKwFunction{fdb}{FDB}
+  \SetKwFunction{fdb}{FactorDeBalanceo}
   \SetKwFunction{raizq}{RotarAIzquierda}
   \SetKwFunction{rader}{RotarADerecha}
   \SetKwFunction{buscar}{Buscar}
@@ -206,7 +206,7 @@
   {} % Pre
   {} % Post
   {$\Theta(\log(n) \times order(k) + copy(k) + copy(s))$} % Complejidad
-  {La funci\'on tiene llamadas a funciones con complejidad $\Theta(\log(n) \times order(k)$ y $\Theta(copy(k) + copy(s))$.} % Justificacíón
+  {La funci\'on tiene llamadas a funciones con complejidad $\Theta(\log(n) \times order(k))$ y $\Theta(copy(k) + copy(s))$.} % Justificacíón
 
   \begin{algoritmo}{iObtener}{\In{e}{estrAVL}, \In{k}{$\kappa$}}{$\sigma$}
     \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
@@ -393,7 +393,7 @@
   {$\Theta(1)$} % Complejidad
   {El algoritmo presenta varios casos, y todos ellos realizan realizan operaciones con complejidad $\Theta(1)$.} % Justificación
 
-  \begin{algoritmo}{iFBD}{\In{n}{puntero(nodo)}}{int}
+  \begin{algoritmo}{iFactorDeBalanceo}{\In{n}{puntero(nodo)}}{int}
     \tipo{int} $altIzq \gets n \to izq = \NULL$ ? 0 : $n \to izq \to altSubarbol$ \com*{$\Theta(1)$}
     \tipo{int} $altDer \gets n \to der = \NULL$ ? 0 : $n \to izq \to altSubarbol$ \com*{$\Theta(1)$}
     $res \gets altDer - altIzq$ \com*{$\Theta(1)$}
@@ -463,7 +463,7 @@
         \uIf(\com*[f]{$\Theta(1)$}){$fdb2 = 1 \lor fdb2 = 0$}{
           \raizq{$p$} \com*{$\Theta(1)$}
           $p \gets q$ \com*{$\Theta(1)$}
-        }\ElseIf(\com*[f]{$\Theta(1)$}){$fbd2 = -1$}{
+        }\ElseIf(\com*[f]{$\Theta(1)$}){$fdb2 = -1$}{
           \rader{$q$} \com*{$\Theta(1)$}
           \raizq{$p$} \com*{$\Theta(1)$}
           $p \gets (q \to padre)$ \com*{$\Theta(1)$}
@@ -474,7 +474,7 @@
         \uIf(\com*[f]{$\Theta(1)$}){$fdb2 = -1 \lor fdb2 = 0$}{
           \rader{$p$} \com*{$\Theta(1)$}
           $p \gets q$ \com*{$\Theta(1)$}
-        }\ElseIf(\com*[f]{$\Theta(1)$}){$fbd2 = 1$}{
+        }\ElseIf(\com*[f]{$\Theta(1)$}){$fdb2 = 1$}{
           \raizq{$q$} \com*{$\Theta(1)$}
           \rader{$p$} \com*{$\Theta(1)$}
           $p \gets (q \to padre)$ \com*{$\Theta(1)$}

@@ -8,15 +8,17 @@
     \item $I$: Mayor cantidad de interfaces que tiene alguna computadora en la red en el momento.
   \end{itemize}
 
-\servUsados{interfaz, tupla, nat, IP, lista\_enlazada}
+\servUsados{interfaz, tupla, nat, IP, lista}
 
 \begin{Interfaz}
   
+  % IMPORTANTE: Hay que arreglar las complejidades.
+
   \seExplicaCon{Red, Iterador Unidireccional(Compu)}
 
   \generos{\tipo{red}, \tipo{itRed}}
   
-  \Encabezado{Operaciones b\'{a}sicas de Red}
+  \Encabezado{Operaciones del TAD Red}
 
   \InterfazFuncion{iniciarRed}{}{Red}%
   {res $\igobs$ iniciarRed()}%pos
@@ -35,20 +37,20 @@
   [$r$ $\igobs$ $r_{0}$ $\land$ $c_{1} \in$ computadoras($r$) $\land$ $c_{2} \in$ computadoras($r$) $\land$ ip($c_{0} $) $\neq$ ip($c_{1}$) $\land$ $\lnot$conectadas?($r$, $c_{0}$ , $c_{1} $) $\land$ $\lnot$usaInterfaz?($r$, $c_{0}$, $i_{0}$) $\land$ $\lnot$usaInterfaz?($r$, $c_{1}$, $i_{1}$)]%pre
   {$r$ $\igobs$ conectar($r_{0}$, $c_{0}$, $i_{0}$, $c_{1}$, $i_{1}$)}%pos
   [$\Theta(n+I)$]%complejidad
-  [Conecta la pc $c_{0}$ con la pc $c_{1}$ a trav\'es de las interfaces $i_{0}$ y $i_{1}$ respectivamente. ]%descripcion
+  [Conecta la computadora $c_{0}$ con la computadora $c_{1}$ a trav\'es de las interfaces $i_{0}$ y $i_{1}$ respectivamente. ]%descripcion
   []%aliasing
   
   \InterfazFuncion{computadoras}{\In{r}{Red}}{conj(compu)}%
   {$res$ $\igobs$ computadoras(r)} %es alias(res,compus(R))             %pos
-  [$\Theta(n \times (n+I²))$]%complejidad
-  [Devuelve todas las computadoras de la red. ]%descripcion
-  [devuelve las computadoras por copia]%aliasing
+  [$\Theta(1)$]%complejidad
+  [Devuelve el conjunto de todas las computadoras de la red. ]%descripcion
+  [El conjunto es devuelto por referencia.]%aliasing
   
   \InterfazFuncion{conectadas?}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{bool}%
   [$c_{0}$ $\in$ computadoras($r$) $\land$ $c_{1} \in $ computadoras($r$)]%pre
   {$res$ $\igobs$ conectadas?($r$, $c_{0}$, $c_{1}$)}%pos
   [$\Theta(n+I)$]%complejidad
-  [Devuelve true si y solo si la pc $c_{0}$ esta conectada a la pc $c_{1}$]%descripcion
+  [Devuelve \emph{true} si y solo si la computadora $c_{0}$ esta conectada a la computadora $c_{1}$]%descripcion
   []%aliasing
   
   \InterfazFuncion{interfazUsada}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{interfaz}%
@@ -62,28 +64,28 @@
   [$c$ $\in$ computadoras($r$)]%pre
   {$res$ $\igobs$ vecinos($r$, $c$)}%pos
   [$\Theta(n+I³)$]%complejidad
-  [Devuelve el conjunto de vecinos de la pc $c$]%descripcion
-  [Devuelve el conjunto por copia]%aliasing
+  [Devuelve el conjunto de vecinos de la computadora $c$, es decir, las computadoras que tienen una conexi\'on directa con $c$.]%descripcion
+  [Devuelve el conjunto por copia.]%aliasing
   
   \InterfazFuncion{usaInterfaz?}{\In{r}{Red}, \In{c}{compu}, \In{i}{interfaz}}{bool}%
   [$c$ $\in$ computadoras($r$)]%pre
   {$res$ $\igobs$ usaInterfaz?($r$, $c$, $i$)}%pos
   [$\Theta(n+I)$]%complejidad
-  [Devuelve true si y solo si la pc $c$ esta usando la interfaz $i$. ]%descripcion
+  [Devuelve \emph{true} si y solo si la computadora $c$ est\'a usando la interfaz $i$.]%descripcion
   []%aliasing
   
   \InterfazFuncion{caminosMinimos}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{conj(secu(compu))}%
   [$c_{0}$ $\in$ computadoras($r$) $\land$ $c_{1} \in $ computadoras($r$)]%pre
   {$res$ $\igobs$ caminosMinimos($r$, $c_{0}$, $c_{1}$)}%pos
   [$\Theta(n³ \times n! \times n! + I)$]%complejidad
-  [Devuelve todos los caminos m\'nimos posibles entre $c_{0}$ y $c_{1}$. De no haber ninguno, devuelve $\emptyset$. ]%descripcion
-  [Devuelve el conjunto por copia]%aliasing
+  [Devuelve el conjunto de todos los caminos m\'nimos posibles entre $c_{0}$ y $c_{1}$. De no haber ninguno, devuelve $\emptyset$.]%descripcion
+  [Devuelve el conjunto por copia.]%aliasing
   
   \InterfazFuncion{hayCamino?}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{bool}%
   [$c_{0}$ $\in$ computadoras($r$) $\land$ $c_{1} \in $ computadoras($r$)]%pre
   {$res$ $\igobs$ hayCamino?($r$, $c_{0}$, $c_{1}$)}%pos
   [$\Theta(n² \times n!)$]%complejidad
-  [Devuelve true si y solo si hay alg\'un camino posible entre $c_{0}$ y $c_{1}$. ]%descripcion
+  [Devuelve \emph{true} si y solo si hay al menos un camino posible entre $c_{0}$ y $c_{1}$. ]%descripcion
   []%aliasing
   
   \InterfazFuncion{cantCompus}{\In{r}{Red}}{nat}%
@@ -100,54 +102,18 @@
   [Devuelve una copia de la red.]%descripcion
   []%aliasing
 
-  \Encabezado{Operaciones b\'{a}sicas del iterador de red}
-
-  \InterfazFuncion{crearIt}{\In{r}{Red}}{itRed}%
-  [true]%pre
-  {$res$ $\igobs$ crearItUni($r$.compus)}%pos
-  [$\Theta(1)$]%complejidad
-  [Crea un iterador de red.]%descripcion
-  []%aliasing
-
-  \InterfazFuncion{haySiguiente?}{\In{it}{itRed}}{bool}%
-  [true]%pre
-  {$res$ $\igobs$ hayMas?($it$)}%pos
-  [$\Theta(1)$]%complejidad
-  [Devuelve true si y solo si $it$ tiene una computadora siguiente.]%descripcion
-  []%aliasing
-
-  \InterfazFuncion{siguiente}{\In{it}{itRed}}{compu}%
-  [true]%pre
-  {$res$ $\igobs$ actual($it$)}%pos
-  [$\Theta(I^2)$]%complejidad
-  [Devuelve la computadora siguiente a la posici\'on del iterador.]%descripcion
-  [$res$ se devuelve por referencia]%aliasing
-
-  \InterfazFuncion{avanzar}{\Inout{it}{itRed}}{}%
-  [$it \igobs$ $it_{0}$ $\land$ haySiguiente?($it$)]%pre
-  {$it$ $\igobs$ avanzar($it_{0}$)}%pos
-  [$\Theta(1)$]%complejidad
-  [Avanza el iterador a la siguiente posici\'on.]%descripcion
-  []%aliasing
-  
-
 \end{Interfaz}
 
 \begin{Representacion}
 
-  \Encabezado{Estructura Red}
-  
-  \begin{Estructura}{Red}[estrRed]
+  \begin{Estructura}{red}[estrRed]
 
     \begin{Tupla}[estrRed]
-      \tupItem{compus}{lista(estrCompu)}
-      \tupItem{cantidadCompus}{nat}
+      \tupItem{compus}{conjunto(compu)}
+      \tupItem{conexiones}{dicc(IP, diccConexiones)}
     \end{Tupla}
 
-    \begin{Tupla}[estrCompu]
-      \tupItem{IP}{IP}
-      \tupItem{conexiones}{lista(tupla(inter: interfaz, com: itLista(estrCompu)))}
-    \end{Tupla}
+    \hspace*{3mm}donde \TipoVariable{diccConexiones} es \TipoVariable{dicc(interfaz, itDicc(IP, diccConexiones))}
 
   \end{Estructura}
 
