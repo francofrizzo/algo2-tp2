@@ -8,7 +8,7 @@
     \item $n$: Cantidad de claves definidas en el diccionario.
   \end{itemize}
 
-\servUsados{puntero, tupla, nat }
+\servUsados{puntero, tupla, nat}
 
 \begin{Interfaz}
   
@@ -53,7 +53,7 @@
     \InterfazFuncion{Vacio}{}{\diccLogKS}
     {$res \igobs$ vac\'io}
     [$\Theta(1)$]
-    [Crea y devuelve un diccionario AVL vac\'io.]
+    [Crea y devuelve un diccionario logar\'itmico vac\'io.]
 
     \InterfazFuncion{Definir}{\Inout{d}{\diccLogKS}, \In{k}{$\kappa$}, \In{s}{$\sigma$}}{}
     [$d \igobs d_0$]
@@ -68,7 +68,7 @@
     [$\Theta(\log(n) \times order(k))$]
     [Elimina del diccionario la clave pasada por par\'ametro.]
 
-    \InterfazFuncion{\#Claves}{\In{d}{\diccLogKS}}{nat}
+    \InterfazFuncion{CantClaves}{\In{d}{\diccLogKS}}{nat}
     {$res \igobs$ \#(claves($d$))}
     [$\Theta(1)$]
     [Devuelve la cantidad de claves del diccionario.]
@@ -90,77 +90,31 @@
 \begin{Representacion}
 
   \begin{Estructura}{\diccLogKS}[estrAVL]
-
-    \begin{Tupla}[estrAVL]
-      \tupItemNL{raiz}{puntero(nodo)}%
-      \tupItemNL{cantNodos}{nat}%
-    \end{Tupla}
-
-    \begin{Tupla}[nodo]
-      \tupItemNL{clave}{$\kappa$}%
-      \tupItemNL{significado}{$\sigma$}%
-      \tupItemNL{padre}{puntero(nodo)}%
-      \tupItemNL{izq}{puntero(nodo)}%
-      \tupItemNL{der}{puntero(nodo)}%
-      \tupItemNL{altSubarbol}{nat}%
-    \end{Tupla}
-
+    \hspace*{3mm}donde \TipoVariable{estrAVL} es \TipoVariable{ab(tupla($clave:$ $\kappa$, $significado:$ $\sigma$, $altSubarbol:$ nat))}
   \end{Estructura} 
 
-  \Rep[estrAVL][e]{
-    $e.cantNodos$ = \#(nodos($e$)) $\land$ \\
-    \#(claves($e$)) = \#(nodos($e$)) $\land$ \\
-    $(\paratodo{nodo}{n})$ ($n$ $\in$ nodos($e$) $\impluego$ (\\
-    $n.altSubarbol$ = altura(sub\'arbol($\&n$)) $\land$ \\
-    m\'ax(altura(sub\'arbol($n.izq$)), altura(sub\'arbol($n.der$))) $-$ \\
-    m\'in(altura(sub\'arbol($n.izq$)), altura(sub\'arbol($n.der$))) $\leq 1 \land$ \\
-    $(\paratodo{nodo}{n'})$ (($n' \in$ nodos(sub\'arbol($n$))) $\implies$ ($n' \in$ nodos(sub\'arbol($n.der$)) $\Leftrightarrow$ $\neg (n'.clave \leq n.clave)$)) $\land$ \\
-    $*(n.izq) \neq *(n.der)$ $\land$ $(n.padre = \NULL \Leftrightarrow \&n = e.raiz) \yluego$ \\
-    $((\&n \neq e.raiz) \impluego (\paratodo{nodo}{n'})(n.padre = \&n' \Leftrightarrow n'.izq = \&n \lor n'.der = \&n)$)))
+  \Rep[estrAVL][a]{
+    $\neg$ nil?($a$) $\implies$ ( \\
+    \hspace*{3mm}(nil?(izq($a$)) $\oluego$ (raiz(izq($a$)) $\neq$ raiz($a$) $\land$ raiz(izq($a$)) $\leq$ raiz($a$))) $\land$ \\
+    \hspace*{3mm}(nil?(der($a$)) $\oluego$ (raiz(der($a$)) $\neq$ raiz($a$) $\land$ raiz(der($a$)) $\geq$ raiz($a$))) $\land$ \\
+    \hspace*{3mm}raiz($a$).altSubarbol = altura($a$) $\land$ \\
+    \hspace*{3mm}m\'ax(altura(izq($a$)), altura(der($a$))) $-$ m\'in(altura(izq($a$)), altura(der($a$))) $\leq$ 1 $\land$ \\
+    \hspace*{3mm}Rep(izq($a$)) $\land$ Rep(der($a$))
+    \\ )
   }
-
   ~
-
-  \Abs[estrAVL]{dicc($\kappa$, $\sigma$))}[e]{$d$}{
-    ($\paratodo{k}{\kappa}$) ((def?($k$, $d$)) $\igobs$ ($k$ $\in$ claves($e$)) $\yluego$
-    (def?($k$, $d$) $\impluego$ obtener($k$, $d$) $\igobs$ significado($k$, $e$)))
+  \AbsFc[estrAVL]{dicc($\kappa$, $\sigma$))}[a]{
+    \IF nil?($a$) THEN vac\'io ELSE definir(raiz($a$).clave, raiz($a$).significado, unir(Abs(izq($a$)), Abs(der($a$)))) FI
   }
-
   ~
-
-  \tadOperacion{hijos}{nodo}{conj(nodo)}{}
-  \tadAxioma{hijos($n$)}{\IF $n.izq$ = NULL THEN $\emptyset$ ELSE Ag($*$($n.izq$), hijos($*$($n.izq$))) FI \\
-  $\cup$ \IF $n.der$ = NULL THEN $\emptyset$ ELSE Ag($*$($n.der$), hijos($*$($n.der$))) FI}
-
-  ~
-
-  \tadOperacion{nodos}{estrAVL}{conj(nodo)}{}
-  \tadAxioma{nodos($e$)}{\IF $e.raiz$ = NULL THEN $\emptyset$ ELSE Ag($*$($e.raiz$), hijos($*$($e.raiz$))) FI}
-
-  ~
-
-  % \tadOperacion{sub\'arbol}{nodo}{estrAVL}{}
-  % \tadAxioma{sub\'arbol($n$)}{$\langle \&n$, $1 + \#$(hijos($n$))$\rangle$}
-
-  % ~
-
-  \tadOperacion{sub\'arbol}{puntero(nodo)}{estrAVL}{}
-  \tadAxioma{sub\'arbol($p$)}{$\langle p$, $1 + \#$(hijos($*$($p$)))$\rangle$}
-
-  ~
-
-  \tadOperacion{claves}{estrAVL}{conj($\kappa$)}{}
-  \tadAxioma{claves($e$)}{\IF $e.raiz = \NULL$ THEN $\emptyset$ ELSE Ag($e.raiz \to clave$, claves(sub\'arbol($e.raiz \to izq$)) $\cup$ claves(sub\'arbol($e.raiz \to der$))) FI}
-
-  ~
-
-  \tadOperacion{altura}{estrAVL}{nat}{}
-  \tadAxioma{altura($e$)}{\IF $e.raiz = \NULL$ THEN 0 ELSE 1 + m\'ax(altura(sub\'arbol($e.raiz \to izq$)), altura(sub\'arbol($e.raiz \to der$))) FI}
-
-  ~
-
-  \tadOperacion{significado}{estrAVL/e,$\kappa$/k}{$\sigma$}{$k$ $\in$ claves($e$)}
-  \tadAxioma{significado($e$, $k$)}{\IF $e.raiz \to clave = k$ THEN $e.raiz \to significado$ ELSE {\IF $k$ $\in$ claves(sub\'arbol($e.raiz \to izq$)) THEN significado($k$, sub\'arbol($e.raiz \to izq$)) ELSE significado($k$, sub\'arbol($e.raiz \to der$)) FI} FI}
+  \tadOperacion{unir}{dicc($\kappa$, $\sigma$), dicc($\kappa$, $\sigma$)}{dicc($\kappa$, $\sigma$)}{}
+  \tadAxioma{
+    unir($d_1$, $d_2$)}{\IF vac\'io($d_2$) THEN $d_1$ ELSE definir( \\
+    \hspace*{3mm}dameUno(claves($d_2$)), \\
+    \hspace*{3mm}obtener(dameUno(claves($d_2$)), $d_2$), \\
+    \hspace*{3mm}unir($d_1$, borrar(dameUno(claves($d_2$)), $d_2$)) \\
+    ) FI
+  }
 
 \end{Representacion}
 
@@ -170,13 +124,12 @@
   \SetKwFunction{raizq}{RotarAIzquierda}
   \SetKwFunction{rader}{RotarADerecha}
   \SetKwFunction{buscar}{Buscar}
-  \SetKwFunction{max}{max}
   \SetKwFunction{rebalancear}{RebalancearArbol}
   \SetKwFunction{recalcAlt}{RecalcularAltura}
   % \SetKwFunction{recalcAlts}{RecalcularAlturas}
 
   \begin{algoritmo}{iVacio}{}{estrAVL}
-    $res \gets \langle$NULL, 0$\rangle$ \com*{$\Theta(1)$}
+    $res \gets$ \nil{} \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -184,22 +137,19 @@
   {$\Theta(1)$} % Complejidad
   {} % Justificación
 
-  \begin{algoritmo}{iDefinir}{\Inout{e}{estrAVL}, \In{k}{$\kappa$}, \In{s}{$\sigma$}}{}
-    \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
-    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
-    \eIf(\com*[f]{$\Theta(1)$}){$lugar \neq \NULL$}{
-      $(lugar \to significado) \gets$ \copiar{$s$} \com*{$\Theta(copy(s))$}
+  \begin{algoritmo}{iDefinir}{\In{k}{$\kappa$}, \In{s}{$\sigma$}, \Inout{a}{estrAVL}}{}
+    \tipo{estrAVL} $padre$ \;
+    \tipo{estrAVL} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
+    \eIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{$lugar$}}{
+      \raiz{$lugar$}.$signficado \gets$ \copiar{$s$} \com*{$\Theta(copy(s))$}
     }{
-      \tipo{puntero(nodo)} $nuevo \gets \new \langle$\copiar{$k$}, \copiar{$s$}, NULL, NULL, NULL, $1 \rangle$ \tcp*[h]{Reservamos memoria para el nuevo nodo} \com*{$\Theta(copy(k) + copy(s))$}
-      \eIf(\com*[f]{$\Theta(order(k))$}){$k \leq (padre \to clave)$}{
-        $(padre \to izq) \gets nuevo$ \com*{$\Theta(1)$}
+      \tipo{estrAVL} $nuevo \gets \new$ \bin{\nil{}, $\langle$\copiar{k}, \copiar{s}$, 1 \rangle$, \nil{}} \tcp*[h]{Reservamos memoria para el nuevo nodo} \com*{$\Theta(copy(k) + copy(s))$}
+      \eIf(\com*[f]{$\Theta(order(k))$}){$k \leq $\raiz{$padre$}$.clave$}{
+        $padre \gets$ \bin{$nuevo$, \raiz{$padre$}, \der{$padre$}} \com*{$\Theta(1)$}
       }{
-        $(padre \to der) \gets nuevo$ \com*{$\Theta(1)$}
+        $padre \gets$ \bin{\izq{$padre$}, \raiz{$padre$}, $nuevo$} \com*{$\Theta(1)$}
       }
-      $(nuevo \to padre) \gets padre$ \com*{$\Theta(1)$}
-      % \recalcAlts($padre$) \;
       \rebalancear($padre$) \com*{$\Theta(\log(n))$}
-      $e.cantNodos ++$ \com*{$\Theta(1)$}
     }
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
@@ -208,9 +158,9 @@
   {$\Theta(\log(n) \times order(k) + copy(k) + copy(s))$} % Complejidad
   {La funci\'on tiene llamadas a funciones con complejidad $\Theta(\log(n) \times order(k))$ y $\Theta(copy(k) + copy(s))$.} % Justificacíón
 
-  \begin{algoritmo}{iObtener}{\In{e}{estrAVL}, \In{k}{$\kappa$}}{$\sigma$}
+  \begin{algoritmo}{iObtener}{\In{a}{estrAVL}, \In{k}{$\kappa$}}{$\sigma$}
     \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
-    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
+    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
     $res \gets (lugar \to significado)$ \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
@@ -219,8 +169,8 @@
   {$\Theta(\log(n) \times order(k))$} % Complejidad
   {La funci\'on tiene llamadas a funciones con complejidad $\Theta(\log(n) \times order(k)$ y $\Theta(copy(k) + copy(s))$.} % Justificacíón
 
-  \begin{algoritmo}{i\#Claves}{\In{e}{estrAVL}}{nat}
-    $res \gets e.cantNodos$ \com*{$\Theta(1)$}
+  \begin{algoritmo}{iCantClaves}{\In{a}{estrAVL}}{nat}
+    $res \gets$ \cantNodos{$a$} \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -228,9 +178,9 @@
   {$\Theta(1)$} % Complejidad
   {} % Justificación
 
-  \begin{algoritmo}{iDefinido?}{\In{e}{estrAVL}, \In{k}{$\kappa$}}{bool}
+  \begin{algoritmo}{iDefinido?}{\In{a}{estrAVL}, \In{k}{$\kappa$}}{bool}
     \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
-    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
+    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
     $res \gets (lugar \neq \NULL)$ \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
@@ -239,9 +189,9 @@
   {$\Theta(\log(n) \times order(k))$} % Complejidad
   {$\Theta(1) + \Theta(\log(n) \times order(k)) + \Theta(1) = \Theta(\log(n) \times order(k)) + \Theta(1)$} % Justificación
 
-  \begin{algoritmo}{iBorrar}{\Inout{e}{estrAVL}, \In{k}{$\kappa$}}{}
+  \begin{algoritmo}{iBorrar}{\Inout{a}{estrAVL}, \In{k}{$\kappa$}}{}
     \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
-    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$e$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
+    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
     \uIf(\com*[f]{$\Theta(1)$}){$lugar \to izq = \NULL \land lugar \to der = \NULL$}{
       \eIf(\com*[f]{$\Theta(1)$}){$padre \neq \NULL$}{
         \eIf(\com*[f]{$\Theta(1)$}){$padre \to izq = lugar$}{
@@ -252,7 +202,7 @@
         % \recalcAlts{$padre$} \;
         \rebalancear{$padre$} \com*{$\Theta(\log(n))$}
       }{
-        $e.raiz = \NULL$ \com*{$\Theta(1)$}
+        $a.raiz = \NULL$ \com*{$\Theta(1)$}
       }
     }\uElseIf(\com*[f]{$\Theta(1)$}){$lugar \to der = \NULL$}{
       $(lugar \to izq \to padre) \gets padre$ \com*{$\Theta(1)$}
@@ -265,7 +215,7 @@
         % \recalcAlts{$padre$} \;
         \rebalancear{$padre$} \com*{$\Theta(\log(n))$}
       }{
-        $e.raiz \gets lugar \to izq$ \com*{$\Theta(1)$}
+        $a.raiz \gets lugar \to izq$ \com*{$\Theta(1)$}
       }
     }\uElseIf(\com*[f]{$\Theta(1)$}){$lugar \to izq = \NULL$}{
       $(lugar \to der \to padre) \gets padre$ \com*{$\Theta(1)$}
@@ -278,7 +228,7 @@
         % \recalcAlts{$padre$} \;
         \rebalancear{$padre$} \com*{$\Theta(\log(n))$}
       }{
-        $e.raiz \gets lugar \to izq$ \com*{$\Theta(1)$}
+        $a.raiz \gets lugar \to izq$ \com*{$\Theta(1)$}
       }
     }
   \end{algoritmo}
@@ -294,7 +244,7 @@
             $(padre \to der) \gets reemplazo$ \com*{$\Theta(1)$}
           }
         }{
-          $e.raiz \gets reemplazo$ \com*{$\Theta(1)$}
+          $a.raiz \gets reemplazo$ \com*{$\Theta(1)$}
         }
         $(reemplazo \to padre) \gets padre$ \com*{$\Theta(1)$}
         $(reemplazo \to izq) \gets lugar \to izq$ \com*{$\Theta(1)$}
@@ -313,7 +263,7 @@
             $(padre \to der) \gets reemplazo$ \com*{$\Theta(1)$}
           }
         }{
-          $e.raiz \gets reemplazo$ \com*{$\Theta(1)$}
+          $a.raiz \gets reemplazo$ \com*{$\Theta(1)$}
         }
         $(reemplazo \to padre) \gets padre$ \com*{$\Theta(1)$}
         $(reemplazo \to izq) \gets lugar \to izq$ \com*{$\Theta(1)$}
@@ -336,20 +286,20 @@
   {$\Theta(\log(n) \times order(k))$} % Complejidad
   {El algoritmo tiene una llamada a funci\'on con complejidad $\Theta(\log(n) \times order(k))$, y luego presenta varios casos, pero en todos ellos las funciones llamadas son $O(\log(n))$.} % Justificación
 
-  \begin{algoritmo}{iBuscar}{\In{e}{estrAVL}, \In{k}{$\kappa$}, \Out{padre}{puntero(nodo)}}{puntero(nodo)}
-    $padre \gets \NULL$  \com*{$\Theta(1)$}
-    $actual \gets e.raiz$  \com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$actual \neq \NULL \yluego (actual \to clave \neq k)$}{ % ¡Preguntar por el y luego!
+  \begin{algoritmo}{iBuscar}{\In{a}{estrAVL}, \In{k}{$\kappa$}, \Out{padre}{estrAVL}}{puntero(estrAVL)}
+    $padre \gets$ \nil{} \com*{$\Theta(1)$}
+    $actual \gets a$ \com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$\neg$ \esNil{$actual$} $\yluego ($\raiz{$actual$}.$clave$ $ \neq k)$}{
       $padre \gets actual$ \com*{$\Theta(1)$}
-      \eIf(\com*[f]{$\Theta(order(k))$}){$k \leq (padre \to clave)$}{
-        $actual \gets (actual \to izq)$ \com*{$\Theta(1)$}
+      \eIf(\com*[f]{$\Theta(order(k))$}){$k \leq$ \raiz{$actual$}.$clave$}{
+        $actual \gets$ \izq{$actual$} \com*{$\Theta(1)$}
       }{
-        $actual \gets (actual \to der)$ \com*{$\Theta(1)$}
+        $actual \gets$ \der{$actual$} \com*{$\Theta(1)$}
       }
     }
     $res \gets actual$ \com*{$\Theta(1)$}
   \end{algoritmo}
-  \datosAlgoritmo{Esta operaci\'on privada recibe la estructura de representaci\'on interna del diccionario y una clave por par\'ametro. Si la clave est\'a definida, devuelve un puntero al nodo que la contiene y coloca en el par\'ametro de out $padre$ un puntero al padre de dicho nodo. En caso contrario, devuelve NULL y coloca en el par\'ametro de out $padre$ un puntero a la hoja del \'arbol que deber\'ia ser padre del nodo buscado, si la clave estuviera definida.} % Descripción
+  \datosAlgoritmo{Esta operaci\'on privada recibe el \'arbol AVL sobre el que est\'a representado el diccionario y una clave por par\'ametro. Si la clave est\'a definida, devuelve el sub\'arbol que tiene a dicha clave en su ra\'iz, y coloca en el par\'ametro de out $padre$ el sub\'arbol del cual dicha clave es hija inmediata. En caso contrario, devuelve un \'arbol vac\'io y coloca en el par\'ametro de out $padre$ el sub\'arbol \'arbol del cual la clave deber\'ia ser hija inmediata, si estuviera definida.} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(\log(n) \times order(k))$} % Complejidad
@@ -359,7 +309,7 @@
   %   \tipo{puntero(nodo)} $p \gets n$ \com*{$\Theta(1)$}
   %   \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$p \neq \NULL$}{
   %     \uIf{$p \to izq \neq \NULL \land p \to der \neq \NULL$}{
-  %       $(p \to altSubarbol) \gets 1$ + \max{$p \to izq \to altSubarbol$, $p \to der \to altSubarbol$} \com*{$\Theta(1)$}
+  %       $(p \to altSubarbol) \gets 1$ + \maximo{$p \to izq \to altSubarbol$, $p \to der \to altSubarbol$} \com*{$\Theta(1)$}
   %     }\uElseIf{$p \to izq \neq \NULL$}{
   %       $(p \to altSubarbol) \gets 1 + (p \to izq \to altSubarbol)$ \com*{$\Theta(1)$}
   %     }\uElseIf{$p \to der \neq \NULL$}{
@@ -378,7 +328,7 @@
 
   \begin{algoritmo}{iRecalcularAltura}{\In{n}{puntero(nodo)}}{}
     \uIf(\com*[f]{$\Theta(1)$}){$n \to izq \neq \NULL \land n \to der \neq \NULL$}{
-      $(n \to altSubarbol) \gets 1$ + \max{$n \to izq \to altSubarbol$, $n \to der \to altSubarbol$} \com*{$\Theta(1)$}
+      $(n \to altSubarbol) \gets 1$ + \maximo{$n \to izq \to altSubarbol$, $n \to der \to altSubarbol$} \com*{$\Theta(1)$}
     }\uElseIf(\com*[f]{$\Theta(1)$}){$n \to izq \neq \NULL$}{
       $(n \to altSubarbol) \gets 1 + (n \to izq \to altSubarbol)$ \com*{$\Theta(1)$}
     }\uElseIf(\com*[f]{$\Theta(1)$}){$n \to der \neq \NULL$}{

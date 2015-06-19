@@ -1,1 +1,240 @@
-\section{M\'odulo \'Arbol Binario}
+\section{M\'odulo \'Arbol binario}
+
+\Encabezado{Notas preliminares}
+  En todos los casos, al indicar las complejidades de los algoritmos, las variables que se utilizan corresponden a:
+  \vspace{-0.5em}\begin{itemize}
+    \item $n$: Cantidad de nodos en el \'arbol binario.
+  \end{itemize}
+
+\begin{Interfaz}
+  
+  \begin{paramFormales}
+    \paramGeneros{$\alpha$}
+  \end{paramFormales}
+
+  \seExplicaCon{Arbol binario($\alpha$)}
+
+  \generos{\tipo{ab($\alpha$)}}
+
+  \Encabezado{Operaciones del TAD \'Arbol binario}
+
+    \InterfazFuncion{Nil}{}{ab($\alpha$)}
+    {$res \igobs$ nil}
+    [$\Theta(1)$]
+    [Crea y devuelve un \'arbol binario vac\'io.]
+
+    \InterfazFuncion{Bin}{\In{i}{ab($\alpha$)}, \In{r}{$\alpha$}, \In{d}{ab($\alpha$)}}{ab($\alpha$)}
+    {$res$ $\igobs$ bin($i$, $r$, $d$) $\land$ esAlias(izq($res$), $i$) $\land$ esAlias(raiz($res$), $r$) $\land$ esAlias(der($res$), $d$)}
+    [$\Theta(1)$]
+    [Crea y devuelve un \'arbol binario usando los par\'ametros de entrada como sub\'arbol izquierdo, ra\'iz y sub\'arbol derecho, respectivamente.]
+    [Tanto la ra\'iz como los dos sub\'arboles son tomados por referencia. Cualquier modificaci\'on de los mismos incide sobre el \'arbol binario creado.]
+
+    \InterfazFuncion{EsNil}{\In{a}{ab($\alpha$)}}{bool}
+    {$res$ $\igobs$ nil?($a$)}
+    [$\Theta(1)$]
+    [Devuelve \emph{true} si y solo si el \'arbol binario est\'a vac\'io.]
+
+    \InterfazFuncion{Raiz}{\In{a}{ab($\alpha$)}}{$\alpha$}
+    [$\neg$ nil?($a$)]
+    {esAlias($res$, raiz($a$))}
+    [$\Theta(1)$]
+    [Devuelve la ra\'iz del \'arbol binario pasado por par\'ametro.]
+    [El elemento se devuelve por referencia.]
+
+    \InterfazFuncion{Izq}{\In{a}{ab($\alpha$)}}{$\alpha$}
+    [$\neg$ nil?($a$)]
+    {esAlias($res$, izq($a$))}
+    [$\Theta(1)$]
+    [Devuelve el sub\'arbol izquierdo del \'arbol binario pasado por par\'ametro.]
+    [El sub\'arbol se devuelve por referencia.]
+
+    \InterfazFuncion{Der}{\In{a}{ab($\alpha$)}}{$\alpha$}
+    [$\neg$ nil?($a$)]
+    {esAlias($res$, der($a$))}
+    [$\Theta(1)$]
+    [Devuelve el sub\'arbol derecho del \'arbol binario pasado por par\'ametro.]
+    [El sub\'arbol se devuelve por referencia.]
+
+    \InterfazFuncion{Altura}{\In{a}{ab($\alpha$)}}{nat}
+    {$res \igobs$ altura($a$))}
+    [$\Theta(1)$]
+    [Devuelve la m\'axima distancia entre la ra\'iz del \'arbol binario y alguna de sus hojas.]
+
+    \InterfazFuncion{CantNodos}{\In{a}{ab($\alpha$)}}{nat}
+    {$res \igobs$ tama\~no($a$))}
+    [$\Theta(1)$]
+    [Devuelve la cantidad de nodos del \'arbol binario.]
+
+    \InterfazFuncion{Inorder}{\In{a}{ab($\alpha$)}}{lista($\alpha$)}
+    {$res \igobs$ inorder($a$))}
+    [$\Theta(n)$]
+    [Devuelve una lista con todos los elementos del \'arbol, recorridos en inorden.]
+
+    \InterfazFuncion{Preorder}{\In{a}{ab($\alpha$)}}{lista($\alpha$)}
+    {$res \igobs$ preorder($a$))}
+    [$\Theta(n)$]
+    [Devuelve una lista con todos los elementos del \'arbol, recorridos en preorden.]
+
+    \InterfazFuncion{Postorder}{\In{a}{ab($\alpha$)}}{lista($\alpha$)}
+    {$res \igobs$ postorder($a$))}
+    [$\Theta(n)$]
+    [Devuelve una lista con todos los elementos del \'arbol, recorridos en postorden.]
+
+\end{Interfaz}
+
+\begin{Representacion}
+
+  \begin{Estructura}{ab($\alpha$)}[puntero(nodo)]
+
+    \begin{Tupla}[nodo]
+      \tupItemNL{valor}{$\alpha$}%
+      % \tupItemNL{padre}{puntero(nodo)}%
+      \tupItemNL{izq}{puntero(nodo)}%
+      \tupItemNL{der}{puntero(nodo)}%
+      % \tupItemNL{cantNodosSubarbol}{nat}%
+      % \tupItemNL{altSubarbol}{nat}%
+    \end{Tupla}
+
+  \end{Estructura} 
+
+  \Rep[puntero(nodo)][a]{
+    $\emptyset$?(padres($a$, nodos($a$))) $\land$ \\
+    $(\paratodo{nodo}{n})$ ($n$ $\in$ nodos($a$) $\implies$ (\\
+    ($(\&n \neq a)$ $\implies$ \#(padres($n$, nodos($a$))) = 1) $\land$ \\
+    $n.izq$ $\neq$ NULL $\implies$ $n.izq$ $\neq$ $n.der$ $\land$ \\
+    % $n.cantNodosSubarbol$ = \#(nodos($\&n$)) $\land$ \\
+    % $n.altSubarbol$ = altura($\&n$) ))
+  }
+  ~
+  \AbsFc[puntero(nodo)]{ab($\alpha$)}[a]{
+    \IF $a$ = NULL THEN nil ELSE bin(Abs($a \to izq$), $a \to valor$, Abs($a \to der$)) FI
+  }
+  ~
+  \tadOperacion{hijos}{nodo}{conj(nodo)}{}
+  \tadAxioma{hijos($n$)}{\IF $n.izq$ = NULL THEN $\emptyset$ ELSE Ag($*$($n.izq$), hijos($*$($n.izq$))) FI \\
+  $\cup$ \IF $n.der$ = NULL THEN $\emptyset$ ELSE Ag($*$($n.der$), hijos($*$($n.der$))) FI}
+  ~
+  \tadOperacion{nodos}{puntero(nodo)}{conj(nodo)}{}
+  \tadAxioma{nodos($a$)}{\IF $a$ = NULL THEN $\emptyset$ ELSE Ag($*$($a$), hijos($*$($a$))) FI}
+  ~
+  \tadOperacion{altura}{puntero(nodo)}{nat}{}
+  \tadAxioma{altura($a$)}{\IF $a = \NULL$ THEN 0 ELSE 1 + m\'ax(altura($a \to izq$), altura($a \to der$)) FI}
+  ~
+  \tadOperacion{padres}{puntero(nodo),conj(nodo)}{conj(nodo)}{}
+  \tadAxioma{padres($a$, $ns$)}{\IF dameUno($ns$).$izq$ $=$ $a$ $\lor$ dameUno($ns$).$der$ $=$ $a$ THEN Ag(dameUno($ns$), padres($a$, sinUno($ns$)) ELSE padres($a$, sinUno($ns$)) FI}
+
+\end{Representacion}
+
+\begin{Algoritmos}
+
+  \SetKwFunction{nil}{Nil}
+  \SetKwFunction{bin}{Bin}
+  \SetKwFunction{esNil}{EsNil}
+  \SetKwFunction{raiz}{Raiz}
+  \SetKwFunction{izq}{Izq}
+  \SetKwFunction{der}{Der}
+  \SetKwFunction{altura}{Altura}
+  \SetKwFunction{cantNodos}{CantNodos}
+  \SetKwFunction{inord}{Inorder}
+  \SetKwFunction{preord}{Preorder}
+  \SetKwFunction{postord}{Postorder}
+
+  \begin{algoritmo}{iNil}{}{puntero(nodo)}
+    $res \gets \NULL$ \com*{$\Theta(1)$}
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {} % Justificación
+
+  \begin{algoritmo}{iBin}{\In{i}{puntero(nodo)}, \In{r}{$\alpha$}, \In{d}{puntero(nodo)}}{puntero(nodo)}
+    $res \gets \new \langle r$, $i$, $d$, 1 + \maximo{\altura{$i$}, \altura{$d$}}, 1 + \cantNodos{$i$} + \cantNodos{$d$} $\rangle$ \tcp*[h]{Reservamos memoria para el nuevo nodo} \com*{$\Theta(1)$}
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {} % Justificación
+
+  \begin{algoritmo}{iEsNil}{\In{a}{ab($\alpha$)}}{bool}
+    $res \gets a = \NULL$ \com*{$\Theta(1)$}
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {} % Justificación
+
+  \begin{algoritmo}{iRaiz}{\In{a}{ab($\alpha$)}}{$\alpha$}
+    $res \gets a \to valor$ \com*{$\Theta(1)$}
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {} % Justificación
+
+  \begin{algoritmo}{iIzq}{\In{a}{ab($\alpha$)}}{ab($\alpha$)}
+    $res \gets a \to izq$ \com*{$\Theta(1)$}
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {} % Justificación
+
+  \begin{algoritmo}{iDer}{\In{a}{ab($\alpha$)}}{ab($\alpha$)}
+    $res \gets a \to der$ \com*{$\Theta(1)$}
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(1)$} % Complejidad
+  {} % Justificación
+
+  % \begin{algoritmo}{Altura}{\In{a}{ab($\alpha$)}}{nat}
+  %   $res \gets a \to alturaSubarbol$ \com*{$\Theta(1)$}
+  % \end{algoritmo}
+  % \datosAlgoritmo{} % Descripción
+  % {} % Pre
+  % {} % Post
+  % {$\Theta(1)$} % Complejidad
+  % {} % Justificación
+
+  % \begin{algoritmo}{CantNodos}{\In{a}{ab($\alpha$)}}{nat}
+  %   $res \gets a \to cantNodosSubarbol$ \com*{$\Theta(1)$}
+  % \end{algoritmo}
+  % \datosAlgoritmo{} % Descripción
+  % {} % Pre
+  % {} % Post
+  % {$\Theta(1)$} % Complejidad
+  % {} % Justificación
+
+  \begin{algoritmo}{iAltura}{\In{a}{ab($\alpha$)}}{nat}
+    \eIf(\com*[f]{$\Theta(1)$}){\esNil{$a$}}{
+      $res \gets 0$ \com*{$\Theta(1)$}
+    }{
+      $res \gets$ 1 + \maximo{\altura{\izq{$a$}}, \altura{\der{$a$}}} \com*{$\Theta(n)$ (ver justificaci\'on)}
+    }
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(n)$} % Complejidad
+  {Cada nodo interior del \'arbol llama a la funci\'on recursivamente sobre sus dos hijos, por lo que la funci\'on se ejecuta exactamente una vez por cada uno de los $n$ nodos del \'arbol. Como las operaciones que se realizan, sin contar la llamada recursiva, tienen complejidad $\Theta(1)$, la complejidad total resulta $\Theta(n)$.} % Justificación
+
+  \begin{algoritmo}{iCantNodos}{\In{a}{ab($\alpha$)}}{nat}
+    \eIf(\com*[f]{$\Theta(1)$}){\esNil{$a$}}{
+      $res \gets 0$ \com*{$\Theta(1)$}
+    }{
+      $res \gets$ 1 + \cantNodos{\izq{$a$}} + \cantNodos{\der{$a$}} \com*{$\Theta(n)$ (ver justificaci\'on)}
+    }
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(n)$} % Complejidad
+  {Cada nodo interior del \'arbol llama a la funci\'on recursivamente sobre sus dos hijos, por lo que la funci\'on se ejecuta exactamente una vez por cada uno de los $n$ nodos del \'arbol. Como las operaciones que se realizan, sin contar la llamada recursiva, tienen complejidad $\Theta(1)$, la complejidad total resulta $\Theta(n)$.} % Justificación
+
+\end{Algoritmos}
