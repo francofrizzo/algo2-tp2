@@ -70,7 +70,7 @@
 
     \InterfazFuncion{CantClaves}{\In{d}{\diccLogKS}}{nat}
     {$res \igobs$ \#(claves($d$))}
-    [$\Theta(1)$]
+    [$\Theta(n)$]
     [Devuelve la cantidad de claves del diccionario.]
 
     \InterfazFuncion{Definido?}{\In{d}{\diccLogKS}, \In{k}{$\kappa$}}{bool}
@@ -90,13 +90,41 @@
 \begin{Representacion}
 
   \begin{Estructura}{\diccLogKS}[estrAVL]
-    \hspace*{3mm}donde \TipoVariable{estrAVL} es \TipoVariable{ab(tupla($clave:$ $\kappa$, $significado:$ $\sigma$, $altSubarbol:$ nat))}
+    \hspace*{3mm}donde \TipoVariable{estrAVL} es \TipoVariable{ab(tupla(\campoTupla{clave}{$\kappa$}, \campoTupla{significado}{$\sigma$}, \campoTupla{altSubarbol}{nat}, \campoTupla{padre}{estrAVL}))}
   \end{Estructura} 
+
+  % Variante no recursiva del REP
+  % \Rep[estrAVL][a]{
+  %   $(\neg$ nil?($a$) $\implies$ raiz($a$).$padre$ = nil) $\land$ \\
+  %   $(\paratodo{estrAVL}{b}) ((b \in$ sub\'arboles($a$) $\land$ $\neg$ nil?($b$)) $\implies$ ( \\
+  %   \hspace*{3mm}(nil?(izq($b$)) $\oluego$ ( \\
+  %     \hspace*{6mm}raiz(izq($b$)).$clave$ $\neq$ raiz($b$).$clave$ $\land$ \\
+  %     \hspace*{6mm}raiz(izq($b$)).$clave$ $\leq$ raiz($b$).$clave$ $\land$ \\
+  %     \hspace*{6mm}raiz(izq($b$)).$padre$ = $b$ \\
+  %   \hspace*{3mm})) $\land$ \\
+  %   \hspace*{3mm}(nil?(der($b$)) $\oluego$ ( \\
+  %     \hspace*{6mm}raiz(der($b$)).$clave$ $\neq$ raiz($b$).$clave$ $\land$ \\
+  %     \hspace*{6mm}raiz(der($b$)).$clave$ $\geq$ raiz($b$).$clave$ $\land$ \\
+  %     \hspace*{6mm}raiz(der($b$)).$padre$ = $b$ \\
+  %   \hspace*{3mm})) $\land$ \\
+  %   \hspace*{3mm}raiz($b$).$altSubarbol$ = altura($b$) $\land$ \\
+  %   \hspace*{3mm}m\'ax(altura(izq($b$)), altura(der($b$))) $-$ m\'in(altura(izq($b$)), altura(der($b$))) $\leq$ 1 $\land$ \\
+  %   ))
+  % }
 
   \Rep[estrAVL][a]{
     $\neg$ nil?($a$) $\implies$ ( \\
-    \hspace*{3mm}(nil?(izq($a$)) $\oluego$ (raiz(izq($a$)) $\neq$ raiz($a$) $\land$ raiz(izq($a$)) $\leq$ raiz($a$))) $\land$ \\
-    \hspace*{3mm}(nil?(der($a$)) $\oluego$ (raiz(der($a$)) $\neq$ raiz($a$) $\land$ raiz(der($a$)) $\geq$ raiz($a$))) $\land$ \\
+    \hspace*{3mm}(nil?(izq($a$)) $\oluego$ ( \\
+      \hspace*{6mm}raiz(izq($a$)).$clave$ $\neq$ raiz($a$).$clave$ $\land$ \\
+      \hspace*{6mm}raiz(izq($a$)).$clave$ $\leq$ raiz($a$).$clave$ $\land$ \\
+      \hspace*{6mm}raiz(izq($a$)).$padre$ = $a$ \\
+    \hspace*{3mm})) $\land$ \\
+    \hspace*{3mm}(nil?(der($a$)) $\oluego$ ( \\
+      \hspace*{6mm}raiz(der($a$)).$clave$ $\neq$ raiz($a$).$clave$ $\land$ \\
+      \hspace*{6mm}raiz(der($a$)).$clave$ $\geq$ raiz($a$).$clave$ $\land$ \\
+      \hspace*{6mm}raiz(der($a$)).$padre$ = $a$ \\
+    \hspace*{3mm})) $\land$ \\
+    \hspace*{3mm}raiz($a$).$altSubarbol$ = altura($a$) $\land$ \\
     \hspace*{3mm}raiz($a$).altSubarbol = altura($a$) $\land$ \\
     \hspace*{3mm}m\'ax(altura(izq($a$)), altura(der($a$))) $-$ m\'in(altura(izq($a$)), altura(der($a$))) $\leq$ 1 $\land$ \\
     \hspace*{3mm}Rep(izq($a$)) $\land$ Rep(der($a$))
@@ -107,9 +135,12 @@
     \IF nil?($a$) THEN vac\'io ELSE definir(raiz($a$).clave, raiz($a$).significado, unir(Abs(izq($a$)), Abs(der($a$)))) FI
   }
   ~
+  % \tadOperacion{sub\'arboles}{estrAVL}{conj(estrAVL)}{}
+  % \tadAxioma{sub\'arboles($a$)}{\IF nil?($a$) THEN $\emptyset$ ELSE Ag($a$, sub\'arboles(izq($a$)) $\cup$ sub\'arboles(der($a$))) FI}
+  % ~
   \tadOperacion{unir}{dicc($\kappa$, $\sigma$), dicc($\kappa$, $\sigma$)}{dicc($\kappa$, $\sigma$)}{}
-  \tadAxioma{
-    unir($d_1$, $d_2$)}{\IF vac\'io($d_2$) THEN $d_1$ ELSE definir( \\
+  \tadAxioma{unir($d_1$, $d_2$)}{
+    \IF vac\'io($d_2$) THEN $d_1$ ELSE definir( \\
     \hspace*{3mm}dameUno(claves($d_2$)), \\
     \hspace*{3mm}obtener(dameUno(claves($d_2$)), $d_2$), \\
     \hspace*{3mm}unir($d_1$, borrar(dameUno(claves($d_2$)), $d_2$)) \\
@@ -126,8 +157,8 @@
   \SetKwFunction{buscar}{Buscar}
   \SetKwFunction{rebalancear}{RebalancearArbol}
   \SetKwFunction{recalcAlt}{RecalcularAltura}
-  % \SetKwFunction{recalcAlts}{RecalcularAlturas}
 
+  \nuevoAlgo
   \begin{algoritmo}{iVacio}{}{estrAVL}
     $res \gets$ \nil{} \com*{$\Theta(1)$}
   \end{algoritmo}
@@ -137,13 +168,14 @@
   {$\Theta(1)$} % Complejidad
   {} % Justificación
 
+  \nuevoAlgo
   \begin{algoritmo}{iDefinir}{\In{k}{$\kappa$}, \In{s}{$\sigma$}, \Inout{a}{estrAVL}}{}
     \tipo{estrAVL} $padre$ \;
     \tipo{estrAVL} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
     \eIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{$lugar$}}{
       \raiz{$lugar$}.$signficado \gets$ \copiar{$s$} \com*{$\Theta(copy(s))$}
     }{
-      \tipo{estrAVL} $nuevo \gets \new$ \bin{\nil{}, $\langle$\copiar{k}, \copiar{s}$, 1 \rangle$, \nil{}} \tcp*[h]{Reservamos memoria para el nuevo nodo} \com*{$\Theta(copy(k) + copy(s))$}
+      \tipo{estrAVL} $nuevo \gets \new$ \bin{\nil{}, $\langle$\copiar{$k$}, \copiar{$s$}, 1, $padre \rangle$, \nil{}} \tcp*[h]{Reservamos memoria para el nuevo nodo} \com*{$\Theta(copy(k) + copy(s))$}
       \eIf(\com*[f]{$\Theta(order(k))$}){$k \leq $\raiz{$padre$}$.clave$}{
         $padre \gets$ \bin{$nuevo$, \raiz{$padre$}, \der{$padre$}} \com*{$\Theta(1)$}
       }{
@@ -158,10 +190,11 @@
   {$\Theta(\log(n) \times order(k) + copy(k) + copy(s))$} % Complejidad
   {La funci\'on tiene llamadas a funciones con complejidad $\Theta(\log(n) \times order(k))$ y $\Theta(copy(k) + copy(s))$.} % Justificacíón
 
+  \nuevoAlgo
   \begin{algoritmo}{iObtener}{\In{a}{estrAVL}, \In{k}{$\kappa$}}{$\sigma$}
-    \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
-    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
-    $res \gets (lugar \to significado)$ \com*{$\Theta(1)$}
+    \tipo{estrAVL} $padre$ \;
+    \tipo{estrAVL} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
+    $res \gets$ \raiz{$lugar$}.$significado$ \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -169,19 +202,21 @@
   {$\Theta(\log(n) \times order(k))$} % Complejidad
   {La funci\'on tiene llamadas a funciones con complejidad $\Theta(\log(n) \times order(k)$ y $\Theta(copy(k) + copy(s))$.} % Justificacíón
 
+  \nuevoAlgo
   \begin{algoritmo}{iCantClaves}{\In{a}{estrAVL}}{nat}
-    $res \gets$ \cantNodos{$a$} \com*{$\Theta(1)$}
+    $res \gets$ \cantNodos{$a$} \com*{$\Theta(n)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(1)$} % Complejidad
+  {$\Theta(n)$} % Complejidad
   {} % Justificación
 
+  \nuevoAlgo
   \begin{algoritmo}{iDefinido?}{\In{a}{estrAVL}, \In{k}{$\kappa$}}{bool}
-    \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
-    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
-    $res \gets (lugar \neq \NULL)$ \com*{$\Theta(1)$}
+    \tipo{estrAVL} $padre$ \;
+    \tipo{estrAVL} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
+    $res \gets \neg$ \esNil{$lugar$} \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -190,77 +225,73 @@
   {$\Theta(1) + \Theta(\log(n) \times order(k)) + \Theta(1) = \Theta(\log(n) \times order(k)) + \Theta(1)$} % Justificación
 
   \begin{algoritmo}{iBorrar}{\Inout{a}{estrAVL}, \In{k}{$\kappa$}}{}
-    \tipo{puntero(nodo)} $padre \gets \NULL$ \com*{$\Theta(1)$}
-    \tipo{puntero(nodo)} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
-    \uIf(\com*[f]{$\Theta(1)$}){$lugar \to izq = \NULL \land lugar \to der = \NULL$}{
-      \eIf(\com*[f]{$\Theta(1)$}){$padre \neq \NULL$}{
-        \eIf(\com*[f]{$\Theta(1)$}){$padre \to izq = lugar$}{
-          $(padre \to izq) \gets \NULL$ \com*{$\Theta(1)$}
+    \tipo{estrAVL} $padre$ \;
+    \tipo{estrAVL} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
+    \uIf(\com*[f]{$\Theta(1)$}){\esNil{\izq{$lugar$}} $\land$ \esNil{\der{$lugar$}}}{
+      \eIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{$padre$}}{
+        \eIf(\com*[f]{$\Theta(1)$}){\izq{$padre$} = $lugar$}{
+          $padre \gets$ \bin{\nil{}, \raiz{$padre$}, \der{$padre$}} \com*{$\Theta(1)$}
         }{
-          $(padre \to der) \gets \NULL$ \com*{$\Theta(1)$}
+          $padre \gets$ \bin{\izq{$padre$}, \raiz{$padre$}, \nil{}} \com*{$\Theta(1)$}
         }
-        % \recalcAlts{$padre$} \;
         \rebalancear{$padre$} \com*{$\Theta(\log(n))$}
       }{
-        $a.raiz = \NULL$ \com*{$\Theta(1)$}
+        $a \gets$ \nil{} \com*{$\Theta(1)$}
       }
-    }\uElseIf(\com*[f]{$\Theta(1)$}){$lugar \to der = \NULL$}{
-      $(lugar \to izq \to padre) \gets padre$ \com*{$\Theta(1)$}
-      \eIf(\com*[f]{$\Theta(1)$}){$padre \neq \NULL$}{
-        \eIf(\com*[f]{$\Theta(1)$}){$padre \to izq = lugar$}{
-          $(padre \to izq) \gets (lugar \to izq)$ \com*{$\Theta(1)$}
+    }\uElseIf(\com*[f]{$\Theta(1)$}){\esNil{\der{$lugar$}}}{
+      \raiz{\izq{$lugar$}}.$padre \gets padre$ \com*{$\Theta(1)$}
+      \eIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{$padre$}}{
+        \eIf(\com*[f]{$\Theta(1)$}){\izq{$padre$} = $lugar$}{
+          $padre \gets$ \bin{\izq{$lugar$}, \raiz{$padre$}, \der{$padre$}} \com*{$\Theta(1)$}
         }{
-          $(padre \to der) \gets (lugar \to izq)$ \com*{$\Theta(1)$}
+          $padre \gets$ \bin{\izq{$padre$}, \raiz{$padre$}, \izq{$lugar$}} \com*{$\Theta(1)$}
         }
-        % \recalcAlts{$padre$} \;
         \rebalancear{$padre$} \com*{$\Theta(\log(n))$}
       }{
-        $a.raiz \gets lugar \to izq$ \com*{$\Theta(1)$}
+        $a \gets$ \izq{$lugar$} \com*{$\Theta(1)$}
       }
-    }\uElseIf(\com*[f]{$\Theta(1)$}){$lugar \to izq = \NULL$}{
-      $(lugar \to der \to padre) \gets padre$ \com*{$\Theta(1)$}
-      \eIf(\com*[f]{$\Theta(1)$}){$padre \neq \NULL$}{
-        \eIf(\com*[f]{$\Theta(1)$}){$padre \to izq = lugar$}{
-          $(padre \to izq) \gets (lugar \to der)$ \com*{$\Theta(1)$}
+    }\uElseIf(\com*[f]{$\Theta(1)$}){\esNil{\izq{$lugar$}}}{
+      \raiz{\izq{$lugar$}}.$padre \gets padre$ \com*{$\Theta(1)$}
+      \eIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{$padre$}}{
+        \eIf(\com*[f]{$\Theta(1)$}){\izq{$padre$} = $lugar$}{
+          $padre \gets$ \bin{\der{$lugar$}, \raiz{$padre$}, \der{$padre$}} \com*{$\Theta(1)$}
         }{
-          $(padre \to der) \gets (lugar \to der)$ \com*{$\Theta(1)$}
+          $padre \gets$ \bin{\izq{$padre$}, \raiz{$padre$}, \der{$lugar$}} \com*{$\Theta(1)$}
         }
-        % \recalcAlts{$padre$} \;
         \rebalancear{$padre$} \com*{$\Theta(\log(n))$}
       }{
-        $a.raiz \gets lugar \to izq$ \com*{$\Theta(1)$}
+        $a \gets$ \der{$lugar$} \com*{$\Theta(1)$}
       }
     }
   \end{algoritmo}
 
   \begin{contAlgoritmo}{iBorrar}
     \Else{
-      \tipo{puntero(nodo)} $reemplazo \gets (lugar \to der)$ \com*{$\Theta(1)$}
-      \eIf(\com*[f]{$\Theta(1)$}){$(reemplazo \to izq = \NULL)$}{
-        \eIf(\com*[f]{$\Theta(1)$}){$padre \neq \NULL$}{
-          \eIf(\com*[f]{$\Theta(1)$}){$(padre \to izq) = lugar$}{
-            $(padre \to izq) \gets reemplazo$ \com*{$\Theta(1)$}
+      \tipo{estrAVL} $reemplazo \gets$ \der{$lugar$} \com*{$\Theta(1)$}
+      \eIf(\com*[f]{$\Theta(1)$}){\esNil{\izq{$reemplazo$}}}{
+        \eIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{$padre$}}{
+          \eIf(\com*[f]{$\Theta(1)$}){\izq{$padre$} = $lugar$}{
+            \izq{$padre$} $\gets reemplazo$ \com*{$\Theta(1)$}
           }{
-            $(padre \to der) \gets reemplazo$ \com*{$\Theta(1)$}
+            \der{$padre$} $\gets reemplazo$ \com*{$\Theta(1)$}
           }
         }{
-          $a.raiz \gets reemplazo$ \com*{$\Theta(1)$}
+          $a \gets reemplazo$ \com*{$\Theta(1)$}
         }
-        $(reemplazo \to padre) \gets padre$ \com*{$\Theta(1)$}
-        $(reemplazo \to izq) \gets lugar \to izq$ \com*{$\Theta(1)$}
-        $(lugar \to izq \to padre) \gets reemplazo$ \com*{$\Theta(1)$}
-        % \recalcAlts{$reemplazo$} \;
+        \raiz{$reemplazo$}.$padre \gets padre$ \com*{$\Theta(1)$}
+        \izq{$reemplazo$} $\gets$ \izq{$lugar$} \com*{$\Theta(1)$}
+        \izq{$lugar$}.$padre$ $\gets reemplazo$ \com*{$\Theta(1)$}
         \rebalancear{$reemplazo$} \com*{$\Theta(\log(n))$}
       }{
-        \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$(reemplazo \to izq) \neq \NULL$}{
-          $reemplazo \gets (reemplazo \to izq)$ \com*{$\Theta(1)$}
+        \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$\neg$ \esNil{\izq{$reemplazo$}}}{
+          $reemplazo \gets$ \izq{$reemplazo$} \com*{$\Theta(1)$}
         }
-        \tipo{puntero(nodo)} $padreReemplazo \gets (reemplazo \to padre)$ \com*{$\Theta(1)$}
-        \eIf(\com*[f]{$\Theta(1)$}){$padre \neq \NULL$}{
-          \eIf(\com*[f]{$\Theta(1)$}){$padre \to izq = lugar$}{
-            $(padre \to izq) \gets reemplazo$ \com*{$\Theta(1)$}
+        \tipo{estrAVL} $padreReemplazo \gets$ \raiz{$reemplazo$}.$padre$ \com*{$\Theta(1)$}
+        \eIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{$padre$}}{
+          \eIf(\com*[f]{$\Theta(1)$}){\izq{$padre$} = $lugar$}{
+            $padre \gets$ \bin{$reemplazo$, \raiz{$padre$}, \der{$padre$}}
           }{
-            $(padre \to der) \gets reemplazo$ \com*{$\Theta(1)$}
+            $padre \gets$ \bin{\izq{$padre$}, \raiz{$padre$}, $reemplazo$}
           }
         }{
           $a.raiz \gets reemplazo$ \com*{$\Theta(1)$}
@@ -274,7 +305,6 @@
         }
         $(reemplazo \to der) \gets (lugar \to der)$ \com*{$\Theta(1)$}
         $(lugar \to der \to padre) \gets reemplazo$ \com*{$\Theta(1)$}
-        % \recalcAlts{$reemplazo$} \;
         \rebalancear{$reemplazo$} \com*{$\Theta(\log(n))$}
       }
     }
@@ -286,6 +316,7 @@
   {$\Theta(\log(n) \times order(k))$} % Complejidad
   {El algoritmo tiene una llamada a funci\'on con complejidad $\Theta(\log(n) \times order(k))$, y luego presenta varios casos, pero en todos ellos las funciones llamadas son $O(\log(n))$.} % Justificación
 
+  \nuevoAlgo
   \begin{algoritmo}{iBuscar}{\In{a}{estrAVL}, \In{k}{$\kappa$}, \Out{padre}{estrAVL}}{puntero(estrAVL)}
     $padre \gets$ \nil{} \com*{$\Theta(1)$}
     $actual \gets a$ \com*{$\Theta(1)$}
@@ -305,135 +336,107 @@
   {$\Theta(\log(n) \times order(k))$} % Complejidad
   {El algoritmo presenta un ciclo que se repite $\Theta(\log(n))$ veces, y en cada una de ellas se realiza una llamada a funci\'on con complejidad $\Theta(order(k))$.} % Justificación
 
-  % \begin{algoritmo}{iRecalcularAlturas}{\In{n}{puntero(nodo)}}{}
-  %   \tipo{puntero(nodo)} $p \gets n$ \com*{$\Theta(1)$}
-  %   \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$p \neq \NULL$}{
-  %     \uIf{$p \to izq \neq \NULL \land p \to der \neq \NULL$}{
-  %       $(p \to altSubarbol) \gets 1$ + \maximo{$p \to izq \to altSubarbol$, $p \to der \to altSubarbol$} \com*{$\Theta(1)$}
-  %     }\uElseIf{$p \to izq \neq \NULL$}{
-  %       $(p \to altSubarbol) \gets 1 + (p \to izq \to altSubarbol)$ \com*{$\Theta(1)$}
-  %     }\uElseIf{$p \to der \neq \NULL$}{
-  %       $(p \to altSubarbol) \gets 1 + (p \to der \to altSubarbol)$ \com*{$\Theta(1)$}
-  %     }\Else{
-  %       $(p \to altSubarbol) \gets 1$ \com*{$\Theta(1)$}
-  %     }
-  %     $p \gets (p \to padre)$ \com*{$\Theta(1)$}
-  %   }
-  % \end{algoritmo}
-  % \datosAlgoritmo{} % Descripción
-  % {} % Pre
-  % {} % Post
-  % {$\Theta(\log(n))$} % Complejidad
-  % {} % Justificación
-
-  \begin{algoritmo}{iRecalcularAltura}{\In{n}{puntero(nodo)}}{}
-    \uIf(\com*[f]{$\Theta(1)$}){$n \to izq \neq \NULL \land n \to der \neq \NULL$}{
-      $(n \to altSubarbol) \gets 1$ + \maximo{$n \to izq \to altSubarbol$, $n \to der \to altSubarbol$} \com*{$\Theta(1)$}
-    }\uElseIf(\com*[f]{$\Theta(1)$}){$n \to izq \neq \NULL$}{
-      $(n \to altSubarbol) \gets 1 + (n \to izq \to altSubarbol)$ \com*{$\Theta(1)$}
-    }\uElseIf(\com*[f]{$\Theta(1)$}){$n \to der \neq \NULL$}{
-      $(n \to altSubarbol) \gets 1 + (n \to der \to altSubarbol)$ \com*{$\Theta(1)$}
+  \nuevoAlgo
+  \begin{algoritmo}{iRecalcularAltura}{\In{a}{estrAVL}}{}
+    \uIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{\izq{$a$}} $\land$ $\neg$ \esNil{\izq{$a$}}}{
+      \raiz{$a$}.$altSubarbol \gets 1$ + \maximo{\raiz{\izq{$a$}}.$altSubarbol$, \raiz{\der{$a$}}.$altSubarbol$} \com*{$\Theta(1)$}
+    }\uElseIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{\izq{$a$}}}{
+      \raiz{$a$}.$altSubarbol \gets 1$ + \raiz{\izq{$a$}}.$altSubarbol$ \com*{$\Theta(1)$}
+    }\uElseIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{\der{$a$}}}{
+      \raiz{$a$}.$altSubarbol \gets 1$ + \raiz{\der{$a$}}.$altSubarbol$ \com*{$\Theta(1)$}
     }\Else{
-      $(n \to altSubarbol) \gets 1$ \com*{$\Theta(1)$}
+      \raiz{$a$}.$altSubarbol \gets 1$ \com*{$\Theta(1)$}
     }
   \end{algoritmo}
-  \datosAlgoritmo{Esta operaci\'on privada recibe un puntero a un nodo del \'arbol y recalcula el valor de su campo $altSubarbol$ en funci\'on a los datos que sus nodos hijos poseen en este campo.} % Descripción
+  \datosAlgoritmo{Esta operaci\'on privada recibe un sub\'arbol y recalcula el valor de su campo $altSubarbol$ en funci\'on a los datos que sus nodos hijos poseen en este campo.} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(1)$} % Complejidad
   {El algoritmo presenta varios casos, y todos ellos realizan realizan operaciones con complejidad $\Theta(1)$.} % Justificación
 
-  \begin{algoritmo}{iFactorDeBalanceo}{\In{n}{puntero(nodo)}}{int}
-    \tipo{int} $altIzq \gets n \to izq = \NULL$ ? 0 : $n \to izq \to altSubarbol$ \com*{$\Theta(1)$}
-    \tipo{int} $altDer \gets n \to der = \NULL$ ? 0 : $n \to izq \to altSubarbol$ \com*{$\Theta(1)$}
+  \nuevoAlgo
+  \begin{algoritmo}{iFactorDeBalanceo}{\In{a}{estrAVL}}{int}
+    \tipo{int} $altIzq \gets$ \esNil{\izq{$a$}} ? 0 : \raiz{\izq{$a$}}.$altSubarbol$ \com*{$\Theta(1)$}
+    \tipo{int} $altDer \gets$ \esNil{\der{$a$}} ? 0 : \raiz{\der{$a$}}.$altSubarbol$ \com*{$\Theta(1)$}
     $res \gets altDer - altIzq$ \com*{$\Theta(1)$}
   \end{algoritmo}
-  \datosAlgoritmo{Esta operaci\'on privada recibe un puntero a un nodo del \'arbol y calcula su factor de balanceo.} % Descripción
+  \datosAlgoritmo{Esta operaci\'on privada recibe un sub\'arbol cualquiera y calcula su factor de balanceo.} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(1)$} % Complejidad
   {$\Theta(1) + \Theta(1) + \Theta(1) = \Theta(1)$} % Justificación
 
-  \begin{algoritmo}{iRotarAIzquierda}{\In{n}{puntero(nodo)}}{}
-    \If(\com*[f]{$\Theta(1)$}){$n.padre \neq \NULL$}{
-      \eIf(\com*[f]{$\Theta(1)$}){$n.padre \to izq = n$}{
-        $(n \to padre \to izq) \gets n \to der$ \com*{$\Theta(1)$}
-      }{
-        $(n \to padre \to der) \gets n \to der$ \com*{$\Theta(1)$}
-      }
-    }
-    $(n \to der \to padre) \gets n \to padre$ \com*{$\Theta(1)$} 
-    $n \to padre \gets n \to der$ \com*{$\Theta(1)$}
-    $n \to der \gets (n \to der \to izq)$ \com*{$\Theta(1)$}
-    \If(\com*[f]{$\Theta(1)$}){$n \to der \neq \NULL$}{
-      $(n \to der \to padre) \gets n$ \com*{$\Theta(1)$}
-    }
-    $(n \to padre \to izq) \gets n$ \com*{$\Theta(1)$}
-    \recalcAlt{$n$} \com*{$\Theta(1)$}
-    \recalcAlt{$n \to padre$} \com*{$\Theta(1)$}
+  \nuevoAlgo
+  \begin{algoritmo}{iRotarAIzquierda}{\Inout{a}{estrAVL}}{}
+    \tipo{estrAVL} $nuevo_1 \gets$ \bin{\izq{$a$}, \raiz{$a$}, \izq{\der{$a$}}} \com*{$\Theta(1)$}
+    \tipo{estrAVL} $nuevo_2 \gets$ \bin{$nuevo_1$, \raiz{\der{$a$}}, \der{\der{$a$}}} \com*{$\Theta(1)$}
+    \delete{\der{$a$}} \tcp*[h]{Liberamos la memoria de los sub\'arboles que ya no usaremos} \com*{$\Theta(1)$}
+    \delete{$a$} \com*{$\Theta(1)$}
+    $a \gets nuevo_2$ \com*{$\Theta(1)$}
+    \raiz{$a$}.$padre \gets$ \raiz{\izq{$a$}}.$padre$ \com*{$\Theta(1)$}
+    \raiz{\izq{$a$}}.$padre \gets a$ \com*{$\Theta(1)$}
+    \raiz{\der{$a$}}.$padre \gets a$ \com*{$\Theta(1)$}
+    \raiz{\izq{\izq{$a$}}}.$padre \gets$ \izq{$a$} \com*{$\Theta(1)$}
+    \raiz{\der{\izq{$a$}}}.$padre \gets$ \izq{$a$} \com*{$\Theta(1)$}
+    \recalcAlt{\izq{$a$}} \com*{$\Theta(1)$}
+    \recalcAlt{$a$} \com*{$\Theta(1)$}
   \end{algoritmo}
-  \datosAlgoritmo{Esta operaci\'on privada recibe un puntero a un nodo del \'arbol y realiza una rotaci\'on a izquierda de dicho nodo. !`Ojo, rompe el invariante de representaci\'on! (Los campos $altSubarbol$ de los nodos superiores quedan inconsistentes).} % Descripción
+  \datosAlgoritmo{Esta operaci\'on privada recibe un sub\'arbol y realiza una rotaci\'on a izquierda de su ra\'iz. !`Ojo, rompe el invariante de representaci\'on! (Los campos $altSubarbol$ de los sub\'arboles superiores quedan inconsistentes).} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(1)$} % Complejidad
   {Todas las operaciones que realiza el algoritmo tienen complejidad $\Theta(1)$.} % Justificación
 
-  \begin{algoritmo}{iRotarADerecha}{\In{n}{puntero(nodo)}}{}
-    \If(\com*[f]{$\Theta(1)$}){$n \to padre \neq \NULL$}{
-      \eIf(\com*[f]{$\Theta(1)$}){$n \to padre \to izq = n$}{
-        $(n \to padre \to izq) \gets n \to izq$ \com*{$\Theta(1)$}
-      }{
-        $(n \to padre \to der) \gets n \to izq$ \com*{$\Theta(1)$}
-      }
-    }
-    $(n \to izq \to padre) \gets n \to padre$ \com*{$\Theta(1)$} 
-    $n \to padre \gets n \to izq$ \com*{$\Theta(1)$}
-    $n \to izq \gets (n \to izq \to der)$ \com*{$\Theta(1)$}
-    \If(\com*[f]{$\Theta(1)$}){$n \to izq \neq \NULL$}{
-      $(n \to izq \to padre) \gets n$ \com*{$\Theta(1)$}
-    }
-    $(n \to padre \to der) \gets n$ \com*{$\Theta(1)$}
-    \recalcAlt{$n$} \com*{$\Theta(1)$}
-    \recalcAlt{$n \to padre$} \com*{$\Theta(1)$}
+  \nuevoAlgo
+  \begin{algoritmo}{iRotarADerecha}{\Inout{a}{estrAVL}}{}
+    \tipo{estrAVL} $nuevo_1 \gets$ \bin{\der{\izq{$a$}}, \raiz{$a$}, \der{$a$}} \com*{$\Theta(1)$}
+    \tipo{estrAVL} $nuevo_2 \gets$ \bin{\izq{\izq{$a$}}, \raiz{\izq{$a$}}, $nuevo_1$} \com*{$\Theta(1)$}
+    \delete{\izq{$a$}} \tcp*[h]{Liberamos la memoria de los sub\'arboles que ya no usaremos} \com*{$\Theta(1)$}
+    \delete{$a$} \com*{$\Theta(1)$}
+    $a \gets nuevo_2$ \com*{$\Theta(1)$}
+    \raiz{$a$}.$padre \gets$ \raiz{\der{$a$}}.$padre$ \com*{$\Theta(1)$}
+    \raiz{\izq{$a$}}.$padre \gets a$ \com*{$\Theta(1)$}
+    \raiz{\der{$a$}}.$padre \gets a$ \com*{$\Theta(1)$}
+    \raiz{\izq{\der{$a$}}}.$padre \gets$ \der{$a$} \com*{$\Theta(1)$}
+    \raiz{\der{\der{$a$}}}.$padre \gets$ \der{$a$} \com*{$\Theta(1)$}
+    \recalcAlt{\der{$a$}} \com*{$\Theta(1)$}
+    \recalcAlt{$a$} \com*{$\Theta(1)$}
   \end{algoritmo}
-  \datosAlgoritmo{Esta operaci\'on privada recibe un puntero a un nodo del \'arbol y realiza una rotaci\'on a derecha de dicho nodo. !`Ojo, rompe el invariante de representaci\'on! (Los campos $altSubarbol$ de los nodos superiores quedan inconsistentes).} % Descripción
+  \datosAlgoritmo{Esta operaci\'on privada recibe un sub\'arbol y realiza una rotaci\'on a derecha de su ra\'iz. !`Ojo, rompe el invariante de representaci\'on! (Los campos $altSubarbol$ de los sub\'arboles superiores quedan inconsistentes).} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(1)$} % Complejidad
   {Todas las operaciones que realiza el algoritmo tienen complejidad $\Theta(1)$.} % Justificación
 
-  \begin{algoritmo}{iRebalancearArbol}{\In{n}{puntero(nodo)}}{}
-    \tipo{puntero(nodo)} $p \gets n$ \com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$p \neq \NULL$}{ 
+  \nuevoAlgo
+  \begin{algoritmo}{iRebalancearArbol}{\In{a}{estrAVL}}{}
+    \tipo{estrAVL} $p \gets a$ \com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$\neg$ \esNil{$p$}}{ 
       \recalcAlt{$p$} \com*{$\Theta(1)$}
       \tipo{int} $fdb1 \gets$ \fdb{$p$} \com*{$\Theta(1)$}
       \uIf(\com*[f]{$\Theta(1)$}){$fdb1 = 2$}{
-        \tipo{puntero(nodo)} $q \gets (p \to der)$ \com*{$\Theta(1)$}
+        \tipo{estrAVL} $q \gets$ \der{$p$} \com*{$\Theta(1)$}
         \tipo{int} $fdb2 \gets$ \fdb{$q$} \com*{$\Theta(1)$}
         \uIf(\com*[f]{$\Theta(1)$}){$fdb2 = 1 \lor fdb2 = 0$}{
           \raizq{$p$} \com*{$\Theta(1)$}
-          $p \gets q$ \com*{$\Theta(1)$}
         }\ElseIf(\com*[f]{$\Theta(1)$}){$fdb2 = -1$}{
           \rader{$q$} \com*{$\Theta(1)$}
           \raizq{$p$} \com*{$\Theta(1)$}
-          $p \gets (q \to padre)$ \com*{$\Theta(1)$}
         }
-      }\ElseIf{$fdb1 = -2$}{
-        \tipo{puntero(nodo)} $q \gets (p \to izq)$ \com*{$\Theta(1)$}
+      }\ElseIf(\com*[f]{$\Theta(1)$}){$fdb1 = -2$}{
+        \tipo{estrAVL} $q \gets$ \izq{$p$} \com*{$\Theta(1)$}
         \tipo{int} $fdb2 \gets$ \fdb{$q$} \com*{$\Theta(1)$}
         \uIf(\com*[f]{$\Theta(1)$}){$fdb2 = -1 \lor fdb2 = 0$}{
           \rader{$p$} \com*{$\Theta(1)$}
-          $p \gets q$ \com*{$\Theta(1)$}
         }\ElseIf(\com*[f]{$\Theta(1)$}){$fdb2 = 1$}{
           \raizq{$q$} \com*{$\Theta(1)$}
           \rader{$p$} \com*{$\Theta(1)$}
-          $p \gets (q \to padre)$ \com*{$\Theta(1)$}
         }
       }
-      $p \gets (p \to padre)$ \com*{$\Theta(1)$}
+      $p \gets$ \raiz{$p$}.$padre$ \com*{$\Theta(1)$}
     }
   \end{algoritmo}
-  \datosAlgoritmo{Esta operaci\'on privada recibe un puntero a un nodo del \'arbol y restaura el invariante de representaci\'on en la rama ascendente a partir de dicho nodo, realizando las rotaciones necesarias para rebalancear el \'arbol.} % Descripción
+  \datosAlgoritmo{Esta operaci\'on privada recibe un sub\'arbol y, utilizando la informaci\'on del campo $padre$ de su ra\'iz, restaura el invariante de representaci\'on en la rama ascendente a partir de ella, realizando las rotaciones necesarias para rebalancear el \'arbol.} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(\log(n))$} % Complejidad
