@@ -1,0 +1,4 @@
+\select@language {spanish}
+\contentsline {section}{\numberline {1}M\'{o}dulo Red}{5}{section.1}
+\contentsline {section}{\numberline {2}M\'odulo \'Arbol binario}{14}{section.2}
+\contentsline {section}{\numberline {3}M\'odulo Diccionario Logar\'itmico}{18}{section.3}
