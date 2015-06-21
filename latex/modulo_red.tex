@@ -120,12 +120,29 @@
   \end{Estructura}
 
   % Hay que rehacer el REP, y explicarlo en castellano
+\large
+Rep en castellano:
+\normalsize
+    \begin{enumerate} 
+      \item El cardinal del conjunto de claves del diccionario Conexiones, es igual al cardinal del conjunto de compus.
+      \item Ninguna compu tiene vecinos repetidos.
+      \item Ninguna compu puede ser vecina de si misma.
+      \item Todos los vecinos tienen que estar en el conjunto de claves del diccionario Conexiones.
+      \item Si $c_{1}$ y $c_{2}$ son computadoras de la red, $c_{1}$ es vecina de $c_{2}$ si y solo si $c_{2}$ es vecina de $c_{1}$.
+      \item El conjunto de compus es el mismo que el que resulta de armar las computadoras con los diccionarios.
+    \end{enumerate}
 
-  \RepFc[Red][e]{($\forall c$: compu)(c $\in$ ArmarComputadoras(e.compus) $\impluego$ $\lnot$ Pertenece?(e.compus, c, c))$\land$ \\
-    $\#$ArmarComputadoras(e.compus) = e.cantidadCompus $\land$ \\
-    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) ($c_{1}$ $\in$ ArmarComputadoras(e.compus) $\land$ $c_{2}$ $\in$ ArmarComputadoras(e.compus) $\impluego$ Pertenece?(e.compus, $c_{1}$, $c_{2}$) $\Leftrightarrow$ Pertenece?(e.compus, $c_{2}$, $c_{1}$))) $\land$ \\
-    ($\forall c_{1}$: compu)($c_{1}$ $\in$ ArmarComputadoras(e.compus) $\impluego$ ($\forall c_{2}$: compu) (Pertenece?(e.compus, $c_{1}$, $c_{2}$) $\Rightarrow$ $c_{2}$ $\in$ ArmarComputadoras(e.compus))) $\land$ \\
-    sinRepetidos(ArmarSecuencia(e.compus)) 
+  \RepFc[Red][e]{ 
+  \begin{enumerate} 
+      \item $\#$claves($e$.conexiones)=$\#$($e$.compus) $\land$
+      \item ($\forall c$: IP) $c$ $\in$ claves($e$.conexiones) $\impluego$ sinRepetidos(JuntarSignificados(obtener($c$, $e$.conexiones))) $\land$
+      \item ($\forall c$: IP) $c$ $\in$ claves($e$.conexiones) $\impluego$ $\neg$esta?($c$, JuntarSignificados(obtener($c$, $e$.conexiones))) $\land$
+      \item ($\forall c_{1}$:IP) $c$ $\in$ claves($e$.conexiones) $\impluego$ ($\forall c_{2}$:IP) esta?($c_{2}$, JuntarSignificados(obtener($c_{1}$, $e$.conexiones))) $c_{2}$ $\Rightarrow$ ($e$.conexiones) $\yluego$
+      \item ($\forall c_{1}$:IP) ($\forall c_{2}$:IP) ($c_{1}$ $\in$ claves($e$.conexiones)) $\land$ ($c_{2}$ $\in$ claves($e$.conexiones)) $\impluego$ esta?($c_{1}$, JuntarSignificados(obtener($c_{2}$, $e$.conexiones))) $\Leftrightarrow$ esta?($c_{2}$, JuntarSignificados(obtener($c_{1}$, $e$.conexiones))) $\land$
+      \item ($\forall c$: IP) $c$ $\in$ $e$.compus $\Rightarrow$ $\Pi_{1}$($c$) $\in$ claves($e$.conexiones) $\yluego$ claves(obtener($\Pi_{1}$($c$), $e$.conexiones)) $\subseteq$ $\Pi_{2}$($c$)
+
+
+      \end{enumerate}
     }\mbox{}
 
   ~
