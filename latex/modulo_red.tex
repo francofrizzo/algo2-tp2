@@ -119,68 +119,73 @@
 
   \end{Estructura}
 
-  % Hay que rehacer el REP, y explicarlo en castellano
 
-  \RepFc[Red][e]{($\forall c$: compu)(c $\in$ ArmarComputadoras(e.compus) $\impluego$ $\lnot$ Pertenece?(e.compus, c, c))$\land$ \\
-    $\#$ArmarComputadoras(e.compus) = e.cantidadCompus $\land$ \\
-    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) ($c_{1}$ $\in$ ArmarComputadoras(e.compus) $\land$ $c_{2}$ $\in$ ArmarComputadoras(e.compus) $\impluego$ Pertenece?(e.compus, $c_{1}$, $c_{2}$) $\Leftrightarrow$ Pertenece?(e.compus, $c_{2}$, $c_{1}$))) $\land$ \\
-    ($\forall c_{1}$: compu)($c_{1}$ $\in$ ArmarComputadoras(e.compus) $\impluego$ ($\forall c_{2}$: compu) (Pertenece?(e.compus, $c_{1}$, $c_{2}$) $\Rightarrow$ $c_{2}$ $\in$ ArmarComputadoras(e.compus))) $\land$ \\
-    sinRepetidos(ArmarSecuencia(e.compus)) 
+\textbf{Rep en castellano:}
+
+    \begin{enumerate} 
+      \item El cardinal del conjunto de claves del diccionario Conexiones, es igual al cardinal del conjunto de compus.
+      \item Ninguna compu tiene vecinos repetidos.
+      \item Ninguna compu puede ser vecina de si misma.
+      \item Todos los vecinos tienen que estar en el conjunto de claves del diccionario Conexiones.
+      \item Si $c_{1}$ y $c_{2}$ son computadoras de la red, $c_{1}$ es vecina de $c_{2}$ si y solo si $c_{2}$ es vecina de $c_{1}$.
+      \item El conjunto de compus es el mismo que el que resulta de armar las computadoras con los diccionarios.
+    \end{enumerate}
+
+  \RepFc[Red][e]{ 
+  \begin{enumerate} 
+      \item $\#$claves($e$.conexiones)=$\#$($e$.compus) $\land$
+      \item ($\forall c$: IP) $c$ $\in$ claves($e$.conexiones) $\impluego$ sinRepetidos(JuntarSignificados(obtener($c$, $e$.conexiones))) $\land$
+      \item ($\forall c$: IP) $c$ $\in$ claves($e$.conexiones) $\impluego$ $\neg$esta?($c$, JuntarSignificados(obtener($c$, $e$.conexiones))) $\land$
+      \item ($\forall c_{1}$:IP) $c$ $\in$ claves($e$.conexiones) $\impluego$ ($\forall c_{2}$:IP) esta?($c_{2}$, JuntarSignificados(obtener($c_{1}$, $e$.conexiones))) $c_{2}$ $\Rightarrow$ ($e$.conexiones) $\yluego$
+      \item ($\forall c_{1}$:IP) ($\forall c_{2}$:IP) ($c_{1}$ $\in$ claves($e$.conexiones)) $\land$ ($c_{2}$ $\in$ claves($e$.conexiones)) $\impluego$ esta?($c_{1}$, JuntarSignificados(obtener($c_{2}$, $e$.conexiones))) $\Leftrightarrow$ esta?($c_{2}$, JuntarSignificados(obtener($c_{1}$, $e$.conexiones))) $\land$
+      \item ($\forall c$: IP) $c$ $\in$ $e$.compus $\Rightarrow$ $\Pi_{1}$($c$) $\in$ claves($e$.conexiones) $\yluego$ claves(obtener($\Pi_{1}$($c$), $e$.conexiones)) $\subseteq$ $\Pi_{2}$($c$)
+
+
+      \end{enumerate}
     }\mbox{}
 
   ~
 
-  % Hay que rehacer el ABS
-
-  \AbsFc[estrRed]{Red}[e]{(r: Red | computadoras(r) = ArmarComputadoras(e.compus) $\land$ \\
-    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) conectados?(r, $c_{1}$, $c_{2}$) = Pertenece?(e.compus, $c_{1}$, $c_{2}$) $\land$ \\
-    InterfazUsada(r, $c_{1}$, $c_{2}$) = DevolverInterfaz(e.compus, $c_{1}$, $c_{2}$)))
+  \AbsFc[estrRed]{Red}[e]{(r: Red | computadoras(r) = $e$.compus $\land$ \\
+    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) conectados?(r, $c_{1}$, $c_{2}$) = esta?($c_{2}$, JuntarSignificados(Obtener($c_{1}$, $e$.conexiones))) $\land$ \\
+    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) InterfazUsada(r, $c_{1}$, $c_{2}$) = DameClave(Obtener($c_{1}$, $e$.conexiones), $c_{2}$))
   }
   
   ~
 
-  \tadOperacion{ArmarComputadoras}{secu(tupla(string{,} secu(tupla(Interfaz{,} ItRed))))}{conj(compu)}{}
-  \tadAxioma{ArmarComputadoras($l$)}{\IF vacia?(l) THEN $\emptyset$ ELSE Ag($\langle \Pi_{1}$(prim($l$)), GenerarInterfaces($\Pi_{2}$(prim($l$)))$\rangle$, ArmarComputadoras(fin($l$))) FI}
-
-  ~
-  
-  \tadOperacion{ArmarSecuencia}{secu(tupla(string{,} secu(tupla(interfaz{,} itLista(compu)))))}{secu(string)}{}
-  \tadAxioma{ArmarSecuencia(s)}{\IF vacia?($s$) THEN <> ELSE ($\Pi_{1}$(prim(s))) $\puntito$ ArmarSecuencia(fin($s$)) FI}
- 
-  ~
-   
-  \tadOperacion{sinRepetidos}{secu(string)}{bool}{}
-  \tadAxioma{sinRepetidos($s$)}{\#(pasarSecuAConj($s$) $=$ long($s$)}
+  \textbf{Funciones Auxiliares:}
 
   ~
     
-  \tadOperacion{pasarSecuAConj}{secu(string)}{conj(string)}{}
+  \tadOperacion{sinRepetidos}{secu(nat)}{bool}{}
+  \tadAxioma{sinRepetidos($s$)}{$\#$(pasarSecuAConj($s$)) $=$ long($s$)}
+
+  ~
+    
+  \tadOperacion{pasarSecuAConj}{secu(nat)}{conj(nat)}{}
   \tadAxioma{pasarSecuAConj($s$)}{\IF vacia?($s$) THEN $\emptyset$ ELSE Ag(prim($s$), pasarSecuAConj(fin($s$))) FI}
 
   ~
-  
-  \tadOperacion{GenerarInterfaces}{secu(tupla(Interfaz{,} ItLista(estrCompu)))}{conj(Interfaz)}{}
-  \tadAxioma{GenerarInterfaces($l$)}{\IF vacia?($l$) THEN $\emptyset$ ELSE Ag($\Pi_{1}$(prim($l$)), GenerarInterfaces(fin($l$))) FI}
+
+  \tadOperacion{JuntarSignificados}{dicc(Interfaz{,} IP)}{secu(IP)}{}
+  \tadAxioma{JuntarSignificados($d$)}{JuntarSignificados\fAux($d$, claves($d$))}
 
   ~
 
-  \tadOperacion{Pertenece?}{secu(tupla(string{,} secu(tupla(Interfaz{,} ItRed))))/l, compu/c_{1}, compu/c_{2}}{bool}{}
-  \tadAxioma{Pertenece?($l$, $c_{1}$, $c_{2}$)}{\IF ($\Pi_{1}$(prim($l$) = $\Pi_{1}$($c_{1}$))) THEN $\Pi_{1}$($c_{2}$) $\in$ GenerarCompus($\Pi_{2}$(prim($l$))) ELSE Pertenece?(fin($l$), $c_{1}$, $c_{2}$) FI}
+  \tadOperacion{JuntarSignificados\fAux}{dicc(Interfaz{,} IP), conj(Interfaz)}{secu(IP)}{}
+  \tadAxioma{JuntarSignificados\fAux($d$, $Is$)}{\IF $\emptyset$?($Is$) THEN <> ELSE obtener(dameUno($Is$, $d$)) $\puntito$ JuntarSignificados\fAux($d$, sinUno($Is$)) FI}
 
   ~
 
-  \tadOperacion{GenerarCompus}{secu(tupla<Interfaz, ItLista(estrCompu)>)}{conj(string)}{}
-  \tadAxioma{GenerarCompus($l$)}{\IF vacia?($l$) THEN $\emptyset$ ELSE Ag($\Pi_{1}$(siguiente($\Pi_{2}$(prim($l$)))), GenerarCompus(fin($l$))) FI}
+  \tadOperacion{DameClave}{dicc(Interfaz{,} IP)/$d$, IP/$c$}{Interfaz}{esta?($c$, JuntarSignificados($d$))}
+  \tadAxioma{DameClave($d$, $c$)}{DameClave\fAux($d$, claves($d$), $c$)}
 
   ~
 
-  \tadOperacion{DevolverInterfaz}{secu(tupla(string, secu(tupla(Interfaz, ItRed))))/l, compu/c_{1}, compu/c_{2}}{Interfaz}{Pertenece?($l$, $c_{1}$, $c_{2}$} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
-  \tadAxioma{DevolverInterfaz($l$, $c_{1}$, $c_{2}$)}{\IF ($\Pi_{1}$(prim($l$)) = $\Pi_{1}$($c_{1}$)) THEN DevolverInterfaz\textsubscript{aux}($\Pi_{2}$(prim($l$), $c_{2}$)) ELSE DevolverInterfaz(fin($l$, $c_{1}$, $c_{2}$)) FI}
+  \tadOperacion{DameClave\fAux}{dicc(Interfaz{,} IP)/$d$, conj(Interfaz)/$Is$, IP/$c$}{Interfaz}{esta?($c$, JuntarSignificados($d$))}
+  \tadAxioma{DameClave\fAux($d$, $Is$, $c$)}{\IF (obtener(dameUno($Is$))$=c$) THEN dameUno($Is$) ELSE DameClave\fAux($d$, sinUno($Is$), $c$) FI}
 
-  ~  
-  
-  \tadOperacion{DevolverInterfaz\textsubscript{aux}}{secu(tupla(Interfaz, ItRed))/l, compu/c}{Interfaz}{} % Restriccion? Pertenece?(l, c1, c2) o c1 \in computadoras(r)
-  \tadAxioma{DevolverInterfaz($l$, $c$)}{\IF ($\Pi_{1}$($c_{2}$) = $\Pi_{1}$(siguiente($\Pi_{2}$(prim($l$))))) THEN $\Pi_{1}$(prim($l$)) ELSE DevolverInterfaz\textsubscript{aux}(fin($l$, c)) FI}
+  ~
 
 \end{Representacion}
 
