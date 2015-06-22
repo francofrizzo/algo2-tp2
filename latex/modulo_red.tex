@@ -454,18 +454,14 @@
   {$\Theta(n)$} % Complejidad
   {.} % Justificacíón
 
+  \nuevoAlgo
   \begin{algoritmo}{iComputadoras}{\In{r}{estrRed}}{conj(compu)}{}
-    $res \gets$ vacio()\com*{$\Theta(1)$}
-    \tipo{itRed} $it \gets$ crearItRed()\com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(n)$ iteraciones}){haySiguiente?($it$)}{
-      agregar($res$, siguiente($it$))\com*{$\Theta(n+I²)$}
-      avanzar($it$)\com*{$\Theta(1)$}
-    }
+    $res \gets$ $r$.compus
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n \times (n+I²))$} % Complejidad
+  {} % Complejidad
   {} % Justificacíón
    
   \begin{algoritmo}{iCopiar}{\In r:estrRed}{Red}
@@ -477,8 +473,9 @@
   {$\Theta(n \times I)$} % Complejidad
   {Devuelve una copia de la Red} % Justificacíón
 
+  \nuevoAlgo
   \begin{algoritmo}{iCantCompus}{\In{r}{Red}}{nat}
-    $res \gets$ $r$.cantCompus\com*{$\Theta(1)$}
+    $res \gets$ $\#$($r$.compus) \com*{$\Theta(1)$}
   \end{algoritmo}   
   \datosAlgoritmo{} % Descripción
   {} % Pre
