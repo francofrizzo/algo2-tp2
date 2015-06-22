@@ -230,107 +230,85 @@
   
   \nuevoAlgo
   \begin{algoritmo}{iConectar}{\Inout{r}{estrRed)}, \In{c_{1}}{compu}, \In{i_{1}}{interfaz}, \In{c_{2}}{compu}, \In{i_{2}}{interfaz}}{}
-    \tipo{itDicc(IP, diccConexiones)} $it_1 \gets$ \crearIt{$r.conexiones$} \com*{$\Theta(1)$}
-    \tipo{itDicc(IP, diccConexiones)} $it_2 \gets$ \crearIt{$r.conexiones$} \com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(n)$ iteraciones}){\sigClave{$it_1$} $\neq$ $c_1.IP$}{
-      \avanzar{$it_1$} \com*{$\Theta(1)$}
-    }
-    \While(\com*[f]{$\Theta(n)$ iteraciones}){\sigClave{$it_2$} $\neq$ $c_1.IP$}{
-      \avanzar{$it_2$} \com*{$\Theta(1)$}
-    }
-    \defRap{\sigSignif{$it_1$}, $i_1$, \copiar{$it_2$}} \com*{$\Theta(1)$}
-    \defRap{\sigSignif{$it_2$}, $i_2$, \copiar{$it_1$}} \com*{$\Theta(1)$}
+    \defRap($i_{1}$, $c_{2}$.IP, significado($r$.conexiones, $c_{1}$))
+    \defRap($i_{2}$, $c_{1}$.IP, significado($r$.conexiones, $c_{2}$))
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n)$} % Complejidad
-  {El algoritmo tiene dos ciclos que se ejecutan $\Theta(n)$ veces, cada una con complejidad $\Theta(1)$. El resto de las operaciones tiene complejidad $\Theta(1)$.} % Justificacíón
+  {} % Complejidad
+  {} % Justificacíón
   
   \nuevoAlgo
   \begin{algoritmo}{iConectadas?}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{bool}{}
-    \tipo{itDicc(IP, diccConexiones)} $it_1 \gets$ \crearIt{$r.conexiones$} \com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(n)$ iteraciones}){\sigClave{$it_1$} $\neq$ $c_1.IP$}{
+    \tipo{dicc(Interfaz, IP)} $d \gets$ significado($c_1$, $r$.conexiones) \com*{$\Theta(L)$}
+    \tipo{ItDicc(Interfaz, IP)} $it \gets$ crearIt($d$) \com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(I)$ iteraciones}){haySiguiente(it) $\yluego$ siguienteSignificado(it) $\neq$ $c_2$}{
       \avanzar{$it_1$} \com*{$\Theta(1)$}
     }
-    \tipo{itDicc(interfaz, itDicc(IP, diccConexiones))} $it_2 \gets$ \crearIt{\signif{\sig{$it_1$}}} \com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(I)$ iteraciones}){\haySig{$it_2$} $\yluego$ \sigClave{\sigSignif{$it_2$}} $\neq$ $c_2.IP$}{
-      \avanzar{$it_2$} \com*{$\Theta(1)$}
-    }
-    $res \gets$ \haySig{$it_2$} $\yluego$ \sigClave{\sigSignif{$it_2$}} = $c_2.IP$ \com*{$\Theta(1)$}
+    $res \gets$ \haySig{$it$} \com*{$\Theta(1)$}
   \end{algoritmo}  
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n+I)$} % Complejidad
-  {El algoritmo tiene dos ciclos; uno de ellos se ejecuta $\Theta(n)$ veces, y el otro $\Theta(I)$ veces, todas ellas con complejidad $\Theta(1)$. El resto de las operaciones tiene complejidad $\Theta(1)$.} % Justificacíón
+  {$\Theta(L+I)$} % Complejidad
+  {} % Justificacíón
 
   \nuevoAlgo
   \begin{algoritmo}{iInterfazUsada}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{interfaz}{}
-    \tipo{itLista(estrCompu)} $it_{1} \gets$ crearIt(r.compus)\com*{$\Theta(1)$}  
-    \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq c_{1}$.IP}{
-      avanzar($it_{1}$)\com*{$\Theta(1)$}
+    \tipo{dicc(Interfaz, IP)} $d \gets$ significado($c_1$, $r$.conexiones) \com*{$\Theta(L)$}
+    \tipo{ItDicc(Interfaz, IP)} $it \gets$ crearIt($d$) \com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(I)$ iteraciones}){\sigSignif($it$) $\neq$ $c_2$}{
+      \avanzar{$it_1$} \com*{$\Theta(1)$}
     }
-    \tipo{itLista(tupla(interfaz, itLista(estrCompu)))} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(I)$ iteraciones}){(siguiente(siguiente($it_{2}$).com)).IP $\neq c_{2}$.IP}{
-      avanzar($it_{1}$)\com*{$\Theta(1)$}
-    }
-    $res \gets$ siguiente($it_{2}$).inter\com*{$\Theta(1)$}
+    $res \gets$ \sigClave($it$) \com*{$\Theta(1)$}
   \end{algoritmo}  
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n+I)$} % Complejidad
+  {$\Theta(L+I)$} % Complejidad
   {} % Justificacíón
     
   \begin{algoritmo}{iVecinos}{\In{r}{estrRed}, \In{c}{compu}}{conj(compu)}{}
+    \tipo{dicc(Interfaz, IP)} $d \gets$ significado($c_1$, $r$.conexiones) \com*{$\Theta(L)$}
+    \tipo{ItDicc(Interfaz, IP)} $it_1 \gets$ crearIt($d$) \com*{$\Theta(1)$}
     $res \gets$ vacio() \com*{$\Theta(1)$}
-    \tipo{itLista(estrComp)} $it_{1} \gets$ crearIt(r.compus) \com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq c$.IP}{
-      avanzar($it_{1}$) \com*{$\Theta(1)$}
-    }
-    \tipo{itLista(tupla(interfaz, itLista(estrCompu)))} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones) \com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(n)$ iteraciones}){haySiguiente?($it_{2}$)}{
-      \If(\com*[f]{$\Theta(1)$}){haySiguiente?(siguiente($it_{2}$).com)}{
-        agregar($res$, $\langle$siguiente(siguiente($it_{2}$).com).IP, crearConjunto(siguiente(siguiente($it_{2}$).com).conexiones))$\rangle$)\com*{$\Theta(I^2)$}
+    \While(\com*[f]{$\Theta(I)$ iteraciones}){haySiguiente?($it_1$)}{
+      \tipo{ItConj} $it_2 \gets$ crearIt($r$.compus) com*{$\Theta(1)$}
+      \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_2$).IP $\neq$ \sigClave($it_1$)}{
+        avanzar($it_2$)
       }
-      avanzar($it_{2}$)\com*{$\Theta(1)$}
-    }
+      \agRap{res, siguiente($it_2$)}
+     } 
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n+I³)$} % Complejidad
+  {$\Theta(L+I \times N)$} % Complejidad
   {} % Justificacíón
   
-   \begin{algoritmo}{iCrearConjunto}{\In{l}{lista(tupla($inter$: interfaz, $com$: itLista(estrCompu)))}}{conj(interfaz)}{}
-    \tipo{nat} $n \gets$ 0\com*{$\Theta(1)$}
-    $res \gets$ vacio()\com*{$\Theta(1)$}
-   \While(\com*[f]{$\Theta(I)$ iteraciones}){n < longitud(l)}{
-      agregar($res$, (l[n]).inter)\com*{$\Theta(I)$}
-      $n \gets n+1$\com*{$\Theta(1)$}
-    }
-  \end{algoritmo} 
-  \datosAlgoritmo{Dada una lista de tupla de $\langle$Interfaz,Iterador$\rangle$ (que representa las conexiones de la computadora), devuelve el conjunto de todas las interfaces que se encuentran en ella. } % Descripción
-  {} % Pre
-  {} % Post
-  {$\Theta(I²)$} % Complejidad
-  {} % Justificacíón
+
+  % Esta operación tal vez ya no sea necesaria:
+  % \begin{algoritmo}{iCrearConjunto}{\In{l}{lista(tupla($inter$: interfaz, $com$: itLista(estrCompu)))}}{conj(interfaz)}{}
+  %  \tipo{nat} $n \gets$ 0\com*{$\Theta(1)$}
+  %  $res \gets$ vacio()\com*{$\Theta(1)$}
+  % \While(\com*[f]{$\Theta(I)$ iteraciones}){n < longitud(l)}{
+  %    agregar($res$, (l[n]).inter)\com*{$\Theta(I)$}
+  %    $n \gets n+1$\com*{$\Theta(1)$}
+  %  }
+ % \end{algoritmo} 
+ % \datosAlgoritmo{Dada una lista de tupla de $\langle$Interfaz,Iterador$\rangle$ (que representa las conexiones de la computadora), devuelve el conjunto de todas las interfaces que se encuentran en ella. } % Descripción
+ % {} % Pre
+ % {} % Post
+ % {$\Theta(I²)$} % Complejidad
+ % {} % Justificacíón
 
   \begin{algoritmo}{iUsaInterfaz?}{\In{r}{estrRed}, \In{c}{compu}, \In{i}{interfaz}}{bool}{}
-    \tipo{itLista(estrComp)} $it_{1} \gets$ crearIt(r.compus)\com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(n)$ iteraciones}){siguiente($it_{1}$).IP $\neq c$.IP}{
-      avanzar($it_{1}$) \com*{$\Theta(1)$}
-    }
-    \tipo{itLista(tupla(interfaz, itLista(estrCompu)))} $it_{2} \gets$ crearIt(siguiente($it_{1}$).conexiones)\com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(I)$ iteraciones}){siguiente($it_{2}$).inter $\neq i$}{
-     avanzar($it_{2}$)\com*{$\Theta(1)$}
-    }
-    $res \gets$ haySiguiente(siguiente($it_{2}$).com)\com*{$\Theta(1)$}
+    $res \gets$ definido?(significado($c$, $r$.conexiones), $i$) 
   \end{algoritmo} \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n+I)$} % Complejidad
+  {} % Complejidad
   {} % Justificacíón
    
   \begin{algoritmo}{iCaminosMinimos}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{conj(lista(compu))}{}
