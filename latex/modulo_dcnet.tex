@@ -68,9 +68,9 @@
   [Devuelve los paquetes que tiene en espera la compu ``c''. ]%descripcion
   [El conjunto de paquetes en espera se devuelve por referencia]%aliasing
 
-  \InterfazFuncion{paquetesEnTr\'ansito?}{\In{D}{DCNet}, \In{p}{paquete}}{bool}%
+  \InterfazFuncion{paqueteEnTr\'ansito?}{\In{D}{DCNet}, \In{p}{paquete}}{bool}%
   [true]%pre
-  {res $\igobs$ paquetesEnTrancito?(D, p)}%pos
+  {res $\igobs$ paqueteEnTransito?(D, p)}%pos
   [$\Theta(n \times log(k))$]%complejidad
   [Devuelve ``True'' si y solo si el paquete esta en los paquetes en espera de alguna computadora. ]%descripcion
   []%aliasing

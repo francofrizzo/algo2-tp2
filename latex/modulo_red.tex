@@ -30,14 +30,14 @@
   \InterfazFuncion{agregarCompu}{\Inout{r}{Red}, \In{c}{compu}}{}
   [$r$ $\igobs$ $r_{0}$ $\land$ ($\forall c'$: compu)($c' \in$ computadoras($r$) $\rightarrow$ ip($c$) $\neq$ ip($c'$))] % Pre
   {$r$ $\igobs$ agregarCompu($r_{0}$, c)} % Pos
-  [$\Theta(I)$] % Complejidad
+  [$\Theta(1)$] % Complejidad
   [Agrega una nueva computadora a la red.] % Descripción
   [] % Aliasing
 
   \InterfazFuncion{conectar}{\Inout{r}{Red}, \In{c_0}{compu}, \In{i_0}{interfaz}, \In{c_1}{compu}, \In{i_1}{interfaz}}{Red}
   [$r$ $\igobs$ $r_{0}$ $\land$ $c_{1} \in$ computadoras($r$) $\land$ $c_{2} \in$ computadoras($r$) $\land$ ip($c_{0} $) $\neq$ ip($c_{1}$) $\land$ $\lnot$conectadas?($r$, $c_{0}$ , $c_{1} $) $\land$ $\lnot$usaInterfaz?($r$, $c_{0}$, $i_{0}$) $\land$ $\lnot$usaInterfaz?($r$, $c_{1}$, $i_{1}$)] % Pre
   {$r$ $\igobs$ conectar($r_{0}$, $c_{0}$, $i_{0}$, $c_{1}$, $i_{1}$)} % Pos
-  [$\Theta(n+I)$] % Complejidad
+  [$\Theta(L)$] % Complejidad
   [Conecta la computadora $c_{0}$ con la computadora $c_{1}$ a trav\'es de las interfaces $i_{0}$ y $i_{1}$ respectivamente. ] % Descripción
   [] % Aliasing
   
@@ -51,28 +51,28 @@
   \InterfazFuncion{conectadas?}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{bool}
   [$c_{0}$ $\in$ computadoras($r$) $\land$ $c_{1} \in $ computadoras($r$)] % Pre
   {$res$ $\igobs$ conectadas?($r$, $c_{0}$, $c_{1}$)} % Pos
-  [$\Theta(n+I)$] % Complejidad
+  [$\Theta(L \times I)$] % Complejidad
   [Devuelve \emph{true} si y solo si la computadora $c_{0}$ esta conectada a la computadora $c_{1}$] % Descripción
   [] % Aliasing
   
   \InterfazFuncion{interfazUsada}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{interfaz}
   [$c_{0}$ $\in$ computadoras($r$) $\land$ $c_{1} \in $ computadoras($r$) $\yluego$ conectadas?($r$, $c_{0}$, $c_{1}$)] % Pre
   {$res$ $\igobs$ interfazUsada($r$, $c_{0}$, $c_{1}$)} % Pos
-  [$\Theta(n+I)$] % Complejidad
+  [$\Theta(I \times L)$] % Complejidad
   [Devuelve la interfaz usada por $c_{0}$ para conectarse a $c_{1}$] % Descripción
   [] % Aliasing
   
   \InterfazFuncion{vecinos}{\In{r}{Red}, \In{c}{compu}}{conj(compu)}
   [$c$ $\in$ computadoras($r$)] % Pre
   {$res$ $\igobs$ vecinos($r$, $c$)} % Pos
-  [$\Theta(n+I³)$] % Complejidad
+  [$\Theta(I \times n \times L)$] % Complejidad
   [Devuelve el conjunto de vecinos de la computadora $c$, es decir, las computadoras que tienen una conexi\'on directa con $c$.] % Descripción
   [Devuelve el conjunto por copia.] % Aliasing
   
   \InterfazFuncion{usaInterfaz?}{\In{r}{Red}, \In{c}{compu}, \In{i}{interfaz}}{bool}
   [$c$ $\in$ computadoras($r$)] % Pre
   {$res$ $\igobs$ usaInterfaz?($r$, $c$, $i$)} % Pos
-  [$\Theta(n+I)$] % Complejidad
+  [$\Theta(I)$] % Complejidad
   [Devuelve \emph{true} si y solo si la computadora $c$ est\'a usando la interfaz $i$.] % Descripción
   [] % Aliasing
   
@@ -100,7 +100,7 @@
   \InterfazFuncion{copiar}{\In{r}{Red}}{Red}
   [true] % Pre
   {$res$ $\igobs$ $r$} % Pos
-  [$\Theta(n \times I)$] % Complejidad
+  [$\Theta(n \times I \times L)$] % Complejidad
   [Devuelve una copia de la red.] % Descripción
   [] % Aliasing
 
