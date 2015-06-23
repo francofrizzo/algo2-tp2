@@ -126,7 +126,7 @@ sympy-plots-for-*.tex/
 *.sav
 
 # PDF files
-# *.pdf
+*.pdf
 
 # paquetes de la facu
 aed2-itef.sty

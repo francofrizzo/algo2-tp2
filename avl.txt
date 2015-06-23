@@ -1,0 +1,26 @@
+AB:
+  PUNTERO(NODO)
+
+NODO:
+  VALOR: α,
+  IZQ: PUNTERO(NODO),
+  DER: PUNTERO(NODO)
+
+AVL:
+  AB(TUPLA(
+    CLAVE: κ
+    SIGNIFICADO: σ
+    ALTURA: NAT
+    PADRE: PUNTERO(AB)
+  ))
+
+
+              O
+             / \
+            O   x
+           / \ / \
+          A  A A  O
+                 / \
+                Y   A
+                \
+                 A
