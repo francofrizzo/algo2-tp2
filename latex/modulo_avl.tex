@@ -55,12 +55,24 @@
     [$\Theta(1)$]
     [Crea y devuelve un diccionario logar\'itmico vac\'io.]
 
+    \InterfazFuncion{Definido}{\In{d}{\diccLogKS}, \In{k}{$\kappa$}}{bool}
+    {$res \igobs$ def?($k$, $d$)}
+    [$\Theta(\log(n) \times order(k))$]
+    [Devuelve true si y solo si la clave pasada por par\'ametro est\'a definida en el diccionario.]
+
     \InterfazFuncion{Definir}{\Inout{d}{\diccLogKS}, \In{k}{$\kappa$}, \In{s}{$\sigma$}}{}
     [$d \igobs d_0$]
     {$d \igobs$ definir($k$, $s$, $d_0$)}
     [$\Theta(\log(n) \times order(k) + copy(k) + copy(s))$]
     [Define en el diccionario la clave pasada por par\'ametro con el significado pasado por par\'ametro. En caso de que la clave ya est\'e definida, sobreescribe su significado con el nuevo.]
     [Las claves y significados se almacenan por copia.]
+
+    \InterfazFuncion{Obtener}{\In{d}{\diccLogKS}, \In{k}{$\kappa$}}{$\sigma$}
+    [def?($k$, $d$)]
+    {alias($res \igobs$ obtener($k$, $d$))}
+    [$\Theta(\log(n) \times order(k))$]
+    [Devuelve el significado con el que la clave pasada por par\'ametro est\'a definida en el diccionario.]
+    [El significado se pasa por referencia. Modificarlo implica cambiarlo en la estructura interna del diccionario.]
 
     \InterfazFuncion{Borrar}{\Inout{d}{\diccLogKS}, \In{k}{$\kappa$}}{}
     [$d \igobs d_0 \land$ def?($k$, $d$)]
@@ -72,18 +84,6 @@
     {$res \igobs$ \#(claves($d$))}
     [$\Theta(n)$]
     [Devuelve la cantidad de claves del diccionario.]
-
-    \InterfazFuncion{Definido?}{\In{d}{\diccLogKS}, \In{k}{$\kappa$}}{bool}
-    {$res \igobs$ def?($k$, $d$)}
-    [$\Theta(\log(n) \times order(k))$]
-    [Devuelve true si y solo si la clave pasada por par\'ametro est\'a definida en el diccionario.]
-
-    \InterfazFuncion{Obtener}{\In{d}{\diccLogKS}, \In{k}{$\kappa$}}{$\sigma$}
-    [def?($k$, $d$)]
-    {alias($res \igobs$ obtener($k$, $d$))}
-    [$\Theta(\log(n) \times order(k))$]
-    [Devuelve el significado con el que la clave pasada por par\'ametro est\'a definida en el diccionario.]
-    [El significado se pasa por referencia. Modificarlo implica cambiarlo en la estructura interna del diccionario.]
 
 \end{Interfaz}
 
@@ -158,7 +158,7 @@
   \SetKwFunction{rebalancear}{RebalancearArbol}
   \SetKwFunction{recalcAlt}{RecalcularAltura}
 
-  \nuevoAlgo
+  % \nuevoAlgo
   \begin{algoritmo}{iVacio}{}{estrAVL}
     $res \gets$ \nil{} \com*{$\Theta(1)$}
   \end{algoritmo}
@@ -168,7 +168,19 @@
   {$\Theta(1)$} % Complejidad
   {} % Justificación
 
-  \nuevoAlgo
+  % \nuevoAlgo
+  \begin{algoritmo}{iDefinido}{\In{a}{estrAVL}, \In{k}{$\kappa$}}{bool}
+    \tipo{estrAVL} $padre$ \;
+    \tipo{estrAVL} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
+    $res \gets \neg$ \esNil{$lugar$} \com*{$\Theta(1)$}
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(\log(n) \times order(k))$} % Complejidad
+  {$\Theta(1) + \Theta(\log(n) \times order(k)) + \Theta(1) = \Theta(\log(n) \times order(k)) + \Theta(1)$} % Justificación
+
+  % \nuevoAlgo
   \begin{algoritmo}{iDefinir}{\In{k}{$\kappa$}, \In{s}{$\sigma$}, \Inout{a}{estrAVL}}{}
     \tipo{estrAVL} $padre$ \;
     \tipo{estrAVL} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
@@ -190,7 +202,7 @@
   {$\Theta(\log(n) \times order(k) + copy(k) + copy(s))$} % Complejidad
   {La funci\'on tiene llamadas a funciones con complejidad $\Theta(\log(n) \times order(k))$ y $\Theta(copy(k) + copy(s))$.} % Justificacíón
 
-  \nuevoAlgo
+  % \nuevoAlgo
   \begin{algoritmo}{iObtener}{\In{a}{estrAVL}, \In{k}{$\kappa$}}{$\sigma$}
     \tipo{estrAVL} $padre$ \;
     \tipo{estrAVL} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
@@ -202,28 +214,7 @@
   {$\Theta(\log(n) \times order(k))$} % Complejidad
   {La funci\'on tiene llamadas a funciones con complejidad $\Theta(\log(n) \times order(k)$ y $\Theta(copy(k) + copy(s))$.} % Justificacíón
 
-  \nuevoAlgo
-  \begin{algoritmo}{iCantClaves}{\In{a}{estrAVL}}{nat}
-    $res \gets$ \cantNodos{$a$} \com*{$\Theta(n)$}
-  \end{algoritmo}
-  \datosAlgoritmo{} % Descripción
-  {} % Pre
-  {} % Post
-  {$\Theta(n)$} % Complejidad
-  {} % Justificación
-
-  \nuevoAlgo
-  \begin{algoritmo}{iDefinido?}{\In{a}{estrAVL}, \In{k}{$\kappa$}}{bool}
-    \tipo{estrAVL} $padre$ \;
-    \tipo{estrAVL} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
-    $res \gets \neg$ \esNil{$lugar$} \com*{$\Theta(1)$}
-  \end{algoritmo}
-  \datosAlgoritmo{} % Descripción
-  {} % Pre
-  {} % Post
-  {$\Theta(\log(n) \times order(k))$} % Complejidad
-  {$\Theta(1) + \Theta(\log(n) \times order(k)) + \Theta(1) = \Theta(\log(n) \times order(k)) + \Theta(1)$} % Justificación
-
+  % \nuevoAlgo
   \begin{algoritmo}{iBorrar}{\Inout{a}{estrAVL}, \In{k}{$\kappa$}}{}
     \tipo{estrAVL} $padre$ \;
     \tipo{estrAVL} $lugar \gets$ \buscar{$a$, $k$, $padre$} \com*{$\Theta(\log(n) \times order(k))$}
@@ -238,6 +229,7 @@
       }{
         $a \gets$ \nil{} \com*{$\Theta(1)$}
       }
+      \delete{$lugar$} \tcp*[h]{Liberamos la memoria ocupada por el nodo eliminado.} \com*{$\Theta(1)$}
     }\uElseIf(\com*[f]{$\Theta(1)$}){\esNil{\der{$lugar$}}}{
       \raiz{\izq{$lugar$}}.$padre \gets padre$ \com*{$\Theta(1)$}
       \eIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{$padre$}}{
@@ -249,9 +241,11 @@
         \rebalancear{$padre$} \com*{$\Theta(\log(n))$}
       }{
         $a \gets$ \izq{$lugar$} \com*{$\Theta(1)$}
+
       }
+      \delete{$lugar$} \tcp*[h]{Liberamos la memoria ocupada por el nodo eliminado.} \com*{$\Theta(1)$}
     }\uElseIf(\com*[f]{$\Theta(1)$}){\esNil{\izq{$lugar$}}}{
-      \raiz{\izq{$lugar$}}.$padre \gets padre$ \com*{$\Theta(1)$}
+      \raiz{\der{$lugar$}}.$padre \gets padre$ \com*{$\Theta(1)$}
       \eIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{$padre$}}{
         \eIf(\com*[f]{$\Theta(1)$}){\izq{$padre$} = $lugar$}{
           $padre \gets$ \bin{\der{$lugar$}, \raiz{$padre$}, \der{$padre$}} \com*{$\Theta(1)$}
@@ -262,61 +256,41 @@
       }{
         $a \gets$ \der{$lugar$} \com*{$\Theta(1)$}
       }
+      \delete{$lugar$} \tcp*[h]{Liberamos la memoria ocupada por el nodo eliminado.} \com*{$\Theta(1)$}
     }
-  \end{algoritmo}
-
-  \begin{contAlgoritmo}{iBorrar}
     \Else{
       \tipo{estrAVL} $reemplazo \gets$ \der{$lugar$} \com*{$\Theta(1)$}
-      \eIf(\com*[f]{$\Theta(1)$}){\esNil{\izq{$reemplazo$}}}{
-        \eIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{$padre$}}{
-          \eIf(\com*[f]{$\Theta(1)$}){\izq{$padre$} = $lugar$}{
-            \izq{$padre$} $\gets reemplazo$ \com*{$\Theta(1)$}
-          }{
-            \der{$padre$} $\gets reemplazo$ \com*{$\Theta(1)$}
-          }
-        }{
-          $a \gets reemplazo$ \com*{$\Theta(1)$}
-        }
-        \raiz{$reemplazo$}.$padre \gets padre$ \com*{$\Theta(1)$}
-        \izq{$reemplazo$} $\gets$ \izq{$lugar$} \com*{$\Theta(1)$}
-        \izq{$lugar$}.$padre$ $\gets reemplazo$ \com*{$\Theta(1)$}
-        \rebalancear{$reemplazo$} \com*{$\Theta(\log(n))$}
-      }{
-        \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$\neg$ \esNil{\izq{$reemplazo$}}}{
-          $reemplazo \gets$ \izq{$reemplazo$} \com*{$\Theta(1)$}
-        }
-        \tipo{estrAVL} $padreReemplazo \gets$ \raiz{$reemplazo$}.$padre$ \com*{$\Theta(1)$}
-        \eIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{$padre$}}{
-          \eIf(\com*[f]{$\Theta(1)$}){\izq{$padre$} = $lugar$}{
-            $padre \gets$ \bin{$reemplazo$, \raiz{$padre$}, \der{$padre$}}
-          }{
-            $padre \gets$ \bin{\izq{$padre$}, \raiz{$padre$}, $reemplazo$}
-          }
-        }{
-          $a.raiz \gets reemplazo$ \com*{$\Theta(1)$}
-        }
-        $(reemplazo \to padre) \gets padre$ \com*{$\Theta(1)$}
-        $(reemplazo \to izq) \gets lugar \to izq$ \com*{$\Theta(1)$}
-        $(lugar \to izq \to padre) \gets reemplazo$ \com*{$\Theta(1)$}
-        $(padreReemplazo \to izq) \gets (reemplazo \to der)$ \com*{$\Theta(1)$}
-        \If(\com*[f]{$\Theta(1)$}){$(reemplazo \to der) \neq \NULL$}{
-          $(reemplazo \to der \to padre) \gets padreReemplazo$ \com*{$\Theta(1)$}
-        }
-        $(reemplazo \to der) \gets (lugar \to der)$ \com*{$\Theta(1)$}
-        $(lugar \to der \to padre) \gets reemplazo$ \com*{$\Theta(1)$}
-        \rebalancear{$reemplazo$} \com*{$\Theta(\log(n))$}
+      \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$\neg$ \esNil{\izq{$reemplazo$}}}{
+        $reemplazo \gets$ \izq{$reemplazo$} \com*{$\Theta(1)$}
       }
+      \tipo{estrAVL} $padreReemplazo \gets$ \raiz{$reemplazo$}.$padre$ \com*{$\Theta(1)$}
+      $padreReemplazo \gets$ \bin{\der{$reemplazo$}, \raiz{$padreReemplazo$}, \der{$padreReemplazo$}} \com*{$\Theta(1)$}
+      \If(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{\izq{$padreReemplazo$}}}{
+        \raiz{$padreReemplazo$}.$padre \gets padreReemplazo$ \com*{$\Theta(1)$}
+      }
+      $lugar \gets$ \bin{\izq{$lugar$}, \raiz{$reemplazo$}, \der{$lugar$}} \com*{$\Theta(1)$}
+      \raiz{$lugar$}.$padre \gets padre$ \com*{$\Theta(1)$}
+      \rebalancear{$padreReemplazo$} \com*{$\Theta(\log(n))$}
+      \delete{$reemplazo$} \tcp*[h]{Liberamos la memoria ocupada por el nodo eliminado.} \com*{$\Theta(1)$}
     }
-    \delete{$lugar$} \tcp*[h]{Liberamos la memoria ocupada por el nodo eliminado.} \com*{$\Theta(1)$}
-  \end{contAlgoritmo}
+  \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(\log(n) \times order(k))$} % Complejidad
   {El algoritmo tiene una llamada a funci\'on con complejidad $\Theta(\log(n) \times order(k))$, y luego presenta varios casos, pero en todos ellos las funciones llamadas son $O(\log(n))$.} % Justificación
+  
+  % \nuevoAlgo
+  \begin{algoritmo}{iCantClaves}{\In{a}{estrAVL}}{nat}
+    $res \gets$ \cantNodos{$a$} \com*{$\Theta(n)$}
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(n)$} % Complejidad
+  {} % Justificación
 
-  \nuevoAlgo
+  % \nuevoAlgo
   \begin{algoritmo}{iBuscar}{\In{a}{estrAVL}, \In{k}{$\kappa$}, \Out{padre}{estrAVL}}{puntero(estrAVL)}
     $padre \gets$ \nil{} \com*{$\Theta(1)$}
     $actual \gets a$ \com*{$\Theta(1)$}
@@ -336,7 +310,7 @@
   {$\Theta(\log(n) \times order(k))$} % Complejidad
   {El algoritmo presenta un ciclo que se repite $\Theta(\log(n))$ veces, y en cada una de ellas se realiza una llamada a funci\'on con complejidad $\Theta(order(k))$.} % Justificación
 
-  \nuevoAlgo
+  % \nuevoAlgo
   \begin{algoritmo}{iRecalcularAltura}{\In{a}{estrAVL}}{}
     \uIf(\com*[f]{$\Theta(1)$}){$\neg$ \esNil{\izq{$a$}} $\land$ $\neg$ \esNil{\izq{$a$}}}{
       \raiz{$a$}.$altSubarbol \gets 1$ + \maximo{\raiz{\izq{$a$}}.$altSubarbol$, \raiz{\der{$a$}}.$altSubarbol$} \com*{$\Theta(1)$}
@@ -354,7 +328,7 @@
   {$\Theta(1)$} % Complejidad
   {El algoritmo presenta varios casos, y todos ellos realizan realizan operaciones con complejidad $\Theta(1)$.} % Justificación
 
-  \nuevoAlgo
+  % \nuevoAlgo
   \begin{algoritmo}{iFactorDeBalanceo}{\In{a}{estrAVL}}{int}
     \tipo{int} $altIzq \gets$ \esNil{\izq{$a$}} ? 0 : \raiz{\izq{$a$}}.$altSubarbol$ \com*{$\Theta(1)$}
     \tipo{int} $altDer \gets$ \esNil{\der{$a$}} ? 0 : \raiz{\der{$a$}}.$altSubarbol$ \com*{$\Theta(1)$}
@@ -366,7 +340,7 @@
   {$\Theta(1)$} % Complejidad
   {$\Theta(1) + \Theta(1) + \Theta(1) = \Theta(1)$} % Justificación
 
-  \nuevoAlgo
+  % \nuevoAlgo
   \begin{algoritmo}{iRotarAIzquierda}{\Inout{a}{estrAVL}}{}
     \tipo{estrAVL} $nuevo_1 \gets$ \bin{\izq{$a$}, \raiz{$a$}, \izq{\der{$a$}}} \com*{$\Theta(1)$}
     \tipo{estrAVL} $nuevo_2 \gets$ \bin{$nuevo_1$, \raiz{\der{$a$}}, \der{\der{$a$}}} \com*{$\Theta(1)$}
@@ -387,7 +361,7 @@
   {$\Theta(1)$} % Complejidad
   {Todas las operaciones que realiza el algoritmo tienen complejidad $\Theta(1)$.} % Justificación
 
-  \nuevoAlgo
+  % \nuevoAlgo
   \begin{algoritmo}{iRotarADerecha}{\Inout{a}{estrAVL}}{}
     \tipo{estrAVL} $nuevo_1 \gets$ \bin{\der{\izq{$a$}}, \raiz{$a$}, \der{$a$}} \com*{$\Theta(1)$}
     \tipo{estrAVL} $nuevo_2 \gets$ \bin{\izq{\izq{$a$}}, \raiz{\izq{$a$}}, $nuevo_1$} \com*{$\Theta(1)$}
@@ -408,7 +382,7 @@
   {$\Theta(1)$} % Complejidad
   {Todas las operaciones que realiza el algoritmo tienen complejidad $\Theta(1)$.} % Justificación
 
-  \nuevoAlgo
+  % \nuevoAlgo
   \begin{algoritmo}{iRebalancearArbol}{\In{a}{estrAVL}}{}
     \tipo{estrAVL} $p \gets a$ \com*{$\Theta(1)$}
     \While(\com*[f]{$\Theta(\log(n))$ iteraciones}){$\neg$ \esNil{$p$}}{ 

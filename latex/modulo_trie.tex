@@ -4,6 +4,7 @@
   En todos los casos, al indicar las complejidades de los algoritmos, las variables que se utilizan corresponden a:
   \vspace{-0.5em}\begin{itemize}
     \item $n$: Cantidad de claves definidas en el diccionario.
+    \item $L$: Longitud de la clave m\'as larga definida en el diccionario.
   \end{itemize}
 
 \begin{Interfaz}
@@ -33,34 +34,33 @@
 
   \Encabezado{Operaciones de diccionario}
 
-    \InterfazFuncion{vac\'{i}o}{}{diccStr($\alpha$)}
+    \InterfazFuncion{Vacio}{}{diccStr($\alpha$)}
     [true]
     {$res \igobs$ vac\'{i}o}
     [$\Theta(1)$]
     [Devuelve un diccionario vac\'io.]
 
-    \InterfazFuncion{definir}{\Inout{d}{diccStr($\alpha$)}, \In{k}{string}, \In{s}{$\alpha$}}{diccStr($\alpha$)}
+    \InterfazFuncion{Definido}{\In{d}{diccStr($\alpha$)}, \In{k}{string}}{bool}
+    {$res \igobs$ def?($d$, $k$)}
+    [$\Theta(L)$]
+    [Devuelve true si y solo si la clave $k$ est\'a definida en el diccionario.]
+
+    \InterfazFuncion{Definir}{\Inout{d}{diccStr($\alpha$)}, \In{k}{string}, \In{s}{$\alpha$}}
     [$d \igobs d_{0}$]
     {$d \igobs$ definir($k$, $s$, $d_{0}$}
     [$\Theta(L)$]
     [Define una palabra en el diccionario.]
 
-    \InterfazFuncion{borrar}{\Inout{d}{diccStr($\alpha$)}, \In{k}{string}}{diccStr($\alpha$)}
-    [$d \igobs d_{0}$ $\land$ def?($d$, $k$)]
-    {$d \igobs$ borrar($k$, $s$, $d_{0}$}
-    [$\Theta(L)$]
-    [Borra una palabra del diccionario.]
-
-    \InterfazFuncion{def?}{\In{d}{diccStr($\alpha$)}, \In{k}{string}}{bool}
-    [true]
-    {$res \igobs$ def?($d$, $k$)}
-    [$\Theta(L)$]
-    [Devuelve true si y solo si la clave $k$ est\'a definida en el diccionario.]
-
-    \InterfazFuncion{obtener}{\In{d}{diccStr($\alpha$)}, \In{k}{string}}{$\alpha$}
+    \InterfazFuncion{Obtener}{\In{d}{diccStr($\alpha$)}, \In{k}{string}}{$\alpha$}
     [def?($d$, $k$)]
     {$res \igobs$ obtener($d$, $k$)}
     [$\Theta(L)$]
     [Devuelve el significado asociado a la clave $k$.]
+
+    \InterfazFuncion{Borrar}{\Inout{d}{diccStr($\alpha$)}, \In{k}{string}}{diccStr($\alpha$)}
+    [$d \igobs d_{0}$ $\land$ def?($d$, $k$)]
+    {$d \igobs$ borrar($k$, $s$, $d_{0}$}
+    [$\Theta(L)$]
+    [Borra una palabra del diccionario.]
 
 \end{Interfaz}
