@@ -99,7 +99,11 @@
       \tupItemNL{red}{red}
       \tupItemNL{IDsCompusPorIP}{diccStr(string, nat)}
       \tupItemNL{siguientesCompus}{ad(ad(nat))}
-      \tupItemNL{paquetesEnEspera}{ad(tupla(enConjunto: conj(paquete), porID: diccLog(ID, tupla(iPaquete: itConj(paquete),codOrigen: nat, codDestino: nat), porPrioridad: colaPrior(tupla(prioridad, itConjunto(paquete))))))}
+      \tupItemNL{paquetesEnEspera}{ad(tupla( \\
+        \hspace*{3mm}\campoTupla{enConjunto}{conj(paquete)}, \\
+        \hspace*{3mm}\campoTupla{porID}{diccLog(ID, tupla(\campoTupla{iPaquete}{itConj(paquete)}, \campoTupla{codOrigen}{nat}, \campoTupla{codDestino}{nat})}, \\
+        \hspace*{3mm}\campoTupla{porPrioridad}{colaPrior(tupla(prioridad, itConjunto(paquete))))} \\
+      ))}
       \tupItemNL{\#PaqEnviados}{ad(nat)}
       \tupItemNL{laQueM\'asEnvi\'o}{compu}
       \tupItemNL{IPsCompuPorID}{ad(compu)}
@@ -107,7 +111,7 @@
 
   \end{Estructura} 
 
-\textbf{Rep en castellano:}
+\textbf{Invariante de representaci\'on en castellano:}
 
     \begin{enumerate} 
       \item Tam(PaquetesEnEspera) $=$ Tam($\#$PaquetesEnviados) $=$ Tam(ProximaCompu) $=$ Tam(IPsCompusPorID) $=$ $\#$(computadoras(red)). Ademas, la longitud de cada uno de los arreglos de ProximaCompu es igual a \#(computadoras(red)).
@@ -213,7 +217,9 @@
 
   ~
 
-\tadOperacion{caminoDelPaquete}{ad(ad(nat)), ad(compu), ad(tupla(enConjunto: conj(paquete){,} porID: diccLog, tupla(iPaquete: itConj(paquete){,}codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,} itConjunto(paquete)))))), paquete, nat, nat}{secu(compu)}{$(\exists L$:nat) 0 $\leq$ L < tam($e$.paquetesEnEspera) $\yluego$ def?($p$.ID,  $\Pi_2$($e$.paquetesEnEspera[L])) }   
+\tadTipoFuncion{ad(ad(nat)), ad(compu), ad(tupla(enConjunto: conj(paquete){,} porID: diccLog, tupla(iPaquete: itConj(paquete){,} codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,} itConjunto(paquete)))))), paquete, nat, nat}
+
+\tadOperacion{caminoDelPaquete}{ad(ad(nat)), ad(compu), ad(tupla(enConjunto: conj(paquete){,} porID: diccLog, tupla(iPaquete: itConj(paquete){,} codOrigen: nat{,} codDestino: nat{,} porPrioridad: colaPrior(tupla(prioridad{,} itConjunto(paquete)))))), paquete, nat, nat}{secu(compu)}{$(\exists L$:nat) 0 $\leq$ L < tam($e$.paquetesEnEspera) $\yluego$ def?($p$.ID,  $\Pi_2$($e$.paquetesEnEspera[L]))}   
 
 \small\begin{verbatim}
 \caminoDelPaquete: ad(ad(nat)), ad(compu), ad(tupla(enConjunto: conj(paquete), 
