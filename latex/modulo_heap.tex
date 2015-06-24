@@ -35,7 +35,7 @@
 
   \Encabezado{Operaciones de cola de prioridad}
 
-    \InterfazFuncion{Vac\'ia}{}{colaPrior($\alpha$)}
+    \InterfazFuncion{Vacia}{}{colaPrior($\alpha$)}
     [true]
     {$res \igobs$ vac\'ia}
     [$\Theta(1)$]
@@ -48,7 +48,7 @@
     [Agrega un elemento a la cola de prioridad.]
     [El elemento se agrega a la cola de prioridad por copia.]
 
-    \InterfazFuncion{Vac\'ia?}{\In{cp}{colaPrior($\alpha$)}}{bool}
+    \InterfazFuncion{EsVacia?}{\In{cp}{colaPrior($\alpha$)}}{bool}
     [true]
     {$cp \igobs$ vac\'ia($cp$)}
     [$\Theta(1)$]
@@ -84,13 +84,11 @@
 
 \begin{Algoritmos}
 
-  \SetKwFunction{vacia}{Vac\'ia}
   \SetKwFunction{lon}{long}
   \SetKwFunction{swap}{Swap}
-  \SetKwFunction{esVacio}{esVac\'io?}
 
-  \begin{algoritmo}{iVac\'io}{}{}
-    $res \gets$ \vacia{} \com*{$\Theta(1)$}
+  \begin{algoritmo}{iVacia}{}{}
+    $res \gets$ \vacio{} \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -112,7 +110,7 @@
   {$\Theta(log(n)) \times \Theta(copy(\alpha))$} % Complejidad
   {El ciclo se repite como m\'aximo $log(n)$ veces y cada repetici\'on tiene complejidad $\Theta(copy(\alpha))$. } % Justificación
 
-  \begin{algoritmo}{iVac\'ia?}{\In{v}{vector($\alpha$)}}{bool}
+  \begin{algoritmo}{iEsVacia?}{\In{v}{vector($\alpha$)}}{bool}
     $res \gets$ \esVacio{$v$} \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción

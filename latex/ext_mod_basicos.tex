@@ -3,10 +3,10 @@
 \subsection{TAD Arreglo dimensionable($\alpha$)}
 
   \tadOperacion{fin}{ad($\alpha$)/a}{ad($\alpha$)}{tam($a$) > 0}
-  \tadAxioma{fin($a$)}{\IF (tam(a) $\leq$ 1) THEN crearArreglo(0) ELSE fin\textsubscript{aux}($a$, crearArreglo(tam($a$)-1), tam($a$)-2) FI}
+  \tadAxioma{fin($a$)}{fin\textsubscript{aux}($a$, tam($a$)$-$ 1)}
 
-  \tadOperacion{fin\textsubscript{aux}}{ad($\alpha$)/a, ad($\alpha$)/b, nat}{ad($\alpha$)}{definido?($a$, $n$) $\land$ definido?($b$, $n - 1$)}
-  \tadAxioma{fin\textsubscript{aux}($a$, $b$, $n$)}{\IF $n$ = 0 THEN $b$[0] $\leftarrow$ $a$[1] ELSE fin\textsubscript{aux}($a$, $b$[$n$] $\leftarrow$ $a$[$n$ + 1], $n$ - 1) FI}
+  \tadOperacion{fin\textsubscript{aux}}{ad($\alpha$)/a, nat/n}{ad($\alpha$)}{$n$ $<$ tam($a$)}
+  \tadAxioma{fin\textsubscript{aux}($a$, $n$)}{\IF $n$ = 0 THEN crearArreglo(tam($a$) $-$ 1) ELSE {\IF definido?($a$, $n$) THEN fin\textsubscript{aux}($a$, $n - 1$)$[n - 1] \gets a[n]$ ELSE fin\textsubscript{aux}($a$, $n - 1$) FI} FI}
 
 \subsection{M\'odulo Conjunto Lineal($\alpha$)}
 

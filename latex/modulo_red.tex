@@ -123,31 +123,29 @@
 \textbf{Invariante de representaci\'on en castellano:}
 
     \begin{enumerate} 
-      \item El cardinal del conjunto de claves del diccionario Conexiones, es igual al cardinal del conjunto de compus.
-      \item Ninguna compu tiene vecinos repetidos.
-      \item Ninguna compu puede ser vecina de si misma.
-      \item Todos los vecinos tienen que estar en el conjunto de claves del diccionario Conexiones.
+      \item El cardinal del conjunto de claves del diccionario $conexiones$ es igual al cardinal del conjunto $compus$.
+      \item Ninguna compu est\'a conectada por dos interfaces diferentes a la misma computadora.
+      \item Ninguna compu puede tener una conexi\'on consigo misma.
+      \item Las computadoras que aparecen como vecinas de otra, es decir, como significado de alguno de los significados del diccionario $conexiones$, tienen que formar parte de la red, es decir, estar en el conjunto de claves del diccionario $conexiones$.
       \item Si $c_{1}$ y $c_{2}$ son computadoras de la red, $c_{1}$ es vecina de $c_{2}$ si y solo si $c_{2}$ es vecina de $c_{1}$.
-      \item El conjunto de compus es el mismo que el que resulta de armar las computadoras con los diccionarios.
+      \item El conjunto $compus$ es el mismo que el que resulta de armar las computadoras con los diccionarios.
     \end{enumerate}
 
   \RepFc[Red][e]{ 
   \begin{enumerate} 
-      \item $\#$claves($e$.conexiones)=$\#$($e$.compus) $\land$
-      \item ($\forall c$: IP) $c$ $\in$ claves($e$.conexiones) $\impluego$ sinRepetidos(JuntarSignificados(obtener($c$, $e$.conexiones))) $\land$
-      \item ($\forall c$: IP) $c$ $\in$ claves($e$.conexiones) $\impluego$ $\neg$esta?($c$, JuntarSignificados(obtener($c$, $e$.conexiones))) $\land$
-      \item ($\forall c_{1}$:IP) $c$ $\in$ claves($e$.conexiones) $\impluego$ ($\forall c_{2}$:IP) esta?($c_{2}$, JuntarSignificados(obtener($c_{1}$, $e$.conexiones))) $c_{2}$ $\Rightarrow$ ($e$.conexiones) $\yluego$
-      \item ($\forall c_{1}$:IP) ($\forall c_{2}$:IP) ($c_{1}$ $\in$ claves($e$.conexiones)) $\land$ ($c_{2}$ $\in$ claves($e$.conexiones)) $\impluego$ esta?($c_{1}$, JuntarSignificados(obtener($c_{2}$, $e$.conexiones))) $\Leftrightarrow$ esta?($c_{2}$, JuntarSignificados(obtener($c_{1}$, $e$.conexiones))) $\land$
-      \item ($\forall c$: IP) $c$ $\in$ $e$.compus $\Rightarrow$ $\Pi_{1}$($c$) $\in$ claves($e$.conexiones) $\yluego$ claves(obtener($\Pi_{1}$($c$), $e$.conexiones)) $\subseteq$ $\Pi_{2}$($c$)
-
-
+      \item $\#$claves($e$.$conexiones$)=$\#$($e$.$compus$) $\land$
+      \item ($\forall c$: IP) $c$ $\in$ claves($e$.$conexiones$) $\impluego$ sinRepetidos(JuntarSignificados(obtener($c$, $e$.$conexiones$))) $\land$
+      \item ($\forall c$: IP) $c$ $\in$ claves($e$.$conexiones$) $\impluego$ $\neg$esta?($c$, JuntarSignificados(obtener($c$, $e$.$conexiones$))) $\land$
+      \item ($\forall c_{1}$:IP) $c$ $\in$ claves($e$.$conexiones$) $\impluego$ ($\forall c_{2}$:IP) esta?($c_{2}$, JuntarSignificados(obtener($c_{1}$, $e$.$conexiones$))) $c_{2}$ $\Rightarrow$ ($e$.$conexiones$) $\yluego$
+      \item ($\forall c_{1}$:IP) ($\forall c_{2}$:IP) ($c_{1}$ $\in$ claves($e$.$conexiones$)) $\land$ ($c_{2}$ $\in$ claves($e$.$conexiones$)) $\impluego$ esta?($c_{1}$, JuntarSignificados(obtener($c_{2}$, $e$.$conexiones$))) $\Leftrightarrow$ esta?($c_{2}$, JuntarSignificados(obtener($c_{1}$, $e$.$conexiones$))) $\land$
+      \item ($\forall c$: IP) $c$ $\in$ $e$.$compus$ $\Rightarrow$ $\Pi_{1}$($c$) $\in$ claves($e$.$conexiones$) $\yluego$ claves(obtener($\Pi_{1}$($c$), $e$.$conexiones$)) $\subseteq$ $\Pi_{2}$($c$)
       \end{enumerate}
     }\mbox{}
 
   ~
 
-  \AbsFc[estrRed]{Red}[e]{(r: Red | computadoras(r) = $e$.compus $\land$ \\
-    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) (($c_1 \in$ computadoras($r$) $\land$ $c_2 \in$ computadoras($r$)) $\impluego$ (conectadas?($r$, $c_{1}$, $c_{2}$) $\igobs$ esta?($c_{2}$, JuntarSignificados(Obtener($c_{1}$, $e$.conexiones)) $\land$ InterfazUsada(r, $c_{1}$, $c_{2}$) = DameClave(Obtener($c_{1}$, $e$.conexiones), $c_{2}$))))) \\
+  \AbsFc[estrRed]{Red}[e]{(r: Red | computadoras(r) = $e$.$compus$ $\land$ \\
+    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) (($c_1 \in$ computadoras($r$) $\land$ $c_2 \in$ computadoras($r$)) $\impluego$ (conectadas?($r$, $c_{1}$, $c_{2}$) $\igobs$ esta?($c_{2}$, JuntarSignificados(Obtener($c_{1}$, $e$.$conexiones$)) $\land$ InterfazUsada(r, $c_{1}$, $c_{2}$) = DameClave(Obtener($c_{1}$, $e$.$conexiones$), $c_{2}$))))) \\
   }
   
   ~
@@ -190,8 +188,12 @@
 
 \begin{Algoritmos}
 
+  \SetKwFunction{compus}{Computadoras}
+  \SetKwFunction{conectadas}{Conectadas?}
+  \SetKwFunction{cantCompus}{CantCompus}
   \SetKwFunction{caminos}{Caminos}
   \SetKwFunction{vecinos}{Vecinos}
+  \SetKwFunction{caminosMinimos}{CaminosMinimos}
   \SetKwFunction{dameMinimos}{DameMinimos}
   \SetKwFunction{pasarConjASecu}{PasarConjASecu}
   \SetKwFunction{losDeLong}{LosDeLong}
@@ -236,8 +238,8 @@
   
   % \nuevoAlgo
   \begin{algoritmo}{iConectar}{\Inout{r}{estrRed)}, \In{c_{1}}{compu}, \In{i_{1}}{interfaz}, \In{c_{2}}{compu}, \In{i_{2}}{interfaz}}{}
-    \defRap{$i_{1}$, $c_{2}.IP$, \obtener{$r.conexiones$, $c_{1}$}} \com*{$\Theta(L)$}
-    \defRap{$i_{2}$, $c_{1}.IP$, \obtener{$r.conexiones$, $c_{2}$}} \com*{$\Theta(L)$}
+    \defRap{\obtener{$c_{1}$, $r.conexiones$}, $i_{1}$, $c_{2}.IP$} \com*{$\Theta(L)$}
+    \defRap{\obtener{$c_{2}$, $r.conexiones$}, $i_{2}$, $c_{1}.IP$} \com*{$\Theta(L)$}
   \end{algoritmo}
   \datosAlgoritmo
   {} % Descripción
@@ -280,13 +282,13 @@
   \begin{algoritmo}{iVecinos}{\In{r}{estrRed}, \In{c}{compu}}{conj(compu)}{}
     \tipo{dicc(Interfaz, IP)} $d \gets$ \obtener{$c_1$, $r.conexiones$} \com*{$\Theta(L)$}
     \tipo{ItDicc(Interfaz, IP)} $it_1 \gets$ \crearIt{$d$} \com*{$\Theta(1)$}
-    $res \gets$ vacio() \com*{$\Theta(1)$}
+    $res \gets$ \vacio{} \com*{$\Theta(1)$}
     \While(\com*[f]{$\Theta(I)$ iteraciones}){\haySig{$it_1$}}{
-      \tipo{ItConj} $it_2 \gets$ \crearIt{$r$.compus} \com*{$\Theta(1)$}
+      \tipo{ItConj} $it_2 \gets$ \crearIt{$r$.$compus$} \com*{$\Theta(1)$}
       \While(\com*[f]{$\Theta(n \times L)$}){\sig{$it_2$}$.IP$ $\neq$ \sigClave($it_1$)}{
         \avanzar{$it_2$} \com*{$\Theta(1)$}
       }
-      \agRap{res, siguiente($it_2$)} \com*{$\Theta(n + I)$}
+      \agRap{$res$, \sig{$it_2$}} \com*{$\Theta(n + I)$}
      } 
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
@@ -394,7 +396,7 @@
   {} % Justificación
      
   \begin{algoritmo}{iHayCamino?}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{bool}{}
-    $res \gets$ ($\neg$esVacio?(Caminos($r$, $c_{1}$, $c_{2}$, \agAtras{\vacia{}, $c_1$}, \vecinos{$c_1$}))) \com*{$O(n!)$}
+    $res \gets$ ($\neg$ \esVacio{\caminos{$r$, $c_{1}$, $c_{2}$, \agAtras{\vacia{}, $c_1$}, \vecinos{$c_1$}}}) \com*{$O(n!)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
@@ -426,7 +428,7 @@
 
   % \nuevoAlgo
   \begin{algoritmo}{iComputadoras}{\In{r}{estrRed}}{conj(compu)}{}
-    $res \gets$ $r$.compus \com*{$\Theta(1)$}
+    $res \gets$ $r$.$compus$ \com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre

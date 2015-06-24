@@ -34,33 +34,32 @@
 
   \Encabezado{Operaciones de diccionario}
 
-    \InterfazFuncion{Vacio}{}{diccStr($\alpha$)}
-    [true]
-    {$res \igobs$ vac\'{i}o}
-    [$\Theta(1)$]
+    \InterfazFuncion{Vacio}{}{diccStr($\alpha$)}%
+    {$res \igobs$ vac\'{i}o}%
+    [$\Theta(1)$]%
     [Devuelve un diccionario vac\'io.]
 
-    \InterfazFuncion{Definido}{\In{k}{string}, \In{d}{diccStr($\alpha$)}}{bool}
-    {$res \igobs$ def?($k$, $d$)}
-    [$\Theta(L)$]
-    [Devuelve true si y solo si la clave $k$ est\'a definida en el diccionario.]
+    \InterfazFuncion{Definido}{\In{k}{string}, \In{d}{diccStr($\alpha$)}}{bool}%
+    {$res \igobs$ def?($k$, $d$)}%
+    [$\Theta(L)$]%
+    [Devuelve \emph{true} si y solo si la clave $k$ est\'a definida en el diccionario.]
 
-    \InterfazFuncion{Definir}{\In{k}{string}, \In{s}{$\alpha$}, \Inout{d}{diccStr($\alpha$)}}
-    [$d \igobs d_{0}$]
-    {$d \igobs$ definir($d_{0}$, $k$, $s$)}
-    [$\Theta(L)$]
+    \InterfazFuncion{Definir}{\In{k}{string}, \In{s}{$\alpha$}, \Inout{d}{diccStr($\alpha$)}}{}%
+    [$d \igobs d_{0}$]%
+    {$d \igobs$ definir($d_{0}$, $k$, $s$)}%
+    [$\Theta(L)$]%
     [Define una palabra en el diccionario.]
 
-    \InterfazFuncion{Obtener}{\In{k}{string}, \In{d}{diccStr($\alpha$)}}{$\alpha$}
-    [def?($d$, $k$)]
-    {$res \igobs$ obtener($k$, $d$)}
-    [$\Theta(L)$]
+    \InterfazFuncion{Obtener}{\In{k}{string}, \In{d}{diccStr($\alpha$)}}{$\alpha$}%
+    [def?($d$, $k$)]%
+    {$res \igobs$ obtener($k$, $d$)}%
+    [$\Theta(L)$]%
     [Devuelve el significado asociado a la clave $k$.]
 
-    \InterfazFuncion{Borrar}{\In{k}{string}}{diccStr($\alpha$), \Inout{d}{diccStr($\alpha$)}}
-    [$d \igobs d_{0}$ $\land$ def?($d$, $k$)]
-    {$d \igobs$ borrar($d_{0}$, $k$, $s$}
-    [$\Theta(L)$]
+    \InterfazFuncion{Borrar}{\In{k}{string}}{diccStr($\alpha$), \Inout{d}{diccStr($\alpha$)}}%
+    [$d \igobs d_{0}$ $\land$ def?($d$, $k$)]%
+    {$d \igobs$ borrar($d_{0}$, $k$, $s$}%
+    [$\Theta(L)$]%
     [Borra una palabra del diccionario.]
 
 \end{Interfaz}
