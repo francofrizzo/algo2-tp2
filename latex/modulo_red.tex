@@ -20,88 +20,88 @@
   
   \Encabezado{Operaciones de Red}
 
-  \InterfazFuncion{iniciarRed}{}{Red}
+  \InterfazFuncion{IniciarRed}{}{Red}
   [] % Pre
   {res $\igobs$ iniciarRed()} % Pos
   [$\Theta(1)$] % Complejidad
   [Genera una nueva red sin ninguna computadora.] % Descripción
   [] % Aliasing
   
-  \InterfazFuncion{agregarCompu}{\Inout{r}{Red}, \In{c}{compu}}{}
+  \InterfazFuncion{AgregarCompu}{\Inout{r}{Red}, \In{c}{compu}}{}
   [$r$ $\igobs$ $r_{0}$ $\land$ ($\forall c'$: compu)($c' \in$ computadoras($r$) $\rightarrow$ ip($c$) $\neq$ ip($c'$))] % Pre
   {$r$ $\igobs$ agregarCompu($r_{0}$, c)} % Pos
   [$\Theta(1)$] % Complejidad
   [Agrega una nueva computadora a la red.] % Descripción
   [] % Aliasing
 
-  \InterfazFuncion{conectar}{\Inout{r}{Red}, \In{c_0}{compu}, \In{i_0}{interfaz}, \In{c_1}{compu}, \In{i_1}{interfaz}}{Red}
+  \InterfazFuncion{Conectar}{\Inout{r}{Red}, \In{c_0}{compu}, \In{i_0}{interfaz}, \In{c_1}{compu}, \In{i_1}{interfaz}}{Red}
   [$r$ $\igobs$ $r_{0}$ $\land$ $c_{1} \in$ computadoras($r$) $\land$ $c_{2} \in$ computadoras($r$) $\land$ ip($c_{0} $) $\neq$ ip($c_{1}$) $\land$ $\lnot$conectadas?($r$, $c_{0}$ , $c_{1} $) $\land$ $\lnot$usaInterfaz?($r$, $c_{0}$, $i_{0}$) $\land$ $\lnot$usaInterfaz?($r$, $c_{1}$, $i_{1}$)] % Pre
   {$r$ $\igobs$ conectar($r_{0}$, $c_{0}$, $i_{0}$, $c_{1}$, $i_{1}$)} % Pos
   [$\Theta(L)$] % Complejidad
   [Conecta la computadora $c_{0}$ con la computadora $c_{1}$ a trav\'es de las interfaces $i_{0}$ y $i_{1}$ respectivamente. ] % Descripción
   [] % Aliasing
   
-  \InterfazFuncion{computadoras}{\In{r}{Red}}{conj(compu)}
-  [] % Pre
-  {esAlias($res$, computadoras(r))} % Pos
-  [$\Theta(1)$] % Complejidad
-  [Devuelve el conjunto de todas las computadoras de la red. ] % Descripción
-  [El conjunto es devuelto por referencia.] % Aliasing
-  
-  \InterfazFuncion{conectadas?}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{bool}
+  \InterfazFuncion{Conectadas?}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{bool}
   [$c_{0}$ $\in$ computadoras($r$) $\land$ $c_{1} \in $ computadoras($r$)] % Pre
   {$res$ $\igobs$ conectadas?($r$, $c_{0}$, $c_{1}$)} % Pos
   [$\Theta(L \times I)$] % Complejidad
   [Devuelve \emph{true} si y solo si la computadora $c_{0}$ esta conectada a la computadora $c_{1}$] % Descripción
   [] % Aliasing
   
-  \InterfazFuncion{interfazUsada}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{interfaz}
+  \InterfazFuncion{InterfazUsada}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{interfaz}
   [$c_{0}$ $\in$ computadoras($r$) $\land$ $c_{1} \in $ computadoras($r$) $\yluego$ conectadas?($r$, $c_{0}$, $c_{1}$)] % Pre
   {$res$ $\igobs$ interfazUsada($r$, $c_{0}$, $c_{1}$)} % Pos
   [$\Theta(I \times L)$] % Complejidad
   [Devuelve la interfaz usada por $c_{0}$ para conectarse a $c_{1}$] % Descripción
   [] % Aliasing
   
-  \InterfazFuncion{vecinos}{\In{r}{Red}, \In{c}{compu}}{conj(compu)}
+  \InterfazFuncion{Vecinos}{\In{r}{Red}, \In{c}{compu}}{conj(compu)}
   [$c$ $\in$ computadoras($r$)] % Pre
   {$res$ $\igobs$ vecinos($r$, $c$)} % Pos
   [$\Theta(I \times n \times L)$] % Complejidad
   [Devuelve el conjunto de vecinos de la computadora $c$, es decir, las computadoras que tienen una conexi\'on directa con $c$.] % Descripción
   [Devuelve el conjunto por copia.] % Aliasing
   
-  \InterfazFuncion{usaInterfaz?}{\In{r}{Red}, \In{c}{compu}, \In{i}{interfaz}}{bool}
+  \InterfazFuncion{UsaInterfaz?}{\In{r}{Red}, \In{c}{compu}, \In{i}{interfaz}}{bool}
   [$c$ $\in$ computadoras($r$)] % Pre
   {$res$ $\igobs$ usaInterfaz?($r$, $c$, $i$)} % Pos
   [$\Theta(I)$] % Complejidad
   [Devuelve \emph{true} si y solo si la computadora $c$ est\'a usando la interfaz $i$.] % Descripción
   [] % Aliasing
   
-  \InterfazFuncion{caminosMinimos}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{conj(secu(compu))}
+  \InterfazFuncion{CaminosMinimos}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{conj(secu(compu))}
   [$c_{0}$ $\in$ computadoras($r$) $\land$ $c_{1} \in $ computadoras($r$)] % Pre
   {$res$ $\igobs$ caminosMinimos($r$, $c_{0}$, $c_{1}$)} % Pos
-  [$\Theta(n³ \times n! \times n! + I)$] % Complejidad
+  [$O(n! + n \times (I + L))$] % Complejidad
   [Devuelve el conjunto de todos los caminos m\'nimos posibles entre $c_{0}$ y $c_{1}$. De no haber ninguno, devuelve $\emptyset$.] % Descripción
   [Devuelve el conjunto por copia.] % Aliasing
   
-  \InterfazFuncion{hayCamino?}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{bool}
+  \InterfazFuncion{HayCamino?}{\In{r}{Red}, \In{c_{0}}{compu}, \In{c_{1}}{compu}}{bool}
   [$c_{0}$ $\in$ computadoras($r$) $\land$ $c_{1} \in $ computadoras($r$)] % Pre
   {$res$ $\igobs$ hayCamino?($r$, $c_{0}$, $c_{1}$)} % Pos
-  [$\Theta(n² \times n!)$] % Complejidad
+  [$O(n!)$] % Complejidad
   [Devuelve \emph{true} si y solo si hay al menos un camino posible entre $c_{0}$ y $c_{1}$. ] % Descripción
   [] % Aliasing
-  
-  \InterfazFuncion{cantCompus}{\In{r}{Red}}{nat}
-  [true] % Pre
-  {$res$ $\igobs$ \#(computadoras(r))} % Pos
-  [$\Theta(1)$] % Complejidad
-  [Devuelve cu\'antas computadoras hay en la red.] % Descripción
-  [] % Aliasing
 
-  \InterfazFuncion{copiar}{\In{r}{Red}}{Red}
+  \InterfazFuncion{Computadoras}{\In{r}{Red}}{conj(compu)}
+  [] % Pre
+  {esAlias($res$, computadoras(r))} % Pos
+  [$\Theta(1)$] % Complejidad
+  [Devuelve el conjunto de todas las computadoras de la red. ] % Descripción
+  [El conjunto es devuelto por referencia.] % Aliasing
+
+  \InterfazFuncion{Copiar}{\In{r}{Red}}{Red}
   [true] % Pre
   {$res$ $\igobs$ $r$} % Pos
   [$\Theta(n \times I \times L)$] % Complejidad
   [Devuelve una copia de la red.] % Descripción
+  [] % Aliasing
+  
+  \InterfazFuncion{CantCompus}{\In{r}{Red}}{nat}
+  [true] % Pre
+  {$res$ $\igobs$ \#(computadoras(r))} % Pos
+  [$\Theta(1)$] % Complejidad
+  [Devuelve cu\'antas computadoras hay en la red.] % Descripción
   [] % Aliasing
 
 \end{Interfaz}
@@ -120,7 +120,7 @@
   \end{Estructura}
 
 
-\textbf{Rep en castellano:}
+\textbf{Invariante de representaci\'on en castellano:}
 
     \begin{enumerate} 
       \item El cardinal del conjunto de claves del diccionario Conexiones, es igual al cardinal del conjunto de compus.
@@ -147,8 +147,7 @@
   ~
 
   \AbsFc[estrRed]{Red}[e]{(r: Red | computadoras(r) = $e$.compus $\land$ \\
-    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) conectados?(r, $c_{1}$, $c_{2}$) = esta?($c_{2}$, JuntarSignificados(Obtener($c_{1}$, $e$.conexiones))) $\land$ \\
-    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) InterfazUsada(r, $c_{1}$, $c_{2}$) = DameClave(Obtener($c_{1}$, $e$.conexiones), $c_{2}$))
+    ($\forall c_{1}$: compu)(($\forall c_{2}$: compu) (($c_1 \in$ computadoras($r$) $\land$ $c_2 \in$ computadoras($r$)) $\impluego$ (conectadas?($r$, $c_{1}$, $c_{2}$) $\igobs$ esta?($c_{2}$, JuntarSignificados(Obtener($c_{1}$, $e$.conexiones)) $\land$ InterfazUsada(r, $c_{1}$, $c_{2}$) = DameClave(Obtener($c_{1}$, $e$.conexiones), $c_{2}$))))) \\
   }
   
   ~
@@ -191,6 +190,13 @@
 
 \begin{Algoritmos}
 
+  \SetKwFunction{caminos}{Caminos}
+  \SetKwFunction{vecinos}{Vecinos}
+  \SetKwFunction{dameMinimos}{DameMinimos}
+  \SetKwFunction{pasarConjASecu}{PasarConjASecu}
+  \SetKwFunction{losDeLong}{LosDeLong}
+  \SetKwFunction{minimaLong}{MinimaLong}
+
   % \nuevoAlgo
   \begin{algoritmo}{iIniciarRed}{}{estrRed}
     $res \gets \langle$\vacio{}, \vacio{}$\rangle$ \com*{$\Theta(1)$}
@@ -199,7 +205,7 @@
   {} % Pre
   {} % Post
   {$\Theta(1)$} % Complejidad
-  {} % Justificacíón
+  {} % Justificación
 
   % \nuevoAlgo
   \begin{algoritmo}{iAgregarCompu}{\Inout{r}{estrRed}, \In{c}{compu}}{}
@@ -210,11 +216,11 @@
   {} % Pre
   {} % Post
   {$\Theta(1)$} % Complejidad
-  {} % Justificacíón
+  {} % Justificación
 
   % Esta operación tal vez ya no sea necesaria:
   
-  % \begin{algoritmo}{iArmarLista}{\In{c}{conj(interfaz)}}{lista($\langle$Interfaz, itLista(estrCompu)$\rangle$)}
+  % \begin{algoritmo}{iArmarLista}{\In{c}{conj(interfaz)}}{lista($\langle$Interfaz, itLista(compu)$\rangle$)}
   %   $res \gets$ vacia()\com*{$\Theta(1)$}
   %   \tipo{itConj(interfaz)} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
   %   \While(\com*[f]{$\Theta(I)$ iteraciones}){haySiguiente($it$)}{
@@ -226,39 +232,39 @@
   % {} % Pre
   % {} % Post
   % {$\Theta(I)$} % Complejidad
-  % {} % Justificacíón
+  % {} % Justificación
   
   % \nuevoAlgo
   \begin{algoritmo}{iConectar}{\Inout{r}{estrRed)}, \In{c_{1}}{compu}, \In{i_{1}}{interfaz}, \In{c_{2}}{compu}, \In{i_{2}}{interfaz}}{}
-    \defRap($i_{1}$, $c_{2}$.IP, significado($r$.conexiones, $c_{1}$))\com*{$\Theta(L)$}
-    \defRap($i_{2}$, $c_{1}$.IP, significado($r$.conexiones, $c_{2}$))\com*{$\Theta(L)$}
+    \defRap{$i_{1}$, $c_{2}.IP$, \obtener{$r.conexiones$, $c_{1}$}} \com*{$\Theta(L)$}
+    \defRap{$i_{2}$, $c_{1}.IP$, \obtener{$r.conexiones$, $c_{2}$}} \com*{$\Theta(L)$}
   \end{algoritmo}
   \datosAlgoritmo
   {} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(L)$} % Complejidad
-  {Es $\Theta(L)$ porque obtener el significado es buscar el IP en el trie (que toma $\Theta(L)$) y despues copiar el IP para definirlo tambien es $\Theta(L)$. Copiar la Interfaz es $\Theta(1)$ } % Justificacíón
+  {Es $\Theta(L)$ porque obtener el significado es buscar el IP en el diccionario de strings (que toma $\Theta(L)$) y despues copiar el IP para definirlo tambien es $\Theta(L)$. Copiar la Interfaz es $\Theta(1)$ } % Justificación
   
   % \nuevoAlgo
   \begin{algoritmo}{iConectadas?}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{bool}{}
-    \tipo{dicc(Interfaz, IP)} $d \gets$ significado($c_1$, $r$.conexiones) \com*{$\Theta(L)$}
-    \tipo{ItDicc(Interfaz, IP)} $it \gets$ crearIt($d$) \com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(I \times L)$}){haySiguiente(it) $\yluego$ siguienteSignificado(it) $\neq$ $c_2$}{
+    \tipo{dicc(Interfaz, IP)} $d \gets$ \obtener{$c_1$, $r.conexiones$} \com*{$\Theta(L)$}
+    \tipo{ItDicc(Interfaz, IP)} $it \gets$ \crearIt{$d$} \com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(I \times L)$}){\haySig{$it$} $\yluego$ \sigSignif{$it$} $\neq$ $c_2$}{
       \avanzar{$it_1$} \com*{$\Theta(1)$}
     }
     $res \gets$ \haySig{$it$} \com*{$\Theta(1)$}
-  \end{algoritmo}  
+  \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(L \times I)$} % Complejidad
-  {Buscar un IP en el Trie es $\Theta(L)$. Luego con un ciclo que se ejecuta $\Theta(I)$ iteraciones, se comparan las IPs (toma $\Theta(L)$)} % Justificacíón
+  {Buscar un IP en el diccionario de strings es $\Theta(L)$. Luego con un ciclo que se ejecuta $\Theta(I)$ iteraciones, se comparan las IPs (toma $\Theta(L)$)} % Justificación
 
   % \nuevoAlgo
   \begin{algoritmo}{iInterfazUsada}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{interfaz}{}
-    \tipo{dicc(Interfaz, IP)} $d \gets$ significado($c_1$, $r$.conexiones) \com*{$\Theta(L)$}
-    \tipo{ItDicc(Interfaz, IP)} $it \gets$ crearIt($d$) \com*{$\Theta(1)$}
+    \tipo{dicc(Interfaz, IP)} $d \gets$ \obtener($c_1$, $r.conexiones$) \com*{$\Theta(L)$}
+    \tipo{ItDicc(Interfaz, IP)} $it \gets$ \crearIt{$d$} \com*{$\Theta(1)$}
     \While(\com*[f]{$\Theta(I \times L)$ }){\sigSignif($it$) $\neq$ $c_2$}{
       \avanzar{$it_1$} \com*{$\Theta(1)$}
     }
@@ -268,17 +274,17 @@
   {} % Pre
   {} % Post
   {$\Theta(I \times L)$} % Complejidad
-  {Buscar un IP en el Trie es $\Theta(L)$. Luego con un ciclo que se ejecuta $\Theta(I)$ iteraciones, se comparan las IPs (toma $\Theta(L)$)} % Justificacíón
+  {Buscar un IP en el diccionario de strings es $\Theta(L)$. Luego con un ciclo que se ejecuta $\Theta(I)$ iteraciones, se comparan las IPs (toma $\Theta(L)$)} % Justificación
   
   % \nuevoAlgo  
   \begin{algoritmo}{iVecinos}{\In{r}{estrRed}, \In{c}{compu}}{conj(compu)}{}
-    \tipo{dicc(Interfaz, IP)} $d \gets$ significado($c_1$, $r$.conexiones) \com*{$\Theta(L)$}
-    \tipo{ItDicc(Interfaz, IP)} $it_1 \gets$ crearIt($d$) \com*{$\Theta(1)$}
+    \tipo{dicc(Interfaz, IP)} $d \gets$ \obtener{$c_1$, $r.conexiones$} \com*{$\Theta(L)$}
+    \tipo{ItDicc(Interfaz, IP)} $it_1 \gets$ \crearIt{$d$} \com*{$\Theta(1)$}
     $res \gets$ vacio() \com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(I)$ iteraciones}){haySiguiente?($it_1$)}{
-      \tipo{ItConj} $it_2 \gets$ crearIt($r$.compus) \com*{$\Theta(1)$}
-      \While(\com*[f]{$\Theta(n \times L)$}){siguiente($it_2$).IP $\neq$ \sigClave($it_1$)}{
-        avanzar($it_2$) \com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(I)$ iteraciones}){\haySig{$it_1$}}{
+      \tipo{ItConj} $it_2 \gets$ \crearIt{$r$.compus} \com*{$\Theta(1)$}
+      \While(\com*[f]{$\Theta(n \times L)$}){\sig{$it_2$}$.IP$ $\neq$ \sigClave($it_1$)}{
+        \avanzar{$it_2$} \com*{$\Theta(1)$}
       }
       \agRap{res, siguiente($it_2$)} \com*{$\Theta(n + I)$}
      } 
@@ -287,11 +293,11 @@
   {} % Pre
   {} % Post
   {$\Theta(I \times n \times L)$} % Complejidad
-  {Se busca la computadora de la que se quiere los vecinos, lo que me toma $\Theta(L)$. Se recorren las interfaces ocupadas y para cada una se obtiene el IP. Luego, se busca en el conjunto de compus($\Theta(n)$), cual de ellas es la que se corresponde con el IP(la comparacion toma $\Theta(L)$).} % Justificacíón
+  {Se busca la computadora de la que se quiere los vecinos, lo que me toma $\Theta(L)$. Se recorren las interfaces ocupadas y para cada una se obtiene el IP. Luego, se busca en el conjunto de compus($\Theta(n)$), cual de ellas es la que se corresponde con el IP(la comparacion toma $\Theta(L)$).} % Justificación
   
 
   % Esta operación tal vez ya no sea necesaria:
-  % \begin{algoritmo}{iCrearConjunto}{\In{l}{lista(tupla($inter$: interfaz, $com$: itLista(estrCompu)))}}{conj(interfaz)}{}
+  % \begin{algoritmo}{iCrearConjunto}{\In{l}{lista(tupla($inter$: interfaz, $com$: itLista(compu)))}}{conj(interfaz)}{}
   %  \tipo{nat} $n \gets$ 0\com*{$\Theta(1)$}
   %  $res \gets$ vacio()\com*{$\Theta(1)$}
   % \While(\com*[f]{$\Theta(I)$ iteraciones}){n < longitud(l)}{
@@ -302,161 +308,121 @@
  % \datosAlgoritmo{Dada una lista de tupla de $\langle$Interfaz,Iterador$\rangle$ (que representa las conexiones de la computadora), devuelve el conjunto de todas las interfaces que se encuentran en ella. } % Descripción
  % {} % Pre
  % {} % Post
- % {$\Theta(I²)$} % Complejidad
- % {} % Justificacíón
+ % {$\Theta(I^2)$} % Complejidad
+ % {} % Justificación
 
   \begin{algoritmo}{iUsaInterfaz?}{\In{r}{estrRed}, \In{c}{compu}, \In{i}{interfaz}}{bool}{}
-    $res \gets$ definido?(significado($c$, $r$.conexiones), $i$) \com*{$\Theta(I)$}
+    $res \gets$ \definido{\obtener{$c$, $r.conexiones$}, $i$} \com*{$\Theta(I)$}
   \end{algoritmo} \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(I)$} % Complejidad
-  {} % Justificacíón
+  {} % Justificación
    
   \begin{algoritmo}{iCaminosMinimos}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{conj(lista(compu))}{}
-    $res \gets$ vacio()\com*{$\Theta(1)$}
-    \eIf(\com*[f]{$\Theta(I)$}){pertenece?($c_{2}$, vecinos($r$, $c_{1}$))}{
-      agregar($res$, agregarAtras(agregarAtras(<>,$c_{1}$), $c_{2}$))\com*{$\Theta(n+I)$}
+    $res \gets$ \vacio{} \com*{$\Theta(1)$}
+    \eIf(\com*[f]{$\Theta(I)$}){\pert{$c_{2}$, \vecinos{$r$, $c_{1}$}}}{
+      \ag{$res$, \agAtras{\agAtras{\vacia{}, $c_{1}$}, $c_{2}$}} \com*{$\Theta(n + I + L)$}
     }{
-      $res \gets$ dameMinimos(Caminos($r$, $c_{1}$, $c_{2}$, agregarAtras(<>,$c_{1}$), pasarConjASecu(vecinos($r$, $c_{1}$))))\com*{$\Theta(n³ \times n! \times n!)$}
+      $res \gets$ \dameMinimos{\caminos{$r$, $c_{1}$, $c_{2}$, \agAtras{\vacia{}, $c_{1}$}, \pasarConjASecu{\vecinos{$r$, $c_{1}$}}}} \com*{$O(n! + n! + n \times(I + L)) = O(n! + n \times (I + L))$}
     }
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n³ \times n! \times n! + I$)} % Complejidad
-  {} % Justificacíón
+  {$O(n! + n \times (I + L))$)} % Complejidad
+  {} % Justificación
 
-  \begin{algoritmo}{dameMinimos}{\In{c}{conj(lista(compu))}}{conj(lista(compu))}
-    \eIf(\com*[f]{$\Theta(1)$}){esVacio?($c$)}{
-      $res \gets$ vacio()\com*{$\Theta(1)$}
-    }{
-      \tipo{itConj(lista(compu))} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
-      $res \gets$ dameMinimosAux($c$, minimaLong($c$, long(siguiente($it$))))\com*{$\Theta(n \times n!)$}
-    }
+  \begin{algoritmo}{iDameMinimos}{\In{c}{conj(lista(compu))}}{conj(lista(compu))}
+    $res \gets$ \losDeLong{$c$, \minimaLong{$c$}}\com*{$\Theta(\#(c))$}
   \end{algoritmo}
-  \datosAlgoritmo{Devuelve, del total de caminos posibles, solo los de longitud m\'{i}nima} % Descripción
+  \datosAlgoritmo{Dado un conjunto de listas de compus, devuelve otro conjunto incluyendo solo las listas de longitud m\'{i}nima} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n \times n!)$} % Complejidad
-  {} % Justificacíón
+  {$\Theta(\#(c))$} % Complejidad
+  {} % Justificación
 
-  \begin{algoritmo}{dameMinimosAux}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{conj(lista(compu))}
-    \tipo{itConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
-    $res \gets$ vacio() \com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(n!)$ iteraciones}){haySiguiente($it$)}{
-      \eIf(\com*[f]{$\Theta(1)$}){long(siguiente($it$))$=n$}{
-        agregar($res$, siguiente($it$))\com*{$\Theta(n)$}
-        avanzar($it$) \com*{$\Theta(1)$}
-      }{
-        avanzar($it$) \com*{$\Theta(1)$}
+  \begin{algoritmo}{iLosDeLong}{\In{c}{conj(lista(compu))}, \In{k}{nat}}{conj(lista(compu))}
+    \tipo{itConj(lista(compu))} $it \gets$ \crearIt{$c$}\com*{$\Theta(1)$}
+    $res \gets$ \vacio{} \com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(\#(c))$ iteraciones}){\haySig{$it$}}{
+      \If(\com*[f]{$\Theta(1)$}){\longitud{\sig{$it$}}$ = k$}{
+        \ag{$res$, \sig{$it$}} \com*{$\Theta(n)$}
       }
+      \avanzar{$it$} \com*{$\Theta(1)$}
     }
   \end{algoritmo}
-  \datosAlgoritmo{} % Descripción
+  \datosAlgoritmo{Dado un conjunto de listas de compus y un n\'umero natural $k$, devuelve otro conjunto conteniendo solo las listas de longitud $k$.} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n \times n!)$} % Complejidad
-  {} % Justificacíón
+  {$\Theta(\#(c))$} % Complejidad
+  {} % Justificación
 
-  \begin{algoritmo}{minimaLong}{\In{c}{conj(lista(compu))}, \In{n}{nat}}{nat}
-    \tipo{nat} $i \gets n$\com*{$\Theta(1)$}
-    \tipo{itConj(lista(compu))} $it \gets$ crearIt($c$)\com*{$\Theta(1)$}
-    \While(\com*[f]{$\Theta(n \times n!)$ iteraciones}){haySiguiente($it$)}{
-      \eIf{long(siguiente($it$))}{
-        $i \gets$ longitud(siguiente($it$))\com*{$\Theta(1)$}
-        avanzar($it$)\com*{$\Theta(1)$}
-      }{
-        avanzar($it$)\com*{$\Theta(1)$}
-      }
+  \begin{algoritmo}{iMinimaLong}{\In{c}{conj(lista(compu))}}{nat}
+    \tipo{nat} $min \gets$ 0 \com*{$\Theta(1)$}
+    \tipo{itConj(lista(compu))} $it \gets$ \crearIt{$c$} \com*{$\Theta(1)$}
+    \If{\haySig{$it$}}{
+      $min \gets$ \longitud{\sig{$it$}} \com*{$\Theta(1)$}
     }
-    $res \gets i$\com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta(\#(c))$ iteraciones}){\haySig{$it$}}{
+      \If{\longitud{\sig{$it$}} $<$ $min$}{
+        $min \gets$ \longitud{\sig{$it$}} \com*{$\Theta(1)$}
+      }
+      \avanzar{$it$} \com*{$\Theta(1)$}
+    }
+    $res \gets min$\com*{$\Theta(1)$}
   \end{algoritmo}
   \datosAlgoritmo
-  {Devuelve la longitud de la secuencia m\'{a}s chica} % Descripción
+  {Dado un conjunto de listas, devuelve la longitud de la m\'as corta.} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n \times n!)$} % Complejidad
-  {En el peor de los casos, todas las computadoras estan conectadas entre si. Por lo tanto, la cantidad maxima de caminos posibles entre dos computadoras es n $\times$ n!} % Justificacíón
+  {$\Theta(\#(c))$} % Complejidad
+  {} % Justificación
     
-	\begin{algoritmo}{pasarConjASecu}{\In{c}{conj(compu)}}{secu(compu)}{}
-		$res \gets$ vacia()\com*{$\Theta(1)$}
-		\tipo{ItConj} $it \gets$ crearIt(c)\com*{$\Theta(1)$}
-		\While(\com*[f]{$\Theta(n)$ iteraciones}){haySiguiente($it$)}{
-			agregarAtras($res$, siguiente($it$))\com*{$\Theta(I+L)$} 		
+	\begin{algoritmo}{iPasarConjASecu}{\In{c}{conj(compu)}}{secu(compu)}{}
+		$res \gets$ \vacia{} \com*{$\Theta(1)$}
+		\tipo{itConj} $it \gets$ \crearIt{$c$} \com*{$\Theta(1)$}
+		\While(\com*[f]{$\Theta(\#(c))$ iteraciones}){\haySig{$it$}}{
+			\agAtras{$res$, \sig{$it$}} \com*{$\Theta(I + L)$} 		
 		}
 	\end{algoritmo}    
   \datosAlgoritmo
   {Devuelve una secuencia que contiene a todos los elementos del conjunto pasado por par\'{a}metro} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n \times (I + L))$} % Complejidad
-  {} % Justificacíón
+  {$\Theta(\#(c) \times (I + L))$ (donde $I$ y $L$ corresponden a la m\'axima cantidad de interfaces y la m\'axima longitud de IP entre las computadoras de $c$, respectivamente).} % Complejidad
+  {} % Justificación
      
   \begin{algoritmo}{iHayCamino?}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}}{bool}{}
-    $res \gets$ ($\neg$esVacio?(iCaminosMinimos($r$, $c_{1}$, $c_{2}$))) \com*{$\Theta(n² \times n!)$}
+    $res \gets$ ($\neg$esVacio?(Caminos($r$, $c_{1}$, $c_{2}$, \agAtras{\vacia{}, $c_1$}, \vecinos{$c_1$}))) \com*{$O(n!)$}
   \end{algoritmo}
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n² \times n!)$} % Complejidad
-  {} % Justificacíón
+  {$O(n!)$} % Complejidad
+  {} % Justificación
 
-  \begin{algoritmo}{iCaminos}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}, \In{l}{lista(estrCompu)}, \In{vec}{lista(estrCompu)}}{conj(lista(estrCompu))}{}
-    \eIf{vacia?($vec$)}{
-      $res \gets$ vacia()\;
+  \begin{algoritmo}{iCaminos}{\In{r}{estrRed}, \In{c_{1}}{compu}, \In{c_{2}}{compu}, \In{l}{lista(compu)}, \In{candidatos}{lista(compu)}}{conj(lista(compu))}{}
+    \eIf{\vacia{$candidatos$}}{
+      $res \gets$ \vacio{} \;
     }{
-      \eIf{\'{u}ltimo($l$) = $c_{1}$}{
-        $res \gets$ agregar($l$, vacia())\;
+      \eIf{\ult{l} = $c_{2}$}{
+        $res \gets$ \ag{$l$, \vacio{}} \;
       }{
-        \eIf{$\neg$est\'{a}?(primero($vec$, $l$))}{
-          $res \gets$ uni\'{o}n(caminos($r$, $c_{0}$, $c_{1}$, agregarAtras($l$, primero($vec$)), Vecinos($r$, primeros($vec$))), caminos($r$, $c_{0}$, $c_{1}$, $l$, fin($vec$)))\;
+        \eIf{$\neg$ \esta{\prim{$candidatos$}, {$l$}}}{
+          $res \gets$ \union{\caminos{$r$, $c_{1}$, $c_{2}$, \agAtras{$l$, primero($candidatos$)}, \pasarConjASecu{\vecinos{$r$, \prim{$candidatos$}}}}, \caminos{$r$, $c_{1}$, $c_{2}$, $l$, \fin{$candidatos$}}}\;
         }{
-          $res \gets$ caminos($r$, $c_{0}$, $c_{1}$, $l$, fin($vec$))\;
+          $res \gets$ \caminos{$r$, $c_{1}$, $c_{2}$, $l$, \fin{$candidatos$}}\;
         }
       }
     }
   \end{algoritmo}
-  \datosAlgoritmo{Dada una red, dos compus, los vecinos de la primer compu, y una lista que usamos para guardar las computadoras por las que ya preguntamos, iteramos sobre todas las computadoras y devolvemos el conjunto de todos los caminos posibles desde la primer computadora hasta la segunda. } % Descripción
+  \datosAlgoritmo{Dada una red, dos compus, una lista que usamos para guardar las computadoras por las que ya preguntamos, y una de computadoras candidatas a ser el siguiente paso del camino, esta funci\'on calcula de forma recursiva el conjunto de todos los caminos posibles desde la primer computadora hasta la segunda.} % Descripción
   {} % Pre
   {} % Post
-  {$\Theta(n² \times n!)$} % Complejidad
-  {} % Justificacíón
-
-  \begin{algoritmo}{iUni\'{o}n}{\In{c_{1}}{conj(lista(compu))}, \In{c_{2}}{conj(lista(compu))}}{conj(lista(compu))}
-    $res \gets$ vacio()\com*{$\Theta(1)$}     
-    \eIf(\com*[f]{$\Theta(1)$}){vacio?($c_{1}$)}{
-      $res \gets$ $c_{2}$\com*{$\Theta(I \times n \times n!)$} 
-      }{
-      \tipo{itConj(lista(compu))} $it \gets$ crearIt($c_{1}$)\com*{$\Theta(1)$}     
-      \While(\com*[f]{$\Theta(n)$}){haySiguiente($it$)}{
-        Ag(siguiente($it$), $c_{2}$)\com*{$\Theta(n)$}
-        avanzar(it)\com*{$\Theta(1)$}
-      } 
-    }
-  \end{algoritmo}
-  \datosAlgoritmo{} % Descripción
-  {} % Pre
-  {} % Post
-  {$\Theta(n² + n \times I \times n!)$} % Complejidad
-  {Devuelve la uni\'{o}n de dos conjuntos. } % Justificacíón
-
-  \begin{algoritmo}{iEsta?}{\In{c}{compu}, \In{l}{lista(compu)}}{bool}
-    \eIf(\com*[f]{$\Theta(1)$}){vacia?($l$)}{
-      $res \gets$ false\com*{$\Theta(1)$}
-    }{
-    \tipo{ItLista(compu)} $it \gets$ crearIt($l$)\com*{$\Theta(1)$}
-      \While(\com*{$\Theta(n)$}){haySiguiente($it$) $\yluego$ siguiente($it$) $\neq$ $c$}{
-        avanzar(it)\com*{$\Theta(1)$}
-      }
-    }
-    $res \gets$ (haySiguiente($it$))\com*{$\Theta(1)$}
-  \end{algoritmo}
-  \datosAlgoritmo{Devuelve True si y solo si la compu $c$ se encuentra en la lista l} % Descripción
-  {} % Pre
-  {} % Post
-  {$\Theta(n)$} % Complejidad
-  {.} % Justificacíón
+  {$O(n!)$} % Complejidad
+  {El peor caso del algoritmo se da cuando todas las computadoras de la red est\'an conectadas entre s\'i. En este caso, dadas dos computadoras cualquiera, la cantidad de caminos posibles entre ellas (es decir, el tama\~no de la salida del algoritmo) es aproximadamente $O(n!)$. Esto es porque la cantidad de caminos de $k$ computadoras de longitud es $\frac{n!}{k!} = O(n!)$. \\
+  Como la longitud de todos los caminos est\'a acotada por $n$, y en cada llamado recursivo se le agrega una computadora al camino (que se va formando en el par\'ametro acumulador $l$), la m\'axima profundidad de la recursi\'on es $n$. La operaci\'on de uni\'on que se efect\'ua tras los llamados recursivos tambi\'en es $O(n)$. Como claramente el tama\~no de la salida, $O(n!)$, domina sobre las operaciones necesarias para obtener cada uno de sus elementos, incluso considerando el peso de las llamadas recursivas, podemos asegurar que la complejidad del algoritmo en peor caso es $O(n!)$.} % Justificación
 
   % \nuevoAlgo
   \begin{algoritmo}{iComputadoras}{\In{r}{estrRed}}{conj(compu)}{}
@@ -466,27 +432,27 @@
   {} % Pre
   {} % Post
   {$\Theta(1)$} % Complejidad
-  {El conjunto de computadoras se pasa por referencia.} % Justificacíón
+  {El conjunto de computadoras se pasa por referencia.} % Justificación
    
   % \nuevoAlgo 
   \begin{algoritmo}{iCopiar}{\In r:estrRed}{Red}
-   	$res \gets$ $\langle$copiar(r.compus), copiar (r.conexiones)$\rangle$\com*{$\Theta(n \times (L + I) + n \times (L + I \times L))$}
+   	$res \gets$ $\langle$ \copiar{$r.compus$}, \copiar{$r.conexiones$} $\rangle$\com*{$\Theta(n \times (L + I) + n \times (L + I \times L))$}
   \end{algoritmo}
   \datosAlgoritmo
-  {Devuelve una copia de la Red} % Descripción
+  {Devuelve una copia de la red.} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(n \times I \times L)$} % Complejidad
-  {Copiar el conjunto lleva para cada una de las computadoras ($\Theta(n)$), la suma de lo que se tarda en copiar las interfaces y el IP($\Theta(I + L)$). Copiar el diccionario de conexiones, es para cada una de las claves($\Theta(n)$) lo que se tarda en copiar el significado. El significado es otro diccionario, que para copiarse lleva para cada una de las claves ($\Theta(I)$), lo que se tarda en copiar el significado, es decir las IPs ($\Theta(L)$). } % Justificacíón
+  {Copiar el conjunto lleva para cada una de las computadoras ($\Theta(n)$), la suma de lo que se tarda en copiar las interfaces y el IP($\Theta(I + L)$). Copiar el diccionario de conexiones, es para cada una de las claves($\Theta(n)$) lo que se tarda en copiar el significado. El significado es otro diccionario, que para copiarse lleva para cada una de las claves ($\Theta(I)$), lo que se tarda en copiar el significado, es decir las IPs ($\Theta(L)$). } % Justificación
 
   % \nuevoAlgo
   \begin{algoritmo}{iCantCompus}{\In{r}{Red}}{nat}
-    $res \gets$ $\#$($r$.compus) \com*{$\Theta(1)$}
+    $res \gets$ $\#$($r.compus$) \com*{$\Theta(1)$}
   \end{algoritmo}   
   \datosAlgoritmo{} % Descripción
   {} % Pre
   {} % Post
   {$\Theta(1)$} % Complejidad
-  {} % Justificacíón
+  {} % Justificación
 
 \end{Algoritmos}

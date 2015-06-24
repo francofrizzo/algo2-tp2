@@ -1,1 +1,66 @@
-\section{Extensiones de m\'odulos b\'asicos}
+\section{Extensiones de m\'odulos y TADs b\'asicos}
+
+\subsection{TAD Arreglo dimensionable($\alpha$)}
+
+  \tadOperacion{fin}{ad($\alpha$)/a}{ad($\alpha$)}{tam($a$) > 0}
+  \tadAxioma{fin($a$)}{\IF (tam(a) $\leq$ 1) THEN crearArreglo(0) ELSE fin\textsubscript{aux}($a$, crearArreglo(tam($a$)-1), tam($a$)-2) FI}
+
+  \tadOperacion{fin\textsubscript{aux}}{ad($\alpha$)/a, ad($\alpha$)/b, nat}{ad($\alpha$)}{definido?($a$, $n$) $\land$ definido?($b$, $n - 1$)}
+  \tadAxioma{fin\textsubscript{aux}($a$, $b$, $n$)}{\IF $n$ = 0 THEN $b$[0] $\leftarrow$ $a$[1] ELSE fin\textsubscript{aux}($a$, $b$[$n$] $\leftarrow$ $a$[$n$ + 1], $n$ - 1) FI}
+
+\subsection{M\'odulo Conjunto Lineal($\alpha$)}
+
+  \Encabezado{Interfaces}
+
+  \InterfazFuncion{Uni\'on}{\In{c_1}{conj($\alpha$)}, \In{c_2}{conj($\alpha$)}}{conj($\alpha$)}
+  {$res$ $\igobs$ $c_1 \cup c_2$)} % Pos
+  [$\Theta\left(\sum_{a \in c_1} copy(a) + \#(c_2) \times \sum_{a' \in c_1 \cup c_2} copy(a, a')\right)$] % Complejidad
+  [Devuelve un conjunto que contiene a todos los elementos que pertenecen a $c_1$ o a $c_2$, y ning\'un otro elemento.] % Descripción
+  [Los elementos de $c_1$ y $c_2$ son agregados al conjunto por copia.] % Aliasing
+
+  \Encabezado{Algoritmos}
+
+  \begin{algoritmo}{iUni\'{o}n}{\In{c_1}{conj($\alpha$)}, \In{c_2}{conj($\alpha$)}}{conj($\alpha$)}
+    $res \gets$ \copiar{$c_{1}$} \com*{$\Theta\left(\sum_{a \in c_1} copy(a)\right)$} 
+    \tipo{itConj($\alpha$)} $it \gets$ \crearIt{$c_2$} \com*{$\Theta(1)$}     
+    \While(\com*[f]{$\Theta(\#(c_2))$ iteraciones}){\haySig{$it$}}{
+      \ag{\sig{$it$}, $res$} \com*{$\Theta\left(\sum_{a' \in c_1 \cup c_2} copy(a, a')\right)$}
+      \avanzar{$it$} \com*{$\Theta(1)$}
+    } 
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta\left(\sum_{a \in c_1} copy(a) + \#(c_2) \times \sum_{a' \in c_1 \cup c_2} copy(a, a')\right)$} % Complejidad
+  {} % Justificacíón
+
+\subsection{M\'odulo Lista Enlazada($\alpha$)}
+
+  \Encabezado{Interfaces}
+
+  \InterfazFuncion{Esta?}{\In{a}{$\alpha$}, \In{l}{lista($\alpha$)}}{bool}
+  {$res$ $\igobs$ est\'a?($a$, $l$))} % Pos
+  [$\Theta\left(\sum_{a \in c_1} copy(a) + \#(c_2) \times \sum_{a' \in c_1 \cup c_2} copy(a, a')\right)$] % Complejidad
+  [Devuelve \emph{true} si y solo si el elemento $a$ se encuentra en la lista $l$.] % Descripción
+  [] % Aliasing
+  [\begin{minipage}{\linewidth}
+    \InterfazFuncion{\puntito = \puntito}{\In{a_1}{$\alpha$}, \In{a_2}{$\alpha$}}{bool}
+    {$res \igobs (a_1 = a_2)$} \\
+    \textbf{Complejidad:} $\Theta(equal(a_1, a_2))$ \\
+    \textbf{Descripci\'on:} Funci\'on de igualdad de $\alpha$'s.
+  \end{minipage}] % Requiere
+
+  \Encabezado{Algoritmos}
+
+  \begin{algoritmo}{iEsta?}{\In{c}{$\alpha$}, \In{l}{lista($\alpha$)}}{bool}
+    \tipo{itLista($\alpha$)} $it \gets$ \crearIt{$l$} \com*{$\Theta(1)$}
+    \While(\com*[f]{$\Theta($long($l$)$)$ iteraciones}){\haySig{$it$} $\yluego$ \sig{$it$} $\neq$ $c$}{
+      \avanzar{$it$} \com*{$\Theta(1)$}
+    }
+    $res \gets$ \haySig{$it$} \com*{$\Theta(1)$}
+  \end{algoritmo}
+  \datosAlgoritmo{} % Descripción
+  {} % Pre
+  {} % Post
+  {$\Theta(\sum_{i = 0}^{long(l) - 1} equal(a, l[i]))$} % Complejidad
+  {El algoritmo posee un ciclo que se ejecuta $\Theta($long($l$)$)$ veces. Las operaciones que se realizan en en el interior del ciclo son $\Theta(1)$, pero la evaluaci\'on de la guarda tiene complejidad $\Theta(equal(a, a'))$ donde $a'$ toma en cada iteraci\'on el valor de un elemento diferente de la lista.} % Justificacíón
